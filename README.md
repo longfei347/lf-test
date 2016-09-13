@@ -1,5 +1,5 @@
 # lf-test
-[w3cfuns](http://www.w3cfun.com)
+[w3cfuns](http://www.w3cfuns.com)  
 **Examples**
 
 Align text values in an array:

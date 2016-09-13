@@ -1,235 +1,138 @@
 # lf-test
-[w3cfuns](http://www.w3cfuns.com)  
-**Examples**
 
-Align text values in an array:
-
-```js
-align([1, 2, 3, 100]);
-//=> ['  1', '  2', '  3', '100']
-```
-
-Or [do stuff like this](./example.js):
-
-[![screen shot 2015-06-09 at 2 08 34 am](https://cloud.githubusercontent.com/assets/383994/8051597/7b716fbc-0e4c-11e5-9aef-4493fd22db58.png)](./example.js)
-
-Visit [the example](./example.js) to see how this works.
-
-## Install
-
-Install with [npm](https://www.npmjs.com/)
-
-```sh
-$ npm i align-text --save
-```
-
-## Usage
-
-```js
-var align = require('align-text');
-align(text, callback_function_or_integer);
-```
-
-**Params**
-
-* `text` can be a **string or array**. If a string is passed, a string will be returned. If an array is passed, an array will be returned.
-* `callback|integer`: if an integer, the text will be indented by that amount. If a function, it must return an integer representing the amount of leading indentation to use as `align` loops over each line.
-
-**Example**
-
-```js
-align(text, 4);
-```
-
-Would align:
-
-```
-abc
-abc
-abc
-```
-
-To:
-
-```
-    abc
-    abc
-    abc
-```
-
-## callback
-
-### params
-
-The callback is used to determine the indentation of each line and gets the following params:
-
-* `len` the length of the "current" line
-* `longest` the length of the longest line
-* `line` the current line (string) being aligned
-* `lines` the array of all lines
-
-### return
-
-The callback may return:
-
-* an integer that represents the number of spaces to use for padding,
-* or an object with the following properties:
-  - `indent`: **{Number}** the amount of indentation to use. Default is `0` when an object is returned.
-  - `character`: **{String}** the character to use for indentation. Default is `''` (empty string) when an object is returned.
-  - `prefix`: **{String}** leading characters to use at the beginning of each line. `''` (empty string) when an object is returned.
-
-**Integer example:**
-
-```js
-// calculate half the difference between the length
-// of the current line and the longest line
-function centerAlign(len, longest, line, lines) {
-  return Math.floor((longest - len) / 2);
-}
-```
-
-**Object example:**
-
-```js
-function centerAlign(len, longest, line, lines) {
-  return {
-    character: '\t',
-    indent: Math.floor((longest - len) / 2),
-    prefix: '~ ',
-  }
-}
-```
-
-## Usage examples
-
-### Center align
-
-Using the `centerAlign` function from above:
-
-```js
-align(text, centerAlign);
-```
-
-Would align this text:
-
-```js
-Lorem ipsum dolor sit amet
-consectetur adipiscin
-elit, sed do eiusmod tempor incididun
-ut labore et dolor
-magna aliqua. Ut enim ad mini
-veniam, quis
-```
-
-Resulting in this:
-
-```
-     Lorem ipsum dolor sit amet,
-        consectetur adipiscing
-elit, sed do eiusmod tempor incididunt
-         ut labore et dolore
-    magna aliqua. Ut enim ad minim
-             veniam, quis
-```
-
-**Customize**
-
-If you wanted to add more padding on the left, just pass the number in the callback.
-
-For example, to add 4 spaces before every line:
-
-```js
-function centerAlign(len, longest, line, lines) {
-  return 4 + Math.floor((longest - len) / 2);
-}
-```
-
-Would result in:
-
-```
-         Lorem ipsum dolor sit amet,
-            consectetur adipiscing
-    elit, sed do eiusmod tempor incididunt
-             ut labore et dolore
-        magna aliqua. Ut enim ad minim
-                 veniam, quis
-```
-
-### Bullets
-
-```js
-align(text, function (len, max, line, lines) {
-  return {prefix: ' - '};
-});
-```
-
-Would return:
-
-```
-- Lorem ipsum dolor sit amet,
-- consectetur adipiscing
-- elit, sed do eiusmod tempor incididunt
-- ut labore et dolore
-- magna aliqua. Ut enim ad minim
-- veniam, quis
-```
-
-### Different indent character
-
-```js
-align(text, function (len, max, line, lines) {
-  return { 
-    indent: Math.floor((max - len) / 2), 
-    character: '~', 
-  };
-});
-```
-
-Would return
-
-```
-~~~~~Lorem ipsum dolor sit amet,
-~~~~~~~~consectetur adipiscing
-elit, sed do eiusmod tempor incididunt
-~~~~~~~~~ut labore et dolore
-~~~~magna aliqua. Ut enim ad minim
-~~~~~~~~~~~~~veniam, quis
-```
-
-## Related projects
-
-* [center-align](https://github.com/jonschlinkert/center-align): Center-align the text in a string.
-* [justify](https://github.com/bahamas10/node-justify): Left or right (or both) justify text using a custom width and character
-* [longest](https://github.com/jonschlinkert/longest): Get the longest item in an array.
-* [right-align](https://github.com/jonschlinkert/right-align): Right-align the text in a string.
-* [repeat-string](https://github.com/jonschlinkert/repeat-string): Repeat the given string n times. Fastest implementation for repeating a string.
-* [word-wrap](https://github.com/jonschlinkert/word-wrap): Wrap words to a specified length.
-
-## Running tests
-
-Install dev dependencies:
-
-```sh
-$ npm i -d && npm test
-```
-
-## Contributing
-
-Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/jonschlinkert/align-text/issues/new)
-
-## Author
-
-**Jon Schlinkert**
-
-+ [github/jonschlinkert](https://github.com/jonschlinkert)
-+ [twitter/jonschlinkert](http://twitter.com/jonschlinkert)
-
-## License
-
-Copyright © 2015 [Jon Schlinkert](https://github.com/jonschlinkert)
-Released under the MIT license.
-
-***
-
-_This file was generated by [verb-cli](https://github.com/assemble/verb-cli) on June 09, 2015._
-
+###工作
+[dev-mCloud](http://nkweb-sit.huawei.com/mcloud/ide/develop.html?projectId=24313857)
+[sit-mCloud](http://mcloudnkg-sit.huawei.com/mcloud/ide/develop.html?projectId=182517764)
+[sit-local](http://localhost.huawei.com/mcloud/develop.html?projectId=182517764)
+[font.html](http://localhost.huawei.com/mcloud/font.html)
+[移动云配置平台](http://localhost.huawei.com:8080/mcloud/home1.html)
+###前端
+[W3Cfuns](http://www.w3cfuns.com/)
+[博客园](http://www.cnblogs.com/)
+[JavaScript-MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference)
+[ITeye](http://www.iteye.com/)
+[51CTO](http://www.51cto.com/)
+[开源中国](http://www.oschina.net/)
+[GitHub](https://github.com/)
+[CSDN](http://www.csdn.net/?ref=toolbar)
+[前端观察](http://www.qianduan.net/)
+[jQuery Plugin](http://plugins.jquery.com/)
+[揭秘腾讯大数据](http://www.csdn.net/article/2014-08-29/2821448)
+[Unix技术网](http://www.chinaunix.net/)
+[Bootstrap](http://www.bootcss.com/)
+[CSS参考手册](http://css.doyoe.com/)
+###技术
+[js正则](http://blog.csdn.net/xinying0424/article/details/8113908)
+[ES6入门](http://es6.ruanyifeng.com/)
+[jasmine-intro](http://jasmine.github.io/2.4/introduction.html)
+[ztree3.3/api](http://tool.oschina.net/apidocs/apidoc?api=ztree3.2%2Fapi%2FAPI_cn.html)
+[zTree-api](http://www.ztree.me/v3/api.php)
+[vue.js-api](http://vuejs.org/api/)
+[Vue.js](http://www.cnblogs.com/keepfool/p/5619070.html)
+[Vue.js](http://www.cnblogs.com/keepfool/p/5637834.html)
+[React Native](http://top.css88.com/archives/724)
+[lodash docs](https://lodash.com/docs)
+[JS API - 开发指南](http://developer.baidu.com/map/jsdevelop-4.htm)
+[Markdown 语法](http://wowubuntu.com/markdown/)
+[fullPage.js](https://github.com/alvarotrigo/fullPage.js)
+[fullPage.js](http://www.dowebok.com/77.html)
+[emmet使用](http://docs.emmet.io/actions/)
+[javascript组件化 ](http://purplebamboo.github.io/2015/03/16/javascript-component/)
+[JavaScript 库](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects)
+[WeX5开发工具](http://wex5.com/cn/wex5/)
+[AngularJS中文](http://www.apjs.net/)
+[jQuery XML to JSON](http://www.fyneworks.com/jquery/xml-to-json/)
+[GitHub/artTemplate](https://github.com/aui/artTemplate)
+[CORS 详解](http://www.ruanyifeng.com/blog/2016/04/cors.html)
+[npm](https://www.npmjs.com/)
+[在线工具 ](http://tool.oschina.net/)
+[vue.js](http://cn.vuejs.org/)
+[Zepto.js](http://zeptojs.com/)
+[Js专业八级](http://ourjs.com/detail/52fb82e13bd19c4814000001)
+[快速开始 | React](http://reactjs.cn/react/docs/getting-started.html)
+[jQuery API](http://www.php100.com/manual/jquery/)
+[Cheat Sheet](http://docs.emmet.io/cheat-sheet/)
+[JetBrains](https://www.jetbrains.com/)
+[ReactEurope](https://zhuanlan.zhihu.com/p/21379350)
+[deep-into-node](https://yjhjstz.gitbooks.io/deep-into-node/content/)
+[webpack 前端构建](http://www.cnblogs.com/yangjunhua/p/5615118.html)
+[ jQuery性能优化](http://www.ido321.com/82.html)
+[React Redux](http://www.zcfy.cc/article/863)
+[JavaScript](http://www.zcfy.cc/article/901)[前端JSer装逼手册](http://www.w3cfuns.com/notes/24611/1581e84f8f1c67ac2b883f44945da00b.html)[前端e路|36镇](http://www.36zhen.com/my?id=3751)
+[CSS Reset](http://cssreset.com/)
+[Font Awesome](http://fontawesome.io/)
+[Bootstrap v3 font](http://v3.bootcss.com/components/)
+[Webpack+React+ES6](http://www.cnblogs.com/skylar/p/React-Webpack-ES6.html)
+[React Native](http://www.cnblogs.com/maomishen/p/5303976.html)
+###资源
+[front-end-collect](https://github.com/jikeytang/front-end-collect)
+[最全前端资源汇集](http://www.w3cfuns.com/notes/17755/423092d927775ae297a390f646079a64.html)
+[前端地址大全](http://www.w3cfuns.com/notes/16438/db8e9e0bf80676f32b2cafb9b4932313.html)
+[比较火的 Web 开发技术](http://www.zhihu.com/question/26644904)
+[ECMAScript 6简介](http://es6.ruanyifeng.com/#docs/destructuring)
+[前端资源汇集 ](http://www.jianshu.com/p/c3dae0951f74)
+[Popular Packages](https://packagecontrol.io/browse/popular)
+[javascript-cn](https://github.com/jobbole/awesome-javascript-cn)
+[Bootstrap表单构造器](http://www.bootcss.com/p/bootstrap-form-builder/)
+[Bootstrap可视布局](http://www.bootcss.com/p/layoutit/)
+[部署前端代码](http://www.zhihu.com/question/20790576)
+[JavaScript Style](https://github.com/airbnb/javascript)
+###本地
+[ace-Editor](file:///D:/webdesign/myTest/ace/ace-builds-master/editor.html)
+[Test](file:///D:/webdesign/myTest/test2.html)
+[Bookmarks](file:///D:/webdesign/%E5%85%B6%E4%BB%96/bookmarks_16_2_26-company.html)
+[zTree_demo](file:///D:/webdesign/myTest/zTree_v3-master/demo/cn/core/)
+[ace-editor](file:///D:/webdesign/myTest/ace/ace-new/ace-master/api/editor.html)
+[ace-selection](file:///D:/webdesign/myTest/ace/ace-new/ace-master/api/selection.html)
+[Ace - Web](https://ace.c9.io/#api)
+[API Ext JS](file:///D:/webdesign/Ext4.1.0/index.html)
+[IDE Server](http://localhost.huawei.com:8080/mcloud/sseChannelTest.html)
+###综合
+[百科](http://baike.baidu.com/)
+[百度音乐](http://play.baidu.com/)
+[我的自选](http://quote.yztz.com/favorite/)
+[文库](http://wenku.baidu.com/)
+[车票预订](https://kyfw.12306.cn/otn/leftTicket/init)
+[挑战1000分](http://www.nxmam.cn/yx/yxc.php?oid=bxpdviec)
+[百家](http://baijia.baidu.com/)
+[城市百科](http://baike.baidu.com/city)
+[百度地图](http://map.baidu.com/)
+[分级基金网](http://www.jijinb.com/)
+[券商板块](http://quote.yztz.com/quote/sector_10633)
+[沪港通流向](http://data.eastmoney.com/bkzj/hgt.html)
+[新浪微博](http://weibo.com/u/2034566072/home?wvr=5)
+[4G套餐联通](http://www.10010.com/goodsdetail/511405139289.html)
+[bat薪资](http://www.zhihu.com/question/27108669?rf=27108605)
+[Google 翻译](http://translate.google.cn/)
+[火车票查询](http://train.qunar.com/)
+[dev](http://localhost.huawei.com/mcloud/develop.html?projectId=103874569)
+[dev-d](http://localhost.huawei.com/mcloud/develop-d.html?projectId=103874569)
+[m-new](http://localhost.huawei.com/mcloud/index.html)
+[new-liu](http://10.63.248.167:8080/mcloud/index.html)
+[百度](http://www.baidu.com/)
+[W3](http://w3.huawei.com/next/indexa.html)
+[defect](http://btit-rally.huawei.com/#/1581840d/defects?tpsV=sq%3A33694564)
+[mCloud-pub](http://mcloud-pub.huawei.com/mcloud/ide/home.html?projectId=143392777)
+[Jasmine](http://localhost.huawei.com/mcloud/jasmine/test.html)
+[lf-test](https://github.com/longfei347/lf-test/blob/master/index.html)
+[Chrome下载](http://down.tech.sina.com.cn/page/40975.html)
+[Taocode](http://code.taobao.org/login/)
+[log](http://nkweb-sit.huawei.com/mcloud/channel/sse/server?X-User-Hash=bbb555&param={%22type%22:%22BUSINESS%22,%22to%22:%22bbb555%22})
+[Server-Sent Events](http://nkgtsv9687rhl:8080/mcloud/channel/sseChannelTest.html)
+[个税计算器](http://www.gerensuodeshui.cn/)
+[松山湖](http://xinsheng.huawei.com/cn/index.php?app=forum&mod=Detail&act=index&id=2829471&p=12#p24251669)
+[华为班车](http://117.78.17.233/huaweibus/!index.action)
+[Discuz! 资料库](http://faq.comsenz.com/library/template/cssextend/cssextend_index.htm)
+[layer API 帮助手册](http://sentsin.com/jquery/layer/api.html)
+[layer-jQuery弹层](http://sentsin.com/jquery/layer/)
+[jQuery UI Dialog ](http://www.codesky.net/article/201208/170544.html)
+[fullPage.js](http://www.dowebok.com/demo/2014/77/index8.html#page2)
+[mongodb由浅入深](http://linux.cn/article-4117-1-qqmail.html)
+[Egret](http://www.egret-labs.org/)
+[Grunt静态页面](http://www.jianshu.com/p/47aa09a2910d)
+[The CSS3 Matrix](http://useragentman.com/matrix/)
+[远程调试weinre](http://wyqbailey.diandian.com/post/2011-11-09/20511143)
+[npm使用jQuery 插件](http://www.css88.com/archives/5537)
+[海量数据处理](http://m.blog.csdn.net/blog/v_JULY_v/7382693)
+[unwinder](http://unwinder.test.h5jun.com/)
+[买房必看!2016武汉](http://mt.sohu.com/20160507/n448205169.shtml)

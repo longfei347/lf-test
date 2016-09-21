@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>黑白棋</title>
+	<script src="js/jquery-1.10.1.js"></script>
+</head>
+<style>
+.box{
+	margin: auto;
+	border: 1px solid #000;
+	width: 800px;
+	height: 550px;
+}
+.counter {
+	text-align: center;
+}
+.tbl {
+	margin: auto;
+	border: 1px solid #333;
+	border-collapse: collapse;
+}
+.tbl td{
+	border: 1px solid #666;
+	width: 40px;
+	height: 40px;
+	box-sizing: border-box;
+	cursor: pointer;
+}
+.tbl .red{
+	background-color: red;
+}
+.tbl .orange{
+	background-color: orange;
+}
+.tbl .yellow{
+	background-color: yellow;
+}
+.tbl .green{
+	background-color: green;
+}
+.tbl .blue{
+	background-color: blue;
+}
+.restrat {
+	text-align: center;
+}
+.restrat button {
+	;
+}
+</style>
+<body>
+	<div class="box">
+		<p class="note">消消看</p>
+		<div class="counter">
+			my-score: <span id="score">0</span>
+		</div>
+		<table class="tbl" id="chessboard">
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+		<p class="restrat">
+			<button type="button" onclick="init()">重新开始</button>
+		</p>
+	</div>
+</body>
+<script>
+var color = ["red", "orange", "yellow", "green", "blue"], curColor;//0是红,1是橙,2是黄,3是绿,4是蓝
+function init(argument) {
+	$("td").each(function(i,v) {
+		v.className = color[~~(Math.random()*4)];//只选四种
+	})
+}
+init();
+var modTds = [], count=0;
+function putModify(row,col, direction ) {
+	var curDirection;
+	console.count();
+	count++
+	if (count > 100) {
+		return 0;
+	}
+	if (row > 0 && chessboard.rows[row-1].cells[col].className === curColor && 
+		direction !== "down") {//上
+		modTds.push(chessboard.rows[row-1].cells[col]);
+		putModify(row-1,col,"up");
+	}
+	if (row < 9 && chessboard.rows[row+1].cells[col].className === curColor &&
+		direction !== "up") {// 下
+		modTds.push(chessboard.rows[row+1].cells[col]);
+		putModify(row+1,col,"down");
+	}
+	if (col > 0 && chessboard.rows[row].cells[col-1].className === curColor &&
+		direction !== "left") {// 右
+		modTds.push(chessboard.rows[row].cells[col-1]);
+		putModify(row,col-1,"right");
+	}
+	if (col < 9 && chessboard.rows[row].cells[col+1].className === curColor &&
+		direction !== "right") {// 左
+		modTds.push(chessboard.rows[row].cells[col+1]);
+		putModify(row,col+1,"left");
+	}
+}
+$("#chessboard").on("click","td", function() {
+	var col = this.cellIndex,
+		row = this.parentNode.rowIndex,
+		ind = row*10 + col;
+	curColor  = this.className;
+	if (this.className === "") {
+		return 0;
+	}
+	modTds = [];
+	modTds.push(this);
+	putModify(row, col);
+	if (modTds.length === 1) {
+		return 0;
+	}
+	$("#score").html(+$("#score").html() + modTds.length*modTds.length);
+	modTds.forEach(function(v,i) {
+		v.removeAttribute("class");
+	})
+	
+	// check 相邻棋子
+	// putchess(row, col, player);
+})
+</script>
+</html>

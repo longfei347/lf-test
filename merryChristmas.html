@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>圣诞主题</title>
+    <style type="text/css">
+    section {
+        width: 100%;
+        height: 100%;
+        background: red;
+    }
+    .page{
+        width: 5rem;
+        height: 10rem;
+        background: yellow;
+        font-size: 0.3rem;
+    }
+    .bird {
+        min-width: 91px;
+        min-height: 71px;
+        top: 10%;
+        position: absolute;
+        z-index: 10;
+        background: url(http://img.mukewang.com/55ade1700001b38302730071.png)
+    }
+    
+    .birdFly {
+        /*写法1*/
+        -moz-animation: bird-slow 400ms steps(1,3) infinite;
+        
+        /*写法2*/
+        animation-name: bird-slow;
+        animation-duration: 400ms;
+        animation-timing-function: steps(3);
+        animation-iteration-count: infinite;
+    }
+    
+    /*???*/
+    @keyframes bird-slow {
+        0% {background-position-x: 0}
+        100% {background-position-x: -273px}
+    }
+    @-webkit-keyframes bird-slow {
+        0% {background-position-x: -0px}
+        100% {background-position-x: -273px}
+    }
+    </style>
+</head>
+
+<body>
+    steps(3)实现帧动画
+    <div class="bird birdFly"></div>
+    <section>
+        <div class="page">rem跟着html:font-size变化</div>
+    </section>
+</body>
+<script type="text/javascript">
+var docEl = document.documentElement,
+    //当设备的方向变化（设备横向持或纵向持）此事件被触发。绑定此事件时，
+    //注意现在当浏览器不支持orientationChange事件的时候我们绑定了resize 事件。
+    //总来的来就是监听当然窗口的变化，一旦有变化就需要重新设置根字体的值
+    resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+    recalc = function() {
+        //设置根字体大小
+        docEl.style.fontSize = 20 * (docEl.clientWidth / 320) + 'px';
+    };
+
+//绑定浏览器缩放与加载时间
+window.addEventListener(resizeEvt, recalc, false);
+document.addEventListener('DOMContentLoaded', recalc, false);
+</script>
+
+</html>

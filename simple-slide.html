@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<head>
+<title>无标题文档</title>
+<meta charset="utf-8">
+<style>
+body, ul, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, table, td, img, div, dl, dt, dd, input { margin: 0; padding: 0; }
+body { font-size: 12px; }
+img { border: none; }
+li { list-style: none; }
+input, select, textarea { outline: none; }
+textarea { resize: none; }
+a { text-decoration: none; }/*清浮动*/
+.clearfix:after { content: ""; display: block; clear: both; }
+.clearfix { zoom: 1; }
+.banner { width: 520px; height: 280px; position: relative; overflow: hidden; }
+.banner-btn { display: none; }
+.banner-btn a { display: block; line-height: 40px; position: absolute; top: 120px; width: 40px; height: 40px; background-color: #000; opacity: 0.3; filter:alpha(opacity=30) color: rgb(255, 255, 255);
+overflow: hidden; z-index: 4; }
+.prevBtn { left: 5px; }
+.nextBtn { right: 5px; }
+.banner-img { font-size: 0; *word-spacing:-1px;/* IE6、7 */
+letter-spacing: -3px; position: relative; }
+.banner-img li { display: inline-block; *display:inline;
+*zoom:1;/* IE6、7 */
+vertical-align: top; letter-spacing: normal; word-spacing: normal; font-size: 12px; }
+.banner i { background: url(http://gtms01.alicdn.com/tps/i1/T1szNBFzlmXXX8QSDI-400-340.png) no-repeat; width: 15px; height: 23px; cursor: pointer; margin: 8px 0 0 12px; display: block; }
+.banner .nextBtn i { background-position: -200px -24px; }
+.banner .prevBtn i { background-position: -200px 0px; }
+.banner-circle { height: 13px; position: absolute; left: 50%; bottom: 15px; text-align: center; font-size: 0; border-radius: 10px; background: rgba(255,255,255,0.3); -moz-border-radius: 10px; -ms-border-radius: 10px; -o-border-radius: 10px; -webkit-border-radius: 10px; filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#4CFFFFFF', EndColorStr='#4CFFFFFF');
+}
+.banner-circle li { display: -moz-inline-stack; display: inline-block; vertical-align: middle; zoom: 1; margin: 2px; }
+.banner-circle li a { display: block; padding-top: 9px; width: 9px; height: 0px; border-radius: 50%; -moz-border-radius: 50%; -ms-border-radius: 50%; -o-border-radius: 50%; background: #B7B7B7; overflow: hidden; }
+.banner-circle .selected a { background: #F40; }
+</style>
+<script src="js/j.js"></script>
+<script>
+$(function () {
+	var $banner = $('.banner');
+	var $banner_ul = $('.banner-img');
+	var $btn = $('.banner-btn');
+	var $btn_a = $btn.find('a');
+	var v_width = $banner.width();
+	var page = 1;
+	var timer = null;
+	var btnClass = null;
+	var page_count = $banner_ul.find('li').length - 2; //把这个值赋给小圆点的个数
+	var banner_cir = "<li class='selected' href='#'><a></a></li>";
+	for (var i = 1; i < page_count; i++) { //动态添加小圆点
+		banner_cir += "<li><a href='#'>" + i + "</a></li>";
+	}
+	$('.banner-circle').append(banner_cir);
+	var cirLeft = $('.banner-circle').width() * (-0.5);
+	$('.banner-circle').css({
+		'marginLeft' : cirLeft
+	});
+	$banner_ul.width((page_count + 2) * v_width);
+	$banner_ul.css('left', -v_width);
+	function move(obj, classname) { //手动及自动播放
+		if (!$banner_ul.is(':animated')) { //用stop(true,true)代替
+
+			if (classname == 'prevBtn') {
+				if (page == 1) {
+					$banner_ul.animate({
+						left : '+=' + v_width + 'px'
+					}, "slow", function () {
+						$banner_ul.css('left', -v_width * (page_count) + 'px');
+					});
+					page = page_count;
+					cirMove();
+				} else {
+					$banner_ul.animate({
+						left : '+=' + v_width + 'px'
+					}, "slow");
+					page--;
+					cirMove();
+				}
+			} else {
+				if (page == page_count) {
+					$banner_ul.animate({
+						left : '-=' + v_width + 'px'
+					}, "slow", function () {
+						$banner_ul.css('left', -v_width + 'px');
+					});
+					page = 1;
+					cirMove();
+				} else {
+					$banner_ul.animate({
+						left : '-=' + v_width + 'px'
+					}, "slow");
+					page++;
+					cirMove();
+				}
+			}
+		}
+	}
+	function cirMove() { //检测page的值，使当前的page与selected的小圆点一致
+		$('.banner-circle li').eq(page - 1).addClass('selected').siblings().removeClass('selected');
+	}
+	$banner.on('mouseenter', function () {
+		$btn.css({
+			'display' : 'block'
+		});
+		clearInterval(timer);
+	}).on('mouseleave', function () {
+		$btn.css({
+			'display' : 'none'
+		});
+		clearInterval(timer);
+		timer = setInterval(move, 3000);
+	}).find('li').eq(0).mouseleave(); //激活自动播放
+	$btn_a.on('mouseenter', function () { //实现透明渐变，阻止冒泡
+		$(this).animate({
+			opacity : 0.6
+		}, 'fast');
+		$btn.css({
+			'display' : 'block'
+		});
+		return false;
+	}).on('mouseleave', function () {
+		$(this).animate({
+			opacity : 0.3
+		}, 'fast');
+	}).on('click', function () {
+		btnClass = this.className;
+		clearInterval(timer);
+		timer = setInterval(move, 3000);
+		move($(this), this.className);
+	});
+	$('.banner-circle li').on('click', function () {
+		var index = $('.banner-circle li').index(this);
+		$banner_ul.animate({
+			left : -v_width * (index + 1)
+		}, 'slow');
+		page = index + 1;
+		cirMove();
+	});
+});
+</script>
+</head>
+<body>
+<div class="banner">
+	<div class="banner-btn">
+		<a href="javascript:;" class="prevBtn"><i></i></a> <a href="javascript:;" class="nextBtn"><i></i></a>
+	</div>
+	<ul class="banner-img">
+		<li><a href="#"><img src="http://gtms01.alicdn.com/tps/i1/T104hZFBVdXXazuKP7-520-280.jpg"></a></li>
+		<li><a href="#"><img src="http://gtms03.alicdn.com/tps/i3/T1B1JYFCpdXXazuKP7-520-280.jpg"></a></li>
+		<li><a href="#"><img src="http://i.mmcdn.cn/simba/img/T16YtiFE4aXXb1upjX.jpg"></a></li>
+		<li><a href="#"><img src="http://i.mmcdn.cn/simba/img/T1Oi0oFrFkXXb1upjX.jpg"></a></li>
+		<li><a href="#"><img src="http://i.mmcdn.cn/simba/img/T1LtlPFppjXXb1upjX.jpg"></a></li>
+		<li><a href="#"><img src="http://gtms04.alicdn.com/tps/i4/T1GGJWFvpgXXazuKP7-520-280.jpg"></a></li>
+		<li><a href="#"><img src="http://gtms01.alicdn.com/tps/i1/T104hZFBVdXXazuKP7-520-280.jpg"></a></li>
+		<li><a href="#"><img src="http://gtms03.alicdn.com/tps/i3/T1B1JYFCpdXXazuKP7-520-280.jpg"></a></li>
+	</ul>
+	<ul class="banner-circle">
+	</ul>
+</div>
+</body>
+</html>

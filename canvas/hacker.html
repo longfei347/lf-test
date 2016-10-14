@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>HTML5 仿黑客帝国</title>
+</head>
+<body>
+<p style="display:none;">HTML5 仿黑客帝国 -->for fun 内存会不断增加</p>
+<canvas id="q"></canvas>
+<script type="text/javascript" >
+var s = window.screen;
+var width = q.width = s.width;
+var height = q.height = s.height;
+var letters = Array(256).join(1).split(''),
+	textArr = ["王","素","芳","我","爱","你"];
+var draw = function () {
+  q.getContext('2d').fillStyle='rgba(0,0,0,.05)';
+  q.getContext('2d').fillRect(0,0,width,height);
+  q.getContext('2d').fillStyle='#0F0';
+  letters.map(function(y_pos, index){
+    //text = String.fromCharCode(3e4+Math.random()*33);
+    text = textArr[Math.round(Math.random()*5)];
+    x_pos = index * 14;
+    q.getContext('2d').fillText(text, x_pos, y_pos);
+    letters[index] = (y_pos > 300 + Math.random() * 1e4) ? 0 : y_pos + 14;
+  });
+};
+setInterval(draw, 333);
+</script>
+</body>
+</html>

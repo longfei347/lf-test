@@ -1,0 +1,285 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>test</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script src="js/jquery-1.11.0.js"></script>
+<script src="js/underscore-src.js"></script>
+<script src="js/console_snippets.js"></script>
+<script src="js/tenda-common.js"></script>
+<script src="js/base.js"></script>
+<style>
+
+.none {
+	display: none;
+}
+.test .hd{padding:10px 0;}
+.test .nav{position:fixed;right:10px;left: 540px;}
+.test .nav a{display:block;margin: 10px 0;}
+.test .bd .panel{width:500px;margin-top:5px;border:1px solid #ddd;}
+.test .bd h2{border-bottom:1px solid #ddd;}
+.test .bd .panel:target{border-color:#f60;}
+.test .bd .panel:target h2{border-color:#f60;}
+h2,p{margin:0;padding:10px;font-size:16px;}
+</style>
+</head>
+<body>
+<div class="test none">
+	<div class="hd nav">
+		<a href="#panel1">前往区块1</a>
+		<a href="#panel2">前往区块2</a>
+		<a href="#panel3">前往区块3</a>
+		<a href="#panel4">前往区块4</a>
+		<a href="#panel5">前往区块5</a>
+	</div>
+	<div class="bd">
+		<div id="panel1" class="panel">
+			<h2>区块1</h2>
+			<div><p>区块1内容</p><p>区块1内容</p><p>区块1内容</p></div>
+		</div>
+		<div id="panel2" class="panel">
+			<h2>区块2</h2>
+			<div><p>区块2内容</p><p>区块2内容</p><p>区块2内容</p></div>
+		</div>
+		<div id="panel3" class="panel">
+			<h2>区块3</h2>
+			<div><p>区块3内容</p><p>区块3内容</p><p>区块3内容</p></div>
+		</div>
+		<div id="panel4" class="panel">
+			<h2>区块4</h2>
+			<div><p>区块4内容</p><p>区块4内容</p><p>区块4内容</p></div>
+		</div>
+		<div id="panel5" class="panel">
+			<h2>区块5</h2>
+			<div><p>区块5内容</p><p>区块5内容</p><p>区块5内容</p></div>
+		</div>
+	</div>
+</div>
+</body>
+
+<script src="js/lite2.js"></script>
+<script>
+
+/*var s = new Set();
+
+[2,3,5,4,5,2,2].map(x => s.add(x))
+for (i of s) {console.log(i)}*/
+
+/*Function.prototype.bind = function (obj) {
+		var slice = [].slice,
+		args = slice.call(arguments, 1),
+		self = this,
+		nop = function() {},
+		bound = function() {
+			return self.apply(this instanceof nop ? this : (obj || {}),
+			args.concat(slice.call(arguments)));
+		};
+		nop.prototype = self.prototype;
+		bound.prototype = new nop;
+		return bound;
+	};*/
+/*function ll() {
+	var i=0,sum=0;
+	let a=99;
+	for (;i<arguments.length;i++) {
+		sum += arguments[i];
+	}
+	console.log(sum,a+sum);
+}*/
+/*var m = new Map(); 
+
+m.set("edition", 6)        // 键是字符串
+m.set(262, "standard")     // 键是数值
+m.set(undefined, "nah")    // 键是undefined
+
+var hello = function() {console.log("hello");}
+m.set(hello, "Hello ES6!") // 键是函数
+
+m.has("edition")     // true
+m.has("years")       // false
+m.has(262)           // true
+m.has(undefined)     // true
+m.has(hello)         // true
+
+m.delete(undefined)
+m.has(undefined)       // false
+
+m.get(hello)  // Hello ES6!
+m.get("edition")  // 6*/
+
+/*function add(...values) {
+   let sum = 0;
+
+   for (var val of values) {
+      sum += val;
+   }
+
+   return sum;
+}
+
+add(2, 5, 3) // 10*/
+
+/*function* helloWorldGenerator() {
+    yield 'hello';
+    yield 'world';
+}
+var hw = helloWorldGenerator();
+// 执行遍历器的next方法，则会依次遍历每个成员。
+
+hw.next() 
+// { value: 'hello', done: false }
+
+hw.next()
+// { value: 'world', done: false }
+
+hw.next()
+// { value: undefined, done: true }
+
+hw.next()*/
+
+
+// Error: Generator has already finished
+//	at GeneratorFunctionPrototype.next (native)
+//	at repl:1:3
+//  at REPLServer.defaultEval (repl.js:129:27)
+//  ... 
+
+
+/*function push(array, ...items) { 
+  items.forEach(function(item) {
+    array.push(item);
+    console.log(item);
+  });
+}
+ 
+var a = [];
+push(a, "a1", "a2", "a3", "a4"); */
+
+/*var _ = {}; //只要是引用，保证不报错就行
+var curry = function(fun) {
+	var rest = [].slice.call(arguments, 0);
+	rest.shift(); //rest = [1, _, 3, _]
+	return function() {
+		var args = [].slice.call(arguments, 0); //args = [2, 4]
+		var finalArgs = rest.map(function(value, index) {
+			if (value === _) {
+				return args.shift();
+			}
+			return value;
+		}); //finalArgs = [1, 2, 3, 4]
+		return fun.apply(this, finalArgs);
+	}
+}
+var fun = function(a, b, c, d) {
+	debugger;
+	console.log("" + a + b + c + d);
+}
+var f1 = curry(fun, 1, _, 3, _);
+f1(2, 4); //=>1234*/
+/*var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+
+ctx.font="20px Georgia";
+ctx.fillText("Hello World!",10,150);
+
+ctx.font="30px Verdana";
+// 创建渐变
+var gradient=ctx.createLinearGradient(0,0,c.width,0);
+gradient.addColorStop("0","magenta");
+gradient.addColorStop("0.5","blue");
+gradient.addColorStop("1.0","red");
+// 用渐变填色
+ctx.fillStyle=gradient;
+ctx.fillText("w3school.com.cn",10,90);*/
+/*function ttt() {
+	if (!(this instanceof ttt)) {
+		console.log(arguments.callee);
+		return new ttt();
+	}
+	this.tastes="long";
+}
+var first = new ttt();
+var second = ttt();*/
+/*!function() {
+	function n() {
+		t.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+			t.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+	}
+
+	function e() {
+		i.clearRect(0, 0, t.width, t.height);
+		var n = [a].concat(m);
+		m.forEach(function(e) {
+				e.x += e.xa,
+					e.y += e.ya,
+					e.xa *= e.x > t.width || e.x < 0 ? -1 : 1,
+					e.ya *= e.y > t.height || e.y < 0 ? -1 : 1,
+					i.fillRect(e.x - .5, e.y - .5, 1, 1);
+				for (var o = 0; o < n.length; o++) {
+					var m = n[o];
+					if (e !== m && null !== m.x && null !== m.y) {
+						var d, u = e.x - m.x,
+							c = e.y - m.y,
+							r = u * u + c * c;
+						r < m.max && (m === a && r >= m.max / 2 && (e.x -= .03 * u,
+								e.y -= .03 * c),
+							d = (m.max - r) / m.max,
+							i.beginPath(),
+							i.lineWidth = d / 2,
+							i.strokeStyle = "rgba(0,0,0," + (d + .2) + ")",
+							i.moveTo(e.x, e.y),
+							i.lineTo(m.x, m.y),
+							i.stroke())
+					}
+				}
+				n.splice(n.indexOf(e), 1)
+			}),
+			o(e)
+	}
+	var t = document.getElementById("cas"),
+		i = t.getContext("2d");
+	n(),
+		window.onresize = n;
+	var o = function() {
+			return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(n) {
+				window.setTimeout(n, 1e3 / 60)
+			}
+		}(),
+		a = {
+			x: null,
+			y: null,
+			max: 2e4
+		};
+	window.onmousemove = function(n) {
+			n = n || window.event,
+				a.x = n.clientX,
+				a.y = n.clientY
+		},
+		window.onmouseout = function(n) {
+			a.x = null,
+				a.y = null
+		};
+	for (var m = [], d = 0; 150 > d; d++) {
+		var u = Math.random() * t.width,
+			c = Math.random() * t.height,
+			r = 2 * Math.random() - 1,
+			l = 2 * Math.random() - 1;
+		m.push({
+			x: u,
+			y: c,
+			xa: r,
+			ya: l,
+			max: 6e3
+		})
+	}
+	setTimeout(function() {
+		e()
+	}, 100)
+}();
+https://graph.qq.com/oauth/show?which=Login&display=pc&scope=get_user_info,get_info,add_t,add_pic_t,get_other_info,get_fanslist,get_idollist,add_idol,add_share&state=e8bbd97633b58e30532787099ee7c597&redirect_uri=http://www.zhihu.com/oauth/callback/qqconn&response_type=code&client_id=100490701
+*/
+</script>
+
+</html>

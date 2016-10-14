@@ -1,0 +1,295 @@
+<html>
+<head>
+	<title>JavaScript计算器</title>
+</head>
+<script language="JavaScript">
+<!--
+var curState;	//当前处于的状态
+var curOper;	//当前处于的操作
+var num1;		//双边运算符的前一操作数
+var preOper;	//布尔值,表示当前是否单击过双边运算符
+
+/*******************************************************
+*function setStartState()
+*功能: 初始化程序中各变量
+*参数: 无
+*******************************************************/
+function setStartState()
+{
+	curState = "beStart";
+	num1 = 0;
+	curOper = "start";
+	preOper = false;
+}
+
+/*******************************************************
+*function addNum(i)
+*功能:将数字添加到文本框中
+*参数:i 要添加的值
+*******************************************************/
+function addNum(i)
+{
+	//表示在此之前刚单击过双边运算符,刚开始第2个数的输入
+	if(preOper)	
+	{
+	form_cal.text_total.value = i;	//text_total为结果文本框
+	preOper = false;
+	}
+	else	//表示正在进行或者开始一个数的输入
+	{
+	  if(form_cal.text_total.value == "0")
+	  {
+	  form_cal.text_total.value = i;
+	  curState="beInteger";
+	  }
+	  else
+	  form_cal.text_total.value += i;	
+	  //输入多位数,这里因为text_total.value返回的是字符串,
+	  //所以 += 是字符串连接运算符,而不是"加"运算
+	  //将当前数字与前面数字连接起来得到多位数
+	}
+}
+
+/*******************************************************
+*function addPoint()
+*功能: 添加小数点
+*参数: 无
+*******************************************************/
+function addPoint()
+{
+  if(curState=="beStart"||curState=="beInteger")
+  {
+  form_cal.text_total.value += ".";
+  curState = "beFloat";		//将当前数值状态设置为float
+  }
+}
+
+/*******************************************************
+*function clearText()
+*功能: 重置文本框内容为0,并初始化状态变量
+*参数: 无
+*******************************************************/
+function clearText()
+{
+form_cal.text_total.value = "0";
+curState = "beStart";
+curOper = "start"
+}
+
+/*******************************************************
+*function count()
+*功能: 执行加减乘除等双边计算
+*参数: 无
+*******************************************************/
+function count()
+{
+	if(curOper!="start")
+	{
+		switch(curOper)
+		{
+		case "+":
+		num1 = parseFloat(num1) + parseFloat(form_cal.text_total.value);
+		break;
+		case "-":
+		num1 = parseFloat(num1) - parseFloat(form_cal.text_total.value);
+		break;
+		case "*":
+		num1 = parseFloat(num1) * parseFloat(form_cal.text_total.value);
+		break;
+		case "/":
+		num1 = parseFloat(num1) / parseFloat(form_cal.text_total.value);
+		break;
+		}
+	form_cal.text_total.value = num1;
+	preOper = true;	
+	}
+	curOper="start";
+}
+
+/*******************************************************
+*function setOper(oper)
+*功能: 设置当前操作状态,并执行相应设置与计算
+*参数: oper 要设置的操作状态值
+*******************************************************/
+function setOper(oper)
+{
+preOper = true;	//表示当前已单击了双边运算符
+	if(curOper=="start")
+	{
+	//取输入的第一个操作数存储于num1
+	num1 = parseFloat(form_cal.text_total.value);	
+	curOper = oper;
+	}
+	else	//表示之前已单击过双边运算符,但并没有计算
+	{
+	count();	//先计算前次的运算,再设置本次运算作为当前状态
+	curOper = oper;
+	}
+}
+
+/*******************************************************
+*function useFunc(func)
+*功能: 执行各种单边运算
+*参数: func 要执行的单边运算符
+*******************************************************/
+function useFunc(func)
+{
+	switch(func)
+	{
+	case "sin":
+	form_cal.text_total.value = Math.sin(form_cal.text_total.value);
+	preOper = true;
+	break;
+	case "cos":
+	form_cal.text_total.value = Math.cos(form_cal.text_total.value);
+	preOper = true;
+	break;
+	case "asin":
+	form_cal.text_total.value = Math.asin(form_cal.text_total.value);
+	preOper=true;
+	break;
+	case "acos":
+	form_cal.text_total.value = Math.acos(form_cal.text_total.value);
+	preOper = true;
+	break;
+	case "tan":
+	form_cal.text_total.value = Math.tan(form_cal.text_total.value);
+	preOper = true;
+	break;
+	case "atan":
+	form_cal.text_total.value = Math.atan(form_cal.text_total.value);
+	preOper = true;
+	break;
+	case "log":
+	form_cal.text_total.value = Math.log(form_cal.text_total.value);
+	preOper = true;
+	break;
+	case "exp":
+	form_cal.text_total.value = Math.exp(form_cal.text_total.value);
+	preOper = true;
+	break;
+	case "sqrt":
+	form_cal.text_total.value = Math.sqrt(form_cal.text_total.value);
+	preOper = true;
+	break;
+	case "1/x":
+	form_cal.text_total.value = 1/form_cal.text_total.value;
+	preOper = true;
+	break;
+	}
+}
+//-->
+</script>
+<body onload="setStartState()" align="center">
+<form name="form_cal">
+<table border="2" align="center">
+<tr>
+	<td colspan="12">
+	<font size=5>JavaScript计算器</font>
+	</td>
+</tr>
+<tr align="center">
+	<td colspan="6">
+	<input type="Text" name="text_total" size="40" value="0">
+	</td>
+</tr>
+<tr align="center">
+	<td>
+	<input type="Button" value="sin " onclick="useFunc('sin')">
+	</td>
+	<td>
+	<input type="Button" value="cos " onclick="useFunc('cos')">
+	</td>
+	<td>
+	<input type="Button" value=" 1  " onclick="addNum('1')">
+	</td>
+	<td>
+	<input type="Button" value=" 2  " onclick="addNum('2')">
+	</td>
+	<td>
+	<input type="Button" value=" 3  " onclick="addNum('3')">
+	</td>
+	<td><input type="Button" value=" +  " onclick="setOper('+')">
+	</td>
+</tr>
+<tr align="center">
+	<td>
+	<input type="Button" value="asin" onclick="useFunc('asin')">
+	</td>
+	<td><input type="Button" value="acos" onclick="useFunc('acos')">
+	</td>
+	<td><input type="Button" value=" 4  " onclick="addNum('4')">
+	</td>
+	<td><input type="Button" value=" 5  " onclick="addNum('5')">
+	</td>
+	<td><input type="Button" value=" 6  " onclick="addNum('6')">
+	</td>
+	<td><input type="Button" value=" -  " onclick="setOper('-')">
+	</td>
+</tr>
+<tr align="center">
+	<td>
+	<input type="Button" value="tan " onclick="useFunc('tan')">
+	</td>
+	<td>
+	<input type="Button" value="atan" onclick="useFunc('atan')">
+	</td>
+	<td>
+	<input type="Button" value=" 7  " onclick="addNum('7')">
+	</td>
+	<td>
+	<input type="Button" value=" 8  " onclick="addNum('8')">
+	</td>
+	<td>
+	<input type="Button" value=" 9  " onclick="addNum('9')">
+	</td>
+	<td>
+	<input type="Button" value=" *  " onclick="setOper('*')">
+	</td>
+</tr>
+<tr align="center">
+	<td>
+	<input type="Button" value="log " onclick="useFunc('log')">
+	</td>
+	<td>
+	<input type="Button" value="exp " onclick="useFunc('exp')">
+	</td>
+	<td>
+	<input type="Button" value=" 0  " onclick="addNum('0')">
+	</td>
+	<td>
+	<input type="Button" value=" .  " onclick="addPoint()">
+	</td>
+	<td>
+	<input type="Button" value=" =  " onclick="count()">
+	</td>
+	<td>
+	<input type="Button" value=" /  " onclick="setOper('/')">
+	</td>
+</tr>
+<tr align="center">
+	<td>
+	<input type="Button" value="sqrt" onclick="useFunc('sqrt')">
+	</td>
+	<td>
+	<input type="Button" value="1/x " onclick="useFunc('1/x')">
+	</td>
+	<td>
+	<input type="Button" value=" pi " 
+	onclick="JavaScript:form_cal.text_total.value=Math.PI">
+	</td>
+	<td>
+	<input type="Button" value=" E  " 
+	onclick="JavaScript:form_cal.text_total.value=Math.E">
+	</td>
+	<td colspan=2>
+	<input type="Button" value="  清 除  " onclick="clearText()">
+	</td>
+</tr>
+</table>
+</form>
+</body>
+</html>
+
+
+

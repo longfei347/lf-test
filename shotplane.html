@@ -1,0 +1,196 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>打灰机</title>
+    <style type="text/css">
+        *{padding:0;margin:0;}
+        html,body{height:100%;}
+        #div1{width:400px;height:100%;background:url(images/background_2.png);margin:0 auto;position:relative;overflow: hidden;}
+        .e1{width:34px;height:24px;background:url(images/enemy1_fly_1.png);position:absolute;}
+        .e2{width:46px;height:60px;background:url(images/enemy3_fly_1.png);position:absolute;}
+        #air{width:66px;height:82px;background:url(images/hero_fly_1.png);position:absolute;}
+        .bullet{width:6px;height:14px;background:url(images/bullet1.png);position:absolute;}
+        #score{position:absolute;left:0;top:0;background:rgba(255,255,255,0.5);line-height:33px;padding:0 10px;height:33px;color:red;border-radius:10%;}
+        #tips{line-height: 33px;height:33px;text-align:center;color:red;background: rgba(255,255,255,0.5);padding: 0 10px;position:absolute;top:0;right:0;display:none;}
+    </style>
+    <script type="text/javascript">
+        window.onload = function(){
+            Game.init('div1');
+        }
+        var Game = {
+            b : true,
+            gk : [
+                {
+                    airSpeed : 12,
+                    enemySpeed : 1
+                }
+            ],
+            init : function(id){
+                this.oParent = document.getElementById(id);
+                this.oTips = document.getElementById('tips');
+                this.createAir(0);
+            },
+            createAir : function(iNow){  //创建飞机
+                var oAir = document.createElement('div');
+                oAir.id = "air";
+                this.oParent.appendChild(oAir);
+                this.oAir = oAir;
+                oAir.style.left = (this.oParent.offsetWidth - oAir.offsetWidth)/2 + "px";
+                oAir.style.top = this.oParent.offsetHeight - oAir.offsetHeight + "px";
+                this.runAir(iNow);
+                this.createEnemy(iNow);
+                this.createScore();
+            },
+            runAir : function(iNow){  //飞机运动
+                var This = this;
+                var airSpeed = this.gk[iNow].airSpeed;
+                var oW = this.oAir.offsetWidth/2;
+                document.onkeydown = function(ev){
+                    var ev = ev || window.event;
+                    if(ev.keyCode == 37){ //←
+                        if(This.oAir.offsetLeft >= -oW/2){
+                            This.oAir.style.left = This.oAir.offsetLeft - airSpeed + "px";
+                        }
+                    }else if(ev.keyCode == 38){ // ↑
+                        if(This.oAir.offsetTop >= airSpeed){
+                            This.oAir.style.top = This.oAir.offsetTop - airSpeed + "px";
+                        }
+                    }else if(ev.keyCode == 39){ // →
+                        if(This.oAir.offsetLeft  <= This.oParent.offsetWidth - This.oAir.offsetWidth + oW/2){
+                            This.oAir.style.left = This.oAir.offsetLeft + airSpeed + "px";
+                        }
+                    }else if(ev.keyCode == 40){ // ↓
+                        if(This.oAir.offsetTop <= This.oParent.offsetHeight - This.oAir.offsetHeight){
+                            This.oAir.style.top = This.oAir.offsetTop + airSpeed + "px";
+                        }
+                    }else if(ev.keyCode == 32){
+                        This.createBullet(iNow);
+                    }
+
+
+                }
+            },
+            createEnemy : function(iNow){   //创建敌人
+                var aE = [];
+                var This = this;
+
+                //创建敌人1
+                setInterval(function(){
+                    var speed = This.gk[iNow].enemySpeed;
+                    This.runEnemy(aE , 'e1' , speed);
+                },2000);
+                //创建敌人2
+                setInterval(function(){
+                    var speed = This.gk[iNow].enemySpeed;
+                    This.runEnemy(aE , 'e2' , speed);
+                },3000);
+                this.aE = aE;
+            },
+            runEnemy : function(arr , type , speed){  //各类型敌人开跑
+                var This = this;
+                var oE =document.createElement('div');
+                oE.className = type;
+                this.oParent.appendChild(oE);
+                oE.style.top = 0 + "px";
+                oE.style.left = Math.random()*(this.oParent.offsetWidth - oE.offsetWidth) + "px";
+                arr.push(oE);
+                oE.timer = setInterval(function(){
+                    oE.style.top = oE.offsetTop + speed + "px";
+                    This.checkGameOver();
+                    if(oE.offsetTop >= This.oParent.offsetHeight){
+                        clearInterval(oE.timer);
+                        This.oParent.removeChild(oE);
+                    }
+                },50);
+            },
+            createBullet : function(iNow){
+                var This = this;
+                var oBullet = document.createElement('div');
+                oBullet.className = "bullet";
+                this.oParent.appendChild(oBullet);
+                oBullet.style.left = this.oAir.offsetLeft + this.oAir.offsetWidth/2 + "px";
+                oBullet.style.top = this.oAir.offsetTop - oBullet.offsetHeight + "px";
+                oBullet.timer = setInterval(function(){
+                    if(oBullet.offsetTop <= 0 - oBullet.offsetHeight ){
+                        clearInterval(oBullet.timer);
+                        This.oParent.removeChild(oBullet);
+                    }else{
+                        oBullet.style.top = oBullet.offsetTop - 5 + "px";
+                        for(var i=0;i<This.aE.length;i++){
+                            if(This.pz(oBullet , This.aE[i])){
+                                if(This.aE[i].className == "e1"){
+                                    This.oScore.innerHTML = parseInt(This.oScore.innerHTML) + 1; 
+                                }else if(This.aE[i].className == "e2"){
+                                    This.oScore.innerHTML = parseInt(This.oScore.innerHTML) + 2; 
+                                }
+                                if(parseInt(This.oScore.innerHTML)%20 == 0){
+                                    This.b = true;
+                                }
+                                if(This.b && parseInt(This.oScore.innerHTML) >= 20){
+                                    This.oTips.style.display = "block";
+                                    This.oTips.innerHTML = "温馨提示：要开始加速了！";
+                                    setTimeout(function(){
+                                        This.oTips.style.display = "none";
+                                    },3000);
+                                    This.gk[iNow].enemySpeed ++;
+                                    This.b = false;
+                                }
+                                clearInterval(oBullet.timer);
+                                if(oBullet.parentNode){
+                                    oBullet.parentNode.removeChild(oBullet);
+                                }
+                                clearInterval(This.aE[i].timer);
+                                This.aE[i].style.width = "38px;"
+                                This.aE[i].style.height = "34px;"
+                                This.aE[i].style.background = "url(images/enemy1_blowup_3.png)";
+                                var obj = This.aE[i];
+                                if(obj.parentNode){
+                                    obj.parentNode.removeChild(obj);
+                                }
+                            }
+                        }
+                    }
+
+                },30);
+            },
+            checkGameOver : function(){
+                 for(var i=0;i<this.aE.length;i++){
+                     if(this.pz(this.oAir , this.aE[i])){
+                         alert("游戏结束！你的得分是：" + this.oScore.innerHTML);
+                         window.location.reload();
+                     }
+                 }
+            },
+            createScore : function(){
+                    var oScore = document.createElement('div');
+                    oScore.id ="score";
+                    oScore.innerHTML = "积分：<span>0</span>";
+                    this.oParent.appendChild(oScore);
+                this.oScore = oScore.getElementsByTagName('span')[0];
+            },
+            pz : function(obj1,obj2){
+                var l1 = obj1.offsetLeft;
+                var r1 = obj1.offsetLeft + obj1.offsetWidth;
+                var t1 = obj1.offsetTop;
+                var b1 = obj1.offsetTop + obj1.offsetHeight;
+                var l2 = obj2.offsetLeft;
+                var r2 = obj2.offsetLeft + obj2.offsetWidth;
+                var t2 = obj2.offsetTop;
+                var b2 = obj2.offsetTop + obj2.offsetHeight;
+
+                if(r1 < l2 || b1 <t2 || l1 > r2 || t1 > b2){
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="div1">
+        <div id="tips"></div>
+</div>
+</body>
+</html>

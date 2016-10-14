@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<title>widget</title>
+<link rel="stylesheet" href="styles.css">
+<script>
+
+var targetOrigin = "http://portal.example.com:9999";
+
+// TODO whitelist array
+
+function messageHandler(e) {
+    if (e.origin === "http://localhost") {
+        document.getElementById("status").textContent = e.data;
+    } else {
+        // ignore messages from other origins
+    }
+}
+
+function loadDemo() {
+    document.getElementById("actionButton").addEventListener("click",
+        function() {
+            var messageText = document.getElementById("messageText").value;
+            //window.top.postMessage(messageText, "http://localhost/test/communication/MIME.html");//targetOrigin
+           //window.postMessage(messageText, "http://localhost/test/communication/MIME.html");//targetOrigin
+		   //postMessage(messageText, "http://localhost/test/communication/MIME.html");//targetOrigin
+            //window.top.postMessage(messageText, "http://localhost/test/communication/MIME.html");//targetOrigin
+			//上面的无效，下面的有效 window[0] == window.frames[0]
+			//window[0].postMessage(messageText, "http://localhost/test/communication/MIME.html");//targetOrigin
+			//window.frames[0].postMessage(messageText, "http://localhost/test/communication/MIME.html");//targetOrigin
+			//document.getElementById("dfdf").contentWindow.postMessage(messageText, "http://localhost/test/communication/MIME.html");//targetOrigin
+        }, true);
+		
+		//document.getElementById("dfdf").contentWindow.fun();
+}
+window.addEventListener("load", loadDemo, true);
+window.addEventListener("message", messageHandler, true);
+
+</script>
+<h1>Widget iframe</h1>
+<p><b>Origin</b>: http://chat.example.net:9999</p>
+<p>Status set to: <strong id="status"></strong> by containing portal.<p>
+
+<div>
+    <input type="text" id="messageText" value="Widget notification.">
+    <button id="actionButton">Send Notification</button>
+</div>
+<iframe src="MIME.html" id="dfdf"></iframe>
+<p>
+This will ask the portal to notify the user. The portal does this by flashing the title. If the message comes from an origin other than http://chat.example.net:9999, the portal page will ignore it.
+</p>
+
+
+

@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	#main {
+		width: 400px;
+		height: 400px;
+		border: 2px solid black;
+		margin: 50px auto;
+		position: relative;
+		overflow: hidden;
+	}
+	
+	#con {
+		width: 100%;
+		height: 400px;
+		position: relative;
+		top: -100px;
+	}
+	
+	.row {
+		width: 100%;
+		height: 100px;
+	}
+	
+	.cell {
+		width: 100px;
+		height: 100px;
+		float: left;
+	}
+	
+	.black {
+		background: black;
+	}
+	
+	#score {
+		text-align: center;
+	}
+	
+	#btn {
+		position: absolute;
+		width: 80px;
+		height: 30px;
+		top: 70px;
+		left: 57%;
+	}
+	</style>
+</head>
+
+<body>
+	<h1 id="score">0</h1>
+	<input id="btn" type="button" value="start" />
+	<div id="main">
+		<div id="con"></div>
+	</div>
+	<script>
+	var timer = null;
+	var state = 0;
+	var speed = 4;
+
+	function cdiv(className) {
+		var div = document.createElement('div');
+		div.className = className;
+		return div;
+	}
+
+	function createSn() {
+		var arr = ['cell', 'cell', 'cell', 'cell'];
+		var i = Math.floor(Math.random() * 4);
+		arr[i] = 'cell black';
+		return arr;
+	}
+
+	function crow() {
+		var con = $('con');
+		var row = cdiv('row');
+		var classes = createSn();
+		for (var i = 0; i < 4; i++) {
+			row.appendChild(cdiv(classes[i]));
+			con.firstChild == null ? con.appendChild(row) : con.insertBefore(row, con.firstChild);
+		}
+	}
+
+	function drow() {
+		var con = $('con');
+		if (con.childNodes.length == 6) {
+			con.removeChild(con.lastChild);
+		}
+	}
+
+	function score() {
+		var newscore = parseInt($('score').innerHTML) + 1;
+		$('score').innerHTML = newscore;
+		if (newscore % 10 == 0) {
+			acce();
+		}
+	}
+
+	function acce() {
+		speed += 2;
+		if (speed == 20) {
+			alert('你的电脑太卡了');
+		}
+	}
+
+
+	$('btn').onclick = function() {
+		timer = window.setInterval(function() {
+			var con = $('con');
+			var top = parseInt(window.getComputedStyle(con, null)['top']);
+
+			if (speed + top > 0) { //一步会走过头,直接top=0
+				top = 0;
+			} else {
+				top += speed; //调节每次下降的像素
+			}
+
+			con.style.top = top + 'px';
+			if (top == 0) {
+				crow();
+				con.style.top = '-100px';
+				drow();
+			} else if (top == (-100 + speed)) {
+				var rows = con.childNodes;
+				if ((rows.length == 5) && (rows[rows.length - 1].pass !== 1)) {
+					clearInterval(timer);
+					state = 1;
+					alert('结束');
+
+				}
+			}
+
+		}, 30);
+	}
+
+	function init() {
+		for (var i = 0; i < 4; i++) {
+			crow();
+		}
+
+		$('main').onclick = function(ev) {
+			if (state == 1) {
+				alert('游戏结束啦');
+
+				return;
+			}
+			if (ev.target.className.indexOf('black') == -1) {
+				clearInterval(timer);
+				state = 1;
+				alert('结束')
+			} else {
+				ev.target.className = 'cell';
+				ev.target.parentNode.pass = 1;
+				score();
+			}
+
+		}
+	}
+
+
+	function $(id) {
+		return document.getElementById(id);
+	}
+	init();
+	</script>
+</body>
+
+</html>

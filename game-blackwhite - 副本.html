@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>黑白棋V1.0</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+	#box{
+		margin: 20px auto;
+		width: 900px;
+		height: 600px;
+		border: 1px solid #000;
+
+	}
+	#notice,#tips {
+		height: 30px;
+		margin-top: 20px;
+		text-align: center;
+	}
+	.black {
+		width: 40px;
+		height: 40px;
+		border-radius: 20px;
+		background-color: #000;
+	}
+	
+	.white {
+		border: 1px solid black;
+		width: 40px;
+		height: 40px;
+		border-radius: 20px;
+		background-color: #FFF;
+	}
+	</style>
+</head>
+
+<body>
+	<div id="box">
+		<p class="note">规则：执黑先行，处于两个异色棋子之间的棋子，颜色会转换,棋盘上填满棋子时结束，拥有较多棋子的人获胜. <br>
+ 		说明：每一步必须转换至少一个棋子，若不能，该回合将被自动放弃，算分时，棋盘的空位属于胜方 </p>
+		<div id="notice">
+			my-black:<span id="bp"></span>
+			&nbsp;&nbsp;pc-white:<span id="wp"></span>
+		</div>
+		<table id="checkboard" style="margin:auto; margin-top: 20px;" border="1">
+		</table>
+		<div id="tips">
+			black first
+		</div>
+	</div>
+</body>
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script>
+/* Othello.js
+ * 目标：8×8黑白棋，带AI  
+ */
+var totalPoints = 0; //当前总分
+var maxPoints = 0; //最大数目
+var blackPoints = 0; //黑方得分
+var whitePoints = 0; //白方得分
+var player = 'black'; //当前执子者
+var chesses = []; //2维数组，棋盘抽象
+var blackChess = document.createElement('div');
+blackChess.setAttribute('class', 'black'); //黑子
+var whiteChess = document.createElement('div');
+whiteChess.setAttribute('class', 'white'); //白子
+$(document).ready(function() {
+	createBoard();
+});
+//创建NxN的棋盘
+function createBoard(n) {
+	n = n || 8;
+	maxPoints = n * n;
+	var board = document.getElementById('checkboard');
+	var her = [];
+	for (var i = 0; i < n; i++) { //绘制棋盘
+		var row = document.createElement('tr'); //行
+		row.setAttribute('id', 'r' + i);
+		row.setAttribute('height', '40px');
+		var col = [];
+		for (var j = 0; j < n; j++) {
+			var cell = document.createElement('td'); //列
+			col[j] = ''; //棋子颜色
+			cell.setAttribute('id', 'c' + j);
+			cell.setAttribute('width', '40px');
+			cell.setAttribute('onmousedown', 'done(this)');
+			row.appendChild(cell);
+		}
+		board.appendChild(row);
+		her[i] = col;
+	}
+	chesses = her;
+	var p1 = n / 2 - 1;
+	var p2 = n / 2;
+	putChess(p1, p1, 'white');
+	putChess(p2, p2, 'white');
+	putChess(p1, p2, 'black');
+	putChess(p2, p1, 'black');
+}
+//落子
+function done(obj) {
+	if (player == 'over') {
+		alert('游戏结束了');
+		return;
+	}
+	if (player == 'white') {
+		alert('不是您的回合，请稍候');
+		return;
+	}
+	var target = obj;
+	var board = document.getElementById('checkboard');
+	var col = parseInt(obj.getAttribute('id').substring(1));
+	var row = parseInt(obj.parentNode.getAttribute('id').substring(1));
+	//该点是否可以落子//四周没有邻居
+	if (target.childNodes.length > 0 || !checkNeb(row, col)) { //已经有了
+		target.style.backgroundColor = 'red';
+		$(target).one('mouseup', function() {
+			$(target).css('background-color', 'white');
+		})
+		return false;
+	}
+	var eftAry = effects(row, col, player); //受影响的棋子数
+	if (eftAry.length == 0) {//没有能翻转任何棋子
+
+		target.style.backgroundColor = 'red';
+		$(target).one('mouseup', function() {
+			$(target).css('background-color', 'white');
+		})
+		return false;
+	}
+	putChess(row, col, player);
+	shift(eftAry);
+	judge();
+}
+//放棋子
+function putChess(x, y, color) {
+	var chess = color == 'white' ? whiteChess.cloneNode() : blackChess.cloneNode();
+	var board = document.getElementById('checkboard');
+	board.rows[x].cells[y].appendChild(chess);
+	chesses[x][y] = color;
+	blackPoints = document.querySelectorAll(".black").length;
+	whitePoints = document.querySelectorAll(".white").length;
+	document.getElementById('bp').innerHTML = blackPoints;
+	document.getElementById('wp').innerHTML = whitePoints;
+}
+//裁判
+function judge() {
+	//是否结束
+	if (totalPoints >= maxPoints) {
+		tip('游戏结束');
+		checkPoints();
+		player = 'over'
+		return;
+	}
+	//下一步谁来下
+
+	if (player == 'black') {
+		player = 'white';
+	} else if (player == 'white') {
+		player = 'black'
+	}
+	tip('现在轮到：' + player);
+	//可以走吗？
+	var forcast = forseer();
+	if (forcast.length == 0) { //轮空
+		var playerNext = player == 'white' ? 'black' : player == 'black' ? 'white' : '';
+		confirm('当前玩家 ' + player + ' 没有可下的地方,该回合轮空，现在轮到 ' + playerNext + ' 继续');
+		player = playerNext;
+		tip('现在轮到：' + player);
+		forcast = forseer();
+		if (forcast.length == 0) {
+			confirm('双方均没有可以下的地方，游戏结束');
+			checkPoints();
+			return;
+		}
+	}
+	//继续下一步
+	if (player == 'white') {
+		var move = AIModule();
+
+		function step() {
+			putChess(move.row, move.col, 'white');
+			var eArray = effects(move.row, move.col, player, true);
+			shift(eArray);
+			judge();
+			clearTimeout(st)
+		}
+		var st = setTimeout(step, 1000);
+	}
+	//算分
+	function checkPoints() {
+		if (blackPoints > whitePoints) {
+			var t = setTimeout(function() {
+				tip('YOU WIN!');
+				clearTimeout(t);
+			}, 1000);
+
+		} else {
+			var t = setTimeout(function() {
+				tip('YOU ARE DEFEATED!');
+				clearTimeout(t);
+			}, 1000)
+
+		}
+	}
+}
+
+function tip(s) {
+	var tips = document.getElementById('tips')
+	tips.innerHTML = s;
+}
+//落子时，四（八）个方向上至少有一个邻居
+function checkNeb(row, col) {
+
+	var _w = chesses[row][col - 1] ? chesses[row][col - 1] : '' ;
+	var _e = chesses[row][col + 1] ? chesses[row][col + 1] : '' ;
+	var _n = chesses[row + 1] ? chesses[row + 1][col] ? chesses[row + 1][col] : '' : '';
+	var _s = chesses[row - 1] ? chesses[row - 1][col] ? chesses[row - 1][col] : '' : '';
+	if (_w != '' || _e != '' || _n != '' || _s != '') return true;
+	return false
+}
+//计算该点落子之后收到影响到棋子，给出其位置
+function effects(row, col, player, flag) {
+	var total = [];
+	var board = document.getElementById('checkboard');
+	//if (chesses[row] == undefined) return;
+	if (!flag) {
+		chesses[row][col] = player; //假装放上去    
+	}
+	var num = board.rows.length;
+	var horizon = chesses[row]; //水平方向
+	var h_num = checkArray(horizon, player);
+	if (h_num.length > 0) {
+		for (var i = 0; i < h_num.length; i++) {
+			total.push({
+				x: row, //行
+				y: h_num[i] //列
+			})
+		}
+	}
+	var vertical = [];
+	for (var i = 0; i < num; i++) {
+		vertical.push(chesses[i][col]); //竖直方向
+	}
+	var v_num = checkArray(vertical, player);
+	if (v_num.length > 0) {
+		for (var i = 0; i < v_num.length; i++) {
+			total.push({
+				x: v_num[i], //行
+				y: col //列
+			})
+		}
+	}
+	var lt = []; //左上到右下
+	var lt_ast = []; //辅助数组
+	var lb = []; //左下到右上
+	var lb_ast = [];
+	var delta1 = row - col; //行列差值
+	var delta2 = col + row; //行列和
+	for (var i = 0; i < num; i++) { //对整个数组遍历
+		for (var j = 0; j < num; j++) {
+			if (i - j == delta1) {
+				lt.push(chesses[i][j]); //拿到对角线的元素数组
+				lt_ast.push({
+					x: i,
+					y: j
+				});
+			}
+			if (i + j == delta2) {
+				lb.push(chesses[i][j]);
+				lb_ast.push({
+					x: i,
+					y: j
+				});
+			}
+		}
+	}
+	var _lt = checkArray(lt, player);
+	var _lb = checkArray(lb, player);
+	for (var i = 0; i < _lt.length; i++) {
+		total.push(lt_ast[_lt[i]]);
+	}
+	for (var j = 0; j < _lb.length; j++) {
+		total.push(lb_ast[_lb[j]]);
+	}
+	if (!flag) {
+		chesses[row][col] = ''; //记得拿掉    
+	}
+	return total;
+}
+//对于数组做检查，哪些位可以被翻转，返回一个数组，指出其在原始数组中的位置
+function checkArray(ary, color) {
+	var result = [];
+	var startIndex = 0;
+	var maxIndex = 0;
+	for (var i = 0; i < ary.length; i++) { //正序找最小
+		if (ary[i] == color) {
+			startIndex = i;
+			break;
+		}
+	}
+	for (var i = ary.length - 1; i >= 0; i--) { //逆序找最大
+		if (ary[i] == color) {
+			maxIndex = i;
+			break;
+		}
+	}
+	if (startIndex == maxIndex) return result; //没有值
+	for (var i = startIndex; i < maxIndex; i++) {
+		if (ary[i] != color && ary[i] != undefined && ary[i] != '') result.push(i);
+	}
+	return result;
+}
+//棋子翻转
+function shift(ary) {
+	var board = document.getElementById('checkboard');
+	for (var i = 0; i < ary.length; i++) {
+		var chess = board.childNodes[ary[i].x + 1].childNodes[ary[i].y].childNodes[0];
+		if (chess.getAttribute('class') == 'black') {
+			chesses[ary[i].x][ary[i].y] = 'white';
+			chess.setAttribute('class', 'white');
+			blackPoints--;
+			whitePoints++;
+		} else if (chess.getAttribute('class') == 'white') {
+			chesses[ary[i].x][ary[i].y] = 'black';
+			chess.setAttribute('class', 'black');
+			blackPoints--;
+			whitePoints++;
+		}
+	}
+	document.getElementById('bp').innerHTML = blackPoints;
+	document.getElementById('wp').innerHTML = whitePoints;
+}
+
+//推算影响（能不能下，下了收益多少，下了之后的局势）->(able:bool,effects:int,status:array)
+function test(row, col, player) {
+	var able,
+		effect,
+		status;
+	able = true; //假设可以下
+	if (chesses[row][col] == 'black' || chesses[row][col] == 'white') {
+		able = false;
+	} else if (!checkNeb(row, col)) {
+		able = false;
+	} else {
+		effect = effects(row, col, player)
+		if (effect.length == 0) {
+			able = false;
+		}
+	}
+	if (able) {
+		status = $.extend(true, {},chesses);
+		if (status[row] != undefined) {
+			status[row][col] = player; //下一步的局势
+		}
+		if (effect.length > 0) {
+			for (var i = 0; i < effect.length; i++) {
+				status[effect[i].x][effect[i].y] = player;
+			}
+		}
+	}
+	return {
+		able: able,
+		effect: effect,
+		status: status
+	};
+}
+//AI模组,level决定等级->(row:int,col:int)
+function AIModule(level) {
+	//s1.推测能下在哪些位置
+	//s2.计算收益
+	//s3.局势推演->s1
+	if (!level) level = 0;
+	var strategy = [];
+	var moveX,
+		moveY;
+	if (level == 0) {
+		var foo = [];
+		for (var i = 0; i < chesses.length; i++) {
+			for (var j = 0; j < chesses.length; j++) {
+				var p = test(i, j, player); //所有解
+				if (p.able) {
+					foo.push({
+						eft: p, //该点收益与未来局势
+						row: i, //点的位置
+						col: j
+					});
+				}
+			}
+		}
+		var profit = 0; //收益
+		for (var i = 0; i < foo.length; i++) //找到最优解
+		{
+			if (foo[i].eft.effect.length >= profit) {
+				moveX = foo[i].row;
+				moveY = foo[i].col;
+			}
+		}
+		return {
+			row: moveX,
+			col: moveY
+		}
+	}
+}
+
+function forseer() {
+	//预测算法
+	var forcast = [];
+	for (var i = 0; i < chesses.length; i++) {
+		for (var j = 0; j < chesses.length; j++) {
+			var row = i;
+			var col = j;
+			var t = test(row, col, player);
+			if (t.able) {
+				forcast.push({
+					row: row,
+					col: col,
+					effect: t.effect
+				});
+			}
+		}
+	}
+	return forcast;
+}
+
+</script>
+
+</html>

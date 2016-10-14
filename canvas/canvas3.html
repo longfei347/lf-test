@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="author" content="lut" />
+	<meta name="keywords" content="canvas" />
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>canvas</title>
+	<style type="text/css">
+	* {
+		padding: 0;
+		margin: 0
+	}
+	
+	body {
+		text-align: center;
+		overflow-x: hidden;
+	}
+	
+	img {
+		border: 1px solid #111;
+	}
+	
+	#canvas {
+		border: 1px solid #444;
+	}
+	
+	.tool {
+		width: 960px;
+		margin: 20px auto;
+	}
+	
+	.tool>div {
+		margin-left: 20px;
+		float: left;
+	}
+	
+	.tool span {
+		display: inline-block;
+		width: 40px;
+		height: 40px;
+		border: 1px solid #222;
+		vertical-align: middle;
+		cursor: pointer;
+		position: relative;
+	}
+	
+	.s1:before {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		margin: auto;
+		display: inline-block;
+		width: 10px;
+		height: 10px;
+		background: #000;
+		content: "";
+		border-radius: 50%;
+	}
+	
+	.s2:before {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		margin: auto;
+		display: inline-block;
+		width: 15px;
+		height: 15px;
+		background: #000;
+		content: "";
+		border-radius: 50%;
+	}
+	
+	.s3:before {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		margin: auto;
+		display: inline-block;
+		width: 20px;
+		height: 20px;
+		background: #000;
+		content: "";
+		border-radius: 50%;
+	}
+	
+	#color {
+		margin-left: 20px;
+	}
+	
+	.color1 {
+		background: #000;
+	}
+	
+	.color2 {
+		background: #2d3;
+	}
+	
+	.color3 {
+		background: #23d;
+	}
+	
+	.color4 {
+		background: #E75B12;
+	}
+	
+	.color5 {
+		background: #d23;
+	}
+	
+	#reset,
+	#save {
+		border: 1px solid #aaa;
+		padding: 11px 20px;
+		cursor: pointer;
+		background-color: #eee;
+	}
+	
+	.clear {
+		clear: both;
+	}
+	
+	span.current {
+		border: 1px solid #FFB20D;
+		border-radius: 10px;
+	}
+	</style>
+</head>
+
+<body>
+	<!--[if lte IE 9]>
+	<div id="warning_info" class="text-warning fade in mb_0">
+		<button data-dismiss="alert" class="close" type="button">×</button>
+		<strong>您正在使用低版本浏览器，</strong> 无法完整的显示页面效果。 建议您升级到
+		<a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" target="_blank">                Internet Explorer 9+</a> 或使用谷歌浏览器：
+		<a href="http://www.google.cn/intl/zh-CN/chrome/" target="_blank">Chrome</a>
+	</div>
+	<script type="text/javascript">
+	var oDiv = document.getElementById("warning_info");
+	var oBtn = oDiv.getElementsByTagName("button")[0];
+	oBtn.onclick = function() {
+		document.body.removeChild(oDiv);
+	}
+	</script>
+	<![endif]-->
+	<h1>canvas草绘</h1>
+	<div class="tool" unselectable="on" onselectstart="return false;" style="-moz-user-select:none;">
+		<div id="size">粗细 <span class="s1" val="1"></span>
+			<span class="s2" val="5"></span> 
+			<span class="s3" val="10"></span> 
+		</div>
+		<div id="color">颜色 <span class="color1" val="#000"></span> <span class="color2" val="#2d3"></span> <span class="color3" val="#23d"></span> <span class="color4" val="#E75B12"></span> <span class="color5" val="#d23"></span> </div>
+		<div id="reset">重画</div>
+		<div id="save">保存图片</div>
+		<br class="clear" /> </div>
+	<canvas id="canvas" width="1024px" height="799px"></canvas>
+	<br>
+	<script type="text/javascript">
+	window.onload = function() { // 对象 
+		var oCanvas = document.getElementById("canvas");
+		var oClearBtn = document.getElementById("reset");
+		var oSaveBtn = document.getElementById("save");
+		var oDiv1 = document.getElementById("size");
+		var aSpn = oDiv1.getElementsByTagName("span");
+		var oDiv2 = document.getElementById("color");
+		var aSpn1 = oDiv2.getElementsByTagName("span");
+		var size = null;
+		var color = null;
+		for (var i = 0, len = aSpn.length; i < len; i++) {
+			aSpn[i].onclick = function() {
+				for (var j = 0, len = aSpn.length; j < len; j++) {
+					aSpn[j].className = "s" + (j + 1);
+				}
+				this.className += " current";
+				size = this.getAttribute("val");
+			}
+		}
+		for (var i = 0, len = aSpn1.length; i < len; i++) {
+			aSpn1[i].onclick = function() {
+				for (var j = 0, len = aSpn1.length; j < len; j++) {
+					aSpn1[j].className = "color" + (j + 1);
+				}
+				this.className += " current";
+				color = this.getAttribute("val");
+			}
+		}
+		var oBox = oCanvas.getContext("2d");
+		var start = false;
+		var can_save = false;
+		// 鼠标按下
+		oCanvas.onmousedown = function() {
+			var ev = event || window.event;
+			if (ev.button == 0) {
+				can_save = true;
+				drawStart();
+			}
+		};
+		// 画图
+		oCanvas.onmousemove = function() {
+			draw(size, color);
+		};
+		// 离开画板
+		oCanvas.onmouseleave = function() {
+			drawStop();
+		};
+		// 结合本次画图
+		oCanvas.onmouseup = function() {
+			drawStop();
+		};
+		// 清空画板
+		oClearBtn.onclick = function() {
+			clearBox();
+		};
+		// 清空画板
+		oClearBtn.onclick = function() {
+			clearBox();
+		};
+		// 保存
+		oSaveBtn.onclick = function() {
+			if (can_save == true) {
+				createPic();
+			} else {
+				alert("请先画图");
+			}
+		};
+		// 开始画图
+		function drawStart() {
+			var ev = event || window.event;
+			start = true;
+			oBox.beginPath();
+			oBox.moveTo(ev.pageX - canvas.offsetLeft, ev.pageY - canvas.offsetTop);
+		}
+		// 画图
+		function draw(width, color) {
+			var ev = event || window.event;
+			if (start == true) {
+				oBox.lineWidth = width || 1;
+				oBox.strokeStyle = color || "#000";
+				oBox.lineTo(ev.pageX - canvas.offsetLeft, ev.pageY - canvas.offsetTop);
+				oBox.stroke();
+			}
+		};
+		// 画完
+		function drawStop() {
+			start = false;
+		};
+		// 清空画板
+		function clearBox() {
+			oBox.clearRect(0, 0, oCanvas.width, oCanvas.height);
+		};
+		// 生成图片
+		function createPic() {
+			var url = oCanvas.toDataURL();
+			if (document.getElementById("pic")) {
+				document.getElementById("pic").src = url;
+			} else {
+				var oPic = document.createElement("img");
+				var oSPn = document.createElement("span");
+				oSPn.style.display = "block";
+				oSPn.innerHTML = "鼠标右键点击另存为保存图片，格式是png";
+				oPic.src = url;
+				oPic.setAttribute("id", "pic");
+				document.body.appendChild(oSPn);
+				document.body.appendChild(oPic);
+			}
+		}
+	}
+	</script>
+</body>
+
+</html>

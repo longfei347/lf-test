@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<meta name="generator" content="editplus" />
+	<meta name="author" content="" />
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<title> 圆环状火焰粒子 </title>
+	<style type="text/css">
+	canvas {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		left: 0;
+		top: 0;
+	}
+	</style>
+</head>
+
+<body>
+	<canvas></canvas>
+	<script type="text/javascript">
+	canvas = document.querySelector('canvas'); //  获取元素
+	ctx = canvas.getContext('2d');
+
+	(onresize = function() { //  改变宽高切换画布大小
+		canvas.width = canvas.clientWidth;
+		canvas.height = canvas.clientHeight;
+		ctx.setTransform(1, 0, 0, 1, canvas.width / 2, canvas.height / 2);
+	})();
+
+	particles = (function() { //   34 - 94行
+		var max = (1 << 16) - 1,
+			length = 0,
+			nextIndex = 0,
+			map = new Uint16Array(max),
+			x = new Float32Array(max),
+			y = new Float32Array(max),
+			vx = new Float32Array(max),
+			vy = new Float32Array(max),
+			life = new Uint16Array(max),
+			startLife = new Uint16Array(max),
+			each = function(fn) {
+				for (var i = 0; i < length; i++) {
+					fn(map[i], i);
+				}
+			},
+			remove = function(i) {
+				length = length >= 0 ? length - 1 : 0;
+				map[i] = map[length];
+			}
+
+		return {
+			create: function(conf) {
+				x[nextIndex] = conf.x || 0;
+				y[nextIndex] = conf.y || 0;
+				vx[nextIndex] = conf.vx || 0;
+				vy[nextIndex] = conf.vy || 0;
+				life[nextIndex] = conf.life || 0;
+				startLife[nextIndex] = conf.life;
+				map[length] = nextIndex;
+				length = length === max ? 0 : length + 1;
+				nextIndex = nextIndex === max ? 0 : nextIndex + 1;
+			},
+			update: function() {
+				each(function(i, id) {
+					x[i] += vx[i];
+					y[i] += vy[i];
+					var d = Math.sqrt(x[i] * x[i] + y[i] * y[i]),
+						nx = x[i] / d,
+						ny = y[i] / d,
+						dx = x[i] * 0.000001 + nx * 80,
+						dy = y[i] * 0.000001 + ny * 80;
+					vx[i] += d < 80 ? dx * 0.01 : -dx * 0.01;
+					vy[i] += d < 80 ? dy * 0.01 : -dy * 0.01;
+					vx[i] *= 0.98;
+					vy[i] *= 0.98;
+					if (--life[i] < 0) remove(id);
+				});
+			},
+			draw: function() {
+				ctx.fillStyle = '#f73';
+				ctx.globalCompositeOperation = 'lighter';
+				each(function(i) {
+					var f = life[i] / startLife[i];
+					ctx.globalAlpha = f;
+					ctx.beginPath();
+					ctx.arc(x[i], y[i], 13 * (1 - f), 0, Math.PI * 2);
+					ctx.fill();
+				})
+			}
+		}
+	})();
+
+	requestAnimationFrame(loop = function() { //   动画接口
+		ctx.save();
+		ctx.setTransform(1, 0, 0, 1, 0, 0);
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.restore();
+		for (var i = 0; i < 4; i++) {
+			var a = Math.random() * Math.PI * 2,
+				cos = Math.cos(a),
+				sin = Math.sin(a);
+			particles.create({
+				x: cos * 80,
+				y: sin * 80,
+				vx: -sin * (Math.random() * 10 + 5),
+				vy: cos * (Math.random() * 10 + 5),
+				life: 100
+			})
+		}
+		particles.update();
+		particles.draw();
+		requestAnimationFrame(loop);
+	});
+	</script>
+</body>
+
+</html>

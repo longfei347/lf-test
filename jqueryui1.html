@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="./css/jquery-ui.css">
+	<script src="js/jquery-1.11.0.js"></script>
+	<script src="js/jquery-ui.js"></script>
+</head>
+<style>
+#toggle {
+	width: 100px;
+	height: 100px;
+	background: #ccc;
+}
+
+#toggle.big-blue {
+	width: 200px;
+	height: 200px;
+	background-color: #00f;
+}
+
+.selector {
+	width: 100px;
+	height: 100px;
+	background-color: #f90;
+}
+
+body {
+	font-size: 12px;
+} 
+
+/*jQuery UI fakes*/
+
+.ui-widget {
+	font-size: 1em;
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+	padding-top: .1em;
+	padding-bottom: .1em;
+}
+</style>
+
+<body>
+	<p>Click anywhere to toggle the box.</p>
+	<div id="toggle"></div>
+	<div class="selector"></div>
+	<div>
+		<input type="button" id="button1" value="普通提示" />
+		<input type="button" id="button2" value="自动关闭提示" />
+		<input type="button" id="button3" value="确认提示" />
+		<input type="button" id="button4" value="确认提示2" />
+		<input type="button" id="button5" value="打开窗口" />
+	</div>
+</body>
+<script>
+$(document).ready(function() {
+	//effects
+	//$("#toggle").toggle("blind");
+	//$("#toggle").toggle("clip");
+	// $("#toggle").toggle("drop");
+	// $("#toggle").toggle("explode");
+	// $("#toggle").toggle("fade");
+	// $("#toggle").toggle("fold");
+	// $("#toggle").toggle("puff");
+	// $("#toggle").toggle("shake");
+	// $("#toggle").toggle("scale");
+	// $("#toggle").toggle("pulsate");
+	// $("#toggle").toggle("highlight");
+	//$( "#toggle" ).toggle( "bounce", { times: 3 }, "slow" );
+
+	//methods
+	// $("#toggle").addClass("big-blue", 1000, "easeOutBounce");
+	// $( ".selector" ).draggable({ appendTo: "body" });
+	// var appendTo = $( ".selector" ).draggable( "option", "appendTo" ); 
+	//$( ".selector" ).draggable( "option", "appendTo", "body" );
+	//$( ".selector" ).draggable({ axis: "x" });
+	/*$(".selector").draggable({
+		appendTo: "body",
+		cursor: "pointer",
+		helper: "clone"
+	});*/
+	jQuery.extend(jQuery, {
+		// jQuery UI alert弹出提示 
+		jqalert: function(text, title, fn) {
+			var html =
+				'<div class="dialog" id="dialog-message">' +
+				' <p>' +
+				' <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 0 0;"></span>' + text +
+				' </p>' +
+				'</div>';
+			return $(html).dialog({
+				//autoOpen: false, 
+				resizable: false,
+				modal: true,
+				show: {
+					effect: 'fade',
+					duration: 300
+				},
+				title: title || "提示信息",
+				buttons: {
+					"确定": function() {
+						var dlg = $(this).dialog("close");
+						fn && fn.call(dlg);
+					}
+				}
+			});
+		},
+		// jQuery UI alert弹出提示,一定间隔之后自动关闭 
+		jqtimeralert: function(text, title, fn, timerMax) {
+			var dd = $(
+				'<div class="dialog" id="dialog-message">' +
+				' <p>' +
+				' <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 0 0;"></span>' + text +
+				' </p>' +
+				'</div>');
+			dd[0].timerMax = timerMax || 3;
+			return dd.dialog({
+				//autoOpen: false, 
+				resizable: false,
+				modal: true,
+				show: {
+					effect: 'fade',
+					duration: 300
+				},
+				open: function(e, ui) {
+					var me = this,
+						dlg = $(this),
+						btn = dlg.parent().find(".ui-button-text").text("确定(" + me.timerMax + ")");
+					--me.timerMax;
+					me.timer = window.setInterval(function() {
+						btn.text("确定(" + me.timerMax + ")");
+						if (me.timerMax-- <= 0) {
+							dlg.dialog("close");
+							fn && fn.call(dlg);
+							window.clearInterval(me.timer); // 时间到了清除计时器 
+						}
+					}, 1000);
+				},
+				title: title || "提示信息",
+				buttons: {
+					"确定": function() {
+						var dlg = $(this).dialog("close");
+						fn && fn.call(dlg);
+						window.clearInterval(this.timer); // 清除计时器 
+					}
+				},
+				close: function() {
+					window.clearInterval(this.timer); // 清除计时器 
+				}
+			});
+		},
+		// jQuery UI confirm弹出确认提示 
+		jqconfirm: function(text, title, fn1, fn2) {
+			var html =
+				'<div class="dialog" id="dialog-confirm">' +
+				' <p>' +
+				' <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>' + text +
+				' </p>' +
+				'</div>';
+			return $(html).dialog({
+				//autoOpen: false, 
+				resizable: false,
+				modal: true,
+				show: {
+					effect: 'fade',
+					duration: 300
+				},
+				title: title || "提示信息",
+				buttons: {
+					"确定": function() {
+						var dlg = $(this).dialog("close");
+						fn1 && fn1.call(dlg, true);
+					},
+					"取消": function() {
+						var dlg = $(this).dialog("close");
+						fn2 && fn2(dlg, false);
+					}
+				}
+			});
+		},
+		// jQuery UI 弹出iframe窗口 
+		jqopen: function(url, options) {
+			var html =
+				'<div class="dialog" id="dialog-window" title="提示信息">' +
+				' <iframe src="' + url + '" frameBorder="0" style="border: 0; " scrolling="auto" width="100%" height="100%"></iframe>' +
+				'</div>';
+			return $(html).dialog($.extend({
+				modal: true,
+				closeOnEscape: false,
+				draggable: false,
+				resizable: false,
+				close: function(event, ui) {
+					$(this).dialog("destroy"); // 关闭时销毁 
+				}
+			}, options));
+		},
+		// jQuery UI confirm提示 
+		confirm: function(evt, text, title) {
+			evt = $.event.fix(evt);
+			var me = evt.target;
+			if (me.confirmResult) {
+				me.confirmResult = false;
+				return true;
+			}
+			jQuery.jqconfirm(text, title, function(e) {
+				me.confirmResult = true;
+				if (e) {
+					if (me.href && $.trim(me.href).indexOf("javascript:") == 0) {
+						$.globalEval(me.href);
+						me.confirmResult = false;
+						return;
+					}
+					var t = me.type && me.type.toLowerCase();
+					if (t && me.name && (t == "image" || t == "submit" || t == "button")) {
+						__doPostBack(me.name, "");
+						me.confirmResult = false;
+						return;
+					}
+					if (me.click) me.click(evt);
+				}
+				return false;
+			});
+			return false;
+		}
+	});
+
+	/*以上代码还存在一个问题， 就是每次弹出框关闭之后都没有销毁。
+
+	解决办法有（ 具体不演示）：
+
+	在close事件里面destroy
+	把alert / confirm提供里的dialog实例设置成静态的
+	在外部调用使用单个dialog实例
+	演示程序
+	html代码如下：
+	复制代码 代码如下:*/
+
+
+
+	/*相应js代码如下：
+	复制代码 代码如下:*/
+
+	$("#button1").click(function() {
+		$.jqalert("这是普通提示！");
+	});
+	$("#button2").click(function() {
+		$.jqtimeralert("这是自动关闭的提示！", "自动关闭提示",
+			function() {
+				$.jqalert("时间到");
+			});
+	});
+	$("#button3").click(function() {
+		$.jqconfirm("确定要这么做吗？", "确认提示",
+			function() {
+				$.jqalert("点了确定");
+			},
+			function() {
+				$.jqalert("点了取消");
+			});
+	});
+	$("#button4").click(function(e) {
+		if ($.confirm(e, "确定要这么做吗？"))
+			$.jqalert("点了确定");
+	});
+	$("#button5").click(function(e) {
+		$.jqopen("http://lwme.cnblogs.com/", {
+			title: "我的博客",
+			width: 700,
+			height: 500
+		});
+	});
+
+	/*对于服务器端控件使用confirm， 可能需要如下方法：
+	复制代码 代码如下:*/
+
+	$("#button4").click(function(e) {
+		if (!$.confirm(e, "确定要这么做吗？")) {
+			e.stopPropagation();
+			return false;
+		}
+	});
+
+	/*额外再提一下， jQuery UI使用的字体都是以em为单位， 可能会导致平常使用时dialog变得比较大， 可以额外设置以下样式：
+	复制代码 代码如下:*/
+
+	/*这样子， dialog的大小看起来就比较正常了。
+	在Telerik RadControls
+	for asp.net ajax中使用
+	主要是针对telerik RadButton控件， 定义如下两个函数：
+	复制代码 代码如下:*/
+
+	// 用于RadButton的confirm确认回调，即触发按钮点击 
+	function radcallback(s) {
+		return Function.createDelegate(s, function(argument) {
+			if (argument) {
+				this.click();
+			}
+		});
+	}
+	// 用于为RadButton添加confirm提示 
+	function radconfirm2(textOrFn, title, callback) {
+		return function(s, e) {
+			$.jqconfirm(textOrFn, title, callback || radcallback(s));
+			//radconfirm(textOrFn, callback, 280, 50, null, title); 
+			e.set_cancel(true);
+		};
+	}
+
+});
+</script>
+
+</html>

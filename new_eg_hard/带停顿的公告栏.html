@@ -1,0 +1,128 @@
+<html>
+<head>
+<title>带停顿的公告栏</title>
+<meta name="author" content="czh;czh44@sohu.com">
+<style>
+a{font-family:'宋体';color:black;font-size:10pt}
+</style>
+</head>
+<script>
+<!--
+/*--------------------------------------|
+|	Authored by CZH;Email:czh44@sohu.com  |
+|--------------------------------------*/
+var scroller_height = 280;		//可视区域高度
+var scroller_width = 200;		//可视区域宽度
+var text_hidden = 'text2';		//被隐藏的div,初始状态时为text2
+var text_visible = 'text1';		//显示的div,初始状态时为text1
+var text_array = new Array();	//每个元素对应一个要显示的文本项
+var now_text_id = 1;			//当前显示的文本项
+var back_color = "#aadfff";		//背景色
+var aim_left = 5;				//文字div元素左侧相对父元素的左侧距离
+var aim_top = 10;				//移动停止的顶部位置，相对父元素
+
+//===定义滚动div元素
+function add_div()
+{
+	document.write("<div id='main_div' style='position:absolute;width:"
+	+ scroller_width + ";height:" + scroller_height 
+	+ ";overflow:hidden;background-color:" + back_color
+	+ ";clip:rect(0 " + scroller_width + " " + scroller_height 
+	+ " 0);visibility:visible'>"
+	+ "<div id='text1' style='position:absolute;left:" + aim_left 
+	+ ";width:" + scroller_width + ";visibility:visible'></div>"
+	+ "<div id='text2' style='position:absolute;left:" + aim_left 
+	+ ";width:"	+ scroller_width + ";visibility:visible'></div>"
+	+"</div>"
+	);
+}
+
+//===添加要显示的文本项
+/***参数text为文本内容;
+*url为文本指向URL地址;
+*target为打开链接文档的窗口*/
+function add_item(text,url,target)
+{
+	len = text_array.length;
+	text_array[len] = "<a href='" + url + "' target='" + target+"'>" 
+						+ text + "</a>";
+}
+
+//===滚动div元素
+function move_hidden()
+{
+	text_h = document.getElementById(text_hidden);
+	text_v = document.getElementById(text_visible);
+
+	//因为样式属性top返回的值为含单位的字符串,
+	//所以使用parseInt()方法提取其中的整数值
+	if(parseInt(text_h.style.top) != aim_top)	//未移动到顶部时
+	{
+		text_h.style.top = (parseInt(text_h.style.top) - 10) + "px";
+		text_v.style.top = (parseInt(text_v.style.top) - 10) + "px";
+		moving = setTimeout('move_hidden()',400);
+	}
+	else	//移动到顶部时
+	{
+		clearTimeout(moving);
+		//重设隐藏层与显示层
+		if(text_hidden == 'text2')
+		{
+		text_hidden = 'text1';
+		text_visible = 'text2';
+		}
+		else
+		{
+		text_hidden = 'text2';
+		text_visible = 'text1';
+		}
+		//将现在隐藏的div，即原来显示的div元素移动到显示区域底部
+		document.getElementById(text_hidden).style.top = scroller_height;
+		//将下一次要显示的内容写入当前隐藏的div元素
+		change_content();
+		setTimeout('move_hidden()',4000);
+	}
+}
+
+//===将下一项文本赋予隐藏的div元素
+function change_content()
+{
+	now_text_id += 1;
+	if(now_text_id >= text_array.length)
+	{
+	//当前为最后一项内容时，则下一项内容为第一项内容
+	now_text_id = 0;
+	}
+	//将新的内容写入到当前隐藏的div元素中
+	document.getElementById(text_hidden).innerHTML = "";
+	document.getElementById(text_hidden).innerHTML = text_array[now_text_id];
+}
+
+//===初始化
+function init()
+{	
+	text1.innerHTML = text_array[0];
+	text1.style.top = aim_top;
+	text2.innerHTML = text_array[1];
+	text2.style.top=scroller_height;
+}
+
+//添加滚动文本
+add_item("中国的长城是人类文明史上最伟大的建筑工程.它始建于2000多年前的春秋战国时期，秦朝统一中国之后联成万里长城。汉、明两代又曾大规模修筑。其工程之浩繁，气势之雄伟，堪称世界奇迹。1987年12月长城被列入《世界遗产名录》。","http://www.chinagreatwall.org","_blank");
+add_item("莫高窟俗称千佛洞。位于甘肃敦煌市东南25公里的鸣沙山东麓崖壁上,上下五层,南北长约1600米。始凿于366年,后经十六国至元十几个朝代的开凿,形成一座内容丰富、规模宏大的石窟群。现存洞窟492个,壁画45000平方米,彩塑2400余身, 飞天4000余身, 唐宋木结构建筑5座,莲花柱石和铺地花砖数千块, 一处由建筑、绘画、雕塑组成的博大精深的综合艺术殿堂, 是世界上现存规模最宏大、保存最完好的佛教艺术宝库, 被誉为“东方艺术明珠”。","http://www.mogaoku.net","_blank");
+add_item("九寨沟,位于四川省北部南坪县境内，是一条纵深40余公里的山沟谷地，因周围有9 个藏族村寨而得名，总面积约620平方公里，自然景色兼有湖泊、瀑布、雪山、 森林之美。","http://www.jiuzhai.com","_blank");
+//-->
+</script>
+<body>
+带停顿的滚动公告栏
+<br>
+<script>
+add_div();
+init();
+move_hidden();
+</script>
+</body>
+</html>
+
+
+

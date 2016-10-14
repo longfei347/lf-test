@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>简单的小日历</title>
+<style type="text/css">
+/* css reset */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video, input { margin:0; padding:0; border:none; outline:0; font-size:100%; font:inherit; vertical-align:baseline;}
+html, body, form, fieldset, p, div, h1, h2, h3, h4, h5, h6 { -webkit-text-size-adjust:none;}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display:block;}
+ol, ul { list-style:none;}
+sup, sub {font-size:83%;}
+blockquote, q { quotes:none;}
+blockquote:before, blockquote:after, q:before, q:after { content:''; content:none;}
+del { text-decoration:line-through;}
+ins, u, s, a, a:hover { text-decoration:none;}
+pre, code, kbd, samp { font-family:inherit;}
+em, i, cite, var, address, dfn { font-style:normal;}
+h1, h2, h3, h4, h5, h6, strong, b { font-weight:normal;}
+html, body, fieldset, img, iframe, abbr { border:0;}
+table { border-collapse:collapse; border-spacing:0;}
+caption, th { text-align:left; font-weight:normal;}
+textarea{ overflow:auto; resize:none;}
+label, summary { cursor:default;}
+a, button, label { cursor:pointer;}
+body, textarea, input, button, select, keygen, legend { font:12px/1.14 tahoma,arial,\5b8b\4f53,helvetica,sans-serif; color:#333; outline:0;}
+html { _background-image:url(about:blank); _background-attachment:fixed;}
+body { background:#fff;}
+a { color:#666; -webkit-tap-highlight-color:rgba(0,0,0,0);}
+a:hover { color:#666; text-decoration:underline; }
+
+/* css code */
+body { padding-top:100px;}
+.u-kaipan { width:218px; -webkit-user-select:none; margin:0 auto;}
+.u-kaipan-header { height:30px; line-height:30px;}
+.u-kaipan-header div { float:left; display:inline;}
+.u-kaipan-prev,.u-kaipan-next { width:20px; text-align:center; cursor:pointer;}
+div.u-kaipan-next { float:right;}
+.u-kaipan-date { width:125px; text-align:center;}
+.u-kaipan-body tr, .u-kaipan-body td, .u-kaipan-body th { border:1px solid #ccc;}
+.u-kaipan-body td, .u-kaipan-body th { width:30px; height:30px; text-align:center; vertical-align:middle;}
+.u-kaipan-body td.z-c,.u-kaipan-body td.z-c:hover { background-color:#ed7612; color:#fff;}
+.u-kaipan-body td { color:#999;}
+.u-kaipan-body .td-day { color:#333; cursor:pointer; -webkit-transition:all .2s ease-in-out;}
+.u-kaipan-body .td-day:hover { background-color:#999; color:#fff;}
+.ui-animated {
+    -webkit-animation-fill-mode:both; 
+    animation-fill-mode:both;
+    -webkit-animation-duration:1s;
+    animation-duration:1s;
+}
+.ui-animated.ui-animated-left {
+    -webkit-animation-name:accordionLeft;
+    animation-name:accordionLeft;
+}
+.ui-animated.ui-animated-right {
+    -webkit-animation-name:accordionRight;
+    animation-name:accordionRight;
+}
+@-webkit-keyframes accordionLeft {
+    0% { opacity:0; -webkit-transform:translateX(-60px);}
+    100% { opacity:1; -webkit-transform:translateX(0px);}
+}
+@keyframes accordionLeft {
+    0% { opacity:0; transform:translateX(-60px);}
+    100% { opacity:1; transform:translateX(0px);}
+}
+@-webkit-keyframes accordionRight {
+    0% { opacity:0; -webkit-transform:translateX(60px);}
+    100% { opacity:1; -webkit-transform:translateX(0px);}
+}
+@keyframes accordionRight {
+    0% { opacity:0; transform:translateX(60px);}
+    100% { opacity:1; transform:translateX(0px);}
+}
+</style>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+<div class="u-kaipan">
+    <div class="u-kaipan-header">
+        <div class="u-kaipan-prev" onclick="Kaipan.prevYear();"><<</div>
+        <div class="u-kaipan-prev" onclick="Kaipan.prevMonth();"><</div>
+        <div class="u-kaipan-date">
+            <strong>开盘日历</strong>
+            <span><em class="u-kaipan-year">2014</em>-<em class="u-kaipan-month">1</em></span>
+        </div>
+        <div class="u-kaipan-next" onclick="Kaipan.nextYear();">>></div>
+        <div class="u-kaipan-next" onclick="Kaipan.nextMonth();">></div>
+    </div>
+    <table class="u-kaipan-body"></table>
+    <div class="u-kaipan-footer"></div>
+</div>
+<script type="text/javascript">
+
+var Kaipan = {
+    /**
+     * @desc : 切换方向
+     */
+    dir:'left', 
+    /**
+     * @func : 初始化日历
+     * @param : year:年
+     * @param : month:月
+     */
+    init:function(year, month){
+        month -= 1;
+        var dayCount = [31, (this.isLeap(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+            date = new Date(year, month, 1),
+            currentDay = date.getDay(),
+            indentCell = 0,
+            allCell = 43,
+            dayStart = 0;
+        for(var i = 0; i < 7; i++){
+            dayStart == 7 && (dayStart = 0);
+            dayStart == currentDay && (indentCell = i);
+            dayStart++;
+        }
+        var validCell = indentCell + dayCount[month];
+        
+        this.createFrame(year, month, validCell, indentCell, allCell);
+        this.selectDay();
+    },
+    /**
+     * @func : 创建骨架
+     * @param : year:年
+     * @param : month:月
+     * @param : validCell:有效单元格
+     * @param : indentCell:缩进的单元格
+     * @param : allCell:全部单元格
+     */
+    createFrame:function(year, month, validCell, indentCell, allCell){
+        var tbody = '<tr class="ui-animated ui-animated-'+this.dir+'">',
+            thead = '<thead><tr><th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr></thead>',
+            today = this.isToday(year, month),
+            that = this,
+            createDay = function(i){
+                var current = today == (i - indentCell) ? ' z-c' : '';
+                tbody = tbody + '<td class="td-day'+current+'">' + that.formatNum((i - indentCell)) + '</td>';
+            },
+            otherDay = function(i){
+                var type = i > validCell ? 'td-back' : 'td-front';
+                tbody += '<td class="'+type+'"></td>';
+            }
+        for(var i = 1; i < allCell; i++){
+            (i>1 && ((i-1) % 7 == 0)) && (tbody += '<tr class="ui-animated ui-animated-'+this.dir+'">');
+            (i>indentCell && i<=validCell) ? createDay(i) : otherDay(i);
+            (i % 7 == 0) && (tbody += '</tr>');
+        }
+        $('.u-kaipan-body').html(thead+'<tbody>'+tbody+'</tbody>');
+        this.fillDay(); 
+    },      
+    /**
+     * @func : 填充空日期
+     */
+    fillDay:function(){
+        var backIndex = 1,
+            frontCnt = $('.u-kaipan-body td.td-front').size()-1,
+            first = $('.u-kaipan-year').text()+'/'+$('.u-kaipan-month').text()+'/01',
+            lastDay = this.formatDate(new Date(first).getTime()-86400000, 'date'),
+            frontIndex = lastDay - frontCnt,
+            that = this;
+        $('.u-kaipan-body td.td-back').each(function(){
+            $(this).text(that.formatNum(backIndex));
+            backIndex += 1;
+        });
+        $('.u-kaipan-body td.td-front').each(function(){
+            $(this).text(that.formatNum(frontIndex));
+            frontIndex += 1;
+        });
+    },
+    /**
+     * @func : 单击选择日
+     */
+    selectDay:function(){
+        var that = this,
+            date = null;
+        $('.u-kaipan-body').undelegate().delegate('td.td-day', 'click', function(){
+            $(this).addClass('z-c').siblings().removeClass('z-c').parent().siblings().children().removeClass('z-c');
+            date = $('.u-kaipan-year').text()+'-'+$('.u-kaipan-month').text()+'-'+$(this).text();
+            that.getData(date);
+        });
+    },
+    /**
+     * @func : 格式化数字
+     */
+    formatNum:function(num){
+        num = num.toString();
+        num.length == 1 && (num = '0'+num);
+        return num;
+    },
+    /**
+     * @func : 格式化时间戳
+     * @param : date:时间戳
+     * @param : type:返回类型
+     */
+    formatDate:function(time, type){
+        var date = new Date(time),
+            year = date.getYear(), 
+            month = date.getMonth()+1,
+            date = date.getDate();
+        switch(type){
+            case 'year':
+                return year;
+                break;
+            case 'month':
+                return month;
+                break;
+            case 'date':
+                return date;
+                break;
+            default:
+                return year+'-'+month+'-'+date;
+        }
+    },
+    /**
+     * @func : 返回当天日期
+     */
+    today:function(){
+        var date = new Date();
+        return [date.getFullYear(), date.getMonth(), date.getDate()];
+    },
+    /**
+     * @func : 判断是不是闰年
+     */
+    isLeap:function(year){
+        //return (year % 4) == 0 ? true : false;
+        return year%200== 0 || (year%4 == 0 && year%100 !=0);
+    },
+    /**
+     * @func : 判断是不是当天
+     */
+    isToday:function(year, month){
+        var date = this.today();
+        return (date[0] == year && date[1] == month) ? date[2] : false;
+    },
+    /**
+     * @func : 选择月份后改变其值
+     * @param : year:年
+     * @param : month:月
+     * @param : callback:月、年改变后重置当月日期视图
+     */
+    initDate:function(year, month, callback){
+        month = this.formatNum(month);
+        $('.u-kaipan-month').text(month);
+        $('.u-kaipan-year').text(year);
+        callback && callback.call(this);
+    },
+    /**
+     * @func : 下个月
+     */
+    nextMonth:function(){
+        var month = $('.u-kaipan-month').text(),
+            year = $('.u-kaipan-year').text();
+        if(month < 12){
+            ++month;
+        }
+        else{
+            month = '01';
+            ++year;
+        }
+        this.initDate(year, month, $.proxy(function(){
+            this.dir = 'right';
+            this.init(year, month);
+        }, this));
+    },
+    /**
+     * @func : 上个月
+     */
+    prevMonth:function(){
+        var month = $('.u-kaipan-month').text(),
+            year = $('.u-kaipan-year').text();
+        if(month <= 1){
+            month = 12;
+            --year;
+        }
+        else{
+            --month;
+        }
+        this.initDate(year, month, $.proxy(function(){
+            this.dir = 'left';
+            this.init(year, month);
+        }, this));
+    },
+	/**
+     * @func : 下一年
+     */
+    nextYear:function(){
+        var month = $('.u-kaipan-month').text(),
+            year = $('.u-kaipan-year').text();
+        ++year;
+        this.initDate(year, month, $.proxy(function(){
+            this.dir = 'right';
+            this.init(year, month);
+        }, this));
+    },
+    /**
+     * @func : 上一年
+     */
+    prevYear:function(){
+        var month = $('.u-kaipan-month').text(),
+            year = $('.u-kaipan-year').text();
+		--year;
+        this.initDate(year, month, $.proxy(function(){
+            this.dir = 'left';
+            this.init(year, month);
+        }, this));
+    },
+    /**
+     * @func : ajax请求数据
+     * @param : date:选择的日期
+     */
+    getData:function(date){
+        $('.u-kaipan-footer').text(date);
+    }
+}
+$(function() {
+	var tdy = Kaipan.today(),year  = tdy[0], month = tdy[1]+1;
+	Kaipan.initDate(year, month);
+	Kaipan.init(year, month);
+})
+
+</script>
+</body>
+</html>

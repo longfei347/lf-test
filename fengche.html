@@ -1,0 +1,351 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>风车</title>
+	<style type="text/css">
+	body,
+	div {
+		margin: 0;
+		padding: 0;
+	}
+	body {
+		font-size: 62.5%;
+		/*定义页面字体大小为默认的62.5%，方便从px转化为em*/
+	}
+	#sky {
+		width: 100%;
+		height: 33em;
+		background: #06F;
+		position: relative;
+		display: block;
+	}
+	.windmill {
+		width: 40em;
+		height: 46em;
+		position: absolute;
+		z-index: 2;
+	}
+	.earth {
+		width: 100%;
+		height: 28em;
+		position: fixed;
+		bottom: 0;
+		background: #093;
+	}
+	.sea {
+		width: 100%;
+		height: 11em;
+		position: fixed;
+		top: 55%;
+		margin-top: -7.5em;
+		background: #0CC;
+	}
+	/*-------------------------设计风车桨类的样式---------------------------------------*/
+	
+	.paddle,
+	.paddle:after,
+	.paddle:before {
+		width: 0.2em;
+		height: 0;
+		position: relative;
+		border-bottom: 20em solid rgb(250, 250, 250);
+		border-left: 0.9em solid transparent;
+		border-right: 0.9em solid transparent;
+		border-bottom-left-radius: 1em;
+		border-bottom-right-radius: 1em;
+		-webkit-transform-origin: bottom center;
+		/*定义旋转中心点*/
+		
+		-moz-transform-origin: bottom center;
+		transform-origin: bottom center;
+	}
+	.paddle:after,
+	.paddle:before {
+		position: absolute;
+		content: '';
+		left: -1em;
+	}
+	.paddle:after {
+		-webkit-transform: rotate(120deg);
+		-moz-transform: rotate(120deg);
+		transform: rotate(120deg);
+	}
+	.paddle:before {
+		-webkit-transform: rotate(240deg);
+		-moz-transform: rotate(240deg);
+		transform: rotate(240deg);
+	}
+	.paddle {
+		margin: 0 auto;
+		z-index: 3;
+		-webkit-animation: 8s linear infinite;
+		-moz-animation: 8s linear infinite;
+		animation: 8s linear infinite;
+		-webkit-animation-name: paddleRorate;
+		-moz-animation-name: paddleRorate;
+		animation-name: paddleRorate;
+	}
+	@-webkit-keyframes paddleRorate {
+		0% {
+			-webkit-transform: rotate(0deg);
+		}
+		100% {
+			-webkit-transform: rotate(360deg);
+		}
+	}
+	@-moz-keyframes paddleRorate {
+		0% {
+			-moz-transform: rotate(0deg);
+		}
+		100% {
+			-moz-transform: rotate(360deg);
+		}
+	}
+	@keyframes paddleRorate {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+	/*-------------------------设计风车柱子类的样式---------------------------------------*/
+	
+	.pillars {
+		margin: 0 auto;
+		z-index: 2;
+		width: 1em;
+		height: 0;
+		border-bottom: 25em solid #eee;
+		border-left: 1em solid transparent;
+		border-right: 1em solid transparent;
+		position: relative;
+		border-radius: 0.2em;
+	}
+	.pillars:after {
+		content: '';
+		width: 0.3em;
+		height: 0;
+		border-bottom: 25em solid rgba(204, 204, 205, 0.3);
+		border-right: 1em solid transparent;
+		position: absolute;
+		left: 0.7em;
+		top: 0.5em;
+		border-bottom-right-radius: 1em;
+	}
+	.pillars:before {
+		content: '';
+		width: 3em;
+		height: 1em;
+		border-radius: 3em/1em;
+		background: #eee;
+		position: absolute;
+		top: 24.5em;
+		left: -1em;
+	}
+	/*------------------设置云的样式--------------------------------------*/
+	
+	.cloud,
+	.cloud:after,
+	.cloud:before {
+		width: 10em;
+		height: 6em;
+		background: #FFF;
+		border-radius: 10em/6em;
+		position: relative;
+	}
+	.cloud:after,
+	.cloud:before {
+		position: absolute;
+		content: '';
+		top: 2em;
+		left: -2.5em;
+	}
+	.cloud:before {
+		left: 5em;
+	}
+	.cloud {
+		transform: rotate(-3deg) translate(0.3em, 0.3em);
+		animation:cloudAnimate 4s ease infinite alternate;
+		/* animation-name: cloudAnimate; */
+	}
+	@-webkit-keyframes cloudAnimate {
+		0% {
+			-webkit-transform: rotate(-3deg) translate(0.3em, 0.3em);
+		}
+		100% {
+			-webkit-transform: rotate(3deg) translate(-0.3em, -0.3em);
+		}
+	}
+	@keyframes cloudAnimate {
+		0% {
+			transform: rotate(-3deg) translate(0.3em, 0.3em);
+		}
+		100% {
+			transform: rotate(3deg) translate(-0.3em, -0.3em);
+		}
+	}
+	/*------------------设置波浪的样式--------------------------------------*/
+	
+	.wave,
+	.wave:after {
+		width: 10em;
+		height: 5em;
+		border-top-left-radius: 10em;
+		border-top-right-radius: 10em;
+		background: #FFF;
+		position: relative;
+	}
+	.wave:after {
+		background: #0cc;
+		content: '';
+		position: absolute;
+		top: 0.4em;
+		-webkit-transform: scale(0.96, 0.9);
+		-moz-transform: scale(0.96, 0.9);
+		transform: scale(0.96, 0.9);
+	}
+	.wave-1 {
+		left: 9.8em;
+		top: -0.2em;
+		-webkit-transform: rotate(180deg);
+		-moz-transform: rotate(180deg);
+		transform: rotate(180deg);
+	}
+	.waves {
+		position: relative;
+		margin: auto;
+		width: 20em;
+		-webkit-transform: scale(6, 0.6) translateY(-0.3em) rotate(-3deg);
+		-moz-transform: scale(6, 0.6)translateY(-0.3em) rotate(-3deg);
+		transform: scale(6, 0.6) translateY(-0.3em) rotate(-3deg);
+		-webkit-animation: 2s ease infinite alternate;
+		-moz-animation: 2s ease infinite alternate;
+		animation: 2s ease infinite alternate;
+		-webkit-animation-name: wavesAnimate;
+		-moz-animation-name: wavesAnimate;
+		animation-name: wavesAnimate;
+	}
+	@-webkit-keyframes wavesAnimate {
+		0% {
+			-webkit-transform: scale(6, 0.6) translateY(-0.3em) rotate(-3deg);
+		}
+		100% {
+			-webkit-transform: scale(6, 0.5) translateY(0.3em) rotate(-1deg);
+		}
+	}
+	@-moz-keyframes wavesAnimate {
+		0% {
+			-moz-transform: scale(6, 0.6) translateY(-0.3em) rotate(-3deg);
+		}
+		100% {
+			-moz-transform: scale(6, 0.5) translateY(0.3em) rotate(-1deg);
+		}
+	}
+	@keyframes wavesAnimate {
+		0% {
+			transform: scale(6, 0.6) translateY(-0.3em) rotate(-3deg);
+		}
+		100% {
+			transform: scale(6, 0.5) translateY(0.3em) rotate(-1deg);
+		}
+	}
+	/*------------------设置几个风车的位置及缩放--------------------------------------*/
+	
+	.win-1 {
+		top: -15em;
+		-webkit-transform: scale(0.8);
+		-moz-transform: scale(0.8);
+		transform: scale(0.8);
+	}
+	.win-2 {
+		left: 20em;
+		top: -15em;
+		-webkit-transform: scale(0.6);
+		-moz-transform: scale(0.6);
+		transform: scale(0.6);
+	}
+	.win-3 {
+		left: 35em;
+		top: -15em;
+		-webkit-transform: scale(0.4);
+		-moz-transform: scale(0.4);
+		transform: scale(0.4);
+	}
+	/*------------------设置云的位置及缩放--------------------------------------*/
+	
+	.cloud-1 {
+		top: 3em;
+		left: 50em;
+		-webkit-transform: scale(0.8);
+		-moz-transform: scale(0.8);
+		transform: scale(0.8);
+	}
+	.cloud-2 {
+		top: 1em;
+		left: 75em;
+		-webkit-transform: scale(1.2);
+		-moz-transform: scale(1.2);
+		transform: scale(1.2);
+	}
+	/*------------------设置波浪的位置及缩放--------------------------------------*/
+	
+	.waves-1 {
+		top: -4em;
+	}
+	.waves-2 {
+		top: -11em;
+	}
+	.waves-3 {
+		top: -18em;
+	}
+	.waves-4 {
+		top: -25em;
+	}
+	</style>
+</head>
+
+<body>
+	<div id="sky">
+		<div class="cloud cloud-1"></div>
+		<div class="cloud cloud-2"></div>
+	</div>
+	<div class="earth">
+		<div class="sea">
+			<div class="waves waves-1">
+				<div class="wave"></div>
+				<div class="wave wave-1"></div>
+			</div>
+			<div class="waves waves-2">
+				<div class="wave"></div>
+				<div class="wave wave-1"></div>
+			</div>
+			<div class="waves waves-3">
+				<div class="wave"></div>
+				<div class="wave wave-1"></div>
+			</div>
+			<div class="waves waves-4">
+				<div class="wave"></div>
+				<div class="wave wave-1"></div>
+			</div>
+		</div>
+		<div class="windmill win-1">
+			<div class="paddle"></div>
+			<div class="pillars"></div>
+		</div>
+		<div class="windmill win-2">
+			<div class="paddle"></div>
+			<div class="pillars"></div>
+		</div>
+		<div class="windmill win-3">
+			<div class="paddle"></div>
+			<div class="pillars"></div>
+		</div>
+
+	</div>
+
+</body>
+
+</html>

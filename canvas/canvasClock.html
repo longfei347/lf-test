@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>canvas clock</title>
+<style>
+#canvas{ margin:auto;background-color:#eee;}
+</style>
+</head>
+
+<body>
+<center>
+	<canvas id="canvas" width="500" height="500">
+		<span>你的浏览器不支持canvas</span>
+	</canvas>
+</center>
+<script type="text/javascript">
+var oc=document.getElementById("canvas");
+var op=oc.getContext("2d");
+function move() {
+	var x = 250;
+	var y = 250;
+	var mdate = new Date();
+	var h = mdate.getHours();
+	var m = mdate.getMinutes();
+	var s = mdate.getSeconds();
+	var hh = (-90 + h * 30 + m / 2) * Math.PI / 180;
+	var mm = (-90 + m * 6) * Math.PI / 180;
+	var ss = (-90 + s * 6) * Math.PI / 180;
+	op.clearRect(0, 0, op.width, op.height);
+	for (var i = 0; i <= 60; i++) {
+		op.lineWidth = 1;
+		op.beginPath();
+		op.moveTo(x, y);
+		op.arc(x, y, 150, 6 * i * Math.PI / 180, 6 * (i + 1) * Math.PI / 180);
+		op.closePath();
+		op.stroke();
+	}
+	//return;
+	op.beginPath();
+	op.fillStyle = "#fff";
+	op.moveTo(x, y);
+	op.arc(x, y, 145, 0 * Math.PI / 180, 360 * Math.PI / 180);
+	op.closePath();
+	op.fill();
+	
+	for (var i = 0; i <= 12; i++) {
+		op.lineWidth = 1;
+		op.beginPath();
+		op.moveTo(x, y);
+		op.arc(x, y, 150, 30 * i * Math.PI / 180, 30 * (i + 1) * Math.PI / 180);
+		op.closePath();
+		op.stroke();
+	}
+	//return;
+	op.beginPath();
+	op.fillStyle = "#fff";
+	op.moveTo(x, y);
+	op.arc(x, y, 140, 0 * Math.PI / 180, 360 * Math.PI / 180);
+	op.closePath();
+	op.fill();
+	//
+	op.lineWidth = 1;
+	op.beginPath();
+	op.moveTo(x, y);
+	op.arc(x, y, 135, ss, ss, false);
+	op.closePath();
+	op.stroke();
+	//
+	op.lineWidth = 2;
+	op.beginPath();
+	op.moveTo(x, y);
+	op.arc(x, y, 100, mm, mm, false);
+	op.closePath();
+	op.stroke();
+	//
+	op.lineWidth = 4;
+	op.beginPath();
+	op.moveTo(x, y);
+	op.arc(x, y, 80, hh, hh, false);
+	op.closePath();
+	op.stroke();
+}
+
+setInterval(move,1000);
+move();
+</script>
+</body>
+</html>

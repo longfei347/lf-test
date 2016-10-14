@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.11.0.js"></script>
+	<script src="js/base.js"></script>
+</head>
+<style>
+.protected {
+	position: relative;
+	width: 200px;
+	height: 200px;
+	background-color: #ccc;
+}
+</style>
+
+<body>
+	<div>
+		<ol>
+			<li>Hello</li>
+		</ol>
+	</div>
+	<div>How are you?</div>
+	<div class="protected"></div>
+	<div></div>
+	<ul class="level-1">
+		<li class="item-i">I</li>
+		<li class="item-ii">II
+			<ul class="level-2">
+				<li class="item-a">A</li>
+				<li class="item-b">B
+					<ul class="level-3">
+						<li class="item-1">1</li>
+						<li class="item-2">2</li>
+						<li class="item-3">3</li>
+					</ul>
+				</li>
+				<li class="item-c">C</li>
+			</ul>
+		</li>
+		<li class="item-iii">III</li>
+	</ul>
+</body>
+<script>
+/*var mystr="Many people spell MySQL incorrectly",output="";
+console.log(mystr.replace(/[\w-]+/g,function(s,i,ss){
+	if (i == 0) {
+		s = s.charAt(0).toLowerCase() + s.substr(1,s.length -2) + s.charAt(s.length - 1).toUpperCase();
+	}
+	return s.split("").reverse().join("")
+	// output += s.split("").reverse().join("") + " ";
+	// return output;
+}))*/
+//output = output.substr(0,output.length -1);
+var mystr = "Many people  spell MySQL incorrectly";
+
+function strReverse(str) {
+	return (str.replace(/[\w-]+/g, function(s, i, ss) {
+		if (i == 0) {
+			s = s.charAt(0).toLowerCase() + s.substr(1, s.length - 2) + s.charAt(s.length - 1).toUpperCase();
+		}
+		return s.split("").reverse().join("")
+	}));
+}
+strReverse(mystr)
+$("div").click(function() {
+	if ($(this).hasClass("protected"))
+		$(this)
+		.animate({
+			left: -10
+		})
+		.animate({
+			left: 10
+		})
+		.animate({
+			left: -10
+		})
+		.animate({
+			left: 10
+		})
+		.animate({
+			left: 0
+		});
+});
+</script>
+
+</html>

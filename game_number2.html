@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>无标题文档</title>
+</head>
+<style>
+table {
+	border-spacing: 0;
+	border-collapse: collapse;
+	margin: 0 auto;
+}
+
+table td {
+	border: 1px solid #333;
+	width: 30px;
+	height: 24px;
+	line-height: 24px;
+	text-align: center;
+	vertical-align: top;
+	padding: 0;
+	/*padding: 5px;*/
+}
+h2, p {
+	text-align: center;
+}
+.purple {
+	color: purple;
+}
+.red {
+	color: #f00;
+}
+</style>
+
+<body>
+	<h2>填数字</h2>
+	<p style="text-align:center">在下面表格中,填入从1-n<sup>2</sup> 的数,使表格的每行,每列和每条对角线的上数的和都相等!</p>
+	<p>注意:该题为小学题, 别说小学没毕业哦!!!<br>
+		<i class="purple">提示下吧, 口诀: </i>
+	</p>
+	<p class="red">
+		一居上行正中央,依次斜填切莫忘；<br>
+		上出框时向下放,右出框时向左放；<br>
+		排重便在下格填,右上排重一个样.
+	</p>
+	<table id="table1" contentEditable>
+		<tbody id="table1Body">
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+	<form name="numbercheck" style="margin:10px auto; text-align:center">
+		请输入奇数行的表格:
+		<input type="text" name="col">
+		<button type="button" name="modifyCol">修改行列数</button>
+		<br><br>
+		<button id="ttt" name="ok" type="button" onClick="check()">确定</button>
+	</form>
+</body>
+<script>
+document.forms[0].modifyCol.addEventListener("click", function() {
+	var tmp = document.numbercheck.col.value;
+	if (isNaN(tmp) || tmp < 1 || tmp % 2 == 0) {
+		alert("请输入大于1的奇数!");
+		return false
+	}
+	while (table1Body.rows.length > 0) {
+		table1Body.removeChild(table1Body.rows[0]);
+	}
+	for (var i = 0; i < tmp; i++) {
+		table1Body.insertRow(i);
+		for (var j = 0; j < tmp; j++) {
+			table1Body.rows[i].insertCell(j); //.innerHTML = ""
+		}
+	}
+});
+document.getElementById("table1").addEventListener("keyup", function(e) {
+	var tar = e.target,
+		val = tar.innerText,
+		keyCode = e.keyCode,
+		key = e.keyCode - 38,
+		len = e.target.getElementsByTagName("td").length;
+	if (!((keyCode === 37 || keyCode === 38 || keyCode === 39 || keyCode === 40 || keyCode === 8) || (keyCode <= 57 && keyCode >= 48) || (keyCode <= 105 && keyCode >= 96))) {
+		alert("请输入数字! 从1-" + len);
+		return false;
+	}
+}, true)
+/*document.getElementById("table1").addEventListener("keyup", function(e) {
+	if (e.target.nodeName == "TD") {
+		e.target.innerHTML = e.target.innerHTML.replace(/[^1-9]/,"");
+	}
+})*/
+var num = [],
+	total = 0,
+	f;
+
+function check() {
+	var cols = table1Body.rows[0].cells.length,
+		total = 0,
+		tmp1, tmp2, tmp3 = 0;
+	for (var i = 0; i < cols; i++) {
+		total += +(table1Body.rows[0].cells[i].innerText);
+	}
+	for (i = 0; i < cols; i++) {
+		tmp1 = tmp2 = 0;
+		for (var j = 0; j < cols; j++) {
+			tmp1 += +(table1Body.rows[i].cells[j].innerText);
+			tmp2 += +(table1Body.rows[j].cells[i].innerText);
+			if (i == j) {
+				tmp3 += +(table1Body.rows[j].cells[i].innerText);
+			}
+		}
+		if (tmp1 != total || tmp2 != total) {
+			alert("输入错误,请重新输入!");
+			return false;
+		}
+	}
+	alert("恭喜你答对了,你真聪明!");
+	return true;
+}
+</script>
+
+</html>

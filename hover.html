@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>hoverSlideout Demo</title>
+    <style>
+    body,
+    a {
+        text-align: center;
+        color: white;
+        text-decoration: none;
+    }
+    
+    .hover-slideout {
+        display: inline-block;
+        margin-top: 10%;
+        width: 300px;
+        height: 300px;
+        background: pink;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .smelly-cat {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 0, 0, .5);
+        top: -100%;
+        left: -100%;
+    }
+    
+    h1 {
+        font-size: 3em;
+    }
+    ::-webkit-input-placeholder { /* WebKit browsers */ 
+        color: #f99; 
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */ 
+        color: #999; 
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */ 
+        color: #999; 
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10+ */ 
+        color: #999; 
+    }
+    </style>
+    <script src="http://yuanoook.com/cdn/jquery.min.js"></script>
+</head>
+
+<body>
+    <input type="text" name="" id="" placeholder="店连店科技股份有限公司">
+    <div class="hover-slideout" hover-slideout>
+        <h1>Hover me</h1>
+        <div class="smelly-cat" smelly-cat>
+            <br/>
+            <br/>
+            <br/>
+            <h1>Smelly Cat</h1>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <a href="http://yuanoook.com" target="_blank">Yuanoook.com</a>
+        </div>
+    </div>
+</body>
+<script>
+// 非原创，来自
+// http://www.w3cfuns.com
+// http://cdn.res.w3cfuns.com/js/common/global.js
+
+$(function() {
+    $('[hover-slideout]').each(function() {
+        $(this).hover(function(e) {
+            $(this).find('[smelly-cat]').css(induction_position($(this), e)).stop(true, true).animate({
+                "left": 0,
+                "top": 0
+            }, 200);
+        }, function(e) {
+            $(this).find('[smelly-cat]').stop(true, true).animate(induction_position($(this), e), 200);
+        });
+    });
+
+    //鼠标进入方向
+    function induction_position(elem, e) {
+        var w = elem.width(),
+            h = elem.height(),
+            direction = 0,
+            obj = {};
+        /** 计算x和y得到一个角到elem的中心，得到相对于x和y值到div的中心 **/
+        var x = (e.pageX - elem.offset().left - (w / 2)) * (w > h ? (h / w) : 1);
+        var y = (e.pageY - elem.offset().top - (h / 2)) * (h > w ? (w / h) : 1);
+
+        /** 鼠标从哪里来 / 角度 和 方向出去顺时针（得出的结果是TRBL 0 1 2 3） **/
+        /**
+         * 首先计算点的角度，
+         * 再加上180度摆脱负值
+         * 90初,一得到的象限（象限，又称象限角，意思就是一个圆之四分之一等份）
+         * 加上3，做一个模（求模 求余数）4的象限转移到一个适当的顺时针 得出 TRBL 0 1 2 3（上/右/下/左）
+         */
+        direction = Math.round((((Math.atan2(y, x) * (180 / Math.PI)) + 180) / 90) + 3) % 4;
+
+        switch (direction) {
+            case 0: //from top
+                obj.left = 0;
+                obj.top = "-100%";
+                break;
+            case 1: //from right
+                obj.left = "100%";
+                obj.top = 0;
+                break;
+            case 2: //from bottom
+                obj.left = 0;
+                obj.top = "100%";
+                break;
+            case 3: //from left
+                obj.left = "-100%";
+                obj.top = 0;
+                break;
+        }
+        return obj;
+    }
+});
+</script>
+
+</html>

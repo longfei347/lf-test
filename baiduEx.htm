@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)http://www.baidu.com/search/is/index.html -->
+<html lang="zh"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>极速智能搜索 百度先知</title>
+		<meta charset="utf-8">
+		<link href="css/ISAnimate1.css" rel="stylesheet">
+		<script src="js/jquery-1.10.2.min.js"></script>
+		<script>
+		if (/msie [6|7|8|9]/i.test(navigator.userAgent)) {window.document.location.href = "browserHint.html"};
+		
+		var curIndex = 1,canRoll = true;
+		function showPage(index){	
+			if ( curIndex== index ) return; 
+			if (canRoll == false) return;
+			canRoll = false;		
+			$("#s"+curIndex).removeClass("active").addClass("disappear");
+			$("#s"+index).css("display","block").removeClass("disappear").addClass("active");
+			
+			$("#side_btn_ul li").removeClass("active");
+			$("#l"+index).addClass("active");
+
+			
+			eval("s"+index+"_run()");
+			
+			setTimeout((function(i){
+				return function(){
+					$("#s"+i).css("display","none");
+				};
+			})(curIndex),1000);
+			
+			setTimeout(function(){
+				canRoll = true;
+			},1000);
+			
+			curIndex = index;
+		}
+		var s1_run = s2_run = s3_run = s4_run = s5_run = function(){};
+		</script>
+		<style>
+			body { padding:0; margin:0; background: #3385ff; -moz-user-select:none;}
+			html { overflow:hidden; }
+			div { display: inline-block; font-size:18px; line-height:32px; color:white; }
+			header { display:block; background:rgba(237,230,209,0.4); width:500px; position:absolute; right:0; padding:20px; margin:10px; box-shadow: 3px 3px 9px 1px #bcbcbc; z-index: 1000; }
+			section {  display:none;opacity: 0; height:100%; overflow:hidden;position:absolute; width:100%; margin:0; color: white; font-family:"Microsoft Yahei"; -moz-user-select:none;}
+			.container { padding:0; font-size:30px; height: 100%; margin: 0; display: block;overflow:hidden}
+			.active { color: white; font-family:"Microsoft Yahei"; font-size:40px; }
+
+			/*section-public*/
+			#s1_wrapper, #s2_wrapper ,#s3_wrapper, #s4_wrapper, #s5_wrapper{ 
+				width: 992px; height:600px; 
+				display: block; position:absolute; 
+				top:50%; left:50%; 
+				-webkit-transform:translate(-50%,-50%); 
+				-moz-transform:translate(-50%,-50%); 
+				-ms-transform:translate(-50%,-50%); 
+				-o-transform:translate(-50%,-50%);
+				transform:translate(-50%,-50%);  
+			}
+			#s1_wrapper {
+				top:45%;
+			}
+			#s4_wrapper { width:1039px; }
+			.rollText,.rollImg ,.roll{ position:relative;float:left; z-index:20; }
+			.roll { width:86px; position:absolute; margin:0 50%; left:-43px; bottom:85px;  }
+			.rollImg { top:32px; left:15px; position:absolute; cursor:pointer;}
+			.rollText {font-size:12px; left:5px;}
+			/*useSprite*/
+			.pic {background-image: url("http://s1.bdstatic.com/r/www/search/is/img/isguidex.png"); display: block;}
+			.pic_9 {background-position: -352px -164px; width: 26px; height: 27px; }
+			.pic_3 {background-position: -404px -104px; width: 62px; height: 84px; }
+			.pic_15 {background-position: -0px -228px; width: 287px; height: 174px; }
+			.pic_12 {background-position: -296px -232px; width: 4px; height: 129px; display:inline-block;}
+			.pic_1 {background-position: -312px -236px; width: 4px; height: 129px; display:inline-block; }
+			.pic_10 {background-position: -348px -104px; width: 50px; height: 50px; }
+			.pic_11 {background-position: -288px -104px; width: 58px; height: 58px; }
+			.pic_6 {background-position: -0px -176px; width: 345px; height: 49px; }
+			.pic_16 {background-position: -0px -0px; width: 287px; height: 174px; }
+			.pic_4 {background-position: -288px -52px; width: 214px; height: 49px; }
+			.pic_5 {background-position: -288px -0px; width: 214px; height: 49px; }
+			body{
+				 -moz-user-select:-moz-none;
+    			-moz-user-select: none; /*火狐*/
+    			-webkit-user-select: none; /*webkit浏览器*/
+    			-ms-user-select: none; /*IE10*/
+    			-khtml-user-select: none; /*早期浏览器*/
+    			user-select: none;
+   			 }	
+		</style>
+	</head>
+	<body onselectstart="return false;">
+		<div class="container">
+			<section id="s1" index="1" style="display:block" class="active">
+				<style>
+					/*section-1*/
+					#s1_wrapper { height:400px; }
+					#s1_title,s1_subtitle, #s1_ani, #s1_save, #s1_time { position:relative;float:left; z-index:10; }
+					#s1_title { top:147px;}
+					#s1_subtitle { margin-top: 62px; font-size:18px; line-height:32px;}
+					#s1_ani { z-index:9; width:550px; height:430px; margin-left:20px; }
+					#s1_ani_1 { width:385px; height:385px; display:inline-block; position:absolute; background: url("http://s1.bdstatic.com/r/www/search/is/img/s1_1.png") no-repeat; top:0px; left:70px;}
+					#s1_ani_2 { width:339px; height:339px; display:inline-block; position:absolute; background: url("http://s1.bdstatic.com/r/www/search/is/img/s1_2.png") no-repeat; top:23px; left:93px; }
+					#s1_ani_3 { width:325px; height:325px; display:inline-block; position:absolute; background: url("http://s1.bdstatic.com/r/www/search/is/img/s1_4.png") no-repeat; top:30px; left:100px; }
+					#s1_ani_4 { width:314px; height:314px; display:inline-block; position:absolute; background: url("http://s1.bdstatic.com/r/www/search/is/img/s1_5.png") no-repeat; top:35px; left:105px; }
+					#s1_ani_42{ width:118px; height:157px; display:inline-block; position:absolute; background: url("http://s1.bdstatic.com/r/www/search/is/img/s1_52.png") no-repeat; top:35px; left:261px; }
+					.disappear #s1_ani_4 { 
+						-webkit-transform:	rotateZ(49deg); 
+						-moz-transform:		rotateZ(49deg); 
+						-ms-transform:		rotateZ(49deg); 
+						-o-transform:		rotateZ(49deg); 
+						transform:			rotateZ(49deg); 
+						}	
+					#s1_ani_5,#s1_ani_52 { width:9px; height:158px; display:inline-block; position:absolute; background: url("http://s1.bdstatic.com/r/www/search/is/img/s1_3.png") no-repeat; top:33px; left:257px; }
+					.disappear #s1_ani_52 { 
+						-webkit-transform:	rotateZ(49deg); -webkit-transform-origin: 50% 100%;
+						-moz-transform:		rotateZ(49deg); -moz-transform-origin: 50% 100%;
+						-ms-transform:		rotateZ(49deg); -ms-transform-origin: 50% 100%;
+						-o-transform:		rotateZ(49deg); -o-transform-origin: 50% 100%;
+						transform:			rotateZ(49deg); transform-origin: 50% 100%;
+					} 
+					#s1_save {display:inline-block; width:288px; height:400px; line-height:40px; margin:-400px 0 0 775px; }
+					#s1_savetime { background:url("http://s1.bdstatic.com/r/www/search/is/img/s1_time.png"); width:170px; height:72px; display:inline-block; margin-top:19px;}
+					#s1_savetime2 { background:url("http://s1.bdstatic.com/r/www/search/is/img/s1_saveNum.png");width:262px; height:29px; display:inline-block;}
+					#s1_sava_divide {width:100%; height:1px; background:white; position:relative; top:-6px; }
+					#s1_time { left:-30px; top:380px; font-size:40px; font-family:"arial";}
+					.s1_font16 { font-size:16px; position:relative; top:-6px; }
+					.s1_second { top:-2px; }
+					
+				</style>
+				<div id="s1_wrapper">
+					<div id="s1_title" class="pic pic_4">
+						<div id="s1_subtitle">
+							预测到您的搜索诉求<br>
+							瞬时展现您想要的结果
+						</div>
+					</div>
+					
+					<div id="s1_ani">
+						<div id="s1_ani_1"></div>
+						<div id="s1_ani_2"></div>
+						<div id="s1_ani_3"></div>
+						<div id="s1_ani_4"></div>
+						<div id="s1_ani_42"></div>
+						<div id="s1_ani_5"></div>
+						<div id="s1_ani_52"></div>
+					</div>
+					<div id="s1_save">
+						可节省<br>
+						<span id="s1_savetime"></span> &nbsp; <span class="s1_font16">秒</span><br>
+						/搜索
+						
+						<div id="s1_sava_divide"></div>
+						
+						<span class="s1_font16">每天为百度用户节省</span><br>
+						<span id="s1_savetime2"></span><span class="s1_font16 s1_second">&nbsp;秒</span>
+					
+					</div>
+					
+				</div>
+				<div class="roll">
+					<div class="rollText">试试鼠标滚动</div>
+					<div class="rollImg pic pic_10" id="rollImg1"></div>
+					<div class="rollImg pic pic_10" id="rollImg2"></div>
+				</div>	
+			</section>
+			
+			<section id="s2" index="2">
+				<style>
+					/*section-2*/
+					#s2_title,#s2_ani,#s2_searchCompare { position:relative;float:left; z-index:10;}
+					#s2_ani { z-index:9; left:32px; top:30px; width:498px; height:489px; }
+					#s2_ani1 { display:inline-block; width:478px; height:467px; position:absolute; top:10px; left:10px; background:url("http://s1.bdstatic.com/r/www/search/is/img/s2_1.png");}
+					#s2_ani2 { display:inline-block; width:215px; height:294px; position:absolute; top:110px; left:140px; background:url("http://s1.bdstatic.com/r/www/search/is/img/s2_2.png");}
+					#s2_subtitle { margin-top: 62px; }
+					#s2_title { top:240px; }
+					
+					#s2_searchCompare { width:200px; height:525px; left:85px; margin-top:-36px; }
+					#s2_com11{ position:relative; top:380px; margin:0; }
+					#s2_com12{ position:relative; top:248px; left:-9px; margin:0; }
+					#s2_com13{ position:relative; top:116px; left:-18px; margin:0; left:-19px\0;}
+					@-moz-document url-prefix() { #s2_com13 { left: -19px; } }
+					
+					
+					#s2_com2{ position:relative; top:380px; margin:0; }
+					
+					#s2_right_text { width:200px; height:525px; left:815px; top:-415px; float:left; position:relative; font-size:16px; }
+					#s2_right_text1,#s2_right_text2 { position:relative; }
+					#s2_right_textImg { width:54px; height:74px; background: url("http://s1.bdstatic.com/r/www/search/is/img/s2_num3.png") no-repeat; position:relative; margin-top:-13px; }
+					#s2_right_text3 { color:#205fbd; margin:93px 0 0 20px; display:inline-block; position:relative; }
+					#s2_right_text4 { margin:76px 0 0 -20px; display:block; position:relative; }
+					.s2_lineHeight25 { position:relative; top:-7px; }
+				</style>
+				<div id="s2_wrapper">
+					<div id="s2_title" class="pic pic_5">
+						<div id="s2_subtitle">
+							精确引导<br>
+							让步步所见成为时时所得
+						</div>
+					</div>
+					<div id="s2_ani">
+						<div id="s2_ani2"></div>
+						<div id="s2_ani1"></div>
+					</div>
+					<div id="s2_searchCompare">
+						<div id="s2_com11" class="pic pic_1"></div>
+						<div id="s2_com12" class="pic pic_1"></div>
+						<div id="s2_com13" class="pic pic_1"></div>
+						<div id="s2_com2" class="pic pic_12"></div>
+					</div>				
+					<div id="s2_right_text">
+						<span id="s2_right_text1">极速<br><span class="s2_lineHeight25">搜索效率</span><br><br></span>
+						<div id="s2_right_textImg"></div>
+						<span id="s2_right_text2">倍提升<br></span>
+						<span id="s2_right_text3">普通<br><span class="s2_lineHeight25">搜索效率</span><br></span>
+						<span id="s2_right_text4">智能联想查询</span>
+						
+					</div>	
+				</div>
+				<div class="roll">
+					<div class="rollText">试试鼠标滚动</div>
+					<div class="rollImg pic pic_10" id="rollImg1"></div>
+					<div class="rollImg pic pic_10" id="rollImg2"></div>
+				</div>	
+			</section>
+
+			<section id="s3" index="3">
+				<style>
+					/*section-3*/
+					#s3_title { margin:10px 0 0 323px; }
+					#s3_ani_wrapper { position:relative; width:992px; height:500px; margin-top:50px;}
+					#s3_ani1,#s3_ani2,#s3_ani3 { 
+						position:relative; float:left;
+						width:300px; height:500px; 
+						margin: 0 15px; 
+						opacity: 0; 
+					}
+					#s3_ani1_ani,#s3_ani2_ani,#s3_ani3_ani { width:270px; height:270px; margin:0 15px; }
+					#s3_ani1_text,#s3_ani2_text,#s3_ani3_text {width:270px; height:100px; margin:10px 15px 0; text-align:center;  font-size:16px; line-height:25px; }
+					
+					#s3_ani1_1{ display:inline-block; width:262px; height:262px; position:absolute; top:0px; left:18px; background:url("http://s1.bdstatic.com/r/www/search/is/img/s3_aniBG.png"); }
+					#s3_ani1_2{ display:inline-block; width:166px; height:121px; position:absolute; top:57px; left:64px; background:url("http://s1.bdstatic.com/r/www/search/is/img/s3_11.png"); }
+					#s3_ani1_3{ display:inline-block; width:33px; height:24px; position:absolute; top:110px; left:134px; background:url("http://s1.bdstatic.com/r/www/search/is/img/s3_12.png"); opacity:0; }
+					#s3_ani1_4{ display:inline-block; width:33px; height:24px; position:absolute; top:125px; left:168px; background:url("http://s1.bdstatic.com/r/www/search/is/img/s3_12.png"); opacity:0; }
+					
+					#s3_ani2_1{ display:inline-block; width:262px; height:262px; position:absolute; top:0px; left:18px; background:url("http://s1.bdstatic.com/r/www/search/is/img/s3_aniBG.png"); }
+					#s3_ani2_2{ display:inline-block; width:146px; height:163px; position:absolute; top:50px; left:74px; background:url("http://s1.bdstatic.com/r/www/search/is/img/s3_21.png"); }
+					#s3_ani2_3{ display:inline-block; width:56px; height:57px; position:absolute; top:67px; left:115px; background:url("http://s1.bdstatic.com/r/www/search/is/img/s3_22.png"); }
+					#s3_ani2_4{ display:inline-block; width:48px; height:48px; position:absolute; top:97px; left:158px; background:url("http://s1.bdstatic.com/r/www/search/is/img/s3_23.png"); }
+					#s3_ani2_5{ display:inline-block; width:14px; height:15px; position:absolute; top:60px; left:200px; background:url("http://s1.bdstatic.com/r/www/search/is/img/s3_25.png"); opacity:0; }
+					#s3_ani2_6{ display:inline-block; width:27px; height:28px; position:absolute; top:47px; left:199px; background:url("http://s1.bdstatic.com/r/www/search/is/img/s3_24.png"); opacity:0; }
+					
+					#s3_ani3_1{ display:inline-block; width:262px; height:262px; position:absolute; top:0px; left:18px; background:url("http://s1.bdstatic.com/r/www/search/is/img/s3_aniBG.png"); }
+					#s3_ani3_2{ display:inline-block; width:155px; height:95px; position:absolute; top:85px; left:74px; background:url("http://s1.bdstatic.com/r/www/search/is/img/s3_31.png"); }
+					#s3_ani3_3{ display:inline-block; width:74px; height:77px; position:absolute; top:92px; left:114px; background:url("http://s1.bdstatic.com/r/www/search/is/img/s3_32.png"); }
+					
+					
+				</style>
+				<div id="s3_wrapper">
+					<div id="s3_title" class="pic pic_6"></div>
+					<div id="s3_ani_wrapper">
+						<div id="s3_ani1">
+							<div id="s3_ani1_ani">
+								<div id="s3_ani1_1"></div>
+								<div id="s3_ani1_2"></div>
+								<div id="s3_ani1_3"></div>
+								<div id="s3_ani1_4"></div>
+							</div>
+							<div id="s3_ani1_text">
+								过去的搜索引擎<br>
+								只是工具<br>
+								它能搜到您想要的
+							</div>
+						</div>
+						<div id="s3_ani2">
+							<div id="s3_ani2_ani">
+								<div id="s3_ani2_1"></div>
+								<div id="s3_ani2_2"></div>
+								<div id="s3_ani2_3"></div>
+								<div id="s3_ani2_4"></div>
+								<div id="s3_ani2_5"></div>
+								<div id="s3_ani2_6"></div>
+							</div>
+							<div id="s3_ani2_text">			
+								现在的搜索引擎<br>
+								拥有智能<br>它能猜到您想要的
+							</div>
+						</div>
+						<div id="s3_ani3">
+							<div id="s3_ani3_ani">
+								<div id="s3_ani3_1"></div>
+								<div id="s3_ani3_2"></div>
+								<div id="s3_ani3_3"></div>
+							</div>
+							<div id="s3_ani3_text">
+								未来的搜索引擎<br>
+								洞察需求<br>
+								它能先知您所未想<br>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="roll" id="roll-2">
+					<div class="rollText">试试鼠标滚动</div>
+					<div class="rollImg pic pic_10" id="rollImg1"></div>
+					<div class="rollImg pic pic_10" id="rollImg2"></div>
+				</div>	
+			</section>
+			<section id="s4" index="4">
+				<style>
+					/*section-4 used to be section 5*/
+					#s5_bg_1,#s5_bg_2,#s5_bg_3 {width:857px; height:450px; top:80px; left:90px; }
+					.s5_bg_1 {background:url("http://s1.bdstatic.com/r/www/search/is/img/s5_t.png") no-repeat;opacity:0;z-index:0}
+					.s5_bg_2 {background:url("http://s1.bdstatic.com/r/www/search/is/img/s5_tq.png") no-repeat;opacity:0;z-index:1}
+					.s5_bg_3 {background:url("http://s1.bdstatic.com/r/www/search/is/img/s5_3.png") no-repeat;opacity:0;z-index:2}
+					#s5_bg_1,#s5_bg_2,#s5_bg_3, #s5_arrow, #s5_guide, #s5_text { position:absolute; float:left; }
+					#s5_arrow { left:294px; top:30px; opacity:0;z-index:10; }
+					#s5_text { left:360px; top:20px; opacity:0;z-index:10; font-size:16px; line-height:25px; }
+					#s5_keyboard { position:absolute; margin:0 50%; left:-144px; bottom:0; }
+					#s5_keyboard_click { position:relative; width:80px; height:50px; margin:80px 1px 1px 161px; cursor:pointer;}
+					/*by junjie*/	
+					@keyframes s5_bl
+					{
+						0% {background: #FFF}
+						49% {background:#FFF}
+						100% {background: #000}
+					}
+					@-webkit-keyframes s5_bl
+					{
+						0% {background: #FFF}
+						49% {background:#FFF}
+						100% {background: #000}
+					}
+					@-moz-keyframes s5_bl
+					{
+						0% {background: #FFF}
+						49% {background:#FFF}
+						100% {background: #000}
+					}
+					@-ms-keyframes s5_bl
+					{
+						0% {background: #FFF}
+						49% {background:#FFF}
+						100% {background: #000}
+					}
+					@-o-keyframes s5_bl
+					{
+						0% {background: #FFF}
+						49% {background:#FFF}
+						100% {background: #000}
+					}
+					#s5_blick { overflow:hidden;height:24px;width:1px;position:absolute;left:275px;top:135px;z-index:400;
+						-webkit-animation: s5_bl 800ms infinite ease-in-out;	
+						-moz-animation: s5_bl 800ms infinite ease-in-out;
+						-ms-animation: s5_bl 800ms infinite ease-in-out;
+						-o-animation: s5_bl 800ms infinite ease-in-out;
+						animation: s5_bl 800ms infinite ease-in-out;	
+					}
+
+					#s5_keyboard.hide{
+						opacity:0;	
+						transition: opacity 1s,bottom 1s;
+						-webkit-transition: opacity 1s,bottom 1s;
+						-moz-transition: opacity 1s,bottom 1s;
+						-ms-transition: opacity 1s,bottom 1s;
+						-o-transition: opacity 1s,bottom 1s;
+					}
+					#s5_keyboard.show{
+						opacity:1;
+						bottom:40px;
+						transition: opacity 1s,bottom 1s;
+						-webkit-transition: opacity 1s,bottom 1s;
+						-moz-transition: opacity 1s,bottom 1s;
+						-ms-transition: opacity 1s,bottom 1s;
+						-o-transition: opacity 1s,bottom 1s;
+					}
+					.s5_bg_hide {
+						opacity:0;
+						transition: opacity 200ms;
+						-webkit-transition: opacity 200ms;
+						-moz-transition: opacity 200ms;
+						-ms-transition: opacity 200ms;
+						-o-transition: opacity 200ms;
+
+					}
+					.s5_bg_show {
+						opacity:1;
+						transition: opacity 200ms;
+						-webkit-transition: opacity 200ms;
+						-moz-transition: opacity 200ms;
+						-ms-transition: opacity 200ms;
+						-o-transition: opacity 200ms;
+					}
+					#s5_arrow.hide{
+						transition: all 1000ms;
+						-webkit-transition: all 1000ms;
+						-moz-transition: all 1000ms;
+						-ms-transition: all 1000ms;
+						-o-transition: all 1000ms;
+					}
+					#s5_arrow.show{
+						opacity:1;top:55px;
+						transition: all 1000ms;
+						-webkit-transition: all 1000ms;
+						-moz-transition: all 1000ms;
+						-ms-transition: all 1000ms;
+						-o-transition: all 1000ms;
+					}
+					#s5_text.hide{
+						transition: all 1000ms;
+						-webkit-transition: all 1000ms;
+						-moz-transition: all 1000ms;
+						-ms-transition: all 1000ms;
+						-o-transition: all 1000ms;
+					}
+					#s5_text.show{
+						opacity:1;top:46px;
+						transition: all 1000ms;
+						-webkit-transition: all 1000ms;                                                                                                                                                                      
+						-moz-transition: all 1000ms;
+						-ms-transition: all 1000ms;
+						-o-transition: all 1000ms;
+					}
+				</style>
+				<div id="s5_wrapper">
+					<div id="s5_blick" style="left: 282px;"></div>
+					<div id="s5_arrow" class="pic pic_3 show"></div>
+					<div id="s5_bg_1" class="s5_bg_1 s5_bg_hide"></div>
+					<div id="s5_bg_2" class="s5_bg_2 s5_bg_show"></div>
+					<div id="s5_bg_3" class="s5_bg_3 s5_bg_hide"></div>
+					<div id="s5_text" class="show">
+						智能联想查询会以灰色文字的形式直接显示在搜索框中，<br>
+						按下键盘向右箭头即可选中。
+					</div>
+				</div>
+				<div id="s5_keyboard" class="pic show pic_15"><div id="s5_keyboard_click"></div></div>
+				
+				<script>
+					~function(){
+					
+						var delay,intval,kbstate=true,kbnum=1,kbcount=5,kb=$("#s5_keyboard"),
+							handleKeyDown = function(evt){
+								var keycode = evt.which || evt.keyCode;
+								if (keycode==39) step_3();
+							};
+						function step_1(){
+							window.clearTimeout(delay);
+							window.clearInterval(intval);
+							$("#s5_blick").css("left","275px");
+							$(document).unbind("keydown",handleKeyDown);
+
+							$("#s5_bg_1").removeClass("s5_bg_hide").addClass("s5_bg_show");
+							$("#s5_bg_2").removeClass("s5_bg_show").addClass("s5_bg_hide");
+							$("#s5_bg_3").removeClass("s5_bg_show").addClass("s5_bg_hide");
+							$("#s5_arrow").removeClass("show");
+							$("#s5_text").removeClass("show");
+							
+							$("#s5_keyboard").removeClass("show").addClass("hide");
+							
+							delay = setTimeout(step_2,1500);
+						}
+
+						function step_2(){
+							$("#s5_blick").css("left","282px");
+							
+							$("#s5_bg_1").removeClass("s5_bg_show").addClass("s5_bg_hide");
+							$("#s5_bg_2").removeClass("s5_bg_hide").addClass("s5_bg_show");
+							$("#s5_bg_3").removeClass("s5_bg_show").addClass("s5_bg_hide");
+							
+							
+							setTimeout(function(){
+
+								$("#s5_arrow").addClass("show");
+								$("#s5_text").addClass("show");
+								$("#s5_keyboard").removeClass("hide").addClass("show");
+							
+								kb_ani();
+								
+								intval = setInterval(function(){
+									kb_ani();
+								},4000);
+
+							},1000);
+							
+							$(document).bind("keydown",handleKeyDown);
+							$("#s5_keyboard_click").bind("click",step_3);
+						}
+
+						function kb_ani(){
+							kbnum++;
+							if (kbnum % kbcount == 0) return;
+								
+							kb_blick(kbstate);
+							kbstate = !kbstate;
+							setTimeout(kb_ani,300);
+						}
+
+						function kb_blick(flag){
+							if (flag)  kb.removeClass("pic_16").addClass("pic_15")
+							else kb.removeClass("pic_15").addClass("pic_16");
+						}
+
+						function step_3(){
+							$(document).unbind("keydown",handleKeyDown);
+							$("#s5_keyboard_click").unbind("click",step_3);
+							window.clearInterval(intval);
+							$("#s5_blick").css("left","333px");
+							$("#s5_keyboard").removeClass("show").addClass("hide");
+							$("#s5_arrow").removeClass("show").addClass("hide");
+							$("#s5_text").removeClass("show").addClass("hide");
+							$("#s5_bg_1").removeClass("s5_bg_show").addClass("s5_bg_hide");
+							$("#s5_bg_2").removeClass("s5_bg_show").addClass("s5_bg_hide");
+							$("#s5_bg_3").removeClass("s5_bg_hide").addClass("s5_bg_show");
+						}
+						window.s4_run = step_1;
+						step_1();
+
+					}();
+				</script>
+			</section>		
+
+			<section id="s5" index="5">
+				<style>
+					/* section-5, used to be section6 */
+					#s6_wrapper { display:block; height:100%; width:100%; background:rgba(255,255,255,1); font-family:Arial; }
+					#s6_nav-bg {display:block; height:63px; width:100%; background:white; box-shadow: 0px 2px 1px 0px rgba(0,0,0,0.1); }
+					#s6_mid { display:block; position:absolute; margin:0 50%; left:-310px; top:0; width:620px; }
+					#s6_nav-content { height:63px; width:100% }
+					#s6_nav-logo { background:url("http://s1.bdstatic.com/r/www/search/is/img/baidu_jgylogo3.gif"); width:117px; height:38px; margin-top:10px; }
+					#s6_nav-title { color:#666; font-size:20px; font-weight:normal; display:inline; position:absolute; margin:24px 0 0 30px; }
+					#s6_nav-link { float: right; position: relative; margin-top: 27px; text-decoration: none; color: #333; font-size:13px; }
+					#s6_nav-link:hover { text-decoration:underline;}
+					#s6_qa { width:100%; position:absolute; top:67px; color:#333; left:0; }
+					#s6_qa-title { font-size: 20px; font-weight:normal;margin: 20px 0 0 0;}
+					.s6_qa-question { font-size:14px; margin:15px 0 0 0; /*font-family:Heiti SC, "宋体";*/ }
+					.s6_qa-answer { color:#666; font-size:14px; margin:0 0 0 0; line-height:24px; /*font-family:Heiti SC, "宋体";*/}
+					#s6_footer { width:100%; height:20px; padding:5px; border-top:1px solid #ebebeb; color:#ccc; position:absolute; bottom:0; text-align:center; font-size:12px; font-family:"Arial"; background:white; }
+					.s6_footer-link { ; font-size:12px; text-decoration:none; color:#ccc; }
+					.s6_footer-link:hover{ text-decoration:underline; }
+					
+				</style>
+				<div id="s6_wrapper">
+					<div id="s6_nav-bg"></div>
+					<div id="s6_mid">
+						<div id="s6_nav-content">
+							<div id="s6_nav-logo"></div>
+							<h1 id="s6_nav-title">搜索，进入先知时代</h1>
+							<a href="http://www.baidu.com/" target="_blank" id="s6_nav-link">百度首页</a>
+						</div>
+						<div id="s6_qa" style="overflow-y: scroll; height: 265px;">
+							<h5 id="s6_qa-title">
+								常见问题解答
+							</h5>
+							<h6 class="s6_qa-question">
+								1. 如何体验百度极速智能搜索功能？
+							</h6>
+							<p class="s6_qa-answer">				
+							百度极速智能搜索针对主流浏览器默认开启；但在较老版本的ie浏览器下无法支持。强烈建议您使用<a href="http://liulanqi.baidu.com/index.html">百度浏览器</a>体验极速智能搜索功能。
+							</p>
+							<h6 class="s6_qa-question">
+								2. 如何关闭百度极速智能搜索功能？关闭后如何重新开启？
+							</h6>
+							<p class="s6_qa-answer">
+								如果您不希望在输入内容时显示相关的搜索结果，可以在"设置"下拉菜单中点击"关闭预测"，关闭极速智能搜索。若您想重新开启，可以在"设置"下拉菜单中点击"开启预测"，即可打开极速智能搜索。
+							</p>
+							<h6 class="s6_qa-question">
+								3. 极速智能搜索功能会影响网速和内存吗？
+							</h6>
+							<p class="s6_qa-answer">
+								百度极速智能搜索不会影响您的网速和内存。为了达到最理想的用户体验，百度众多技术人员对此进行了大量而细致的优化工作。事实上，相比其他类型的网络服务（例如在线视频和在线游戏），即使我们展现了更多的页面，新增的负荷也非常小。
+							</p>
+							<h6 class="s6_qa-question">
+								4. 我已经习惯于完成输入后再发起搜索，极速智能搜索是否会让我分心？
+							</h6>
+							<p class="s6_qa-answer">
+								使用百度极速智能搜索的同时，您仍然可以遵循以往的习惯，输入完整的关键词后点击"百度一下"发起搜索。极速智能搜索有助于缩小搜索范围以便找到更准确匹配的搜索结果，甚至在输入的过程中您期待的结果就已经呈现出来。
+							</p>
+							<h6 class="s6_qa-question">
+								5. 极速智能搜索是否会对搜索结果的排名造成影响？
+							</h6>
+							<p class="s6_qa-answer">
+								极速智能搜索不会对搜索结果的排名造成任何影响。
+							</p>
+							<p> </p><p> </p>
+						</div>
+					</div>
+					<div id="s6_footer">
+						©2014 Baidu <a href="http://www.baidu.com/duty/" class="s6_footer-link">使用百度前必读</a> 京ICP证030173号
+					</div>
+				</div>
+				
+				<script>
+					$(window).bind("resize",adjustS6Height);
+					
+					function adjustS6Height(){
+						var h = $(document).height();
+						if (h<670) {
+							$("#s6_qa").css("overflow-y","scroll").css("height",(h-93)+"px");
+						}else {
+							$("#s6_qa").css("overflow-y","hidden").css("height","575px");
+						}
+					}
+					
+					setTimeout(function(){
+							adjustS6Height();
+					},1500);
+					
+				</script>
+				</section>
+			
+			<!--侧边栏-->
+			<style>
+				/*sideBar 右边栏*/
+				.side_container { position:absolute; right:20px; width:40px; height:100%;}
+				#side_link { background:url("http://s1.bdstatic.com/r/www/search/is/img/sideNav.png") no-repeat; width:26px; height:27px; opacity:0.5; display:inline-block; margin:20px 0; }
+
+				#side_link:hover { opacity:1; }
+				#side_btn_ul{ list-style:none; padding:0; position:absolute; float:right; right:10px; top:50%; margin-top:-70px; }
+				#side_btn_ul li { background-position:  -370px -197px;  width: 9px; height: 9px; padding:7px; margin:0; opacity:0.5; }/*use sprite, pic pic_8*/
+				#side_btn_ul li:hover { opacity:1; cursor:pointer; }
+				#side_btn_ul .active {background-position:-346px -197px; width: 9px; height:9px; opacity:1; }/*use sprite, pic pic_7*/
+			
+			</style>
+			<div class="side_container">
+			<a href="http://www.baidu.com/" target="_blank" id="side_link"></a>
+			<ul id="side_btn_ul">
+				<li id="l1" index="1" class="pic active"></li>
+				<li id="l2" index="2" class="pic"></li>
+				<li id="l3" index="3" class="pic"></li>
+				<li id="l4" index="4" class="pic"></li>
+				<li id="l5" index="5" class="pic"></li>
+			</ul>
+			<script>
+				$("#side_btn_ul li").bind("click", function(){
+					var index = $(this).attr("index");
+					showPage(index);
+				});
+			</script>
+		</div>
+		</div>
+		<script>
+			
+			$(document).ready(function(){
+				//鼠标滚轮事件
+				function wheel(event){
+					var delta = 0;
+					if (!event) event = window.event;
+					if (event.wheelDelta) {
+						delta = event.wheelDelta/120; 
+						if (window.opera) delta = -delta;
+					} else if (event.detail) {
+						delta = -event.detail/3;
+					}
+					if (delta)
+						mouseWheel(delta);
+				}
+				 
+				if (window.addEventListener)
+				window.addEventListener('DOMMouseScroll', wheel, false);
+				window.onmousewheel = document.onmousewheel = wheel;
+			
+				//键盘按键事件
+				$(document).keydown(
+					function(e){keyDown(e);
+				});
+				$(".rollImg").bind(
+					"click", function(){downBtnDown();}
+				);
+				
+				//鼠标滚轮事件
+				function mouseWheel(delta) {
+					var dir = delta > 0 ? "up" : "down";
+					var $actived = $(".active");
+					var activeIndex = parseInt($actived.attr('index'));
+					var numOfChildren = $("#side_btn_ul").children().length;
+					
+					if( dir == "down" && activeIndex<numOfChildren && canRoll) {
+						jumpPage(false);
+					} else if( dir =="up" && activeIndex>1 && canRoll) {
+						jumpPage(true);
+					} 
+				}
+				
+				//键盘事件
+				function keyDown(e) {
+					var keycode = e.which || e.keyCode;
+					var $actived = $(".active");
+					var activeIndex = parseInt($actived.attr('index'));
+					var numOfChildren = $("#side_btn_ul").children().length;
+
+					if ((keycode == 65 || keycode == 38 || keycode ==87 || keycode ==33 ) && activeIndex>1 && canRoll){
+						jumpPage(true);
+						return false;
+					} else if ((keycode == 40 || keycode == 83 || keycode ==68 || keycode ==34 && canRoll) && activeIndex<numOfChildren && canRoll){
+						jumpPage(false);
+						return false;
+					} 
+				}
+				
+				//屏幕上的向下按钮
+				function downBtnDown(){
+					var $actived = $(".active");
+					var activeIndex = parseInt($actived.attr('index'));
+					var numOfChildren = $("#side_btn_ul").children().length;
+					if (activeIndex<numOfChildren && canRoll){
+						jumpPage(false);
+					}
+				}	
+				//显示上一个||下一个section
+				function jumpPage(up) {
+					var $actived = $(".active");
+					var activeIndex = parseInt($actived.attr('index'));
+					
+					showPage(activeIndex + (up?-1:1));
+				}				
+			});
+		</script>
+</body></html>

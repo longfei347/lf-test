@@ -1,0 +1,128 @@
+<!-- 　　SVG 即 Scalable Vector Graphics，是一种用来绘制矢量图的 HTML5 标签。你只需定义好XML属性，就能获得一致的图像元素。svg标签若不定义宽高,将显示全屏
+
+　　使用SVG之前先将标签加入到HTML body中。就像其他的HTML标签一样，你可以为SVG标签为之添加ID属性。也可以为之添加css样式，例如“border-style:solid;border-width:2px;”。SVG标签跟其它的HTML标签有通用的属性。你可以用height="100px" width="200px" 为其添加高度和宽度。
+
+　　SVG线条：
+　　该标签包括像起点坐标(x1,y1)和终点坐标(x2,y2)这样的属性。指定x1,y1,x2,y2值来设定起点终点坐标。在指定好坐标后，可以为之添加一些样式，在style属性中使用“stroke:Green;”为线条指定颜色。同样你也可以用stroke-width:2为线条设置宽度。
+
+SVG画圆：
+　　SVG提供了一种不同的标签来画圆。正如你看到的下面代码，circle有个id为myCircle。为了定义圆的中心以及半径，使用cx="55" cy="55"以及r="50"属性分别定义。使用fill="#219E3E"为圆填充颜色。同样你可以用stroke="#17301D" stroke-width="2"定义圆周线条颜色和宽度。
+
+SVG矩形:
+　　同样的使用标签来画矩形，我们同样设置了 id 属性 “myRectangle” ,用 width="300" height="100" 定义高宽，使用 fills 属性定义填充颜色。用 strock 定义边框。还有一点需要注意，我用 fill-opacity="0.5" stroke-opacity="0.5" 为 stroke 和 filling 都添加了透明度。
+
+　　代码3:SVG画矩形
+SVG椭圆：
+
+　　我们同样是用标签来绘制椭圆。设置其 id="myEllipse" ，给定起中心坐标 cx="120"cy="60"，长轴短轴半径 rx="100" ry="50",并用设置填充颜色、边框宽度以及边框颜色style="fill:#3F5208;stroke:black;stroke-width:3"。
+
+　　代码4:SVG画椭圆
+SVG多边形：
+
+　　我们使用特定标签绘制多边形,points属性用来定义多边形的几个顶点，用左边对来定义，形如 points="10,10 75,150 150,60" ，这里定义了三个顶点(10,10),(75,150),(150,60)。同上面一样，用 style="fill:#63BCF7;stroke:black;stroke-width:3" 定义多边形填充颜色、边框以及边框宽度。
+
+　　代码5：SVG画多边形
+<path> 标签用来定义路径。
+M = moveto 
+L = lineto 
+H = horizontal lineto 
+V = vertical lineto 
+C = curveto 
+S = smooth curveto 
+Q = quadratic Belzier curve 
+T = smooth quadratic Belzier curveto 
+A = elliptical Arc 
+Z = closepath 
+以上所有命令均允许小写字母。大写表示绝对定位，小写表示相对定位。
+在 SVG 中，可用的滤镜有：
+
+feBlend 
+feColorMatrix 
+feComponentTransfer 
+feComposite 
+feConvolveMatrix 
+feDiffuseLighting 
+feDisplacementMap 
+feFlood 
+feGaussianBlur 
+feImage 
+feMerge 
+feMorphology 
+feOffset 
+feSpecularLighting 
+feTile 
+feTurbulence 
+feDistantLight 
+fePointLight 
+feSpotLight 
+注释：您可以在每个 SVG 元素上使用多个滤镜！
+
+xmlns="http://www.w3.org/2000/svg"可以不指定
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Mrbool.com - HTML5 Tutorials</title>
+</head>
+<body>
+<h2>HTML5 SVG Line Example</h2>
+<svg id="svgLineTutorial" style="border-style:solid;border-width:2px;" width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+	<!-- <line x1="0" y1="0" x2="50" y2="200" style="stroke:rgb(100,100,0);stroke-width:5"/> -->
+	<!-- <line x1="10" y1="20" x2="100" y2="200" style="stroke:Green;stroke-width:2"/> -->
+	<!-- <circle id="myCircle" cx="55" cy="55" r="50" fill="#219E3E" stroke="#17301D" stroke-width="2" /> -->
+	<!-- <rect x="10" y="20" id="myRectangle" width="150px" height="100px" stroke="#17301D" stroke-width="2"  fill="#0E4E75" fill-opacity="0.5" stroke-opacity="0.5"/> -->
+	<!-- <ellipse id="myEllipse" cx="120" cy="60" rx="100" ry="80" style="fill:#3F5208;stroke:black;stroke-width:3"/> -->
+	<!-- <polygon id="myPolygon" points="10,10 75,150 150,60" style="fill:#63BCF7;stroke:black;stroke-width:3"/> -->
+	<!-- <polyline points="0,0 0,20 20,20 40,40 40,60" style="fill:white;stroke:red;stroke-width:2"/> -->
+	<!-- <path d="M153 334
+		C153 334 151 334 151 334
+		C151 339 153 344 156 344
+		C164 344 171 339 171 334
+		C171 322 164 314 156 314
+		C142 314 131 322 131 334
+		C131 350 142 364 156 364
+		C175 364 191 350 191 334
+		C191 311 175 294 156 294
+		C131 294 111 311 111 334
+		C111 361 131 384 156 384
+		C186 384 211 361 211 334
+		C211 300 186 274 156 274"
+		style="fill:white;stroke:red;stroke-width:2"/> -->
+	<!-- <path d="M153 334 
+		C153 334 151 334 151 334
+		C171 322 164 314 156 314
+		C142 314 131 322 131 334"
+	style="fill:blue;stroke:red;stroke-width:2"> -->
+	<path d="M153 334 L253 434 L53 434 Z" />
+	<!-- <defs>
+	<linearGradient id="orange_red" x1="0%" y1="0%" x2="100%" y2="0%">
+	<stop offset="0%" style="stop-color:rgb(255,255,0);
+	stop-opacity:1"/>
+	<stop offset="100%" style="stop-color:rgb(255,0,0);
+	stop-opacity:1"/>
+	</linearGradient>
+	</defs> -->
+	<ellipse cx="200" cy="190" rx="85" ry="55" style="fill:url(#orange_red)"/>
+	
+	<defs>
+		<radialGradient id="grey_blue" cx="50%" cy="50%" r="50%"
+		fx="50%" fy="50%">
+		<stop offset="0%" style="stop-color:rgb(200,200,200);
+		stop-opacity:0"/>
+		<stop offset="100%" style="stop-color:rgb(0,0,255);
+		stop-opacity:1"/>
+		</radialGradient>
+	</defs>
+	<ellipse cx="230" cy="200" rx="110" ry="100" style="fill:url(#grey_blue)" />
+</svg>
+<canvas width=100 height=100 id="square" fill="#f00"></canvas>
+</body>
+<script>
+//myPolygon.style.fill="#f00";
+</script>
+</html>
+
+   
+
+

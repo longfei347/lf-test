@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<style>
+	ul,li{
+	padding:0;
+	margin:0;
+	}
+    .dots {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        width: 500px;
+        height: 400px;
+        background: black;
+    }
+    .dots li {
+        position: absolute;
+        list-style-type: none;
+        left: 250px;
+        top:100px;
+        width: 8px;
+        height: 8px;
+        background: red;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        -webkit-animation: wave 1800ms ease-in-out infinite;
+        animation: wave 1800ms ease-in-out infinite;
+    }
+    .dots li:nth-child(1) {
+    }
+    @-webkit-keyframes wave {
+        0% {
+            -webkit-transform:rotate(0) translate(0px, 250px);
+        }
+        50% {
+            -webkit-transform:rotate(180deg) translate(0px, -15px);
+        }
+        100% {
+            -webkit-transform:rotate(360deg) translate(0px, 250px);
+        }
+
+    }
+    </style>
+<ul class="dots">
+</ul>
+<script>
+    var fragment=document.createDocumentFragment();
+    var ul=document.getElementsByClassName('dots')[0];
+    var li=null;
+    for(var j=0;j<40;j++){
+         li=document.createElement('li');
+        fragment.appendChild(li);
+    }
+    ul.appendChild(fragment);
+    for(var i=0;i<ul.children.length;i++){
+        ul.children[i].style.webkitAnimationDelay=51*(i+1)+'ms';
+    }
+</script>
+</body>
+</html>

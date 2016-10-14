@@ -1,0 +1,318 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<style type="text/css">
+	.panel {
+		position: relative;
+		z-index: 0;
+		top: 0px;
+		left: 400px;
+		width: 300px;
+		height: 500px;
+	}
+	
+	.console {
+		position: absolute;
+		z-index: 1;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 40px;
+		background-color: #bbb;
+	}
+	
+	.message {
+		position: absolute;
+		z-index: 1;
+		top: 40px;
+		left: 0;
+		width: 100%;
+		height: 460px;
+		color: white;
+		font-size: 50px;
+		text-align: center;
+		line-height: 460px;
+		background-color: #999;
+	}	
+	.start,
+	.score,
+	.pause {
+		position: absolute;
+		z-index: 2;
+		top: 0;
+		width: 100px;
+		height: 100%;
+		font-size: large;
+		color: white;
+		text-align: center;
+		line-height: 40px;
+		background: -webkit-linear-gradient(top, red, yellow);
+	}
+	
+	.start {
+		left: 0px;
+	}
+	
+	.score {
+		left: 100px;
+		background-color: red;
+	}
+	
+	.pause {
+		left: 200px;
+	}
+	
+	.start:after,
+	.pause:before {
+		content: "";
+		position: absolute;
+		z-index: 2;
+		top: 0;
+		width: 3px;
+		height: 100%;
+		background: -webkit-linear-gradient(top, #666, #999);
+	}
+	
+	.start:after {
+		left: 97px;
+	}
+	
+	.pause:before {
+		left: 0px;
+	}
+	
+	.start:hover,
+	.pause:hover {
+		cursor: pointer;
+		background: -webkit-linear-gradient(top, yellow, red);
+	}
+	
+	.panel span {
+		position: absolute;
+		z-index: 0;
+		top: 50%;
+		left: 50%;
+		font-size: 50px;
+		color: blue;
+	}
+	
+	.ball,
+	.secondBall {
+		position: absolute;
+		z-index: 2;
+		border-radius: 50%;
+		width: 20px;
+		height: 20px;
+	}
+	
+	.ball {
+		top: 460px;
+		left: 140px;
+		background-color: red;
+	}
+	
+	.secondBall {
+		top: 40px;
+		left: 140px;
+		background-color: red;
+	}
+	
+	.plate {
+		position: absolute;
+		top: 480px;
+		left: 100px;
+		z-index: 2;
+		width: 100px;
+		height: 20px;
+		background-color: yellow;
+	}
+	</style>
+</head>
+
+<body>
+	<div id="panel" class="panel">
+		<div class="console">
+			<div id="start" class="start">开始</div>
+			<div id="score" class="score">0</div>
+			<div id="pause" class="pause">暂停</div>
+		</div>
+		<div id="message" class="message"></div>
+		<div id="ball" class="ball"></div>
+		<div id="plate" class="plate"></div>
+	</div>
+</body>
+<script type="text/javascript">
+(function() {
+	document.onkeydown = function(e) {
+		var e = e || window.event;
+		if (e.keyCode == 37) {
+			//键盘向左键
+			plateMove("left");
+		} else if (e.keyCode == 39) {
+			//键盘向右键
+			plateMove("right");
+		}
+	}
+})();
+var panel = document.getElementById("panel"),
+	message = document.getElementById("message"),
+	plate = document.getElementById("plate"),
+	ball = document.getElementById("ball"),
+	start = document.getElementById("start"),
+	score = document.getElementById("score"),
+	pause = document.getElementById("pause"),
+	secondBall;
+var startGame, x = x2 = -1,
+	y = y2 = -1,
+	speed = 1,
+	positionArr = [],
+	pauseActive = false,
+	//一个标志：表示难度是否还能增加
+	flag = true,
+	//球的起始位置
+	ballX, ballY, secondBallX, secondBallY,
+	//边界
+	minX = 0,
+	maxX = panel.offsetWidth - ball.offsetWidth,
+	minY = 40;
+maxY = panel.offsetHeight - ball.offsetHeight - plate.offsetHeight;
+window.onload = function() {
+	if (window.addEventListener) {
+		start.addEventListener("click", startClick, false);
+		pause.addEventListener("click", pauseClick, false);
+	} else if (window.attachEvent) {
+		start.attachEvent("onclik", startClick);
+		pause.attachEvent("onclik", pauseClick);
+	} else {
+		start.onclik = startClick;
+		pause.onclik = pauseClick;
+	}
+}
+
+function plateMove(direction) {
+	if (direction == "left") {
+		if (plate.offsetLeft > 0) {
+			plate.style.left = (plate.offsetLeft - 30 < 0 ? 0 : plate.offsetLeft - 30) + "px";
+		}
+	}
+	if (direction == "right") {
+		if (plate.offsetLeft < 200) {
+			plate.style.left = (plate.offsetLeft + 30 > 200 ? 200 : plate.offsetLeft + 30) + "px";
+		}
+	}
+}
+
+function startClick() {
+	if (!pauseActive) {
+		resetGame();
+	} else {
+		pauseActive = !pauseActive;
+	}
+	startGame = setInterval(function() {
+		//console.log(ballX+"======"+ballY);
+		positionArr = setPosition(ballX, ballY, true);
+		if (positionArr == "GAMEOVER") {
+			return;
+		}
+		ballX = positionArr[0];
+		ballY = positionArr[1];
+		//设置球的位置
+		ball.style.left = ballX + "px";
+		ball.style.top = ballY + "px";
+		if (!flag) {
+			positionArr = setPosition(secondBallX, secondBallY, false);
+			secondBallX = positionArr[0];
+			secondBallY = positionArr[1];
+			secondBall.style.left = secondBallX + "px";
+			secondBall.style.top = secondBallY + "px";
+		} else {
+			addDifficulty();
+		}
+	}, 30);
+}
+
+function pauseClick() {
+	pauseActive = true;
+	clearInterval(startGame);
+}
+
+function resetGame() {
+	clearInterval(startGame);
+	message.innerHTML = "";
+	score.innerHTML = "0";
+	ball.style.left = "140px";
+	ball.style.top = "460px";
+	plate.style.left = "100px";
+	plate.style.top = "480px";
+	ballX = ball.offsetLeft;
+	ballY = ball.offsetTop;
+	speed = 1;
+	flag = true;
+	//第二个球设置隐藏
+	if (secondBall) {
+		secondBall.style.display = "none";
+		secondBall.style.left = "140px";
+		secondBall.style.top = "40px";
+	}
+}
+
+function addDifficulty() {
+	if (parseInt(score.innerHTML) > 500 && parseInt(score.innerHTML) < 2000) {
+		speed = 1.2;
+	} else if (parseInt(score.innerHTML) > 2000 && parseInt(score.innerHTML) < 5000) {
+		speed = 1.5;
+	} else if (parseInt(score.innerHTML) > 5000) {
+		if (typeof secondBall != "undefined") {
+			secondBall.style.display = "";
+		} else {
+			secondBall = document.createElement('div');
+		}
+
+		secondBall.className = 'secondBall';
+		panel.appendChild(secondBall);
+		secondBallX = secondBall.offsetLeft;
+		secondBallY = secondBall.offsetTop;
+		flag = false;
+	}
+}
+
+function setPosition(_x, _y, firstball) {
+	if (_x == minX || _x == maxX) {
+		//x*=-1;
+		firstball ? x *= -1 : x2 *= -1;
+	}
+	if (_y == minY || _y == maxY) {
+		//y*=-1;
+		firstball ? y *= -1 : y2 *= -1;
+	}
+	if (_y == maxY) {
+		//判断挡板的位置是不是在球的范围内
+		if (plate.offsetLeft > _x || (plate.offsetLeft + plate.offsetWidth) < _x) {
+			clearInterval(startGame);
+			message.innerHTML = "GAMEOVER";
+			return "GAMEOVER";
+		}
+	}
+	if (firstball) {
+		_x += 4 * x * speed;
+		_y += 5 * y * speed;
+	} else {
+		_x += 4 * x2 * speed;
+		_y += 5 * y2 * speed;
+	}
+
+	//边界处理
+	_x = _x < minX ? minX : _x;
+	_x = _x > maxX ? maxX : _x;
+
+	_y = _y < minY ? minY : _y;
+	_y = _y > maxY ? maxY : _y;
+	//设置分数
+	score.innerHTML = parseInt(score.innerHTML) + 10 * speed;
+	return [_x, _y];
+}
+</script>
+
+</html>

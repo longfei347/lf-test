@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src="js/jquery-1.11.0.js"></script>
+</head>
+<body>
+<button>Go</button> <p>Ready...</p>
+</body>
+
+<script>
+/* 3 functions to call when the Deferred object is resolved */
+function fn1() {
+    $("p").append(" 1 ");
+}
+
+function fn2() {
+    $("p").append(" 2 ");
+}
+
+function fn3(n) {
+    $("p").append(n + " 3 " + n);
+} /* create a deferred object */
+var dfd = $.Deferred(); /* add handlers to be called when dfd is resolved */
+dfd /* .done() can take any number of functions or arrays of functions */ 
+.done([fn1, fn2], fn3, [fn2, fn1]) /* we can chain done methods, too */
+.done(function(n) {
+    $("p").append(n + " we're done.");
+}); /* resolve the Deferred object when the button is clicked */
+$("button").on("click", function() {
+    dfd.resolve("and");
+});
+
+
+Function.prototype.uncurrying = function() {
+    var _this = this;
+    return function() {
+        return Function.prototype.call.apply(_this, arguments);
+        //在下面的例子中Array.prototype.push == _this
+        //因为call 本身也是个函数
+        //Function.prototype.call.apply 就是去调用call()方法
+        //也就是Array.prototype.push.call(arguments);
+        //例子中push(arr,"a") arguments 就是[arr,"a"];
+        //所以实际上到最后我们得到的是
+        //Array.prototype.push.call(arr , "a");
+        //即 arr.push("a")
+    };
+};
+/*function uncurrying(fn) {
+    return function() {
+        return Function.prototype.call.apply(fn, arguments);
+    }
+} <===>等价于
+ function uncurrying(fn) {
+    return function() {
+        var context = [].shift.call(arguments);
+        fn.apply(context, arguments);
+    }
+}*/
+var push = Array.prototype.push.uncurrying();
+var obj = {};
+push(obj, "a");
+push(obj, "b"); //Object {0: "a", 1: "b", length: 2} 
+console.log(obj);
+
+
+var toUpperCase = String.prototype.toUpperCase.uncurrying(),
+    arr = [1, 2, "abc"];
+var arr1 = arr.map(function(elem) {
+    return toUpperCase(elem); //map()迭代数组元素 A ,B,并把结果放在一个新数组中返回
+})
+
+console.log(arr1); //["A", "B"]
+
+"long",
+1 + 2
+undefined
+    '我月薪过万,不打老婆,做家务,房产归你,我妈会游泳,如果难产我保大'
+</script>
+
+
+</html>

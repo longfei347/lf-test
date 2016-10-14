@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+	<title>开花导航DEMO</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+	.nav-btn,.nav-item{
+		width:50px;
+		height:50px;
+		text-align: center;
+		padding:10px;
+		line-height: 45px;
+		color:#fff;
+		-webkit-border-radius:50%;
+		position:absolute;
+		right:50%;
+		bottom:50%;
+		-webkit-transition:all 0.8s;
+	}
+	.nav-btn{
+		background:green;
+		z-index:2;
+	}
+	.nav-btn:after{content:"展开";}
+	.nav-btn.active:after{content:"关闭";}
+	.nav-item{
+		background:blue;
+	}
+	</style>
+</head>
+	<body>
+		<div class="nav-btn"></div>
+		<div class="nav">
+			<div class="nav-item">A</div>
+			<div class="nav-item">B</div>
+			<div class="nav-item">C</div>
+			<div class="nav-item">D</div>
+			<div class="nav-item">E</div>
+			<div class="nav-item">F</div>
+			<div class="nav-item">G</div>
+			<div class="nav-item">H</div>
+			<div class="nav-item">I</div>
+			<!-- <div class="nav-item">J</div>
+			<div class="nav-item">K</div>
+			<div class="nav-item">L</div>
+			<div class="nav-item">M</div> -->
+			 
+		</div>
+<script type="text/javascript">
+//(function () {
+	var btn = document.querySelector(".nav-btn");
+	var items = document.querySelectorAll(".nav-item");
+	var l = items.length;
+	var r = 250;
+	var n = l,
+	m = Math.ceil(l / 2);
+	var deg = (2 * Math.PI) / l,
+	transform = function (x) {
+		this.style.transform = this.style.webkitTransform = this.style.mozTransform = this.style.oTransform = this.style.msTransform = x;
+	}
+	while (n--) {
+		var degg = n * deg;
+		items[n].data_transform = "translate(" + r * Math.cos(n * deg) + "px," + r * Math.sin(n * deg) + "px)"
+		//degg <= (Math.PI / 2) ? (items[n].data_transform = "translate(" + r * Math.cos(n * deg) + "px," + -r * Math.sin(n * deg) + "px)") : (degg < Math.PI ? (items[n].data_transform = "translate(" + r * Math.cos(n * deg) + "px," + -r * Math.sin(n * deg) + "px)") : (degg < ((Math.PI * 3) / 2) ? (items[n].data_transform = "translate(" + r * Math.cos(n * deg) + "px," + -r * Math.sin(n * deg) + "px)") : (items[n].data_transform = "translate(" + r * Math.cos(n * deg) + "px," + -r * Math.sin(n * deg) + "px)")));
+		//items[n].style.transitionDelay=items[n].style.webkitTransitionDelay=items[n].style.mozTransitionDelay=items[n].style.msTransitionDelay=items[n].style.oTransitionDelay=(n*50)+"ms";
+		items[n].style.transitionDelay=(n*50)+"ms";
+	}
+
+	btn.addEventListener("click", function (e) {
+		this.classList.toggle("active");
+		var i = items.length;
+		if (this.classList.contains("active")) {
+			while (i--)
+				transform.call(items[i], items[i].data_transform)//,
+				//items[i].style.transitionDelay = items[i].style.webkitTransitionDelay = items[i].style.mozTransitionDelay = items[i].style.msTransitionDelay = items[i].style.oTransitionDelay = (i * 50) + "ms";
+		} else {
+			while (i--)
+				transform.call(items[i], 'translate(0,0)')//,
+				//items[i].style.transitionDelay = items[i].style.webkitTransitionDelay = items[i].style.mozTransitionDelay = items[i].style.msTransitionDelay = items[i].style.oTransitionDelay = ((items.length - i) * 50) + "ms";
+		}
+	}, false);
+
+//})();
+
+</script>
+</body>
+</html>

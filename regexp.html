@@ -1,0 +1,124 @@
+<html>
+<head>
+<title></title>
+<script language="JavaScript">
+/*str = "numA2 numA2numB3C4 numD5E6numF7G8";
+reg = /(num([A-Z][0-9]){1,}?){2}/;
+arr_m = str.match(reg);console.log(arr_m);
+reg = /(num([A-Z][0-9]){1,}?){2}/g;
+arr_m = str.match(reg);console.log(arr_m);
+
+str = "Great hope make great man";
+reg = /\s\w+\s/g;
+arr_m = str.match(reg);console.log(arr_m);//" hope ", " great "
+
+str = "pic1.gif gif2.gif pic.gif"
+reg = /(.+)([1-4])\.\1/;
+arr_m = str.match(reg);console.log(arr_m);*/
+
+str = "numA2 numA2numB3C4C4 numD5E6E6numD5E6D5";
+reg = /(num([A-Z][0-9]){2})\2+/g;
+arr_m = str.match(reg);console.log(arr_m);
+
+str = "Happy is the Selection";
+reg = /(^\w+)\b(.*)\b(\w+$)/;
+arr_m = str.match(reg);
+str2 = str.replace(reg,"$3$2$1");
+str3 = str.replace(reg,"$3!$2$1!");
+
+str = "img1.jpg,img2.gif,img3.bmp";
+reg = /(\w*)(?=\.gif)/;
+arr_m = str.match(reg);console.log(arr_m);
+
+str = "13311114444,china_dragon@sohu.com,address,mlts@tom.com";
+reg = /\b\w+(?=@)/;
+arr_m = str.match(reg);console.log(arr_m);
+
+str = "img1.jpg,img2.gif,img3.bmp";
+reg = /(?:\w*)(?=\.gif)/;
+arr_m = str.match(reg);console.log(arr_m);
+
+str = "JavaScript is not java\njavascript and java are different.";
+reg1 = /(^java\w*)|(java$)/ig;
+reg2 = /(^java\w*)|(java$)/img;
+arr_m1 = str.match(reg1);
+arr_m2 = str.match(reg2);
+
+str = "JavaScript is not java. Java and javascript are different.";
+reg = /java\w*/img;
+/*
+document.write(reg.lastIndex);
+document.write("<br>");
+arr_m1 = reg.exec(str);
+document.write(reg.lastIndex);
+document.write("<br>");
+document.write(arr_m1);
+document.write("<br>");
+
+*/
+str = "JavaScript is not java. Java and javascript are different.";
+reg = /java\w*/img;
+while((arr_m = reg.exec(str))!= null)
+{
+	//document.write(arr_m[0]);
+	//document.write("<br>");
+}
+
+str = "JavaScript is not java. Java and javascript are different.";
+reg = /java\w*/img;
+num = 0;
+while(reg.test(str))
+{
+	num++; 
+}
+
+/*
+str = "133,cdsm@sohu.com,address,mlts@tom.com,sohu.com";
+reg = /(\b\w+)(?=@)(?:@)([\w\.]+\b)/gi;
+
+arr_m1 = reg.exec(str);
+document.write("结果数组:" + arr_m1);
+document.write("<br>");
+document.write("input属性:" + RegExp.input);
+document.write("<br>");
+document.write("lastMatch属性:" + RegExp.lastMatch);
+document.write("<br>");
+document.write("Email名称$1:" + RegExp.$1);
+document.write("<br>");
+document.write("lastParen属性:" + RegExp.lastParen);
+document.write("<br>");
+document.write("leftContext属性:" + RegExp.leftContext);
+document.write("<br>");
+document.write("rightContext属性:" + RegExp.rightContext);
+document.write("<br>");
+
+document.write("第2次匹配<br>");
+
+arr_m2 = reg.exec(str);
+document.write("结果数组:" + arr_m2);
+document.write("<br>");
+document.write("input属性:" + RegExp.input);
+document.write("<br>");
+document.write("lastMatch属性:" + RegExp.lastMatch);
+document.write("<br>");
+document.write("Email名称$1:" + RegExp.$1);
+document.write("<br>");
+document.write("lastParen属性:" + RegExp.lastParen);
+document.write("<br>");
+document.write("leftContext属性:" + RegExp.leftContext);
+document.write("<br>");
+document.write("rightContext属性:" + RegExp.rightContext);
+document.write("<br>");
+*/
+
+str = "133,cdsm@sohu.com,address,mlts@tom.com,sohu.com";
+reg = /(\b\w+)(?=@)(?:@)([\w\.]+\b)/gi;
+arr_m = str.match(reg);
+</script>
+</head>
+<body>
+<br>
+</body>
+</html>
+
+

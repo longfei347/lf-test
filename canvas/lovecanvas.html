@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>写给未来深爱的女孩</title>
+<style type="text/css">
+@font-face {
+font-family: digit;
+src: url('digital-7_mono.ttf') format("truetype");
+}
+</style>
+<link href="http://www.dianzanec.com/cloth/imgs/favicon.ico" rel="shortcut icon" type="image/x-icon">
+<link href="css/base.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="js/j.js"></script>
+<script type="text/javascript" src="loveyou/garden.js"></script>
+<script type="text/javascript" src="loveyou/functions.js"></script>
+</head>
+<body>
+<a title="Let me be your《Hero》Enrique Iglesias">
+	<audio src="http://www.dianzanec.com/iu/complete/Hero Enrique Iglesias.mp3" autoplay="" controls="" class="listen1">Hero Enrique Iglesias</audio>
+</a>
+<div class="fix1">
+	<a class="link1">精致疯子</a>
+</div>
+<div class="fix2">
+	<a class="link2">孩子气</a>
+</div>
+<div id="mainDiv">
+	<div id="content" style="width: 1150px; height: 625px; margin-top: 10px; margin-left: 119.5px; ">
+		<div id="code" style="margin-top: 82.5px; ">
+			<div id="code" class="code">
+				<span class="comments">/**</span><br>
+				<span class="space"><span class="comments">* 谨以此文，写给终将和我度过一生却还没和我在一起的你！</span><br>
+				<span class="space"><span class="comments">*/</span><br>
+				Boy i = <span class="keyword">new</span> Boy(<span class="string">"东哥哥"</span>);<br>
+				Girl u = <span class="keyword">new</span> Girl(<span class="string">"闪姐姐"</span>);<br>
+				<span class="comments">// 从知道zk君2014年3月创业起来的那一次，心里就一直想帮他做一个网站，表示对朋友创业的行动支持，给zk君3人点赞</span><br>
+				i.dianzan(zk);<br>
+				<span class="comments">// 2014年06月21号，夏至日，下午，第二次过来佛山…… 三年的大学时光让我们擦肩而过，再一次的久别重逢让我相见恨晚</span><br>
+				i.see(u);<br>
+				<span class="comments">// “有一种力量在驱使，可我永远不知道那是什么。” 但，直到我遇见了你，姐姐，Feel Good，我知道自己所有的努力都是值得的！</span><br>
+				i.runforlove(<span class="string">"闪姐姐"</span>);<br>
+				<span class="comments">// 回来广州这么20多天了，一直期待着与你的再次见面，Just Waiting For U，My Heart Will Go On！</span><br>
+				i.missing(u);<br>
+				<span class="comments">// 也一直觉得自己不够好，不得不把自己往前面紧逼一下，为了能遇到更好的人，你。当我变成你喜欢的那个样子，你会不会愿意和我一起牵着手，直到天荒地老！？</span><br>
+				i.sayto(u);<br>
+				<span class="comments">// 愿得一人心，白首不分离</span><br>
+				i.takecareof(u);<br>
+				<span class="comments">// "这封信写给她，让她知道这么多年还不出现的后果是，要陪我到白发苍苍！"... .. .</span><br>
+				Lovers we = <span class="keyword">new</span> Lovers(<span class="string">"i,u"</span>);<br>
+				we.start(?); </span></span></div>
+		</div>
+		<div id="loveHeart">
+			<canvas id="garden" width="670" height="625"></canvas>
+			<div id="words">
+				<div id="messages"> 我不知道所等待的你什么时候会出现<br>
+					我会不会在下一秒就遇见向我微笑的你
+					<div id="elapseClock"><span class="digit"></span> days <span class="digit"></span> hours <span class="digit"></span> minutes <span class="digit"></span> seconds</div>
+				</div>
+				<div id="loveu"> 都是我满满的期待<br>
+					<div class="signature">··· ·· · 罗东</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="copyright">
+	</div>
+</div>
+<script type="text/javascript">
+	var offsetX = $("#loveHeart").width() / 2;
+	var offsetY = $("#loveHeart").height() / 2 - 55;
+	var together = new Date();
+	together.setFullYear(2014, 5, 21);        //January -> 0 February->1 ... December->11
+	together.setHours(19);
+	together.setMinutes(30);
+	together.setSeconds(0);
+	together.setMilliseconds(0);
+		
+	if (!document.createElement('canvas').getContext) {
+		var msg = document.createElement("div");
+		msg.id = "errorMsg";
+		msg.innerHTML = "Your browser doesn't support HTML5!<br/>Recommend use Chrome 14+/IE 9+/Firefox 7+/Safari 4+"; 
+		document.body.appendChild(msg);
+		$("#code").css("display", "none")
+		$("#copyright").css("position", "absolute");
+		$("#copyright").css("bottom", "10px");
+		document.execCommand("stop");
+	} else {
+		setTimeout(function () {
+				adjustWordsPosition();
+				startHeartAnimation();
+		}, 65000);
+		
+		timeElapse(together);
+		setInterval(function () {
+				timeElapse(together);
+		}, 1000);
+		
+		adjustCodePosition();
+		$("#code").typewriter();
+	}
+</script>
+</body>
+</html>

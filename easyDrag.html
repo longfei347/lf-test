@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>  
+<html>  
+<head>  
+    <meta charset="utf-8">
+    <title>easydrag实现可拖动的DIV弹出框</title>
+    <style>  
+        /* 重置浏览器默认样式 */  
+        body,h1,h2,h3,h4,h5,h6,p,ul,ol,li,form,img,dl,dt,dd,table,th,td,blockquote,fieldset,div,strong,label,em{margin:0;padding:0;border:0;}  
+        ul,ol,li{list-style:none;}  
+        input,button{margin:0;font-size:12px;vertical-align:middle;}  
+        body{font-size:12px;font-family:Arial, Helvetica, sans-serif; color:#333; margin:0 auto; }  
+        table{border-collapse:collapse;border-spacing:0;}  
+        a{ color:#333; text-decoration:none;}  
+        a:hover{ text-decoration:none;}  
+  
+        .wrap{ width:960px; margin:20px auto;}  
+        .box{ display:none; background:#fff; border:1px solid #ccc; position:absolute;}  
+  
+        #popbox{ width:550px;height:320px;overflow:hidden;}  
+        #handler{ width:98%; height:30px; line-height:30px; overflow:hidden; color:#fff; border-bottom:1px solid #ccc; background:#ccc; padding-left:2%; float:left;}  
+        .btn{ display:block; width:90px; height:28px; border:1px solid #ccc; line-height:28px; text-align:center; margin-right:20px; float:left; display:inline; margin-right:15px; cursor:pointer;}  
+        .close{ display:block; background:url(images/close.gif) no-repeat; width:13px; height:13px; float:right; text-indent:-999em; cursor:pointer; display:inline; margin:8px 12px 0 0;}  
+        .head i{ float:left; font-style:normal;}  
+        .content{ width:100%; float:left;}  
+        .content img{width:100%;}  
+    </style>  
+    <!-- 使用百度的jquery在线cdn -->  
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>  
+    <!-- easydrag.js没有找到在线的cdn，大家可以自行下载 -->  
+    <script type="text/javascript" src="js/easydrag.js"></script>  
+    <script language="javascript">  
+        $(function(){  
+            //btn绑定click事件  
+            $('.btn').click(function(){  
+                //设置弹出框居中  
+                $('#popbox').css({  
+                    left: ($(window).width() - $('#popbox').outerWidth())/2,  
+                    top: ($(window).height() - $('#popbox').outerHeight())/2 + $(document).scrollTop()  
+                });  
+                $('#popbox').easydrag();      
+                //淡入已隐藏的div  
+                $('#popbox').fadeIn();    
+                $('#popbox').setHandler('handler');  
+                $('.close').click(function(){  
+                    //淡出效果来隐藏弹出的div  
+                    $('#popbox').fadeOut();  
+                });  
+            });   
+        });  
+    </script>  
+</head>  
+<body>  
+  
+<div class="wrap">  
+    <b class="btn">打开弹出框</b>  
+    <div id="popbox" class="box">  
+        <div class="head" id="handler"><b class="close">关闭</b><i>点击标题位置进行拖动</i></div>  
+        <div class="content"><a href="http://blog.csdn.net/xmtblog/"><img src="images/img03.jpg" /></a></div>  
+    </div>  
+</div>  
+</body>  
+</html>  

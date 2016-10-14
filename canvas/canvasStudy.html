@@ -1,0 +1,509 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>canvas</title>
+	
+</head>
+
+<body>
+	<canvas id="my_canvas" width="800" height="600"></canvas>
+</body>
+<script>
+function drawGraph() {
+	var ctx = document.getElementById('my_canvas').getContext('2d');
+	var data_arr = [30, 50, 90, 20, 80, 40, 70];
+	var max = 90;
+	var canvas_h = 250;
+	var canvas_w = 600;
+	var col_w = 30;
+	var space = 30;
+	//===坐标轴
+	ctx.beginPath();
+	ctx.moveTo(20, canvas_h - 30);
+	ctx.lineTo(canvas_w - 20, canvas_h - 30);
+	ctx.moveTo(canvas_w - 30, canvas_h - 25);
+	ctx.lineTo(canvas_w - 20, canvas_h - 30);
+	ctx.lineTo(canvas_w - 30, canvas_h - 35); //ctx.stroke();
+	//
+	ctx.moveTo(20, canvas_h - 30);
+	ctx.lineTo(20, 20);
+	ctx.moveTo(15, 30);
+	ctx.lineTo(20, 20);
+	ctx.lineTo(25, 30);
+	ctx.stroke();
+	//
+	var i = 0,
+		col_h = 0;
+	var ax = 250 - 30; //水平轴
+	var ay = 20; //竖轴
+	ctx.fillStyle = "#6633CC";
+	for (i = 0; i < data_arr.length; i++) {
+		col_h = data_arr[i] / max * 200;
+		ctx.fillRect(ay + i * (col_w + space) + 30, ax - col_h, col_w, col_h);
+	}
+}
+
+function drawArc() {
+	var ctx = document.getElementById('my_canvas').getContext('2d');
+
+	ctx.strokeStyle = '#0099ff';
+	ctx.fillStyle = '#0099ff';
+
+	for (i = 0; i < 4; i++) {
+		for (j = 1; j < 7; j++) {
+			ctx.beginPath();
+			var x = 20 + (j - 1) * 50;
+			var y = 20 + i * 50;
+			var radius = 20;
+			var start_angle = 0;
+			var end_angle = (Math.PI * j) / 3;
+			//false偶数行逆时针绘制,奇数行顺时针绘制
+			var anticlockwise = i % 2 == 0 ? false : true;
+
+			ctx.arc(x, y, radius, start_angle, end_angle, anticlockwise);
+			//第0、1行勾画得到弧线，第2、3行填充
+			if (i > 1) {
+				ctx.fill();
+			} else {
+				ctx.stroke();
+			}
+		}
+	}
+}
+
+function drawRect() {
+	var canvas = document.getElementById('my_canvas');
+	if (canvas.getContext) {
+		var ctx = canvas.getContext('2d');
+		ctx.fillStyle = "#FFCC33";
+		ctx.strokeStyle = "#FF99FF";
+		ctx.lineWidth = "4";
+		ctx.fillRect(30,10,300,100);
+		ctx.clearRect(50,30,260,60);
+		//ctx.strokeRect(70,50,220,20);
+	}
+}
+
+function drawImage() {
+	var ctx = document.getElementById('my_canvas').getContext('2d');
+	//===微笑
+	//ctx.moveTo(500,200)
+	ctx.beginPath();
+	ctx.arc(75, 75, 50, 0, Math.PI * 2, true);
+	ctx.moveTo(110, 75);
+	ctx.arc(75, 75, 35, 0, Math.PI, false);
+	ctx.moveTo(65, 65);
+	ctx.arc(60, 65, 5, 0, Math.PI, true); // 左眼
+	ctx.moveTo(95, 65);
+	ctx.arc(90, 65, 5, 0, Math.PI, true); // 右眼
+	ctx.lineWidth = 3;
+	ctx.strokeStyle = "#FF6600";
+	ctx.stroke();
+	//===Music
+	ctx.beginPath();
+	ctx.arc(240, 75, 40, 0, Math.PI * 2, true);
+	ctx.fillStyle = "#FF9933";
+	ctx.fill();
+	//外环
+	ctx.beginPath();
+	ctx.moveTo(192, 90);
+	ctx.lineTo(192, 70);
+	ctx.arc(240, 75, 48, Math.PI, 0, false);
+	ctx.lineTo(288, 90);
+	ctx.strokeStyle = "#FF9933";
+	ctx.lineWidth = 5;
+	ctx.stroke();
+	//耳朵
+	ctx.beginPath();
+	ctx.arc(188, 75, 10, Math.PI / 2, 3 * Math.PI / 2, false);
+	ctx.fill();
+	ctx.beginPath();
+	ctx.arc(292, 75, 10, 3 * Math.PI / 2, Math.PI / 2, false);
+	ctx.fill();
+	//===八卦
+	//黑色部分
+	ctx.beginPath();
+	ctx.arc(400, 75, 50, 3 * Math.PI / 2, Math.PI / 2, false);
+	ctx.arc(400, 50, 25, 3 * Math.PI / 2, Math.PI / 2, true);
+	ctx.fillStyle = "black";
+	ctx.fill();
+	//
+	ctx.beginPath();
+	ctx.arc(400, 100, 25, 0, Math.PI * 2, true);
+	ctx.fillStyle = "white";
+	ctx.fill();
+	//上边白色小圆
+	ctx.beginPath();
+	ctx.arc(400, 50, 8, 0, Math.PI * 2, true);
+	ctx.fillStyle = "white";
+	ctx.fill();
+	//下边黑色小圆
+	ctx.beginPath();
+	ctx.arc(400, 100, 8, 0, Math.PI * 2, true);
+	ctx.fillStyle = "black";
+	ctx.fill();
+	//外围圆周
+	ctx.beginPath();
+	ctx.arc(400, 75, 50, 0, Math.PI * 2, true);
+	ctx.strokeStyle = "black";
+	ctx.lineWidth = 2;
+	ctx.stroke();
+	//===箭头
+	for (var i = 0; i < 5; i++) {
+		ctx.beginPath();
+		ctx.moveTo(500, 30 + i * (20 + i));
+		ctx.lineTo(570, 30 + i * (20 + i));
+		ctx.moveTo(560, 30 + i * (20 + i) - 5);
+		ctx.lineTo(570, 30 + i * (20 + i));
+		ctx.lineTo(560, 30 + i * (20 + i) + 5);
+		ctx.lineWidth = 2 + i;
+		ctx.stroke();
+	}
+}
+
+function drawGradient() {
+	var ctx = document.getElementById('my_canvas').getContext('2d');
+	//===stroke
+	ctx.beginPath();
+	ctx.moveTo(20, 30);
+	ctx.lineTo(300, 30);
+	//垂直的线性渐变
+	line_gra = ctx.createLinearGradient(20, 25, 20, 35);
+	line_gra.addColorStop(0, "#663300");
+	line_gra.addColorStop(0.5, "white");
+	line_gra.addColorStop(1, "#663300");
+	ctx.strokeStyle = line_gra;
+	ctx.lineWidth = 10;
+	ctx.stroke();
+	//===矩形渐变
+	line_gra2 = ctx.createLinearGradient(400, 25, 400, 125);
+	line_gra2.addColorStop(0, "#33CC00");
+	line_gra2.addColorStop(0.5, "white");
+	line_gra2.addColorStop(0.5, "#663300");
+	line_gra2.addColorStop(1.0, "#99FFFF");
+	ctx.fillStyle = line_gra2;
+	ctx.fillRect(420, 25, 100, 100);
+	//===圆形按钮
+	ctx.beginPath();
+	ctx.arc(600, 100, 70, 0, Math.PI * 2, true);
+	line_gra3 = ctx.createLinearGradient(20, 30, 20, 170);
+	line_gra3.addColorStop(0, "#333333");
+	line_gra3.addColorStop(1, "#DDDDDD");
+	ctx.fillStyle = line_gra3;
+	ctx.fill();
+	ctx.beginPath();
+	ctx.arc(600, 100, 60, 0, Math.PI * 2, true);
+	line_gra4 = ctx.createLinearGradient(20, 40, 20, 160);
+	line_gra4.addColorStop(0, "#DDDDDD");
+	line_gra4.addColorStop(1, "#333333");
+	ctx.fillStyle = line_gra4;
+	ctx.fill();
+	//===放射形渐变
+	ctx.beginPath();
+	ctx.arc(50, 70, 30, 0, Math.PI * 2, true);
+	rad_gra = ctx.createRadialGradient(40, 50, 3, 50, 70, 30);
+	rad_gra.addColorStop(0, "rgba(255,255,255,0.4)"); //定义透明色
+	rad_gra.addColorStop(1, "#FF9900");
+	ctx.fillStyle = rad_gra;
+	ctx.fill();
+	ctx.beginPath();
+	ctx.arc(100, 100, 40, 0, Math.PI * 2, true);
+	rad_gra2 = ctx.createRadialGradient(110, 110, 5, 100, 100, 40);
+	rad_gra2.addColorStop(0, "#99FFFF");
+	rad_gra2.addColorStop(0.95, "#3333FF");
+	rad_gra2.addColorStop(1, "rgba(51,51,255,0.2)"); //定义透明色
+	ctx.fillStyle = rad_gra2;
+	ctx.fill();
+	//===
+	ctx.beginPath();
+	ctx.arc(300, 300, 200, 0, Math.PI, true);
+	ctx.lineTo(120, 300);
+	ctx.arc(300, 300, 150, Math.PI, 0, false);
+	ctx.lineTo(475, 300);
+	rad_gra3 = ctx.createRadialGradient(300, 300, 150, 300, 300, 200);
+	rad_gra3.addColorStop(0, "rgba(255,0,0,0.1)"); //定义透明色
+	rad_gra3.addColorStop(0.2, "rgba(255,255,0,0.7)");
+	rad_gra3.addColorStop(0.4, "rgba(255,0,0,0.6)");
+	rad_gra3.addColorStop(0.7, "rgba(51,200,255,0.6)");
+	rad_gra3.addColorStop(0.9, "rgba(255,218,0,0.6)");
+	rad_gra3.addColorStop(1, "rgba(255,218,0,0.2)");
+	ctx.fillStyle = rad_gra3;
+	ctx.fill();
+}
+
+function drawGradientRect() {
+	var ctx = document.getElementById('my_canvas').getContext('2d');
+	for (i = 0; i < 6; i++) {
+		for (j = 0; j < 12; j++) {
+			ctx.fillStyle = 'rgb(' + Math.floor(255 - 20 * i) + ',' +
+				Math.floor(255 - 20 * j) + ',0)';
+			ctx.fillRect(j * 25, i * 25, 25, 25);
+		}
+	}
+}
+
+function drawOpacityRect() {
+	var ctx = document.getElementById('my_canvas').getContext('2d');
+	ctx.fillStyle = 'rgb(255,221,0)';
+	ctx.fillRect(0, 0, 200, 40);
+	ctx.fillStyle = 'rgb(102,204,0)';
+	ctx.fillRect(0, 40, 200, 40);
+	ctx.fillStyle = 'rgb(0,153,255)';
+	ctx.fillRect(200, 0, 200, 40);
+	ctx.fillStyle = 'rgb(255,51,0)';
+	ctx.fillRect(200, 40, 200, 40);
+	//透明矩形
+	for (i = 0; i < 10; i++) {
+		ctx.fillStyle = 'rgba(255,255,255,' + (i + 1) / 10 + ')';
+		for (j = 0; j < 2; j++) {
+			ctx.fillRect(5 + i * 19, 5 + j * 40, 19, 30);
+			ctx.fillRect(200 + 5 + i * 19, 5 + j * 40, 19, 30);
+		}
+	}
+}
+
+function drawPath() {
+	var ctx = document.getElementById('my_canvas').getContext('2d');
+
+	ctx.beginPath();
+	ctx.strokeStyle = "red";
+	ctx.moveTo(20, 20);
+	ctx.lineTo(20, 100);
+	ctx.lineTo(90, 50);
+	ctx.moveTo(100, 120);
+	ctx.lineTo(30, 100);
+	ctx.lineTo(160, 10);
+	//ctx.arc(200,100,30,0,Math.Pi,true);
+	//ctx.closePath();
+	//ctx.stroke();
+	//ctx.strokeRect(60,60,60,60);
+	//ctx.fill();
+	//ctx.lineTo(190,90);
+	//ctx.lineTo(210,120);
+	ctx.lineWidth = 3;
+	ctx.stroke();
+	ctx.lineTo(200, 30);
+	ctx.lineTo(280, 50);
+	ctx.stroke();
+
+}
+
+function drawLine() {
+	var ctx = document.getElementById('my_canvas').getContext('2d');
+	var left = 10;
+	ctx.beginPath();
+
+	for (i = 0; i < 8; i++) {
+		//上方线条
+		ctx.moveTo(left + i * (40 + 32), 60);
+		ctx.lineTo(left + i * (40 + 32), 40);
+		ctx.lineTo(left + i * (40 + 32) + 40, 40);
+		ctx.lineTo(left + i * (40 + 32) + 40, 60);
+		//下方线条
+		ctx.moveTo(left + 32 + i * (40 + 32), 40);
+		ctx.lineTo(left + 32 + i * (40 + 32), 60);
+		ctx.lineTo(left + 32 + i * (40 + 32) + 48, 60);
+		ctx.lineTo(left + 32 + i * (40 + 32) + 48, 40);
+	}
+	ctx.strokeStyle = "#000066";
+	ctx.stroke();
+}
+
+function drawLinearGradient() {
+	var ctx = document.getElementById('my_canvas').getContext('2d');
+
+	var grad_h = ctx.createLinearGradient(0, 0, 120, 0);
+	grad_h.addColorStop(0, "green");
+	grad_h.addColorStop(0.8, "#ff0");
+	grad_h.addColorStop(1.0, "red");
+	ctx.fillStyle = grad_h;
+	ctx.fillRect(0, 0, 120, 100);
+	var grad_v = ctx.createLinearGradient(0, 0, 0, 100);
+	grad_v.addColorStop(0, "white");
+	grad_v.addColorStop(0.5, "blue");
+	grad_v.addColorStop(1.0, "red");
+	ctx.fillStyle = grad_v;
+	ctx.fillRect(140, 0, 100, 100);
+	var grad = ctx.createLinearGradient(260, 0, 360, 100);
+	grad.addColorStop(0, "white");
+	grad.addColorStop(0.5, "blue");
+	grad.addColorStop(1.0, "red");
+	ctx.fillStyle = grad;
+	ctx.fillRect(260, 0, 100, 100);
+	ctx.fillRect(365, 0, 100, 100);
+}
+
+function drawPolygon() {
+	var ctx = document.getElementById('my_canvas').getContext('2d');
+	ctx.fillStyle = "#663300";
+	ctx.fillRect(0, 0, 150, 70);
+	ctx.fillStyle = "#FFCC00";
+	ctx.fillRect(25, 25, 150, 70);
+	//透明矩形
+	ctx.fillStyle = "#9966FF";
+	ctx.globalAlpha = 0.4; //设置透明度
+	ctx.fillRect(50, 50, 150, 70);
+	//透明三角形
+	ctx.beginPath();
+	ctx.arc(55, 95, 20, 0, Math.PI * 2, true);
+	ctx.arc(170, 95, 20, 0, Math.PI * 2, true);
+	ctx.fillStyle = "#99FF00";
+	ctx.fill();
+
+	ctx.globalAlpha = 1.0; //不透明
+	ctx.fillStyle = '#FD0';
+	ctx.fillRect(300, 0, 75, 75);
+	ctx.fillStyle = '#6C0';
+	ctx.fillRect(375, 0, 75, 75);
+	ctx.fillStyle = '#09F';
+	ctx.fillRect(300, 75, 75, 75);
+	ctx.fillStyle = '#F30';
+	ctx.fillRect(375, 75, 75, 75);
+	ctx.fillStyle = '#FFF';
+	// 透明
+	ctx.globalAlpha = 0.2;
+	// 关透明圆
+	for (i = 0; i < 7; i++) {
+		ctx.beginPath();
+		ctx.arc(375, 75, 10 + 10 * i, 0, Math.PI * 2, true);
+		ctx.fill();
+	}
+}
+
+function drawCirclePercent() {
+	var ctx = document.getElementById("my_canvas").getContext('2d');
+	//移动到圆心位置(100,100)
+	ctx.translate(150, 100); //状态一
+	//绘制扇形
+	ctx.beginPath();
+	ctx.moveTo(0, 0);
+	ctx.lineTo(80, 0);
+	ctx.arc(0, 0, 80, 0, (60 / 180) * Math.PI, false);
+	ctx.lineTo(0, 0);
+	ctx.fillStyle = "red";
+	ctx.fill();
+	ctx.stroke();
+	//存储状态一,目的是存储坐标系
+	ctx.save();
+	//旋转坐标,角度为这前所有扇形弧度之和
+	ctx.rotate((60 / 180) * Math.PI);
+	ctx.beginPath();
+	ctx.moveTo(0, 0);
+	ctx.lineTo(80, 0);
+	ctx.arc(0, 0, 80, 0, (80 / 180) * Math.PI, false);
+	ctx.lineTo(0, 0);
+	ctx.fillStyle = "blue";
+	ctx.fill();
+	ctx.stroke();
+	//
+	ctx.restore(); //恢复状态一
+	ctx.save(); //存储状态一
+	//旋转坐标,角度为这前所有扇形弧度之和
+	ctx.rotate(((60 + 80) / 180) * Math.PI);
+	ctx.beginPath();
+	ctx.moveTo(0, 0);
+	ctx.lineTo(80, 0);
+	ctx.arc(0, 0, 80, 0, (120 / 180) * Math.PI, false);
+	ctx.lineTo(0, 0);
+	ctx.fillStyle = "purple";
+	ctx.fill();
+	ctx.stroke();
+	//
+	ctx.restore(); //恢复状态一
+	ctx.save();
+	//旋转坐标,角度为这前所有扇形弧度之和
+	ctx.rotate(((60 + 80 + 120) / 180) * Math.PI);
+	ctx.beginPath();
+	ctx.moveTo(0, 0);
+	ctx.lineTo(80, 0);
+	ctx.arc(0, 0, 80, 0, (100 / 180) * Math.PI, false);
+	ctx.lineTo(0, 0);
+	ctx.fillStyle = "yellow";
+	ctx.fill();
+	ctx.stroke();
+}
+
+function drawFromImage() {
+	var ctx = document.getElementById('my_canvas').getContext('2d');
+	var pat_img = new Image();
+	pat_img.src = "../images/002.gif";
+	var pat = ctx.createPattern(pat_img, 'repeat');
+	ctx.fillStyle = pat;
+	ctx.fillRect(0, 0, 300, 100);
+}
+
+function drawRadialGradient() {
+	var ctx = document.getElementById('my_canvas').getContext('2d');
+
+	var rad_grad = ctx.createRadialGradient(50, 50, 20, 50, 50, 60);
+	rad_grad.addColorStop(0, "#000000");
+	rad_grad.addColorStop(0.2, "#99CCFF");
+	rad_grad.addColorStop(0.4, "#FFCC33");
+	rad_grad.addColorStop(0.6, "#99FF33");
+	rad_grad.addColorStop(0.8, "#CC66FF");
+	rad_grad.addColorStop(1.0, "#FF3300");
+	ctx.fillStyle = rad_grad;
+	ctx.fillRect(0, 0, 130, 130);
+	var rad_grad2 = ctx.createRadialGradient(200, 50, 20, 200, 70, 60);
+	rad_grad2.addColorStop(0, "#FFFFCC");
+	rad_grad2.addColorStop(0.2, "#99CCFF");
+	rad_grad2.addColorStop(0.4, "#FFCC33");
+	rad_grad2.addColorStop(0.6, "#99FF33");
+	rad_grad2.addColorStop(0.8, "#CC66FF");
+	rad_grad2.addColorStop(1.0, "#FF3300");
+	ctx.fillStyle = rad_grad2;
+	ctx.fillRect(150, 0, 140, 140);
+}
+
+function drawSmallGraph() {
+	var ctx = document.getElementById('my_canvas').getContext('2d'),
+		drawSpirograph = function(ctx, R, r, O) {
+			var x1 = R - O;
+			var y1 = 0;
+			var i = 1;
+			ctx.beginPath();
+			ctx.moveTo(x1, y1);
+			do {
+				if (i > 20000) break;
+				var x2 = (R + r) * Math.cos(i * Math.PI / 72) - (r + O) * Math.cos(((R + r) / r) * (i * Math.PI / 72))
+				var y2 = (R + r) * Math.sin(i * Math.PI / 72) - (r + O) * Math.sin(((R + r) / r) * (i * Math.PI / 72))
+				ctx.lineTo(x2, y2);
+				//x1 = x2;
+				//y1 = y2;
+				i++;
+			} while (x2 != R - O && y2 != 0);
+			ctx.stroke();
+		};
+	ctx.fillRect(0, 0, 300, 300);
+	for (var i = 0; i < 3; i++) {
+		for (var j = 0; j < 3; j++) {
+			ctx.save();
+			ctx.strokeStyle = "#9CFF00";
+			ctx.translate(50 + j * 100, 50 + i * 100);
+			drawSpirograph(ctx, 20 * (j + 2) / (j + 1), -8 * (i + 3) / (i + 1), 10);
+			ctx.restore();
+		}
+	}
+}
+
+function drawLinearGradient() {
+	var ctx = document.getElementById('my_canvas').getContext('2d');
+
+	ctx.font = "20px Georgia";
+	ctx.strokeText("Hello World!", 10, 50);
+
+	ctx.font = "30px Verdana";
+	// 创建渐变
+	var gradient = ctx.createLinearGradient(0, 0, 800, 0);
+	gradient.addColorStop("0", "magenta");
+	gradient.addColorStop("0.5", "blue");
+	gradient.addColorStop("1.0", "red");
+	// 用渐变填色
+	ctx.strokeStyle = gradient;
+	ctx.strokeText("w3school.com.cn", 10, 90);
+
+}
+</script>
+</html>

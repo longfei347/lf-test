@@ -1,0 +1,660 @@
+/*
+*	这个css用来控制字体出现动画
+*	整体animation在前
+*	整体keyframe在后
+*/
+
+/*屏幕切换效果*/
+#s1.active ,#s2.active ,#s3.active ,#s4.active {
+	-webkit-animation: aniSec1a 700ms ease 300ms both;
+	-moz-animation: aniSec1a 700ms ease 300ms both;
+	-ms-animation: aniSec1a 700ms ease 300ms both;
+	-o-animation: aniSec1a 700ms ease 300ms both;
+	animation: aniSec1a 700ms ease 300ms both;
+}
+
+#s5.active {
+	-webkit-animation: 	s5Appear 700ms ease 0ms both;
+	-moz-animation: 	s5Appear 700ms ease 0ms both;
+	-ms-animation: 		s5Appear 700ms ease 0ms both;
+	-o-animation: 		s5Appear 700ms ease 0ms both;
+	animation: 			s5Appear 700ms ease 0ms both;
+}
+#s1.disappear, #s2.disappear,#s3.disappear,#s4.disappear {
+	-webkit-animation: aniSec1b 1000ms ease 1ms both;
+	-moz-animation: aniSec1b 1000ms ease 1ms both;
+	-ms-animation: aniSec1b 1000ms ease 1ms both;
+	-o-animation: aniSec1b 1000ms ease 1ms both;
+	animation: aniSec1b 1000ms ease 1ms both;
+}
+#s5.disappear {
+	-webkit-animation: 	s5Disappear 700ms ease 0ms both;
+	-moz-animation: 	s5Disappear 700ms ease 0ms both;
+	-ms-animation: 		s5Disappear 700ms ease 0ms both;
+	-o-animation: 		s5Disappear 700ms ease 0ms both;
+	animation: 			s5Disappear 700ms ease 0ms both;
+}
+/*"试试鼠标滚动"文字出现*/
+.active .roll {
+	-webkit-animation: 	appearRoll 1700ms ease 2800ms both;
+	-moz-animation: 	appearRoll 1700ms ease 3000ms both;
+	-ms-animation: 		appearRoll 1700ms ease 3000ms both;
+	-o-animation: 		appearRoll 1700ms ease 3000ms both;
+	animation: 			appearRoll 1700ms ease 3000ms both;
+}
+
+/*试试向下按钮-出现效果*/
+.active #rollImg1 { 
+	-webkit-animation: 	bounce 3s infinite ease-in-out;
+	-moz-animation: 	bounce 3s infinite ease-in-out;
+	-ms-animation: 		bounce 3s infinite ease-in-out;
+	-o-animation: 		bounce 3s infinite ease-in-out;
+	animation: 			bounce 3s infinite ease-in-out;
+}.active #rollImg2 { 
+	-webkit-animation: 	bounce 3s ease-in-out 1.5s infinite;
+	-moz-animation: 	bounce 3s ease-in-out 1.5s infinite;
+	-ms-animation: 		bounce 3s ease-in-out 1.5s infinite;
+	-o-animation: 		bounce 3s ease-in-out 1.5s infinite;
+	animation: 			bounce 3s ease-in-out 1.5s infinite;
+}
+
+/*文字从右往左出现*/
+.active #s1_title ,.active #s2_title, .active #s1_save{
+	-webkit-animation: 	appearTitleRL 300ms ease 1800ms both;
+	-moz-animation: 	appearTitleRL 300ms ease 1800ms both;
+	-ms-animation: 		appearTitleRL 300ms ease 1800ms both;
+	-o-animation: 		appearTitleRL 300ms ease 1800ms both;
+	animation: 			appearTitleRL 300ms ease 1800ms both;
+}
+.active #s2_title{
+	-webkit-animation: 	appearTitleRL 300ms ease 1400ms both;
+	-moz-animation: 	appearTitleRL 300ms ease 1400ms both;
+	-ms-animation: 		appearTitleRL 300ms ease 1400ms both;
+	-o-animation: 		appearTitleRL 300ms ease 1400ms both;
+	animation: 			appearTitleRL 300ms ease 1400ms both;
+}
+/*文字从左往右出现*/
+ .active #s1_save{
+	-webkit-animation: 	appearTitleLR 300ms ease 1800ms both;
+	-moz-animation: 	appearTitleLR 300ms ease 1800ms both;
+	-ms-animation: 		appearTitleLR 300ms ease 1800ms both;
+	-o-animation: 		appearTitleLR 300ms ease 1800ms both;
+	animation: 			appearTitleLR 300ms ease 1800ms both;
+}
+
+
+/*第三个-出现的字*/
+.active #s1_time{
+	-webkit-animation: 	appearTitleRL 400ms ease 2000ms both;
+	-moz-animation: 	appearTitleRL 400ms ease 2000ms both;
+	-ms-animation: 		appearTitleRL 400ms ease 2000ms both;
+	-o-animation: 		appearTitleRL 400ms ease 2000ms both;
+	animation: 			appearTitleRL 400ms ease 2000ms both;
+}
+	
+
+/*第五个-出现的字*/
+.active #s2_right_text1,
+.active #s2_right_textImg, 
+.active #s2_right_text2,
+.active #s2_right_text3 {
+	-webkit-animation: 	appearTitleRL 400ms ease 2600ms both;
+	-moz-animation: 	appearTitleRL 400ms ease 3000ms both;
+	-ms-animation: 		appearTitleRL 400ms ease 3000ms both;
+	-o-animation: 		appearTitleRL 400ms ease 3000ms both;
+	animation: 			appearTitleRL 400ms ease 3000ms both;
+}
+.active #s2_right_text4{
+	-webkit-animation: 	appearRoll 200ms ease 1400ms both;
+	-moz-animation: 	appearRoll 200ms ease 1400ms both;
+	-ms-animation: 		appearRoll 200ms ease 1400ms both;
+	-o-animation: 		appearRoll 200ms ease 1400ms both;
+	animation: 			appearRoll 200ms ease 1400ms both;
+}
+
+/*section1 大动画*/
+.active #s1_ani_1{
+	-webkit-animation: 	rotateCW 40s linear 0s infinite;
+	-moz-animation: 	rotateCW 40s linear 0s infinite;
+	-ms-animation: 		rotateCW 40s linear 0s infinite;
+	-o-animation: 		rotateCW 40s linear 0s infinite;
+	animation: 			rotateCW 40s linear 0s infinite;
+}
+.active #s1_ani_2{
+	-webkit-animation: 	rotateCCW 16s linear 0s infinite;
+	-moz-animation: 	rotateCCW 16s linear 0s infinite;
+	-ms-animation: 		rotateCCW 16s linear 0s infinite;
+	-o-animation: 		rotateCCW 16s linear 0s infinite;
+	animation: 			rotateCCW 16s linear 0s infinite;
+}
+.active #s1_ani_4{
+	-webkit-animation: 	rotateCW2 2s linear 0s both;
+	-moz-animation: 	rotateCW2 2s linear 0s both;
+	-ms-animation: 		rotateCW2 2s linear 0s both;
+	-o-animation:		rotateCW2 2s linear 0s both;
+	animation: 			rotateCW2 2s linear 0s both;
+}
+.active #s1_ani_42{
+	-webkit-animation: 	appearRoll 200ms linear 1900ms both;
+	-moz-animation: 	appearRoll 200ms linear 1900ms both;
+	-ms-animation: 		appearRoll 200ms linear 1900ms both;
+	-o-animation:		appearRoll 200ms linear 1900ms both;
+	animation: 			appearRoll 200ms linear 1900ms both;
+}
+
+.active #s1_ani_52{
+	-webkit-animation: 	rotateCW2 2s linear 0s both;
+	-webkit-transform-origin: 	50% 100%;
+	-moz-animation: 	rotateCW2 2s linear 0s both;
+	-moz-transform-origin: 		50% 100%;
+	-ms-animation: 		rotateCW2 2s linear 0s both;
+	-ms-transform-origin: 		50% 100%;
+	-o-animation: 		rotateCW2 2s linear 0s both;
+	-o-transform-origin: 		50% 100%;
+	animation: 			rotateCW2 2s linear 0s both;
+	transform-origin: 			50% 100%;
+}
+/*section2-大动画*/
+.active #s2_ani1 {
+	-webkit-animation: 	rotateCWScale 12s linear 0s infinite;
+	-moz-animation: 	rotateCWScale 12s linear 0s infinite;
+	-ms-animation: 		rotateCWScale 12s linear 0s infinite;
+	-o-animation: 		rotateCWScale 12s linear 0s infinite;
+	animation: 			rotateCWScale 12s linear 0s infinite;
+}
+/*section2-右侧对比动画*/
+.active #s2_com11, .active #s2_com2 {
+	-webkit-animation: 	appearFromBot 400ms ease 1600ms both;
+	-moz-animation: 	appearFromBot 400ms ease 1600ms both;
+	-ms-animation: 		appearFromBot 400ms ease 1600ms both;
+	-o-animation: 		appearFromBot 400ms ease 1600ms both;
+	animation: 			appearFromBot 400ms ease 1600ms both;
+}
+.active #s2_com12 {
+	-webkit-animation: 	appearFromBot 400ms ease 2000ms both;
+	-moz-animation: 	appearFromBot 400ms ease 2000ms both;
+	-ms-animation: 		appearFromBot 400ms ease 2000ms both;
+	-o-animation: 		appearFromBot 400ms ease 2000ms both;
+	animation: 			appearFromBot 400ms ease 2000ms both;
+}
+.active #s2_com13 {
+	-webkit-animation: 	appearFromBot 400ms ease 2400ms both;
+	-moz-animation: 	appearFromBot 400ms ease 2400ms both;
+	-ms-animation: 		appearFromBot 400ms ease 2400ms both;
+	-o-animation: 		appearFromBot 400ms ease 2400ms both;
+	animation: 			appearFromBot 400ms ease 2400ms both;
+}
+
+/*section3-123部分出现*/
+.active #s3_ani1 {
+	-webkit-animation: 	popOut 500ms ease 1000ms forwards; 
+	-moz-animation: 	popOut 500ms ease 1000ms forwards; 
+	-ms-animation: 		popOut 500ms ease 1000ms forwards; 
+	-o-animation: 		popOut 500ms ease 1000ms forwards; 
+	animation: 			popOut 500ms ease 1000ms forwards; 
+}
+.active #s3_ani2 {
+	-webkit-animation: 	popOut 500ms ease 2000ms forwards; 
+	-moz-animation: 	popOut 500ms ease 2000ms forwards; 
+	-ms-animation: 		popOut 500ms ease 2000ms forwards; 
+	-o-animation: 		popOut 500ms ease 2000ms forwards; 
+	animation: 			popOut 500ms ease 2000ms forwards; 
+}
+.active #s3_ani3 {
+	-webkit-animation: 	popOut 500ms ease 3000ms forwards; 
+	-moz-animation: 	popOut 500ms ease 3000ms forwards; 
+	-ms-animation: 		popOut 500ms ease 3000ms forwards; 
+	-o-animation: 		popOut 500ms ease 3000ms forwards; 
+	animation: 			popOut 500ms ease 3000ms forwards; 
+}
+
+/*section3-动画1*/
+.active #s3_ani1_1 {
+	-webkit-animation:	rotateCCWHalf 2300ms linear 500ms both;
+	-moz-animation: 	rotateCCWHalf 2300ms linear 500ms both;
+	-ms-animation: 		rotateCCWHalf 2300ms linear 500ms both;
+	-o-animation: 		rotateCCWHalf 2300ms linear 500ms both;
+	animation: 			rotateCCWHalf 2300ms linear 500ms both;
+}
+.active #s3_ani1_3 {
+	-webkit-animation: 	shine 1800ms linear 700ms both;
+	-moz-animation: 	shine 1800ms linear 700ms both;
+	-ms-animation: 		shine 1800ms linear 700ms both;
+	-o-animation: 		shine 1800ms linear 700ms both;
+	animation: 			shine 1800ms linear 700ms both;
+}
+.active #s3_ani1_4 {
+	-webkit-animation: 	shine 1200ms linear 1200ms both;
+	-moz-animation: 	shine 1200ms linear 1200ms both;
+	-ms-animation: 		shine 1200ms linear 1200ms both;
+	-o-animation: 		shine 1200ms linear 1200ms both;
+	animation: 			shine 1200ms linear 1200ms both;
+}
+/*section3-动画2*/
+.active #s3_ani2_1 {
+	-webkit-animation:	rotateCCWHalf 1500ms linear 2000ms both;
+	-moz-animation: 	rotateCCWHalf 1500ms linear 2000ms both;
+	-ms-animation: 		rotateCCWHalf 1500ms linear 2000ms both;
+	-o-animation: 		rotateCCWHalf 1500ms linear 2000ms both;
+	animation: 			rotateCCWHalf 1500ms linear 2000ms both;
+}
+.active #s3_ani2_3{	
+	-webkit-animation: 	rotateCWHalf 1300ms linear 2000ms both;
+	-moz-animation: 	rotateCWHalf 1300ms linear 2000ms both;
+	-ms-animation: 		rotateCWHalf 1300ms linear 2000ms both;
+	-o-animation: 		rotateCWHalf 1300ms linear 2000ms both;
+	animation: 			rotateCWHalf 1300ms linear 2000ms both;
+}
+.active #s3_ani2_4{
+	-webkit-animation: 	rotateCCWHalf 1300ms linear 2000ms both;
+	-moz-animation: 	rotateCCWHalf 1300ms linear 2000ms both;
+	-ms-animation: 		rotateCCWHalf 1300ms linear 2000ms both;
+	-o-animation: 		rotateCCWHalf 1300ms linear 2000ms both;
+	animation: 			rotateCCWHalf 1300ms linear 2000ms both;
+}
+.active #s3_ani2_5{
+	-webkit-animation: 	shine 1300ms linear 2000ms both;
+	-moz-animation: 	shine 1300ms linear 2000ms both;
+	-ms-animation: 		shine 1300ms linear 2000ms both;
+	-o-animation: 		shine 1300ms linear 2000ms both;
+	animation: 			shine 1300ms linear 2000ms both;
+}
+.active #s3_ani2_6{
+	-webkit-animation: 	shine 1300ms linear 2000ms both;
+	-moz-animation: 	shine 1300ms linear 2000ms both;
+	-ms-animation: 		shine 1300ms linear 2000ms both;
+	-o-animation: 		shine 1300ms linear 20900ms both;
+	animation: 			shine 1300ms linear 2000ms both;
+}
+/*section3-动画3*/
+.active #s3_ani3_1 {
+	-webkit-animation:	rotateCCWHalf 1300ms linear 3000ms both;
+	-moz-animation: 	rotateCCWHalf 1300ms linear 3000ms both;
+	-ms-animation: 		rotateCCWHalf 1300ms linear 3000ms both;
+	-o-animation: 		rotateCCWHalf 1300ms linear 3000ms both;
+	animation: 			rotateCCWHalf 1300ms linear 3000ms both;
+}
+.active #s3_ani3_3{
+	-webkit-animation: 	eyeRotate 1300ms linear 3000ms both;
+	-moz-animation: 	eyeRotate 1300ms linear 3000ms both;
+	-ms-animation: 		eyeRotate 1300ms linear 3000ms both;
+	-o-animation: 		eyeRotate 1300ms linear 3000ms both;
+	animation: 			eyeRotate 1300ms linear 3000ms both;
+}
+
+
+
+
+
+
+
+
+
+/*===========================================================*/
+/*屏幕切换效果*/	
+@keyframes aniSec1a{
+	0%	{ opacity: 0; 	transform: scale(4,4);}
+	100%{ opacity: 1; transform: scale(1,1);}
+}@keyframes aniSec1b{
+	0%	{ opacity: 1; transform: scale(1,1);}
+	100%{ opacity: 0; 	transform: scale(0.3,0.3);}
+}
+
+@-ms-keyframes aniSec1a{
+	0%	{ opacity: 0; 	-ms-transform: scale(4,4);}
+	100%{ opacity: 1; -ms-transform: scale(1,1);}
+}@-ms-keyframes aniSec1b{
+	0%	{ opacity: 1; -ms-transform: scale(1,1);}
+	100%{ opacity: 0; 	-ms-transform: scale(0.3,0.3);}
+}
+
+/*Firefox*/
+@-moz-keyframes aniSec1a{
+	0%	{ opacity: 0; 	-moz-transform: scale(4,4);}
+	100%{ opacity: 1; -moz-transform: scale(1,1);}
+}@-moz-keyframes aniSec1b{
+	0%	{ opacity: 1; -moz-transform: scale(1,1);}
+	100%{ opacity: 0; 	-moz-transform: scale(0.3,0.3);}
+}
+
+/*chrome safari*/
+@-webkit-keyframes aniSec1a{
+	0%	{ opacity: 0; 	-webkit-transform: scale(4,4);}
+	100%{ opacity: 1; -webkit-transform: scale(1,1);}
+}@-webkit-keyframes aniSec1b{
+	0%	{ opacity: 1; -webkit-transform: scale(1,1);}
+	100%{ opacity: 0;	-webkit-transform: scale(0.3,0.3);}
+}	
+
+/*oprea*/
+@-o-keyframes aniSec1a{
+	0%	{ opacity: 0; 	-o-transform: scale(4,4);}
+	100%{ opacity: 1; -o-transform: scale(1,1);}
+}@-o-keyframes aniSec1b{
+	0%	{ opacity: 1; -o-transform: scale(1,1);}
+	100%{ opacity: 0; 	-o-transform: scale(2,2);}
+}	
+		
+/*===========================================================*/
+/*试试向下按钮-出现效果*/
+@-webkit-keyframes bounce {
+	0%, 100% { 	-webkit-transform: scale(0.0) }
+	50% { 		-webkit-transform: scale(1.0) }
+}@-ms-keyframes bounce {
+	0%, 100% { 	-ms-transform: scale(0.0) }
+	50% { 		-ms-transform: scale(1.0) }
+}@-o-keyframes bounce {
+	0%, 100% { 	-o-transform: scale(0.0) }
+	50% { 		-o-transform: scale(1.0) }
+}@-moz-keyframes bounce {
+	0%, 100% { 	-moz-transform: scale(0.0) }
+	50% { 		-moz-transform: scale(1.0) }
+}@keyframes bounce {
+	0%, 100% { 	transform: scale(0.0) }
+	50% { 		transform: scale(1.0) }
+}
+
+
+/*"试试鼠标滚动"文字出现*/
+@-webkit-keyframes appearRoll {
+	0%	{ opacity: 0;}
+	100%{ opacity: 1;}
+}@-moz-keyframes appearRoll {
+	0%	{ opacity: 0;}
+	100%{ opacity: 1;}
+}@-ms-keyframes appearRoll {
+	0%	{ opacity: 0;}
+	100%{ opacity: 1;}
+}@-o-keyframes appearRoll {
+	0%	{ opacity: 0;}
+	100%{ opacity: 1;}
+}@keyframes appearRoll {
+	0%	{ opacity: 0;}
+	100%{ opacity: 1;}
+}
+
+/*第一个-从右往左-文字出现*/
+@-webkit-keyframes appearTitleRL {
+	0%	{ opacity: 0; -webkit-transform: translateX(60px);}
+	100%{ opacity: 1; -webkit-transform: translateX(0);}
+}@-moz-keyframes appearTitleRL {
+	0%	{ opacity: 0; -moz-transform: translateX(60px);}
+	100%{ opacity: 1; -moz-transform: translateX(0);}
+}@-ms-keyframes appearTitleRL {
+	0%	{ opacity: 0; -ms-transform: translateX(60px);}
+	100%{ opacity: 1; -ms-transform: translateX(0);}
+}@-o-keyframes appearTitleRL {
+	0%	{ opacity: 0; -o-transform: translateX(60px);}
+	100%{ opacity: 1; -o-transform: translateX(0);}
+}@keyframes appearTitleRL {
+	0%	{ opacity: 0; transform: translateX(60px);}
+	100%{ opacity: 1; transform: translateX(0);}
+}
+/*第一个-从左往右-文字出现*/
+@-webkit-keyframes appearTitleLR {
+	0%	{ opacity: 0; -webkit-transform: translateX(-60px);}
+	100%{ opacity: 1; -webkit-transform: translateX(0);}
+}@-moz-keyframes appearTitleLR {
+	0%	{ opacity: 0; -moz-transform: translateX(-60px);}
+	100%{ opacity: 1; -moz-transform: translateX(0);}
+}@-ms-keyframes appearTitleLR {
+	0%	{ opacity: 0; -ms-transform: translateX(-60px);}
+	100%{ opacity: 1; -ms-transform: translateX(0);}
+}@-o-keyframes appearTitleLR {
+	0%	{ opacity: 0; -o-transform: translateX(-60px);}
+	100%{ opacity: 1; -o-transform: translateX(0);}
+}@keyframes appearTitleLR {
+	0%	{ opacity: 0; transform: translateX(-60px);}
+	100%{ opacity: 1; transform: translateX(0);}
+}
+
+/*section1-大动画*/
+@-webkit-keyframes rotateCW {
+  0%	{ -webkit-transform: rotateZ(0deg);}
+  100%	{ -webkit-transform:rotateZ(360deg);}
+}@-moz-keyframes rotateCW {
+  0%	{ -moz-transform: rotateZ(0deg);}
+  100%	{ -moz-transform: rotateZ(360deg);}
+}@-ms-keyframes rotateCW {
+  0%	{ -ms-transform: rotateZ(0deg);}
+  100%	{ -ms-transform: rotateZ(360deg);}
+}@-o-keyframes rotateCW {
+  0%	{ -o-transform: rotateZ(0deg);}
+  100%	{ -o-transform: rotateZ(360deg);}
+}@keyframes rotateCW {
+  0%	{ transform: rotateZ(0deg);}
+  100%	{ transform: rotateZ(360deg);}
+}
+
+@-webkit-keyframes rotateCW2 {
+  0%	{ -webkit-transform: rotateZ(0deg);}
+  100%	{ -webkit-transform: rotateZ(769deg);}
+}@-moz-keyframes rotateCW2 {
+  0%	{ -moz-transform: rotateZ(0deg);}
+  100%	{ -moz-transform: rotateZ(769deg);}
+}@-ms-keyframes rotateCW2 {
+  0%	{ -ms-transform: rotateZ(0deg);}
+  100%	{ -ms-transform: rotateZ(769deg);}
+}@-o-keyframes rotateCW2 {
+  0%	{ -o-transform: rotateZ(0deg);}
+  100%	{ -o-transform: rotateZ(769deg);}
+}@keyframes rotateCW2 {
+  0%	{ transform: rotateZ(0deg);}
+  100%	{ transform: rotateZ(769deg);}
+}
+
+@-webkit-keyframes rotateCCW {
+  0%	{ -webkit-transform: rotateZ(0deg);}
+  100%	{ -webkit-transform: rotateZ(-360deg);}
+}@-moz-keyframes rotateCCW {
+  0%	{ -moz-transform: rotateZ(0deg);}
+  100%	{ -moz-transform: rotateZ(-360deg);}
+}@-ms-keyframes rotateCCW {
+  0%	{ -ms-transform: rotateZ(0deg);}
+  100%	{ -ms-transform: rotateZ(-360deg);}
+}@-o-keyframes rotateCCW {
+  0%	{ -o-transform: rotateZ(0deg);}
+  100%	{ -o-transform: rotateZ(-360deg);}
+}@keyframes rotateCCW {
+  0%	{ transform: rotateZ(0deg);}
+  100%	{ transform: rotateZ(-360deg);}
+}
+/*Rotate cw half, used for s3_ani2*/
+@-webkit-keyframes rotateCWHalf {
+  0%	{ -webkit-transform: rotateZ(0deg);}
+  100%	{ -webkit-transform:rotateZ(120deg);}
+}@-moz-keyframes rotateCWHalf {
+  0%	{ -moz-transform: rotateZ(0deg);}
+  100%	{ -moz-transform: rotateZ(120deg);}
+}@-ms-keyframes rotateCWHalf {
+  0%	{ -ms-transform: rotateZ(0deg);}
+  100%	{ -ms-transform: rotateZ(120deg);}
+}@-o-keyframes rotateCWHalf {
+  0%	{ -o-transform: rotateZ(0deg);}
+  100%	{ -o-transform: rotateZ(120deg);}
+}@keyframes rotateCWHalf {
+  0%	{ transform: rotateZ(0deg);}
+  100%	{ transform: rotateZ(120deg);}
+}
+/*Rotate ccw half, used for s3_ani2*/
+@-webkit-keyframes rotateCCWHalf {
+  0%	{ -webkit-transform: rotateZ(0deg);}
+  100%	{ -webkit-transform: rotateZ(-120deg);}
+}@-moz-keyframes rotateCCWHalf {
+  0%	{ -moz-transform: rotateZ(0deg);}
+  100%	{ -moz-transform: rotateZ(-120deg);}
+}@-ms-keyframes rotateCCWHalf {
+  0%	{ -ms-transform: rotateZ(0deg);}
+  100%	{ -ms-transform: rotateZ(-120deg);}
+}@-o-keyframes rotateCCWHalf {
+  0%	{ -o-transform: rotateZ(0deg);}
+  100%	{ -o-transform: rotateZ(-120deg);}
+}@keyframes rotateCCWHalf {
+  0%	{ transform: rotateZ(0deg);}
+  100%	{ transform: rotateZ(-120deg);}
+}
+/*section2-大动画*/
+@-webkit-keyframes rotateCWScale {
+  0%	{ -webkit-transform: rotateZ(0deg) scale(1,1);}
+  25%	{ -webkit-transform: rotateZ(90deg) scale(1.2,1.2);}
+  50%	{ -webkit-transform: rotateZ(180deg) scale(0.9,0.9);}
+  75%	{ -webkit-transform: rotateZ(270deg) scale(1.2,1.2);}
+  100%	{ -webkit-transform: rotateZ(360deg) scale(1,1);}
+}@-moz-keyframes rotateCWScale {
+  0%	{ -moz-keyframes: rotateZ(0deg) scale(1,1);}
+  25%	{ -moz-keyframes: rotateZ(90deg) scale(1.2,1.2);}
+  50%	{ -moz-keyframes: rotateZ(180deg) scale(0.9,0.9);}
+  75%	{ -moz-keyframes: rotateZ(270deg) scale(1.2,1.2);}
+  100%	{ -moz-keyframes: rotateZ(360deg) scale(1,1);}
+}@-ms-keyframes rotateCWScale {
+  0%	{ -ms-keyframes: rotateZ(0deg) scale(1,1);}
+  25%	{ -ms-keyframes: rotateZ(90deg) scale(1.2,1.2);}
+  50%	{ -ms-keyframes: rotateZ(180deg) scale(0.9,0.9);}
+  75%	{ -ms-keyframes: rotateZ(270deg) scale(1.2,1.2);}
+  100%	{ -ms-keyframes: rotateZ(360deg) scale(1,1);}
+}@-o-keyframes rotateCWScale {
+  0%	{ -o-keyframes: rotateZ(0deg) scale(1,1);}
+  25%	{ -o-keyframes: rotateZ(90deg) scale(1.2,1.2);}
+  50%	{ -o-keyframes: rotateZ(180deg) scale(0.9,0.9);}
+  75%	{ -o-keyframes: rotateZ(270deg) scale(1.2,1.2);}
+  100%	{ -o-keyframes: rotateZ(360deg) scale(1,1);}
+}@keyframes rotateCWScale {
+  0%	{ transform: rotateZ(0deg) scale(1,1);}
+  25%	{ transform: rotateZ(90deg) scale(1.2,1.2);}
+  50%	{ transform: rotateZ(180deg) scale(0.9,0.9);}
+  75%	{ transform: rotateZ(270deg) scale(1.2,1.2);}
+  100%	{ transform: rotateZ(360deg) scale(1,1);}
+}
+
+/*section2-右侧对比动画*/
+@-webkit-keyframes appearFromBot {
+	0%	{ -webkit-transform: translateY(60px) scaleY(0.00000001);}
+	100%{ -webkit-transform: translateY(0) scaleY(1);}
+}@-moz-keyframes appearFromBot {
+	0%	{ -moz-transform: translateY(60px) scaleY(0.00000001);}
+	100%{ -moz-transform: translateY(0) scaleY(1);}
+}@-ms-keyframes appearFromBot {
+	0%	{-ms-transform: translateY(60px) scaleY(0.00000001);}
+	100%{-ms-transform: translateY(0) scaleY(1);}
+}@-o-keyframes appearFromBot {
+	0%	{-o-transform: translateY(60px) scaleY(0.00000001);}
+	100%{-o-transform: translateY(0) scaleY(1);}
+}@keyframes appearFromBot {
+	0%	{transform: translateY(60px) scaleY(0.00000001);}
+	100%{transform: translateY(0) scaleY(1);}
+}
+
+/*section3-动画出现动画*/
+@-webkit-keyframes popOut {
+	0%	{-webkit-transform:scale(0.8,0.8) 	translateY(30px); opacity:0; }
+	100%{-webkit-transform:scale(1,1) 		translateY(0px); opacity:1; }
+}@-moz-keyframes popOut {
+	0%	{-moz-transform:scale(0.8,0.8) 	translateY(30px); opacity:0; }
+	100%{-moz-transform:scale(1,1) 		translateY(0px); opacity:1; }
+}@-ms-keyframes popOut {
+	0%	{-ms-transform:scale(0.8,0.8) 	translateY(30px); opacity:0; }
+	100%{-ms-transform:scale(1,1) 		translateY(0px); opacity:1; }
+}@-o-keyframes popOut {
+	0%	{-o-transform:scale(0.8,0.8) 	translateY(30px); opacity:0; }
+	100%{-o-transform:scale(1,1) 		translateY(0px); opacity:1; }
+}@keyframes popOut {
+	0%	{transform:scale(0.8,0.8) 	translateY(30px); opacity:0; }
+	100%{transform:scale(1,1) 		translateY(0px); opacity:1; }
+}
+/*section3-闪烁动画*/
+@-webkit-keyframes shine {
+	0%	{ opacity:0; }
+	25%	{ opacity:0.3; }
+	50%	{ opacity:1; }
+	75%	{ opacity:0.3; }
+	100%{ opacity:0; }
+}@-moz-keyframes shine {
+	0%	{ opacity:0; }
+	25%	{ opacity:0.3; }
+	30%	{ opacity:1; }
+	75%	{ opacity:0.3; }
+	100%{ opacity:0; }
+}@-ms-keyframes shine {
+	0%	{ opacity:0; }
+	25%	{ opacity:0.3; }
+	50%	{ opacity:1; }
+	75%	{ opacity:0.3; }
+	100%{ opacity:0; }
+}@-o-keyframes shine {
+	0%	{ opacity:0; }
+	25%	{ opacity:0.3; }
+	50%	{ opacity:1; }
+	75%	{ opacity:0.3; }
+	100%{ opacity:0; }
+}@keyframes shine {
+	0%	{ opacity:0; }
+	25%	{ opacity:0.3; }
+	50%	{ opacity:1; }
+	75%	{ opacity:0.3; }
+	100%{ opacity:0; }
+}
+
+/*section4-眼睛动画*/
+@-webkit-keyframes eyeRotate {
+	0%	{ -webkit-transform: rotate(0deg);}
+	35%{ -webkit-transform: rotate(30deg);}
+	65%{ -webkit-transform: rotate(-10deg);}
+	100%{ -webkit-transform: rotate(0deg);}
+}@-moz-keyframes eyeRotate {
+	0%	{ -moz-transform: rotate(0deg);}
+	35%{ -moz-transform: rotate(30deg);}
+	65%{ -moz-transform: rotate(-10deg);}
+	100%{ -moz-transform: rotate(0deg);}
+}@-ms-keyframes eyeRotate {
+	0%	{ -ms-transform: rotate(0deg);}
+	35%{ -ms-transform: rotate(30deg);}
+	65%{ -ms-transform: rotate(-10deg);}
+	100%{ -ms-transform: rotate(0deg);}
+}@-o-keyframes eyeRotate {
+	0%	{ -o-transform: rotate(0deg);}
+	35%{ -o-transform: rotate(30deg);}
+	65%{ -o-transform: rotate(-10deg);}
+	100%{ -o-transform: rotate(0deg);}
+}@keyframes eyeRotate {
+	0%	{ transform: rotate(0deg);}
+	35%{ transform: rotate(30deg);}
+	65%{ transform: rotate(-10deg);}
+	100%{ transform: rotate(0deg);}
+}
+
+/*section6-出现动画*/
+@-webkit-keyframes s5Appear{
+	0%	{ opacity: 1; -webkit-transform: translateY(100%);}
+	100%{ opacity: 1; -webkit-transform: translateY(0%);}
+}@-moz-keyframes s5Appear{
+	0%	{ opacity: 1; -moz-transform: translateY(100%);}
+	100%{ opacity: 1; -moz-transform: translateY(0%);}
+}@-ms-keyframes s5Appear{
+	0%	{ opacity: 1; -ms-transform: translateY(100%);}
+	100%{ opacity: 1; -ms-transform: translateY(0%);}
+}@-o-keyframes s5Appear{
+	0%	{ opacity: 1; -o-transform: translateY(100%);}
+	100%{ opacity: 1; -o-transform: translateY(0%);}
+}@keyframes s5Appear{
+	0%	{ opacity: 1; transform: translateY(100%);}
+	100%{ opacity: 1; transform: translateY(0%);}
+}
+/*section6-消失动画*/
+@-webkit-keyframes s5Disappear{
+	0%	{ opacity: 1; -webkit-transform: translateY(0%);}
+	100%{ opacity: 1; -webkit-transform: translateY(100%);}
+}@-moz-keyframes s5Disappear{
+	0%	{ opacity: 1; -moz-transform: translateY(0%);}
+	100%{ opacity: 1; -moz-transform: translateY(100%);}
+}@-ms-keyframes s5Disappear{
+	0%	{ opacity: 1; -ms-transform: translateY(0%);}
+	100%{ opacity: 1; -ms-transform: translateY(100%);}
+}@-o-keyframes s5Disappear{
+	0%	{ opacity: 1; -o-transform: translateY(0%);}
+	100%{ opacity: 1; -o-transform: translateY(100%);}
+}@keyframes s5Disappear{
+	0%	{ opacity: 1; transform: translateY(0%);}
+	100%{ opacity: 1; transform: translateY(100%);}
+}
+
+

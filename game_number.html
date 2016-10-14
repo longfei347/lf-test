@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>猜数字</title>
+</head>
+<style>
+.red {
+	color: #f00;
+}
+</style>
+<body>
+	<h2>猜数字</h2>
+	<p>将0-9中的4个数字填入输入框中, 4个数字不会重复, 且数字与位置都正确才能过关, 你只有8次机会,加油哦!</p>
+	<p>注意:<i class="red">结果提示, A表示数字与位置都正确, B表示数字正确,位置有误</i></p>
+	<form name="numbercheck">
+		<input type="text" name="number1" id="num1" size="2" maxlength="1" onkeyup="toNext(this,event)">
+		<input type="text" name="number2" id="num2" size="2" maxlength="1" onkeyup="toNext(this,event)">
+		<input type="text" name="number3" id="num3" size="2" maxlength="1" onkeyup="toNext(this,event)">
+		<input type="text" name="number4" id="num4" size="2" maxlength="1" onkeyup="toNext(this,event)">
+		<button id="ttt" name="ok" type="button" onClick="check()">确定</button>
+	</form>
+</body>
+<script>
+var num = [],
+	total = 0,
+	f;
+window.onload = function() {
+	f = document.numbercheck;
+	while (num.length < 4) {
+		var tmp = Math.floor(10 * Math.random());
+		if (num.indexOf(tmp) != -1) {
+			continue;
+		} else {
+			num.push(tmp);
+		}
+	}
+	console.log(num);
+}
+
+function check() {
+	var As = 0,
+		Bs = 0,
+		i = 0;
+	if (total == 8) {
+		alert("挑战失败,请再接再励!");
+		location.reload();
+	}
+	if (num1.value == '' || num2.value == "" || num3.value == '' || num4.value == "") {
+		alert("请输入完整");
+		return false;
+	}
+	for (; i < 4; i++) {
+		if (f["num" + (i + 1)].value == num[i]) {
+			As++;
+		}
+		if (num.indexOf(+f["num" + (i + 1)].value) != -1) {
+			Bs++;
+		}
+	}
+	if (As == 4) {
+		alert("恭喜你答对了,你真聪明!");
+		return true;
+	} else {
+		total++;
+		var nodeP = document.createElement("p");
+		nodeP.innerHTML = "第" + total + "组:" + num1.value + ", " + num2.value + ", " + num3.value + ", " + num4.value + "; " + As + "A, " + (Bs - As) + "B";
+		f.appendChild(nodeP)
+		num1.value = '';
+		num2.value = "";
+		num3.value = '';
+		num4.value = "";
+	}
+}
+
+function toNext(t, e) {
+	//console.log(e.keyCode)
+	//if (e.keyCode < 48 || e.keyCode > 57) {
+	if (isNaN(t.value) || t.value < 0 || t.value > 9) {
+		t.value = "";
+	} else if (e.keyCode != 8) {
+		t.nextElementSibling.focus();
+	}
+}
+</script>
+
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8" />
+<title>box-shadow_CSS参考手册_web前端开发参考手册系列,属性级Hack_CSS参考手册_web前端开发参考手册系列</title>
+<meta name="author" content="Joy Du(飘零雾雨), dooyoe@gmail.com" />
+<meta name="copyright" content="www.doyoe.com" />
+<style>
+.test li{margin-top:20px;list-style:none;}
+.test .outset{width:400px;padding:10px;background:#eee;-webkit-box-shadow:5px 5px rgba(0,0,0,0.6);box-shadow:5px 5px rgba(0,0,0,.6);}
+.test .outset-blur{width:400px;padding:10px;background:#eee;-webkit-box-shadow:5px 5px 5px rgba(0,0,0,.6);box-shadow:5px 5px 5px rgba(0,0,0,.6);}
+.test .outset-extension{width:400px;padding:10px;background:#eee;-webkit-box-shadow:5px 5px 5px 10px rgba(0,0,0,.6);box-shadow:5px 5px 5px 10px rgba(0,0,0,.6);}
+.test .inset{width:400px;padding:10px;background:#eee;-webkit-box-shadow:2px 2px 5px 1px rgba(0,0,0,.6) inset;box-shadow:2px 2px 5px 1px rgba(0,0,0,.6) inset;}
+.test .multiple-shadow{width:400px;padding:10px;background:#eee;-webkit-box-shadow:0 0 5px 3px rgba(255,0,0,.6),0 0 5px 6px rgba(0,182,0,.6),0 0 5px 10px rgba(255,255,0,.6);box-shadow:0 0 5px 3px rgba(255,0,0,.6),0 0 5px 6px rgba(0,182,0,.6),0 0 5px 10px rgba(255,255,0,.6);}
+
+h1{margin:10px 0;font-size:16px;}
+.test1{
+	color:#c30;          /* For Firefox */
+	[;color:#ddd;];      /* For webkit(Chrome and Safari) */
+	color:#090\0;        /* For Opera */
+	color:#00f\9;        /* For IE8+ */
+	*color:#f00;         /* For IE7 */
+	_color:#ff0;         /* For IE6 */
+}
+* html .test{color:#090;}       /* For IE6 and earlier */
+* + html .test{color:#ff0;}     /* For IE7 */
+.test:lang(zh-cn){color:#f00;}  /* For IE8+ and not IE */
+.test:nth-child(1){color:#0ff;} /* For IE9+ and not IE */
+.outer{width:200px;height:200px;background:#000;filter:alpha(opacity=20);opacity:.2;}
+.inner{width:200px;height:200px;margin-top:-200px;}
+#triangle-up {
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 100px solid red;
+}
+#triangle-down {
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-top: 100px solid red;
+}
+#triangle-left {
+    width: 0;
+    height: 0;
+    border-top: 50px solid transparent;
+    border-right: 100px solid red;
+    border-bottom: 50px solid transparent;
+}
+#triangle-right {
+    width: 0;
+    height: 0;
+    border-top: 50px solid transparent;
+    border-left: 100px solid red;
+    border-bottom: 50px solid transparent;
+}
+#keleyi_a{ border-top:10px solid #FFFFCC;border-left:10px solid #FF3300;border-bottom:10px solid #FFFFCC;}
+#bin{width:50px;height:50px;background-color:#ff0;}
+a{ color:#666; text-decoration:none; line-height:25px; text-indent:24px;}
+
+.w{ width:200px; position:absolute; background:#999; left:400px; top:200px; font-size:12px; text-align:left}/*模拟灰色阴影背景层*/
+
+.x{ width:180px; position:relative; background:#fff;  border:1px solid #ccc; padding:10px; left:-4px; top:-4px;}/*内容div*/
+
+.y , .z{
+
+position: absolute;
+
+left: 141px;
+
+}
+
+.y{
+
+color: #ccc;
+
+font-size: 19px;
+
+top:-12px;
+
+
+
+z-index:1;
+
+}/*模拟小三角*/
+
+.z{
+
+color: #fff;
+
+font-size: 19px;
+
+top:-11px;  z-index:3;
+
+}/*模拟小三角*/
+</style>
+<script src="js/j.js"></script>
+<script>
+;(function (window) {
+    function Template(str) {
+        this.str = str;
+    }
+    Template.prototype.format = function () {
+        var arg = arguments[0] instanceof Array ? arguments[0] : arguments;
+        return this.str.replace(/\{(\d+)\}/g, function (a, b) {
+            return arg[b] || '';
+        });
+    }
+    window.Template = Template;
+})(window);
+
+;(function(){
+    /** 这个JS模板引擎只适用于数据哈 */
+    var t = new Template('<p><a href="{0}">{1}</a><span>{2}</span></p>');
+    var s = t.format('http://www.google.com', 'Google', 'Google搜索引擎');
+    var s = t.format(['http://www.google.com', 'Google', 'Google搜索引擎']); // 和上面一行代码的功能是一样的
+
+})();
+$(document).ready(function(){
+	var eat = ['yum!', 'gulp', 'burp!', 'nom'];
+	var yum = document.createElement('p');
+	var msie = 0,
+		addEvent = function(ele, type, handler) {
+			ele.addEventListener(type, handler);
+		};
+	
+
+	yum.style.opacity = 1;
+	var links = document.querySelectorAll('li > a'), el = null;
+	for (var i = 0; i < links.length; i++) {
+		el = links[i];
+		el.setAttribute('draggable', 'true');
+		addEvent(el, 'dragstart', function (e) {
+			e.dataTransfer.effectAllowed = 'copy'; // only dropEffect = 'copy' will be dropable
+				e.dataTransfer.setData('Text', this.id); // required otherwise doesn 't work
+		});
+	}
+	var bin = document.querySelector('#keleyi_a');
+	addEvent(bin, 'dragover', function (e) {
+		if (e.preventDefault)
+			e.preventDefault(); // allows us to drop
+		this.className = 'over';
+		e.dataTransfer.dropEffect = 'copy';
+		return false;
+	});
+	// to get IE to work
+	addEvent(bin, 'dragenter', function (e) {
+		this.className = 'over';
+		return false;
+	});
+	addEvent(bin, 'dragleave', function () {
+		this.className = '';
+	});
+	addEvent(bin, 'drop', function (e) {
+		if (e.stopPropagation)
+			e.stopPropagation(); // stops the browser from redirecting...why???
+		var el = document.getElementById(e.dataTransfer.getData('Text'));
+		el.parentNode.removeChild(el);
+		// stupid nom text + fade effect
+		bin.className = '';
+		yum.innerHTML = eat[parseInt(Math.random() * eat.length)];
+		var y = yum.cloneNode(true);
+		bin.appendChild(y);
+		setTimeout(function () {
+			var t = setInterval(function () {
+					if (y.style.opacity <= 0) {
+						if (msie) { // don' t bother with the animation
+							y.style.display = 'none';
+						}
+						clearInterval(t);
+					} else {
+						y.style.opacity -= 0.1;
+					}
+				}, 50);
+		}, 250);
+		return false;
+	});
+});
+var ss="lkdj龙f龙l飞ksuweofdhfkfsjadlj";
+function checkCountMax(str) {
+	str =str.split("").sort();
+	var i = 1,j =str[0],s=1,max=1;
+	for (;i<str.length;i++) {
+		if (str[i-1] ==str[i]) {
+			s++;
+			if (s>max) {
+				max = s;
+				j=str[i];
+			}
+		} else {
+			s=1;
+		}
+	}
+	return {
+		str:j,
+		max:max
+	}
+}
+console.log(checkCountMax(ss));
+</script>
+</head>
+<body>
+<div class="w">
+  <div class="x">
+    <p><a href="#">用面向对象的思想去书写css,用面向对象的心态去书写css。</a></p>
+    <span class="z">◆</span> <span class="y">◆</span> </div>
+</div>
+<ul class="test">
+	<li class="outset">外阴影常规效果<br />box-shadow:5px 5px rgba(0,0,0,.6);</li>
+	<li class="outset-blur">外阴影模糊效果<br />box-shadow:5px 5px 5px rgba(0,0,0,.6);</li>
+	<li class="outset-extension">外阴影模糊外延效果<br />box-shadow:5px 5px 5px 10px rgba(0,0,0,.6);</li>
+	<li class="inset">内阴影效果<br />box-shadow:2px 2px 5px 1px rgba(0,0,0,.6) inset;</li>
+	<li class="multiple-shadow">外阴影模糊效果<br />box-shadow:5px 5px 5px rgba(0,0,0,.6);</li>
+</ul>
+<div id="keleyi_a">longfei</div>
+<div id="triangle-up">transparent</div>
+<div id="triangle-down"></div>
+<div id="triangle-left"></div>
+<div id="triangle-right"></div>
+<div class="item">item</div>
+</body>
+</html>

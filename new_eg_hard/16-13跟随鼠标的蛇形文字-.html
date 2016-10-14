@@ -1,0 +1,103 @@
+<html>
+
+<head>
+	<title>跟随鼠标的蛇形文字</title>
+	<meta http-equiv="content-type" content="text/html;charset=gb2312">
+	<meta name="author" content="czh;czh44@sohu.com">
+</head>
+<style type="text/css">
+.text_div {
+	position: absolute;
+	top: -50px;
+	font-size: 12pt;
+	font-weight: bold;
+}
+</style>
+<script language="JavaScript">
+/*--------------------------------\
+|  Authored by CZH;czh44@sohu.com |
+\--------------------------------*/
+var mouse_x = 0,
+	mouse_y = 0;
+var space1 = 15;
+var space2 = 15;
+var flag = 0;
+var scroll_x; //页面在水平方向上已经滚动的距离
+var scroll_y; //页面在垂直方向上已经滚动的距离
+
+
+//==显示的字符串
+var message = "沟中地僻人稀,景物特异,富于原始自然风貌,有'童话世界'之誉!!";
+message_array = message.split("");
+var x_pos = new Array();
+var y_pos = new Array();
+for (i = 0; i <= message_array.length - 1; i++) {
+	x_pos[i] = -50;
+}
+for (i = 0; i <= message_array.length - 1; i++) {
+	y_pos[i] = -50;
+}
+
+//===获取鼠标位置
+function get_mouse_pos(e) {
+	e = e ? e : event;
+	mouse_x = e.clientX;
+	mouse_y = e.clientY;
+	//
+	flag = 1;
+	return;
+}
+
+//===移动字符
+function move_text() {
+	scroll_x = id_body.scrollLeft;
+	scroll_y = id_body.scrollTop;
+	//console.log("x="+scroll_x+"y="+scroll_y);
+
+	if (flag == 1) {
+		for (i = message_array.length - 1; i >= 1; i--) {
+			x_pos[i] = x_pos[i - 1] + space2;
+			y_pos[i] = y_pos[i - 1];
+		}
+		x_pos[0] = mouse_x + space1 + scroll_x;
+		y_pos[0] = mouse_y + scroll_y;
+
+		for (i = 0; i < message_array.length - 1; i++) {
+			document.getElementById("div" + i).style.left = x_pos[i];
+			document.getElementById("div" + i).style.top = y_pos[i];
+		}
+	}
+	setTimeout("move_text()", 30);
+}
+
+//===为每个字符创建一个div元素
+for (i = 0; i <= message_array.length - 1; i++) {
+	document.write("<div id='div" + i + "' class='text_div'>");
+	document.write(message_array[i]);
+	document.write("</div>");
+}
+
+document.onmousemove = get_mouse_pos;
+</script>
+
+<body onLoad="move_text()" id="id_body">
+	<table height='700px' width='300px' align="center">
+		<tr height="200px">
+			<td></td>
+		</tr>
+		<tr height='21px'>
+			<td>九寨沟简介</td>
+		</tr>
+		<tr height='21px'>
+			<td>
+				九寨沟,位于四川省北部南坪县境内，是一条纵深40余公里的山沟谷地，因周围有9 个藏族村寨而得名，总面积约620平方公里，自然景色兼有湖泊、瀑布、雪山、 森林之美。
+				<br>沟中地僻人稀，景物特异，富于原始自然风貌，有“童话世界”之誉。河谷地带有大小湖泊100多处，其中“五花海”，湖底为沉积石，色彩斑斓，在阳光照射下，呈现出缤纷色彩。诺日朗瀑布，高约30米，宽约百米。1992年12月九寨沟作为自然遗产被列入《世界遗产名录》。
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+</body>
+
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+	<meta charset="utf-8" />
+	<title>border-radius_CSS参考手册_web前端开发参考手册系列</title>
+	<meta name="author" content="Joy Du(飘零雾雨), dooyoe@gmail.com" />
+	<meta name="copyright" content="www.doyoe.com" />
+	<!-- <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"> -->
+	<link rel="stylesheet" href="css/fontawesome.css">
+	<script src="js/j.js"></script>
+</head>
+<style>
+html, body{height: 100%;margin: 0;padding: 0;}
+</style>
+<body>
+	<div id="box" draggable="true" style="background-color:#ccc; width: 40px; height:40px; cursor:move; position:absolute;left:200px;">
+		<div id="coor" style="width: 10px;height: 10px;background: #c00;overflow: hidden;cursor: se-resize;position: absolute;
+right: 0;bottom: 0;"></div>
+	</div>
+	<input type="number" maxlength="3" max="100" min="10" step="5" onkeypress="if(event.keyCode<48||event.keyCode>57)return false;">
+	<div class="dustbin">
+		<br />垃
+		<br />圾
+		<br />箱</div>
+	<div class="dragbox">
+		<div class="draglist" title="拖拽我" draggable="true">列表1</div>
+		<div class="draglist" title="拖拽我" draggable="true">列表2</div>
+		<div class="draglist" title="拖拽我" draggable="true">列表3</div>
+	</div>
+	<div class="dragremind"></div>
+</body>
+
+</html>
+<script>
+var eleDrag = null, pos={};
+box.ondragstart = function(ev) {
+	eleDrag = this;
+	console.log(ev.offsetX,ev.offsetY)
+	pos.x=ev.offsetX;
+	pos.y=ev.offsetY;
+}
+
+document.body.addEventListener("drop", function(ev) {
+	console.log(ev,ev.clientX, ev.clientY)
+	eleDrag.style.left = ev.clientX -pos.x + "px";
+	eleDrag.style.top = ev.clientY -pos.y + "px";
+
+})
+document.body.ondragover = function(ev) {
+	//拖拽元素在目标元素头上移动的时候 
+	ev.preventDefault();
+	return true;
+};
+/*var eleDustbin = $(".dustbin")[0],
+	eleDrags = $(".draglist"),
+	lDrags = eleDrags.length,
+	eleRemind = $(".dragremind")[0],
+	eleDrag = null;
+for (var i = 0; i < lDrags; i += 1) {//
+	eleDrags[i].onselectstart = function() {
+		return false;
+	};
+	eleDrags[i].ondragstart = function(ev) {
+		//拖拽开始
+		//拖拽效果
+		ev.dataTransfer.effectAllowed = "move";
+		ev.dataTransfer.setData("text", ev.target.innerHTML);
+		ev.dataTransfer.setDragImage(ev.target, 0, 0);
+		eleDrag = ev.target;
+		return true;
+	};
+	eleDrags[i].ondragend = function(ev) {
+		//拖拽结束
+		ev.dataTransfer.clearData("text");
+		eleDrag = null;
+		return false
+	};
+}
+eleDustbin.ondragover = function(ev) {
+	//拖拽元素在目标元素头上移动的时候
+	ev.preventDefault();
+	return true;
+};
+eleDustbin.ondragenter = function(ev) {
+	//拖拽元素进入目标元素头上的时候
+	this.style.color = "#f90";
+	return true;
+};
+eleDustbin.ondrop = function(ev) {
+	//拖拽元素进入目标元素头上，同时鼠标松开的时候
+	if (eleDrag) {
+		eleRemind.innerHTML = '"' + eleDrag.innerHTML + '"被扔进了垃圾箱';
+		eleDrag.parentNode.removeChild(eleDrag);
+	}
+	this.style.color = "#000000";
+
+	return false;
+};*/
+
+/*! function() {
+	var a = b = c = 0; //等价于var a=(b=(c=0)) c=0 即全局变量为0,表达式返回0 赋给b,再返回0赋给a
+}()*/
+
+
+/*(function () {
+	"use strict"
+	var a = {n: 1}
+	var b = a,c;
+	a.x = a = {n: 2}
+	console.log(a.x);
+	console.log(b)
+})()*/
+/*var a = {n: 1}
+var b = a;
+a = {n: 2}
+a.x = a
+console.log(a.x);
+console.log(b.x)
+*/
+/*function Foo() {};
+var foo = new Foo();
+//Foo为foo的构造函数
+console.log(foo instanceof Foo); // true
+//但是Function并不是foo的构造函数
+console.log(foo instanceof Function); // false
+//Function为Foo的构造函数
+console.log(Foo instanceof Function);//true*/
+
+var $box = $('#box').mousedown(function(e) {
+	var offset = $(this).offset();
+
+	this.posix = {
+		'x': e.pageX - offset.left,
+		'y': e.pageY - offset.top
+	};
+	$.extend(document, {
+		'move': true,
+		'move_target': this
+	});
+	// console.log("clientY:"+e.clientY, "pageY:"+e.pageY);
+	console.log("offsetX:" + e.offsetX, "offsetY:" + e.offsetY);
+}).on('mousedown', '#coor', function(e) {
+	var posix = {
+		'w': $box.width(),
+		'h': $box.height(),
+		'x': e.pageX,
+		'y': e.pageY
+	};
+
+	$.extend(document, {
+		'move': true,
+		'call_down': function(e) {
+			$box.css({
+				'width': Math.max(30, e.pageX - posix.x + posix.w),
+				'height': Math.max(30, e.pageY - posix.y + posix.h)
+			});
+		}
+	});
+	return false;
+});
+$(document).mousemove(function(e) {
+	if (!!this.move) {
+		//console.log(document.move_target);
+		var posix = !document.move_target ? {
+				'x': 0,
+				'y': 0
+			} : document.move_target.posix,
+			callback = document.call_down || function() {
+				$(this.move_target).css({
+					'top': e.pageY - posix.y,
+					'left': e.pageX - posix.x
+				});
+			};
+
+		callback.call(this, e, posix);
+	}
+}).mouseup(function(e) {
+	if (!!this.move) {
+		var callback = document.call_up || function() {};
+		callback.call(this, e);
+		$.extend(this, {
+			'move': false,
+			'move_target': null,
+			'call_down': false,
+			'call_up': false
+		});
+	}
+});
+</script>

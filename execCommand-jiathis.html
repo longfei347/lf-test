@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>test</title>
+</head>
+<script src="js/j.js"></script>
+<!--<script src="js/underscore-src.js"></script>-->
+<script>
+//document.execCommand执行的命令
+//"source", "|", "undo", "redo", "|", "preview", "print", "template", "cut", "copy", "paste", "plainpaste", "wordpaste", "|", "justifyleft", "justifycenter", "justifyright", "justifyfull", "insertorderedlist", "insertunorderedlist", "indent", "outdent", "subscript", "superscript", "clearhtml", "quickformat", "selectall", "|", "fullscreen", "/", "formatblock", "fontname", "fontsize", "|", "forecolor", "hilitecolor","bold", "italic", "underline", "strikethrough", "lineheight", "removeformat", "|", "image", "flash", "media", "insertfile", "table", "hr", "emoticons", "map", "code", "pagebreak", "anchor", "link", "unlink", "|", "about"
+
+/*该function执行copy指令*/
+function fn_doufucopy() {
+	//edit.select();
+	document.execCommand('Copy');
+	//document.execCommand('Unlink');
+}
+
+/*该function 执行paste指令*/
+
+function fn_doufupaste() {
+	tt.focus();
+	document.execCommand('paste');
+}
+
+/**该function 用来创建一个超链接*/
+function fn_creatlink() {
+	document.execCommand('CreateLink', true, 'true'); //弹出一个对话框输入URL//
+	document.execCommand('CreateLink', false, 'http://www.51js.com');
+}
+
+/**该function 用来将选中的区块设为指定的背景色*/
+function fn_change_backcolor() {
+	document.execCommand('BackColor', true, '#FFbbDD'); //true或false都可以
+}
+
+/**该function 用来将选中的区块设为指定的前景色,改变选中区块的字体大小,改变字体,字体变粗变斜*/
+function fn_change_forecolor() {
+	//指定前景色
+	document.execCommand('ForeColor', false, '#BBDDCC'); //true或false都可以
+	//指定背景色
+	document.execCommand('FontSize', false, 7); //true或false都可以
+	//字体必须是系统支持的字体
+	document.execCommand('Fontname', false, '标楷体'); //true或false都可以
+	//字体变粗
+	document.execCommand('Bold');
+	//变斜体
+	document.execCommand('Italic');
+}
+/**该function 用来将选中的区块加上不同的线条*/
+function fn_change_selection() {
+	//将选中的文字加下划线
+	document.execCommand('Underline');
+	//在选中的文字上划粗线
+	document.execCommand('StrikeThrough');
+	//将选中的部分文字变细
+	document.execCommand('SuperScript');
+	//将选中区块的下划线取消掉
+	document.execCommand('Underline');
+}
+/**该function 用来将选中的区块排成不同的格式*/
+function fn_format() {
+	//有序列排列
+	document.execCommand('InsertOrderedList');
+	//实心无序列排列
+	document.execCommand('InsertUnorderedList');
+	//空心无序列排列
+	document.execCommand('Indent');
+}
+
+/**该function 用来将选中的区块剪下或是删除掉*/
+function fn_CutOrDel() {
+	//删除选中的区块//
+	document.execCommand('Delete');
+	//剪下选中的区块
+	document.execCommand('Cut');
+}
+/**该function 用来将页面保存为一个文件*/
+function fn_save() {
+	//第二个参数为欲保存的文件名
+	document.execCommand('SaveAs', 'mycodes.txt');
+	//打印整个页面//
+	document.execCommand('print');
+}
+</script>
+<!-- <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1402489534955645" charset="utf-8"></script> -->
+</head>
+<body>
+<!-- JiaThis Button BEGIN
+<div class="jiathis_style">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a class="jiathis_button_xiaoyou"></a>
+	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<!-- JiaThis Button END 
+<object id="dazhe_swf" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="980" height="90" type="application/x-shockwave-flash">
+	<param name="Movie" value="http://d1.sina.com.cn/201405/15/551693.swf">
+	<param name="FlashVars" value="mv_clickurl=/?r=www/activity/dazhe">
+	<param name="WMode" value="Opaque">
+	<param name="Quality" value="High">
+	<param name="AllowScriptAccess" value="always">
+	<param name="Scale" value="ShowAll">
+	<param name="AllowNetworking" value="all">
+	<param name="AllowFullScreen" value="false">
+	<embed id="dazhe_swf" width="980px" height="90px" src="http://d1.sina.com.cn/201405/15/551693.swf" quality="High" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" wmode="Opaque" allowscriptaccess="always" flashvars=""></embed>
+</object>
+<input type="text" id="long" onkeydown="console.log(event.keyCode)">
+-->
+<form action="llol" method="get">
+	<P contenteditable>哥写的不是HTML，是寂寞。<br>
+		&nbsp;&nbsp;我说：<br>
+		不要迷恋哥，哥只是一个传说
+	<div id="result"></div>
+	<textarea id="tt" rows="10" cols="50" name="tt"></textarea>
+	<div contenteditable>
+		<img src="" width="200" height="100"> 浮沉聚散变化又再,但是总可卷土重来.<br>
+		天若有情天亦老,人间正道是沧桑.<br>
+		都怪我,太执着,却也等不到花开叶落.<br>
+		Please select above letters, then click following buttons:<br>
+		<hr>
+	</div>
+	<input id="edit" value="范例" name="edit">
+	<button type="button" onclick="fn_doufucopy()" ID="Button1">Copy</button>
+	<button type="button" onclick="fn_doufupaste()" ID="Button2">paste</button>
+	<input type="button" value="创建CreateLink" onclick="fn_creatlink()" id="Button3"name="Button3">
+	<input type="button" value="改变文字背景色" onclick="fn_change_backcolor()" id="Button4"name="Button4">
+	<input type="button" value="改变文字前景色" onclick="fn_change_forecolor()" id="Button5"name="Button5">
+	<input type="button" value="给文字加线条" onclick="fn_change_selection()" id="Button6"name="Button6">
+	<input type="button" value="改变文字的排列" onclick="fn_format()" id="Button7"name="Button7">
+	<input type="button" value="删除或剪下选中的部分" onclick="fn_CutOrDel()" id="Button8"name="Button8">
+	<input type="button" value="插入Object" onclick="fn_InsObj()" ID="Button9"name="Button9">
+	<input type="button" value="保存或打印文件" onclick="fn_save()" iD="Button10"name="Button10">
+	<input type="button" value="测试Refresh属性" onclick="document.execCommand('Refresh')" id="Button11" name="Button11">
+	<!--[if lt IE 9]><div id="noie">妈妈说IE必须死！页面错乱是你活该～</div><![endif]-->
+</form>
+</body>
+</html>

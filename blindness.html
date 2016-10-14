@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>看你有多色小游戏</title>
+</head>
+<body>
+<div style="position:relative; left: 50%; padding-bottom: 15px; width: 500px; margin-left:-400px; font-size: 2em;  ">关数：<span id="gNumber" style="color: red;">0</span><a id="changeA" href="#" style="margin-left: 22px;">改变难度系数</a></div>
+<canvas id="canvas" width="800" height="800" style="position:relative; box-shadow:0 0 5px #999; left:50%; margin-left:-400px;"></canvas>
+<script>
+    (function (window) {
+        var canvas = document.getElementById('canvas');
+        var gNumber = document.getElementById('gNumber');
+        var changeA = document.getElementById('changeA');
+        var ctx = canvas.getContext('2d');
+        var width, height, x, y, raX, raY, k = 2, R, G, B, GS, BS, color1, color2, times = 8, flag = false, guanshu = 0, g = 30;
+        var drawObj = {
+            init: function () {
+                _this = this;
+                this._drawStarGame();//初始化时先绘制开始游戏文字及背景
+                changeA.addEventListener('click', function () {//改变难度系数
+                    if (confirm('是否要改变难度系数呢？')) {
+                        var name = prompt('请输入难度系数（难度系数为两个颜色的色值差，即输入的数值越小，难度越高）', '默认是30哦，即你刚玩的难度为' + g + ',系数范围为(1~54)');
+                        if (name != null && name != '' && !isNaN(name)) {
+                            g = name > 54 ? 54 : name;
+
+                        }
+                    }
+                    return false;
+                });
+                canvas.addEventListener('click', function (e) {
+                    var p = _this._getEventPosition(e);
+                    console.log(p.x + ',' + p.y);
+                    if (ctx.isPointInPath(p.x, p.y)) {//判断点击的点是否在路径内，是返回true，不是返回false
+                        if (k >= 9) {
+                            k = 9;
+
+                            _this._drawRect(k, g);
+
+                            if (guanshu == 20) {//已经通过20关了
+                                if (confirm('您已经通过了20关了哦，是不是感觉太小儿科了，那是否增加难度系数呢？')) {
+                                    var name = prompt('请输入难度系数（难度系数为两个颜色的色值差，即输入的数值越小，难度越高）', '默认是30哦，即你刚玩的难度为' + g + ',系数范围为(1~54)');
+                                    if (name != null && name != '' && !isNaN(name)) {
+                                        g = name > 54 ? 54 : name;
+                                    }
+                                }
+                            }
+                            if (guanshu == 50) {//已经通过了50关了
+
+                                if (confirm('您已经通过了50大关了哦，太牛叉了，是不是感觉太小儿科了，那是否增加难度系数呢？')) {
+                                    var name = prompt('请输入难度系数（难度系数为两个颜色的色值差，即输入的数值越小，难度越高）', '你刚玩的难度为' + g + '系数范围为(1~54)');
+                                    if (name != null && name != '' && !isNaN(name)) {
+                                        g = name > 54 ? 54 : name;
+                                    }
+                                }
+                            }
+                            for (i = 0; i < 1000; i += 30) {
+                                if (guanshu == i) {
+                                    alert('你太牛叉了，现在已经通过' + i + '关了');
+                                }
+                            }
+
+                            guanshu += 1;//累计通过的关数
+                            gNumber.innerHTML = guanshu;
+                        } else {
+                            _this._drawRect(k, g);
+                            k += 1;
+                            flag = true;//用来判断游戏是否已经开始了
+                            guanshu += 1;//累计通过的关数
+                            gNumber.innerHTML = guanshu;
+
+                        }
+                    } else {
+                        if (flag == true) {//等于true时，说明游戏已经开始了
+                            times--;
+                            if (times == 0) {
+                                if (confirm('Game Over!是否要重新来过?')) {//以下为初始化参数
+                                    _this._drawStarGame();
+                                    k = 2
+                                    times = 8;
+                                    flag = false;
+                                    guanshu = 0;
+                                    g = 30;
+                                } else {
+                                    alert('那就继续吧 Come On 再给你5次机会,可要睁大你的色眼了');
+                                    times = 5;
+                                }
+                            } else {
+                                alert('不够色，继续找，还有' + times + '次机会');
+                            }
+                        } else {
+                            return false;
+                        }
+                    }
+                })
+
+            },
+            /*
+             *@method _drawRect 绘制多了矩形
+             *@param Number k  传入的矩形个数
+             *@param Number g  传入的两个正方形相差的色值数，越小颜色就越相近，玩起来游戏寻找不同色块也就越难
+             */
+            _drawRect: function (k, g) {
+                g = !g ? 30 : g;//默认值为30
+                ctx.beginPath();//在ie下要加这个才能清空路径
+                ctx.clearRect(0, 0, canvas.width, canvas.height);//重置画布，即开始时先把画布清空，这个方法在ie浏览器下清空不了路径，所以加了上边的ctx.beginPath()是为了兼容ie
+                width = Math.floor((canvas.width - (k - 1) * 10) / k);
+                height = Math.floor((canvas.height - (k - 1) * 10) / k);
+                raX = Math.floor(Math.random() * (k - 1));
+                raY = Math.floor(Math.random() * (k - 1));
+                var p = drawObj._getSameColor(g);
+                color1 = p.color1;
+                color2 = p.color2;
+                console.log(color1 + ' ' + color2);
+                for (var i = 0; i < k; i++) {
+                    for (var j = 0; j < k; j++) {
+                        if (i == raX && j == raY) {
+                            ctx.fillStyle = color1;
+                            ctx.rect((width + 10) * j, i * (height + 10), width, height);//先创建路径
+                            ctx.fill();//然后填充
+                        } else {
+                            ctx.fillStyle = color2;
+                            ctx.fillRect((width + 10) * j, i * (height + 10), width, height);//直接不创建路径，直接填充矩形
+                        }
+                    }
+                }
+                console.log(raX + ' ' + raY);
+            },
+            /*
+             *@method _getEventPosition 获取事件坐标  @return  包含X坐标和Y坐标的一个对象
+             *@param e  传入的事件
+             */
+            _getEventPosition: function (e) {
+                e = window.event || e;
+                if (e.layerX || e.layerY == 0) {
+                    x = e.layerX;
+                    y = e.layerY;
+                } else if (e.offsetX || e.offsetY) {
+                    x = e.offsetX;
+                    y = e.offsetY;
+                }
+                return {x: x, y: y};
+            },
+            /*
+             *@method _getSameColor 获取相近的两个颜色值  @return  包含了两个相近颜色值的对象
+             *@param Number colorNum  传入两个颜色相差的色值数，传值越大两个相差的颜色越大
+             */
+            _getSameColor: function (colorNum) {
+                R = Math.floor(Math.random() * 200);
+                G = Math.floor(Math.random() * 200);
+                B = Math.floor(Math.random() * 200);
+                GS = G + Number(colorNum);
+                BS = B + Number(colorNum);
+                return {color1: 'rgb(' + R + ',' + G + ',' + B + ')', color2: 'rgb(' + R + ',' + GS + ',' + BS + ')'}
+            },
+            _drawStarGame: function () {
+                ctx.beginPath();
+                canvas.width = canvas.width;
+                ctx.fillStyle = 'yellow';
+                ctx.rect(180, 310, 440, 117);
+                ctx.fill()
+                ctx.textAlign = 'left';
+                ctx.font = '100px arial';
+                ctx.fillStyle = 'blue';
+                ctx.fillText('开始游戏', 200, 400, 800);
+                ;
+
+
+            }
+        }
+        window.drawObj = drawObj;
+    })(window)
+    drawObj.init();
+</script>
+</body>
+</html>

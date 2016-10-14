@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>那一年，我喜欢你</title> 
+</head>
+<body>
+<style type="text/css">
+body {
+	background:url(sky.jpg)}
+	margin: 0;
+}
+
+#title{
+	font-family: "Consolas","Monaco","Bitstream Vera Sans Mono","Courier New","sans-serif";
+	font-size: 24px;
+	color: #fff;
+	margin-right: 20px;
+}
+
+canvas {
+	cursor: crosshair;
+	display: block;
+	position: absolute;
+}
+#mainDiv{float:left;width:100%;height:100%;z-index: 99;}
+#loveHeart{width:800px;height:700px;float: right;}
+#garden{width:800px;height:700px;float:left;}
+
+#elapseClock{text-align:right;font-size:18px;margin-top:10px;margin-bottom:10px}
+#words{font-family:"sans-serif";margin-top: 180px;margin-left: 30px; width:500px;font-size:16px;color:#f66}
+#messages{display:none}
+#elapseClock .digit{font-family:"digit";font-size:36px}
+#loveu{padding:5px;font-size:22px;margin-top:80px;margin-right:120px;text-align:right;display:none}
+#loveu .signature{margin-top:10px;font-size:20px;font-style:italic}
+#clickSound{display:none}
+#code{margin-left: 300px;  width:440px;height:400px;color:#fff;font-family:"Consolas","Monaco","Bitstream Vera Sans Mono","Courier New","sans-serif";font-size:18px}
+#code .string{color:#fff}
+#code .keyword{color:#7f0055;font-weight:bold}
+#code .placeholder{margin-left:15px}#code .space{margin-left:7px}
+#code .comments{color:#fff}
+</style>
+<script src="jquery.js"></script>
+<script src="garden.js"></script>
+<script src="functions.js"></script>
+	<div id="mainDiv">
+		<span id="title">作者：Mr.Long</span>
+		<!--<span id="title">参照：Someone</span> -->
+		<span id="tips">tips：鼠标乱点屏幕，越乱越好看哦</span>	
+		<div id="loveHeart">
+			<canvas id="garden" width="800" height="700"></canvas>
+			<div id="code" style="margin-top: 190px;">
+				Boy name = <span class="keyword">Mr</span> Long<br>
+				Girl name = <span class="keyword">Mrs</span> Zhu<br>
+				<span class="comments">那年,</span><br>
+				<span class="comments">我没能带你去看烟花.</span><br>
+				<span class="comments">希望在这里. </span><br>
+				<span class="comments">你能看到你喜欢的烟花. </span><br>
+				The boy loved the girl;<br>
+				<span class="keyword">The boy</span> very <span class="keyword">happy</span>;<br>
+				<span class="keyword">The girl</span> is also very <span class="keyword">happy</span>;<br>
+				I want to say: <br>
+				<span class="keyword">Baby,</span> I love you <span class="keyword">forever</span>;<br>
+			</div>
+		</div>	
+		<div id="words">
+			<div id="messages">
+				亲爱的，这是我们从第一次相遇(2016.7.7)所经历的时光。
+				<div id="elapseClock"></div>
+			</div>
+			<div id="loveu">
+				Love you forever!<br/>
+				<div class="signature">- 龙先生</div>
+			</div>
+		</div>
+	</div>
+	<canvas id="canvas" width="1296" height="834">Canvas is not supported in your browser.</canvas>
+<script>
+var offsetX = $("#loveHeart").width() / 2;
+var offsetY = $("#loveHeart").height() / 2 - 55;
+var together = new Date();
+together.setFullYear(2016, 6, 7);
+together.setHours(11);
+together.setMinutes(30);
+together.setSeconds(0);
+together.setMilliseconds(0);
+if (!document.createElement('canvas').getContext) {
+	var msg = document.createElement("div");
+	msg.id = "errorMsg";
+	msg.innerHTML = "Your browser doesn't support HTML5!<br/>Recommend use Chrome 14+/IE 9+/Firefox 7+/Safari 4+";
+	document.body.appendChild(msg);
+	$("#code").css("display", "none")
+	document.execCommand("stop");
+} else {
+	setTimeout(function () {
+		startHeartAnimation();
+	}, 5000);
+
+	timeElapse(together);
+	setInterval(function () {
+		timeElapse(together);
+	}, 500);
+
+	$('#code').css("margin-top", ($("#garden").height() + 80 - $("#code").height()) / 2);
+	$("#code").typewriter();
+}
+window.requestAnimFrame = (function () {
+	return window.requestAnimationFrame ||
+	window.webkitRequestAnimationFrame ||
+	window.mozRequestAnimationFrame ||
+	function (callback) {
+		window.setTimeout(callback, 1000 / 60);
+	};
+})();
+
+// now we will setup our basic variables for the demo
+var canvas = document.getElementById('canvas'),
+ctx = canvas.getContext('2d'),
+cw = window.innerWidth,
+ch = window.innerHeight,
+// firework collection
+fireworks = [],
+// particle collection
+particles = [],
+// starting hue
+hue = 120,
+// when launching fireworks with a click, too many get launched at once without a limiter, one launch per 5 loop ticks
+limiterTotal = 5, limiterTick = 0,
+// this will time the auto launches of fireworks, one launch per 80 loop ticks
+timerTotal = 80,timerTick = 0,mousedown = false,
+// mouse x y coordinate
+mx, my;
+
+// set canvas dimensions
+canvas.width = cw;
+canvas.height = ch;
+
+// mouse event bindings
+// update the mouse coordinates on mousemove
+canvas.addEventListener('mousemove', function (e) {
+	mx = e.pageX - canvas.offsetLeft;
+	my = e.pageY - canvas.offsetTop;
+});
+
+// toggle mousedown state and prevent canvas from being selected
+canvas.addEventListener('mousedown', function (e) {
+	e.preventDefault();
+	mousedown = true;
+});
+
+canvas.addEventListener('mouseup', function (e) {
+	e.preventDefault();
+	mousedown = false;
+});
+function Hmlt5Audio(url, loop) {
+	var audio = new Audio(url);
+	audio.autoplay = true;
+	audio.loop = loop || false;
+	audio.play();
+	return {
+		end: function(callback) {
+			audio.addEventListener("ended", function() {
+				callback()
+			}, false)
+		}
+	}
+}
+Hmlt5Audio("sky.mp3", true);
+// once the window loads, we are ready for some fireworks!
+window.onload = loop;
+</script>
+</body></html>

@@ -64,6 +64,7 @@
 [Bootstrap v3 font](http://v3.bootcss.com/components/) | 
 [Webpack+React+ES6](http://www.cnblogs.com/skylar/p/React-Webpack-ES6.html) | 
 [React Native](http://www.cnblogs.com/maomishen/p/5303976.html) | 
+[React Native2](https://my.oschina.net/osccreate/blog/778348) | 
 ###资源
 [front-end-collect](https://github.com/jikeytang/front-end-collect) | 
 [最全前端资源汇集](http://www.w3cfuns.com/notes/17755/423092d927775ae297a390f646079a64.html) | 

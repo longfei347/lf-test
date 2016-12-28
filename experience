@@ -103,7 +103,13 @@ Object.getOwnPropertyNames(String.prototype)
 
 var cls=window.open("","_self");cls.close();
 
-<!-- JiaThis Button BEGIN 参考(http://www.jiathis.com/getcode/tool)-->
+<!-- JiaThis Button BEGIN 参考(
+
+
+
+
+
+://www.jiathis.com/getcode/tool)-->
 <script type="text/javascript">
 var jiathis_config = {data_track_clickback:'true'};
 </script>
@@ -577,8 +583,7 @@ copy/cut 42 41 (41) 9 29 未实现
 [1] 在 Firefox 41 之前，剪贴板功能需要在 user.js 配置文件中启用。参阅 Mozilla 配置概述。命令若未被支持或启用，execCommand 会抛出异常，而不是返回 false。自 Firefox 41 开始，只要是在能够创建窗口的事件回调函数里（半可信脚本里），剪贴板功能都是默认开启的。
 
 document.execCommand 常用命令:JustifyLeft JustifyCenter Copy paste Bold Underline
-http://www.cnblogs.com/xjyggd/archive/2009/02/12/1388788.html
-
+[document.execCommand](http://www.cnblogs.com/xjyggd/archive/2009/02/12/1388788.html)
 var tip = /^(22[0-3]|2[01]\d|1\d\d|[1-9]\d?)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$/;
 "192.023.34.034".replace(/\d+/g,function(s){return +s;})
 >"192.23.34.34"
@@ -668,12 +673,12 @@ Setter: 123
 --disable-web-security
 如，右击谷歌浏览器快捷图标-属性--快捷方式-目标 可使chrome支持本地文件访问
 html,css,js实践
-http://www.w3cfuns.com/blog-5425789-5398798.html  
-http://www.w3cfuns.com/blog-5424323-5399791.html //css
-http://www.w3cfuns.com/blog-5441802-5400269.html //前端资源 
-http://www.w3cfuns.com/blog-5445197-5399640.html //js异步方式
-http://www.w3cfuns.com/blog-5449712-5400263.html //前端工具组件
-http://error.w3cfuns.com/home.php?mod=space&uid=5437204&do=blog&id=5399403 //html5移动
+[html-css-js](http://www.w3cfuns.com/blog-5425789-5398798.html)  
+[css](http://www.w3cfuns.com/blog-5424323-5399791.html) //css
+[前端资源 ](http://www.w3cfuns.com/blog-5441802-5400269.html )//
+[js异步方式](http://www.w3cfuns.com/blog-5445197-5399640.html) //
+[前端工具组件](http://www.w3cfuns.com/blog-5449712-5400263.html) //前端工具组件
+[html5移动](http://error.w3cfuns.com/home.php?mod=space&uid=5437204&do=blog&id=5399403) //
 雅虎最佳实践:
 https://developer.yahoo.com/performance/rules.html
 http://www.w3cfuns.com/blog-5434011-5397390.html

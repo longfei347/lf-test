@@ -1,0 +1,1002 @@
+龙飞▄︻┻═┳一 10:37:36
+远程连接:mstsc -v 192.168.0.171
+
+Function instanceof Object //true
+Object instanceof Function //true
+
+Object.toString==Function.prototype.toString==Function.toString //true
+Object.toString==Object.prototype.toString  // false
+Object.toString==toString  // false  与window.toString不同
+Object.prototype.toString==toString //true
+
+判断是否为数组:
+1, Object.prototype.toString.call(obj) == "[object Array]";
+2, a instanceof Array //true 
+   a.constructor == Array //true 
+3, var is_array = function(value) { 
+	return value && 
+	typeof value === 'object' && 
+	typeof value.length === 'number' && 
+	typeof value.splice === 'function' && 
+	!(value.propertyIsEnumerable('length')); 
+};
+调用Object.prototype.toString的返回值有:[object Array] [object Object] [object Function] [object Number] [object String] [object Boolean] [object Null] [object Undefined] [object Arguments]
+
+字符串也可用for in 遍历
+var str="long";
+for(var s in str) console.log(s,str[s]) //0 l,1 o,2 n,3 g
+
+selectObject.insertBefore(se3,sel.options[1]);//在IE下无文本值,appendChild在IE下也无文本值
+selectObject.add(option, before) //before可为节点也可为索引
+
+原型及原型链
+ 在js中任何对象都有一个内部属性_proto_,这个属性通常称为原型或者原型对象。
+ 它可以为空（null），也可以是一个对象,如果它是一个对象，那它也会有自己的_proto_
+ 当创建一个函数的时候(function)，会自动加入一个prototype的属性，它包含了所有实例共享的属性和方法，并包含一个constructor属性，这个属性包含了一个所指向prototype属性的指针。
+
+document与window 原型链
+//document-->HTMLDocument-->Document-->Node-->EventTarget-->Object-->null
+//window-->Window-->EventTarget-->Object-->null
+//元素为 body-->HTMLBodyElement-->HTMLElement-->Element-->Node-->EventTarget-->Object
+
+1, Object.keys(window)//获取可枚举属性
+2, Object.getOwnPropertyNames(window) //获取自身属性
+Object.getOwnPropertyNames(Array.prototype)
+["length", "constructor", "toString", "toLocaleString", "join", "pop", "push", "concat", "reverse", "shift", "unshift", "slice", "splice", "sort", "filter", "forEach", "some", "every", "map", "indexOf", "lastIndexOf", "reduce", "reduceRight"]
+var a=[1,2,3,5];
+console.log(Math.max.apply(null, a));//最大值
+console.log(Math.min.apply(null, a));//最小值
+var a=[1,2,3,[5,6],[1,4,8]];
+var ta=a.join(",").split(",");//转化为一维数组
+console.log(Math.max.apply(null,ta));//最大值
+console.log(Math.min.apply(null,ta));//最小值
+Array.prototype.max = function(){   //最大值
+ return Math.max.apply({},this) 
+} 
+Array.prototype.min = function(){   //最小值
+ return Math.min.apply({},this) 
+}
+[1,2,3].max()// => 3 
+[1,2,3].min()// => 1
+Array.max=function(array)
+{
+    return Math.max.apply(Math,array);
+}
+
+Array.min=function(array)
+{
+    return Math.min.apply(Math,array);
+}
+var testArray=[1,2,3,4];
+Array.min(testArray);   //==>1
+Array.max(testArray);   //==>4 
+
+Object.getOwnPropertyNames(String.prototype)
+["length", "constructor", "valueOf", "toString", "charAt", "charCodeAt", "concat", "indexOf", "lastIndexOf", "localeCompare", "match", "normalize", "replace", "search", "slice", "split", "substring", "substr", "toLowerCase", "toLocaleLowerCase", "toUpperCase", "toLocaleUpperCase", "trim", "trimLeft", "trimRight", "link", "anchor", "fontcolor", "fontsize", "big", "blink", "bold", "fixed", "italics", "small", "strike", "sub", "sup"]
+3.遍历可枚举的自身属性和继承属性
+(function () {
+    var getEnumPropertyNames = function (obj) {
+        var props = [];
+        for (prop in obj) {
+            props.push(prop);
+        }
+        return props;
+    }
+    var propertys = getEnumPropertyNames(window);
+    console.log(propertys.length);       //185
+    console.log(propertys.join("\n"));   //addEventListener,onload等等
+})()
+4.遍历所有的自身属性和继承属性
+(function () {
+    var getAllPropertyNames = function (obj) {
+        var props = [];
+        do {
+            props = props.concat(Object.getOwnPropertyNames(obj));
+        } while (obj = Object.getPrototypeOf(obj));
+        return props;
+    }
+    var propertys = getAllPropertyNames(window);
+    console.log(propertys.length);          //276
+    console.log(propertys.join("\n"));      //toString等
+})()
+
+
+var cls=window.open("","_self");cls.close();
+
+<!-- JiaThis Button BEGIN 参考(http://www.jiathis.com/getcode/tool)-->
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_r.js?move=0&amp;uid=1408528105995809" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+相关分享有: http://www.bshare.com/help/installAction
+
+console.log(navigator.userLanguage);
+console.log(((navigator.language) ? navigator.language : navigator.browserLanguage).substring(0,2));
+
+
+var s=[1,2,3,4,7];delete s[0];0 in s//false
+var s=[1,2,3,4,7];0 in s//true 对应于数组索引
+
+
+js文件
+MIME_type 规定脚本的 MIME 类型。
+一些常用的值：
+text/javascript (默认) 
+text/ecmascript 
+application/ecmascript 
+application/javascript 
+text/vbscript 
+text/plain(有些浏览器) 
+
+[].forEach.call(document.querySelectorAll('.el'), function (el) {  
+  el.addEventListener('event', function() {  
+  
+  }, false);  //addEventListener中第3个参数默认为false(冒泡).
+}); 
+
+unload 和 beforeunload 都没法区分刷新和关闭，只要当前页面unload了就会触发（关闭，刷新，点击链接，输入地址等等）
+unload 可以做些清理工作，但是不能用preventDefault来阻止页面关闭
+beforeunload 返回null或者undefined会直接关闭;如果返回值不是null或者undefined，浏览器会负责跳出个confirm对话框，返回值可以会做为提示的一部份也可能压根就不用。
+
+
+1,var frag = document.createDocumentFragment();  
+ajaxResult.items.forEach(function(item) {  
+    // 创建<li>元素  
+    var li = document.createElement('li');  
+    li.innerHTML = item.text;  
+    // 将<li>元素添加到碎片中  
+    frag.appendChild(li);  
+});  
+// 最后将所有的列表对象通过DocumentFragment集中注入DOM  
+document.querySelector('ul').appendChild(frag);  
+2,var htmlStr = ''; 
+ajaxResult.items.forEach(function(item) {
+    // 构建包含HTML页面内容的字符串  
+    htmlStr += '<li>' + item.text + '</li>';  
+});  
+document.querySelector('ul').innerHTML = htmlStr;  
+3, var items = [];  
+ajaxResult.items.forEach(function(item) {  
+    // 构建字符串  
+    items.push('<li>', item.text, '</li>');  
+});  
+// 通过innerHTML设置列表内容  
+document.querySelector('ul').innerHTML = items.join('');    
+
+/ 取自 UnderscoreJS 实用框架  
+function debounce(func, wait, immediate) {  
+    var timeout;  
+    return function() {
+        var context = this, args = arguments;  
+        var later = function() {  
+            timeout = null;  
+            if (!immediate) func.apply(context, args);  
+        };  
+        var callNow = immediate && !timeout;  
+        clearTimeout(timeout);  
+        timeout = setTimeout(later, wait);  
+        if (callNow) func.apply(context, args);  
+    };
+}  
+  
+// 添加resize的回调函数，但是只允许它每300毫秒执行一次  
+window.addEventListener('resize', debounce(function(event) {  
+    // 这里写resize过程  
+}, 300));  
+
+define(function() {
+    var cacheObj = window.sessionStorage || {  
+        getItem: function(key) {  
+            return this[key];  
+        },  
+        setItem: function(key, value) {  
+            this[key] = value;  
+        }  
+    };  
+  
+    return {  
+        get: function(key) {  
+            return this.isFresh(key);  
+        },  
+        set: function(key, value, minutes) {  
+            var expDate = new Date();  
+            expDate.setMinutes(expDate.getMinutes() + (minutes || 0));  
+  
+            try {  
+                cacheObj.setItem(key, JSON.stringify({  
+                    value: value,  
+                    expires: expDate.getTime()  
+                }));  
+            }  
+            catch(e) { }  
+        },  
+        isFresh: function(key) {  
+            // 返回值或者返回false  
+            var item;  
+            try {  
+                item = JSON.parse(cacheObj.getItem(key));  
+            }  
+            catch(e) {}  
+            if(!item) return false;  
+  
+            // 日期算法  
+            return new Date().getTime() > item.expires ? false : item.value;  
+        }  
+     }  
+}); 
+//-----
+表达式是js中的一个短句(也称语句),js解释器会将其计算出一个结果.由简单表达式与运算符可组成复杂表达式.
+最简单的表达式是--原始表达式,是表达式的最小单位,不再包含其他表达式. 包含常量,直接量,关键字和变量.
+如果变量不存在,表达式返回undefined. ecma5严格模式会抛出错误.
+
+运算符优先级:
+单目->乘除,加减->移位->比较->按位->逻辑->三目->赋值->逗号
+0&&1|1
+0
+(0&&1)|1
+1
+
+左值: 表达式只能出现在赋值运算符的左侧.js中变量,对象属性,数组元素等都是左值,允许内置函数返回一个左值,但自定义函数不行.
+
+var a=function b(){console.info(b)}; //相当于给a取一个别名b,右边表达式返回了函数b,但函数并未定义
+以表达式定义的的函数,函数名是可选的.
+一条函数声明语句实际上声明了一个变量,并把一个函数对象赋值给它.
+如果函数定义表达式包含名称,函数内部将包含一个绑定到函数对象的名称.
+同理 0||function qq(){}; 返回了函数qq,但qq并未定义
+
+//!function() {
+var tim = setInterval(function long(){
+		console.log(arguments[0]);//,long
+		clearInterval(tim)},
+	200, 1)
+//}()
+在函数long外无法访问long
+
+null和undefined没有包装对象,访问它们的属性会造成一个类型错误.
+存取字符串,数字,布尔值的属性时创建的临时对象称做包装对象. 修改只是发生在临时对象上,而临时对象在表达式运行完即销毁.
+
+!function() {
+	var a=b=c=0;//等价于var a=(b=(c=0)) c=0 即全局变量为0,表达式返回0 赋给b,再返回0赋给a
+}()
+a,b,c ?
+
+if(!("a" in window)) { //true
+	var a=1; //不会进来
+}
+a?
+var a = 1,
+    b = function a(x) {
+        x && a(--x);
+    };
+a?
+function a(x) {
+    return x * 2;
+}
+var a;
+a?
+var a=1;
+function b(x, y, a) {
+    arguments[2] = 10;
+    console.log(a);
+}
+b(1, 2, a);
+a?
+var a=1;
+function b(a) {
+    a = a||5;
+    console.log(a);
+}
+b(a);
+a?
+function a() {
+    console.log(this); // this指window
+}
+a.call(null);
+a?
+function a(t){
+    t();
+    function t(){
+        console.log(2);
+    }
+    var t = function(){
+        console.log(3);
+    }
+}
+a(function(){console.log(1)});  //output  2
+arguments中变量会覆盖var方式定义的变量，这里arguments中的变量又被函数定义的方法覆盖了
+
+jq插件,用";"开头,方便压缩不出错,将between合并到选择器中":".
+;(function($) {
+	$.extend(jQuery.expr[":"], {
+		between :	function( a , i ,m ) {
+			var tmp=m[3].split(","); //将传递进来的m[3]以逗号为分隔符，切成一个数组
+			return tmp[0]-0<i&&i<tmp[1]-0;
+		}
+	});
+})(jQuery)
+
+// use expires attribute, max-age is not supported by IE
+
+function animal(bSex){
+    this.sex = bSex
+    this.getSex = function(){
+        return this.sex
+    }
+}
+var o = {};
+animal.call(o, bSex);
+//o =>Object {sex: "yes", getSex: function} 使用某对象调用构造函数,构造函数中的this将指向该对象.
+
+document.getElementsByTagName("form").namedItem("fff")//这个有错误
+document.forms.namedItem("fff")//这个没有, 使用item()或数组下标,两者都没问题
+
+//Function.prototype.bind=null;
+if (!Function.prototype.bind) {
+	Function.prototype.bind = function (obj) {
+		var slice = [].slice,
+			args = slice.call(arguments, 1),
+			self = this,
+			nop = function() {},
+			bound = function() {
+				return self.apply(this instanceof nop ? this : (obj || {}),
+					args.concat(slice.call(arguments)));
+			};
+		nop.prototype = self.prototype;
+		bound.prototype = new nop;
+		return bound;
+	};
+}
+
+
+
+window.scroll(0,y);      //滚屏操作
+
+/*DOM元素中监听事件:
+chrome,IE：有window.event对象
+FF：没有window.event对象。只能通过给函数参数传递的第一个参数event对象。arguments[0],arguments.callee.caller*/
+
+var e=document.getElementById("");
+var t=e.offsetTop;
+var l=e.offsetLeft;
+while(e=e.offsetParent)
+{
+  t+=e.offsetTop;  //获取X坐标
+  l+=e.offsetLeft; //获取Y坐标
+}
+PageX和clientX ,这个两个比较容易搞混,
+PageX:鼠标在页面上的位置,从页面左上角开始,即是以页面为参考点,不随滑动条移动而变化
+clientX:鼠标在页面上可视区域的位置,从浏览器可视区域左上角开始,即是以浏览器滑动条此刻的滑动到的位置为参考点,随滑动条移动 而变化.
+
+可是悲剧的是,PageX只有FF特有,IE这个悲剧没有啊T_T
+所以大牛们想出了一个办法
+PageY=clientY+scrollTop-clientTop;(只讨论Y轴,X轴同理,下同)
+页面上的位置=可视区域位置+页面滚动条切去高度-自身border高度
+
+console.log("top: ",t ,"; left: ",l);
+
+" String ".replace(/^\s+|\s+$/g,"")//去掉首尾空格
+
+img元素可以不定义src属性,设置width与height等属性
+
+JSON.parse("lf") //当参数不可转化为对象时将报错
+
+window.addEventListener("unload", function(){localStorage["raceLog"] = JSON.stringify({name:"longfei",sex:"nan"});}, true); //退出时执行
+
+str_p = "[a-z0-9]\\.[\\da-z]";
+reg_pattern = new RegExp(str_p,"g");
+(?=exp)也叫零宽度 正 预测先行 断言 (总放在匹配的右边)
+(?<=exp)也叫零宽度 正 回顾后发 断言 (总放在匹配的左边)
+解释:= 为正  !为负
+在右边为预测先行,在左边为回顾后发
+
+reg = /ma|man/g;//只能匹配ma,应将man放前面
+str = "numA2 numA2numB3C4 numD5E6numF7G8";
+reg = /(num([A-Z][0-9]){1,}?){2}/;
+arr_m = str.match(reg);console.log(arr_m);
+reg = /(num([A-Z][0-9]){1,}?){2}/g;
+arr_m = str.match(reg);console.log(arr_m);//不含g,则在捕获组中递归查找,含则不捕获组
+str.match(reg)//reg若有/g则返回的是数组,若无,则为类数组,含有input,index等属性;   m多行模式貌似无效
+
+
+选取form表单可以:
+1,只根据表单名:formname
+2,document.formname
+3,document.forms[n]
+4,document.forms[formname]/document.forms.formname
+5,通用方法getElementById,getElementsByName,getElementsByClassName,getElementsByTagName,querySelector,querySelectorAll
+
+form的MIME类型：
+application/x-www-form-urlencoded 在发送前编码所有字符（默认） 
+multipart/form-data 不对字符编码。在使用包含文件上传控件的表单时，必须使用该值。
+text/plain 空格转换为 "+" 加号，但不对特殊字符编码。 
+
+JavaScript跨域总结与解决办法  
+1.document.domain
+2.服务器代理
+3.script标签
+4.location.hash
+5.window.name	走起
+6.flash 方法
+7.HTML5   postMessage	这儿
+
+function handleFiles(files) {
+	if (files.length) {
+		var file = files[0];
+		var reader = new FileReader();
+		if (/text\/\w+/.test(file.type)) {
+			reader.onload = function() {
+				$('<pre>' + this.result + '</pre>').appendTo('body');
+			}
+			reader.readAsText(file);
+		} else if(/image\/\w+/.test(file.type)) {
+			reader.onload = function() {
+				$('<img src="' + this.result + '"/>').appendTo('body');
+			}
+			reader.readAsDataURL(file);
+		}
+	}
+}
+其实input:file控件还支持选择多个文件：
+<input type="file" id="files" multiple="" onchange="handleFiles(this.files)"/>
+
+光标是停在文本框文字的最后
+function cc()
+{
+	var e = event.srcElement;
+	var r =e.createTextRange();
+	r.moveStart("character",e.value.length);
+	r.collapse(true);
+	r.select();
+}
+
+
+2013.4.7 IE6 byebye
+KeyPress主要用来接收字母、数字等ANSI字符，
+而 KeyDown 和 KeyUP 事件过程可以处理任何不被 KeyPress 识别的击键
+
+var xmlHttp= new XMLHttpRequest;
+xmlHttp.open("post", "Get.aspx?username=" + escape(username));
+xmlHttp.send(null)
+
+1，var xmlHttp= window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHttp");
+1，if (window.XMLHttpRequest) {
+        xmlHttp = new XMLHttpRequest();
+    } else {
+        //确保IE6可以运行,这里可以无视更古老的IE浏览器了
+        if (window.ActiveXObject) {
+            xmlHttp = new ActiveXObject("Microsoft.XMLHttp");
+        }
+    }
+
+    //如果均无法创建XMLHttpRequest对象,很遗憾,就放弃Ajax应用吧
+    if (xmlHttp == null) {
+        return;
+    }
+2，	//配置XMLHttpRequest对象
+	xmlHttp.open("get", "Get.aspx?username=" + escape(username)
+		+ "&age=" + escape(age) + "&random=" + Math.random());
+
+	//设置回调函数
+	xmlHttp.onreadystatechange = function () {
+		if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+			document.getElementById("result").innerHTML = xmlHttp.responseText;
+		}
+	}
+	//发送请求
+	http_request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	xmlHttp.send(null);
+
+方法 描述 
+open(method,url,async) 规定请求的类型、URL 以及是否异步处理请求。
+method：请求的类型；GET 或 POST 
+url：文件在服务器上的位置 
+async：true（异步）或 false（同步） 
+send(string) 将请求发送到服务器。
+string：仅用于 POST 请求 
+ 
+GET 还是 POST
+在以下情况中，请使用 POST 请求：
+无法使用缓存文件（更新服务器上的文件或数据库） 
+向服务器发送大量数据（POST 没有数据量限制） 
+发送包含未知字符的用户输入时，POST 比 GET 更稳定也更可靠 
+
+如果您希望通过 GET 方法发送信息，请向 URL 添加信息：
+
+xmlhttp.open("GET","demo_get2.asp?fname=Bill&lname=Gates",true);
+xmlhttp.send();
+
+如果需要像 HTML 表单那样 POST 数据，请使用 setRequestHeader() 来添加 HTTP 头。然后在 send() 方法中规定您希望发送的数据：
+xmlhttp.open("POST","ajax_test.asp",true);
+xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+xmlhttp.send("fname=Bill&lname=Gates");
+	
+onselect只用于text或textarea
+document.forms[0].addEventListener("invalid", invalidHandler, true);
+
+var hovered = document.querySelector("td:hover");
+var selected = document.querySelectorAll("*:checked");
+
+img_arr[i] = new Image(100,100);
+var option=new Option(textValue,value)
+
+//在IE使用createTextRange()
+var text_range = document.body.createTextRange();
+text_range.findText(s_text)
+text_range = document.selection.createRange();
+if (Ele.createTextRange) {//在IE中使用focus(),光标会定位到文本开始
+	var range = Ele.createTextRange(),
+		pos = Ele.value.length;
+	range.collapse(true);
+	range.moveEnd('character', pos);
+	range.moveStart('character', pos);
+	range.select();
+} else {
+	Ele.focus();
+}
+
+var ca = my_table.createCaption();
+var th = my_table.createTHead();
+
+https://developer.mozilla.org/zh-CN/docs/Web/API/Document/execCommand
+
+当文档对象被转换为设计模式的时候（选中，设置contentEditable等），文档对象提供了一个execCommand方法，通过给这这个方法传递参数命令可以操作可编辑区域的内容。这个方法的命令大多数是对文档选中区域的操作 (如bold, italics等), 也可以插入一个元素(如增加一个a链接) 或者修改一个完整行 (如缩进).。当元素被设置了contentEditable，通过执行execCommand 方法可以对当前活动元素进行很多操作。
+
+语法Edit
+bool = document.execCommand(aCommandName, aShowDefaultUI, aValueArgument)
+
+返回值
+一个 Boolean ，如果是 false 则表示操作不被支持或未被启用。
+参数
+aCommandName一个 DOMString ，命令的名称。可用命令列表请参阅 命令 。aShowDefaultUI一个 Boolean 是否展示用户界面，一般为 false。Mozilla 没有实现。aValueArgument一些命令需要一些额外的参数值（如insertimage需要提供这个image的url）。默认为null。
+
+An example of how to use it on CodePen.
+
+快速实现复制到剪贴板：
+<p>点击复制后在右边textarea CTRL+V看一下</p>
+<input type="text" id="inputText" value="测试文本"/>
+<input type="button" id="btn" value="复制"/>
+<textarea rows="4"></textarea>
+<script type="text/javascript">
+    var btn = document.getElementById('btn');
+    btn.addEventListener('click', function(){
+        var inputText = document.getElementById('inputText');
+        var currentFocus = document.activeElement;
+        inputText.focus();
+        inputText.setSelectionRange(0, inputText.value.length);
+        document.execCommand('copy', true);
+        currentFocus.focus();
+    });
+</script>123456789101112131415
+
+Basic support (Yes) (Yes)[1] ? ? (Yes) 
+insertBrOnReturn 未实现 (Yes) 未实现 未实现 未实现 
+copy/cut 42 41 (41) 9 29 未实现 
+   
+
+[1] 在 Firefox 41 之前，剪贴板功能需要在 user.js 配置文件中启用。参阅 Mozilla 配置概述。命令若未被支持或启用，execCommand 会抛出异常，而不是返回 false。自 Firefox 41 开始，只要是在能够创建窗口的事件回调函数里（半可信脚本里），剪贴板功能都是默认开启的。
+
+document.execCommand 常用命令:JustifyLeft JustifyCenter Copy paste Bold Underline
+http://www.cnblogs.com/xjyggd/archive/2009/02/12/1388788.html
+
+var tip = /^(22[0-3]|2[01]\d|1\d\d|[1-9]\d?)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$/;
+"192.023.34.034".replace(/\d+/g,function(s){return +s;})
+>"192.23.34.34"
+var arr=[];"/234*dfdkfh/123*gter".replace(/\/(.+?)\*/g,function(a){
+	//return arr.push(a.substring(1,a.length-1))
+	return $1;
+});console.log(arr);
+["234", "123"]
+
+parseInt(0xef+1,16);//前面会先转化为整数,576
+
+127<<24
+2130706432
+128<<24
+-2147483648
+
+1+ +"1" //2
+
+在非IE浏览器中可用delete删除localStorage的值
+localStorage.clear()可全部删除
+
+navigator.cookieEnabled 检测cookie是否启用
+ window.addEventListener("storage", handle_storage, false);
+
+锚点:通知a添加，href="#id" 如果针对name跳转，只对a元素有效，name不是标准属性，id才是，才能跳转到其他元素
+
+
+//console.log(undefined instanceof Object);//false
+//console.log(null instanceof Object);//false
+//$("ul li:nth-child(2n+1)")==$("ul li:even")
+//<a href="#panel1">前往区块1</a>点击会跳转到id为panel1的元素去
+
+console.log(document.all("tab",0));//表格不能用name获取
+
+isIE = n.userAgent.indexOf("MSIE") != -1
+ie10或之前版本:
+navigator.appName 
+"Microsoft Internet Explorer" 
+ie11为 "Netscape"
+可用navigator.appVersion.indexOf("Trident") != -1 判断
+
+@import url("phone.css") screen and (min-width:200px) and (max-width:360px);
+这里只有视口宽度在200到360的显示屏才会引入 phone.css
+
+c = (1+3) && (2+"str");//2str
+Math.random(); 返回0和1间(包括0,不包括1)的一个随机数
+!/^[0-9a-f][02468ace](:[0-9a-f]{2}){5}$/i.test(address) || address == "00:00:00:00:00:00"
+测试有效MAC，全F为广播，第二个字母为单数为组播，全0 均无效
+
+var arr=[];
+arr[0] = ['山羊','老虎','猴子'];
+arr[1] = ['狐狸','猴子','猩猩'];
+arr[2] = ['猴子','狗熊','兔子'];
+arr[3] = ['树熊','猴子','袋鼠'];
+var i=0,j=0;
+outerloop:
+for(i=0;i<4;i++)
+{
+	for(j=0;j<3;j++)
+	{
+		document.write("arr[" + i + "][" + j + "]:" + arr[i][j] + "<br>");
+		if(arr[i][j] == '猴子')
+		continue outerloop;	//结束外层循环
+	}
+}
+
+return num * arguments.callee(num-1);
+
+var obj = {
+    get prop() {
+        return "Getter";
+    },
+    set prop(value) {
+        console.log("Setter: "+value);
+    }
+}
+让我们操作一下obj的属性:
+
+> obj.prop
+'Getter'
+> obj.prop = 123;
+Setter: 123
+
+给chrome加上启动参数：
+--allow-file-access-from-files
+或者　
+--disable-web-security
+如，右击谷歌浏览器快捷图标-属性--快捷方式-目标 可使chrome支持本地文件访问
+html,css,js实践
+http://www.w3cfuns.com/blog-5425789-5398798.html  
+http://www.w3cfuns.com/blog-5424323-5399791.html //css
+http://www.w3cfuns.com/blog-5441802-5400269.html //前端资源 
+http://www.w3cfuns.com/blog-5445197-5399640.html //js异步方式
+http://www.w3cfuns.com/blog-5449712-5400263.html //前端工具组件
+http://error.w3cfuns.com/home.php?mod=space&uid=5437204&do=blog&id=5399403 //html5移动
+雅虎最佳实践:
+https://developer.yahoo.com/performance/rules.html
+http://www.w3cfuns.com/blog-5434011-5397390.html
+
+获取最新jquery
+http://code.jquery.com/jquery-latest.js
+http://code.jquery.com/jquery-1.4.2.js
+http://code.jquery.com/jquery-1.4.2.min.js
+安装mongodb
+http://ryanflyer.iteye.com/blog/1166109
+http://www.tuicool.com/articles/IBZNruJ
+mongod --logpath "D:\Program Files\MongoDB 2.6 Standard\logs\mongodb.log" --dbpath "D:\Program Files\MongoDB 2.6 Standard\data\db" --serviceName MongoDB --install
+mongodb常用命令:
+http://www.jbxue.com/db/18346.html
+mongodb全面总结:
+http://blog.csdn.net/yiqijinbu/article/details/9053467
+mongoose学习参考文档:
+http://ourjs.com/detail/53ad24edb984bb4659000013
+
+http://mongoosejs.com/docs/api.html
+https://cnodejs.org/topic/504b4924e2b84515770103dd
+express组件api
+http://expressjs.jser.us/3x_zh-cn/api.html
+nodejs+express+mongoose实例
+http://www.tuicool.com/articles/neeAnq
+http://blog.fens.me/nodejs-mongoose-json/
+同 http://shiyun1013.blog.163.com/blog/static/107740362013415104332419/
+
+http://www.imooc.com/learn/156 
+jquery UI
+nodejs 数据交互
+http://www.imooc.com/learn/75 nodejs
+nodejs+mongoDB+express+moment.js+jade
+
+sublime markdown preview使用
+http://www.xuebuyuan.com/2175658.html
+2048游戏
+http://gabrielecirulli.github.io/2048/
+扫雷游戏
+http://www.w3cfuns.com/article-5600790-1-1.html
+
+理解CSS3 transform中的Matrix(矩阵)
+http://blog.csdn.net/henren555/article/details/9699449
+http://www.zhangxinxu.com/wordpress/?p=552
+http://www.zhangxinxu.com/wordpress/?p=1505
+
+nodejs使用require加载文件,
+如 require('net') 为核心文件,
+require('./net') 为文件夹或文件,为文件夹时,默认会加载index.js或index.node
+
+http://www.xuanfengge.com/practical-collection-of-sublime-plug-in.html
+
+https://sublime.wbond.net/browse/popular sublime流行插件
+
+IE8 a的空链接无法点击解决方法如下三种:
+1、给a标签添加样式：background:url(about:blank);
+2、给a标签随便添加背景色或者背景图片，然后将a标签的透明度设置为0，不过在IE中需要使用滤镜，即 opacity:0;filter:alpha(opacity=0);
+推荐使用第一种方法，尽量少用滤镜
+3、给a添加 href="javascript:void(0)" 即可
+
+Object.bind == Function.prototype.bind //true
+竖向滚动条置顶 window.scrollTo(0,0);
+竖向滚动条置底 window.scrollTo(0,document.body.scrollHeight)
+
+http://huodong.fanli.com/lottery/verify.html?ref=mail 转盘抽奖
+
+$('#depDate').datepicker({
+	dateFormat: 'yy-mm-dd',
+	minDate:0,
+	onSelect:function() {
+		this.value = this.value + " " + ["周日","周一","周二","周三","周四","周五","周六"][(new Date(this.value)).getDay()]
+	}
+});
+$('#arrDate').datepicker({
+	dateFormat: 'yy-mm-dd',
+	minDate:0,
+	onSelect:function() {
+		this.value = this.value + " " + ["周日","周一","周二","周三","周四","周五","周六"][(new Date(this.value)).getDay()]
+	}
+});
+
+function long(a) {
+	console.log(this,a);
+}
+function fei(a) {
+	console.log(a);
+}
+var ss=Function.prototype.call.bind(long);
+ss(fei,123)
+
+var forEach = Function.prototype.call.bind(Array.prototype.forEach);
+var g=f.bind(obj, 1,2);g(3) 等价于 f.call(obj,1,2,3)
+
+http://jipiao.jd.com/ajaxTicket/queryCityInfo.action?_charset_=utf-8 京东城市数据
+http://www.taobao.com/go/rgn/trip/chinahotcity_jsonp.php?qq-pf-to=pcqq.discussion  淘宝城市数据
+
+chrome插件可查看事件源: Chrome Web Store - Visual Event 
+
+在线html,js,css编辑 使用emmet语法
+http://jsbin.com/haxacepidu/1/edit
+http://jsfiddle.net/
+
+格式化与压缩: http://tools.css-js.com/
+在线api文档: http://tool.oschina.net/apidocs
+http://www.cnblogs.com/jikey/p/3607133.html
+emmet 使用技巧
+http://emmet.io/download/
+http://docs.emmet.io/cheat-sheet/
+https://github.com/sergeche/emmet-sublime#readme
+http://www.cnblogs.com/jikey/p/3607133.html
+
+ul#nav>li.item$*4>a{item $} <==> ul#nav>(li.item$>a{item $})*4
+#page>(#header>ul#nav>li*4>a)+(#content>h1{Hello world}+p)+#footer
+
+1, “Next Edit Point” (Ctrl+Alt+→) 
+“Previous Edit Point” (Ctrl+Alt+←)
+2, “Select Next Item” (Shift+Ctrl+.) 
+“Select Previous Item” (Shift+Ctrl+,)
+3, ctrl+' 可将Encode/Decode Image/js to data:URL 
+4, ctrl+shift+g 可使用标签包裹 -->http://www.douban.com/note/299431022/
+nav>ul.nav>li.nav-item$*>a
+nav>ul.nav>li.nav-item$*>a|t(添加|t就可以删除文本中的序列标记)
+ul>li[id=long title=$#]*>{$#}+img[alt=$#]  使用$#操作符Emmet可以将文本输出到多个元素中，而$#平上Emmet缩写语法中的一部分，所以得将$#放在属性值[]或文本{}操作符中
+打开文件并定位到指定行 可用XXX:num, 打开定位到指定函数 或css 可 XXX@fn
+ctrl+shift+;  可删除上级标签 同 ctrl+shift+p 输入 remove tag
+ctrl+shift+a  可选中标签所在内容
+ctrl+shift+p 输入 set syntax 可设置语法
+可在tools 编译系统中自定义集成命令, 使用ctrl+b 执行命令, 比如自动在浏览器中打开文件
+使用ctrl+K,ctrl+d 可跳过当前选择项
+使用alt+. 可快速结束标签
+产生多个光标,可使用shift+右键拖动, 按住鼠标滚动键滚动, ctrl+alt+ down, 或按ctrl+左键
+
+html头可以 !,html:5, doctype
+m0-uto->margin: 0 auto;
+div+div>p>span+em^bq
+<div></div>
+<div>
+    <p><span></span><em></em></p>
+    <blockquote></blockquote>
+</div>
+ul>li.item$$$*5
+<ul>
+    <li class="item001"></li>
+    <li class="item002"></li>
+    <li class="item003"></li>
+    <li class="item004"></li>
+    <li class="item005"></li>
+</ul>
+ul>li.item$@-*5
+<ul>
+	<li class="item5"></li>
+	<li class="item4"></li>
+	<li class="item3"></li>
+	<li class="item2"></li>
+	<li class="item1"></li>
+</ul>
+ul>li.item$@3*5
+<ul>
+    <li class="item3"></li>
+    <li class="item4"></li>
+    <li class="item5"></li>
+    <li class="item6"></li>
+    <li class="item7"></li>
+</ul>
+
+em>.class
+<em><span class="class"></span></em>
+ul>.class
+<ul>
+    <li class="class"></li>
+</ul>
+table>.row>.col
+<table>
+    <tr class="row">
+        <td class="col"></td>
+    </tr>
+</table>
+p.class1.class2.class3
+<p class="class1 class2 class3"></p>
+
+
+chrome使用技巧: 在开发中工具中，可以按「H」键快速隐藏元素。
+Chrome DevTools 的 Network 面板现在支持使用「-」反向搜索了。例如输入「-.js」会筛选出所有非 JS 的请求。
+Firefox 37 修复了 Table 类型元素中不支持 position: relative 这个长达 14年的 Bug [泪]，奔走相告
+使用chrome://about 可以看到所以chrome都关命令
+
+[].forEach.call($$("*"),function(a){a.style.outline="1px solid #"+(~~(Math.random()*(1<<24))).toString(16)})
+
+[].forEach.call(document.querySelectorAll("*"),function(a){a.style.outline="1px solid #"+(~~(Math.random()*(1<<24))).toString(16)})
+
+深入浅出Nodejs读书笔记 
+http://tw93.github.io/2015-03-01/shen-ru-qian-chu-nodejs-reading-mind-map.html 
+
+
+前端要给力之：红绿灯大战中的火星生命-Promise 
+http://blog.csdn.net/aimingoo/article/details/45014325 
+
+
+react-native 之布局篇 
+https://github.com/tmallfe/tmallfe.github.io/issues/19 
+天猫的@sysu_学家实践并整理了的文章，详细丰富的介绍了React Native布局的知识。
+
+The full-stack employee 
+https://medium.com/@chrismessina/the-full-stack-employee-ed0db089f0a1 
+
+About CTO 
+为什么说不懂业务的CTO没有未来？ http://mp.weixin.qq.com/s?__biz=MzA3ODQ1NjYyOQ==&mid=207094084&idx=1&sn=e646daecdaaef74f56fb706677804443&scene=2 
+
+ 
+我眼中真正优秀的CTO http://mp.weixin.qq.com/s?__biz=MzA4NzA2NjcyMg==&mid=205021935&idx=1&sn=f40c64c9ddfed65d50b872cfb4581216 
+
+ 
+创业公司找不到CTO怎么办？ http://mp.weixin.qq.com/s?__biz=MzA4NzA2NjcyMg==&mid=205125427&idx=1&sn=80c83ce06c8e20eb0fe510df9e2cd78a 
+
+ 
+CTO的终结 http://mp.weixin.qq.com/s?__biz=MjM5Njk3NTk0MQ==&mid=207148742&idx=8&sn=58855c1e654341fa3569d250c7283a5f 
+
+Build To Win 
+http://zhuanlan.zhihu.com/goujianzhifa/20003750 
+梦断代码读后感 http://zhuanlan.zhihu.com/goujianzhifa/19970642
+
+迄今为止对互联网+理解最深入的文章 
+http://mp.weixin.qq.com/s?__biz=MjM5MjM3NTU4MA==&mid=204102215&idx=1&sn=b8df1ca10e23557cf5d285cf67d5b2c6 
+
+ 
+
+如何避免软件工程中最昂贵错误的发生 
+http://www.csdn.net/article/2015-03-30/2824346 
+
+ 
+
+Android’s 10 Millisecond Problem: The Android Audio Path Latency Explainer 
+http://superpowered.com/androidaudiopathlatency/ 
+Android’s 10 Millisecond Problem, a little understood yet extremely difficult technical challenge with enormous ramifications, prevents these sorts of revenue producing apps from performing in an acceptable manner and even being published (!) on Android at this point in time.
+
+Android性能优化 
+渲染 http://hukai.me/android-performance-render/ 
+运算 http://hukai.me/android-performance-compute/ 
+内存 http://hukai.me/android-performance-memory/ 
+耗电量 http://hukai.me/android-performance-battery/
+
+http://m.blog.csdn.net/blog/v_JULY_v/7382693
+http://www.zhihu.com/question/20790576
+
+sublime 折叠函数()
+sublime有这样的功能的，你看菜单 edit - code folding
+按ctrl + k，然后按ctrl + 1，可收起所有函数
+按ctrl + k， 再按 ctrl + j 显示所有函数
+你也可以 ctrl + k，ctrl + 2 （这个数字可以变的，表示收起的函数的级数，你试试就明白了）
+希望对你有用
+
+javascript中new对象的过程：如var myObj = newPerson(“aty”,25);
+1.创建一个空的Object对象.var obj = new Object();
+2.将构造函数Person中this指向刚创建的obj对象
+3.将创建的obj的__proto__指向构造函数Person的prototype。这一步是建立对象和原型直接的对应关系。firefox下通过
+对象的__proto__属性能够访问到原型，IE下则没有暴露出相应的属性。
+4.执行构造函数Person()中的代码
+
+查找块注释 \/\*([\s\S]*?)\*\/ (注意不要选全匹配)
+
+0.2-0.1 =0.1
+0.5-0.1 =0.4
+0.3-0.1 !=0.2
+0.4-0.1 !=0.3
+0.8-0.6 !=0.2
+
+Array.isArray( Object.prototype )
+false
+Array.isArray( Array.prototype )
+true
+
+ var a = [0];
+    if ([0]) { 
+      console.log(a == true);
+    } else { 
+      console.log("wut");
+    }
+[0] 被认为是真的，但跟 true 又不等同
+
+var ary = Array(3);
+    ary[0]=2
+    ary.map(function(elem) { return '1'; });
+结果是["1", undefined * 2], 因为map 只能被初始化过的数组成员调用
+
+ var a = 111111111111111110000,
+    b = 1111;
+    a + b;
+	=111111111111111110000
+不精确的JavaScript数字即会影响小数，也会影响大数
+
+Number.MIN_VALUE > 0
+Number.MIN_VALUE 是最小的比0大的数, -Number.MAX_VALUE 可能会返回给你一个最大的负整数
+
+2 == [[[2]]]
+每一个对象都被转换成了string，最终成了 "2"
+
+ var a = /123/, b = /123/;
+    a == b
+    a === b
+false, false
+根据规范：正则表达式不能比较，因为每个正则都是唯一的。
+
+var a = [1, 2, 3],
+        b = [1, 2, 3],
+        c = [1, 2, 4]
+    a ==  b
+    a === b
+    a > c
+    a < c
+false, false, false, true
+数组通过>和<会安顺序比较, 但==和===不会;
+
+ var lowerCaseOnly =  /^[a-z]+$/;
+    [lowerCaseOnly.test(null), lowerCaseOnly.test()]
+	[true, true]
+参数被会转换成字符, 因此参数为 "null" 和 "undefined".
+
+Object.create({l:"l",f:"f"}, {
+    name: {value: "zuojj"},
+    sex : {value: "male"}
+});
+for(var i=0;i<5;i++) {
+	setTimeout(function(ii) {
+		console.log(ii)
+	},0,i);
+}

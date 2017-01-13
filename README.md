@@ -6,6 +6,7 @@
 [sit-local](http://localhost.huawei.com/mcloud/develop.html?projectId=182517764) | 
 [font.html](http://localhost.huawei.com/mcloud/font.html) | 
 [移动云配置平台](http://localhost.huawei.com:8080/mcloud/home1.html) | 
+[vscode shortcut](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf)
 ###前端
 [W3Cfuns](http://www.w3cfuns.com/) | 
 [博客园](http://www.cnblogs.com/) | 
@@ -137,3 +138,4 @@
 [海量数据处理](http://m.blog.csdn.net/blog/v_JULY_v/7382693) | 
 [unwinder](http://unwinder.test.h5jun.com/) | 
 [买房必看!2016武汉](http://mt.sohu.com/20160507/n448205169.shtml)
+

@@ -1,6 +1,7 @@
 # lf-test
 
 ###工作
+[a2-test](http://cache.baiducontent.com/c?m=9f65cb4a8c8507ed4fece7631046893b4c4380146d96864968d4e414c42246064565e1b82620100ed3d82f2747f41802bded602571507be9dad58f4bdbbf92222d8f33712d5cd04e418f4ce8951565d621e05afeaf68a1edb17484aea392881417910252&p=9b769a47888411a05bef9e2952599f&newp=cb628b5d85cc43bc4ebd9b7d0f1c86231610db2151d4d31e6b82c825d7331b001c3bbfb42323150fd0ce7d6c0aa84d5be0f23472310221a3dda5c91d9fb4c574799b31&user=baidu&fm=sc&query=angular2+test+service&qid=94f477e5000229e0&p1=4)
 [dev-mCloud](http://nkweb-sit.huawei.com/mcloud/ide/develop.html?projectId=24313857) | 
 [sit-mCloud](http://mcloudnkg-sit.huawei.com/mcloud/ide/develop.html?projectId=182517764) | 
 [sit-local](http://localhost.huawei.com/mcloud/develop.html?projectId=182517764) | 

@@ -18,8 +18,47 @@
 7.《敦刻尔克》
 8. 王牌特工：黄金圈 是《王牌特工：特工学院的续集。》
 9. 《星球大战8》
-神偷奶爸3
-居然没有 普罗米修斯2 ....
+神偷奶爸3 异形.契约(普罗米修斯2) ....
+
+旅游地点: 
+1,深圳园山自然公园
+2,清溪森林公园
+	清溪森林公园地处东莞市东南部清溪镇北部山地，属银瓶嘴山系，石马河水系；属于国家4A级风景区。
+	清溪森林公园有关特色景点、珍贵植物：1、壮观的黄茅田瀑布； 2、神秘的龙潭； 3、险峻的峭壁； 4、奇特的双尾山瀑布 ；5、短萼仪花； 6、禾雀花 ；7、奇特的爆石； 8、狮子岩。
+3,南昆山国家森林公园
+南昆山位于广东省惠州市龙门县境内，与广州市辖区的增城、从化交界。南昆山原始森林自然保护区是国家AAAA级旅游景区，
+也是重点保护的国家森林公园，被誉为“北回归线上的绿洲”、“南国避暑天堂”、“珠三角后花园”。
+第一天游玩：
+一线天、九重远眺、川龙瀑布、石河奇观、十字水生态度假区
+第二天游玩：
+观音潭、天堂顶
+4, 惠东狮子岛海岸线穿越一日游
+5, 丹霞山2天2晚完整版（阳元石、阳元山、长老峰、阴元石、翔龙湖、巴寨）！！！ 
+6, 深圳客家小镇~~桔钓沙海岸线穿越一日游
+7, 惠州西湖赏荷花~~博罗漂流，一起凉快一夏！！！
+8, 东部华侨城大华兴寺（深圳最美寺庙）~~碧岭溪谷（溯溪下山、观瀑布群）1.5小时 ~~金沙湾海滩（下海游泳、海滩游戏）！！！
+9, 碧岭溪谷（溯溪下山、观瀑布群）~~农家乐自助午餐~~校场尾民宿小镇（逛小镇、下海游泳、海上自行车、快艇兜风）！！！盐田海鲜街品海鲜~~海滨栈道徒步（盐田海鲜街--大梅沙）~~大梅沙下海、踏浪！！！
+10, 马峦山溯溪穿越~~吃农家饭、走地鸡~~观深圳最大瀑布~~品赏本地荔枝！！！ 
+11, 惠州三角洲岛一日游（每个人心中都有一座岛，面朝大海，春暖花开）！！！ 
+12, 广东最美乡村一日游（从化溪头村~~千泷沟竹海漂流）！！！
+13, 《美人鱼》外景拍摄地~~海滨单车~~穿越大辣甲岛~~海滩游泳！！
+14, 广东省“世外桃源”~~溪头村一日游！！！
+15, 东莞清溪森林公园（国家4A级景区）一日游！！！
+16, 增城“白水寨”亲水、摄影、美景、登山健身、沐瀑品氧一日游！！！ 
+17, 增江十里画廊、单车、游泳一日游！！！
+18, 深圳桔钓沙海岸线穿越一日游（景美、人少、可下海）！！！
+19, 东莞观音山森林公园（南天圣地、百粤秘境）一日游！！！
+20, 惠东黑排角海岸线穿越！ 
+21, 七娘山（深圳第二峰）、大鹏半岛地质公园一日游！！！
+22, 深圳最美海岸线穿越，没有之一（西贡村~大鹿港~柚柑湾）一日游！！！ 
+23, 中山一日游（孙中山先生故居~~金钟水库环湖骑行~~泉眼温泉）！！！
+24, 深圳小梅沙~~玫瑰海岸穿越（人少、景美、摄影绝佳地）一日游！！！ 
+25, 惠州红花湖森林公园（单车骑行）~~怡情谷泡温泉一日游！！！ 
+26, 增城白水寨~~东莞“鼓浪屿”一日游！！！
+27, 惠东狮子岛海岸线穿越一日游（圣诞节和大海有个约会，景美，人少）！！！ 
+28, 惠州罗浮山逃票穿越一日游（广东四大名山、道教养生圣地、海拔1288米、新年祈福第一登）！！！
+29, 清远小丹霞~~马头石徒步一日游！！！（春节前最后一次户外活动）
+30, 东莞桥头赏油菜花、增江十里画廊骑单车一日游（春风十里不如有你）！！！ 
 
 Function instanceof Object //true
 Object instanceof Function //true
@@ -1081,3 +1120,99 @@ npm outdated --depth=0
 Also, you can check the current toplevel installed library versions with
 npm list --depth=0
 
+dir *.spec.ts /b/s >2.txt 将.spec.ts 的文件导出到2.txt
+
+a2 8个主要构造块
+模块 (module)
+组件 (component)
+模板 (template)
+元数据 (metadata)
+数据绑定 (data binding)
+指令 (directive)
+服务 (service)
+依赖注入 (dependency injection)
+
+1.模块
+Angular 应用是模块化的，并且 Angular 有自己的模块系统，它被称为 Angular 模块或 NgModules。
+
+Angular 模块（无论是根模块还是特性模块）都是一个带有@NgModule装饰器的类。
+装饰器是用来修饰 JavaScript 类的函数。 Angular 有很多装饰器，它们负责把元数据附加到类上，以了解那些类的设计意图以及它们应如何工作。 关于装饰器的更多信息。
+
+NgModule是一个装饰器函数，它接收一个用来描述模块属性的元数据对象。其中最重要的属性是：
+
+declarations - 声明本模块中拥有的视图类。 Angular 有三种视图类：组件、指令和管道。
+exports - declarations 的子集，可用于其它模块的组件模板。
+imports - 本模块声明的组件模板需要的类所在的其它模块。
+providers - 服务的创建者，并加入到全局服务列表中，可用于应用任何部分。
+bootstrap - 指定应用的主视图（称为根组件），它是所有其它视图的宿主。只有根模块才能设置bootstrap属性。
+
+2.组件
+组件负责控制屏幕上的一小块区域，我们称之为视图。
+3.模板
+我们通过组件的自带的模板来定义组件视图。模板以 HTML 形式存在，告诉 Angular 如何渲染组件。
+4.元数据
+元数据告诉 Angular 如何处理一个类。
+
+5.数据绑定
+{{hero.name}}插值表达式在<li>标签中显示组件的hero.name属性的值。
+[hero]属性绑定把父组件HeroListComponent的selectedHero的值传到子组件HeroDetailComponent的hero属性中。
+(click) 事件绑定在用户点击英雄的名字时调用组件的selectHero方法。
+[(ngModel)] 双向数据绑定是重要的第四种绑定形式，它使用ngModel指令组合了属性绑定和事件绑定的功能
+
+6.指令
+Angular 模板是动态的。当 Angular 渲染它们时，它会根据指令提供的操作对 DOM 进行转换。
+指令是一个带有“指令元数据”的类。在 TypeScript 中，要通过@Directive装饰器把元数据附加到类上。
+
+组件是一个带模板的指令；@Component装饰器实际上就是一个@Directive装饰器，只是扩展了一些面向模板的特性。
+虽然严格来说组件就是一个指令，但是组件非常独特，并在 Angular 中位于中心地位，所以在架构概览中，我们把组件从指令中独立了出来。
+
+还有两种其它类型的指令：结构型指令和属性 (attribute) 型指令。
+它们往往像属性 (attribute) 一样出现在元素标签中， 偶尔会以名字的形式出现，但多数时候还是作为赋值目标或绑定目标出现。
+
+结构型指令通过在 DOM 中添加、移除和替换元素来修改布局。
+属性型 指令修改一个现有元素的外观或行为。 在模板中，它们看起来就像是标准的 HTML 属性，故名。
+
+7.服务
+服务是一个广义范畴，包括：值、函数，或应用所需的特性。
+几乎任何东西都可以是一个服务。 典型的服务是一个类，具有专注的、明确的用途。它应该做一件特定的事情，并把它做好。
+
+8.依赖注入
+依赖注入”是提供类的新实例的一种方式，还负责处理好类所需的全部依赖。大多数依赖都是服务。 Angular 使用依赖注入来提供新组件以及组件所需的服务。
+
+var context;
+window.addEventLisener('load',init,false)
+function init(){
+    try {
+        window.AudioContext = window.AudioContext||window.webkitAudioContext;
+        context = new AudioContext();
+    }
+    catch(e){
+        alert('MLGB 你的浏览器连个Web-Audio-API 都不支持！！')
+    }
+}
+
+var dogBarkingBuffer = null;
+//window.AudioContext = window.AudioContext||window.webkitAudioContext;
+//var context = new AudioContext();
+
+function loadDogSound(url){
+    var request = new XMLHttpRequest();
+     request.oprn('GET',url,true);
+     request.responseType= 'arraybuffer';
+
+	//下面就是对音频文件的异步解析
+	request.onload = function(){
+		context.decodeAudioData(request.response,function(buffer){
+			dogBarkingBuffer = buffer;
+		},onError);
+	}
+	request.send();
+}
+
+function playSound(buffer){
+     var source = context.createBufferSource();
+     source = context.createBuffersource();//创建一个音频源 相当于是装音频的容器
+    source.buffer = buffer;//  告诉音频源 播放哪一段音频
+    source.connect(context.destination);// 连接到输出源
+    source.start(0);//开始播放
+}

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Test1</title>
+	<script src="js/jquery-1.12.4.js"></script>
+	<!-- <script src="js/underscore.js"></script>
+<script src="js/require.js"></script>
+<script src="js/PinYin.js"></script> -->
+	<!-- <script src="js/lite2.js"></script> -->
+	<!-- <script src="js/beautify.js"></script>
+<script src="js/xmllint-m.js"></script> -->
+	<!--<script src="js/jquery.cookie.js"></script>-->
+	<script src="js/ttt.js"></script>
+	<link href="css/base.css" rel="stylesheet">
+	<style>
+	.none {
+		display: none;
+	}
+	
+	#demo {
+		position: relative;
+		width: 100px;
+		height: 100px;
+		background-color: #33f;
+		overflow: auto;
+	}
+	.CodeMirror-hints {
+		background-color: #f90;
+		color: #f33;
+	}
+	.CodeMirror-Tern-tooltip {
+		background-color: #ff3;
+		color: #33f;
+	}
+	.CodeMirror-Tern-hint-doc {
+		background-color: #f60;
+		color: #3f0;
+	}
+
+
+	#istouch {
+		/*display: none;*/
+		height: 400px;
+	}
+	
+	input[type=checkbox][disabled] {
+		width: 30px;
+		height: 30px;
+	}
+	
+	.sanjiao {
+		display: inline-block;
+		height: 50px;
+		width: 30px;
+		background-color: #ccc;
+		background-size: 30px 30px;
+	}
+	
+	.sanjiao::after {
+		position: absolute;
+		display: block;
+		right: 0;
+		margin-right: -50px;
+		width: 0;
+		height: 0;
+		border-top: 50px solid transparent;
+		border-bottom: 50px solid transparent;
+		border-left: 50px solid green;
+		content: "";
+	}
+	
+	.entry {
+		margin: 0 auto;
+		margin-top: 20px;
+		width: 280px;
+		background: #fff;
+		padding: 10px;
+		/*设置圆角*/
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		border-radius: 5px;
+	}
+	
+	.entry-trangle {
+		position: absolute;
+		margin-left: -19px;
+		width: 0;
+		height: 0;
+		border-top: 10px solid transparent;
+		border-bottom: 10px solid transparent;
+		border-right: 10px solid #f90;
+		z-index: -1;
+	}
+	
+	[class^="long_"] {
+		width: 20px;
+		height: 20px;
+	}
+	
+	#test {
+		background-color: #f90;
+	}
+	
+	.long.long1.long2 {
+		background-color: #f00;
+	}
+	
+	.positionDiv {
+		position: absolute;
+		width: 75px;
+		height: 75px;
+		background: green;
+	}
+	
+	input::selection {
+		background-color: #f90;
+	}
+	
+	::selection {
+		background-color: #e60;
+	}
+	/* select:hover {
+		background-color: #f90;
+	} */
+	
+	select:hover {
+		background-color: #eee;
+	}
+	</style>
+</head>
+
+<body>
+	<!-- 
+	<form action="">
+		<div id="fei">
+		</div>
+		<input type="text" name="" id="" value="<!@#1%^&*()_+">
+		<input type="radio" name="long" checked=9 id="test" class="long long1 long2 " disabled>long
+		<input type="checkbox" name="lon" checked=9 id="tes" disabled>
+		<div class="entry">
+			<div class="entry-trangle">
+			</div>
+			hello，我出生了
+			<br/> hello，我出生了
+			<br/> hello，我出生了
+			<br/> hello，我出生了
+			<br/>
+		</div>
+		<div class="sanjiao">12</div>
+		<div id="demo" style="left:1px;">
+			<div id="wangsf"></div>
+		</div>
+		<pre id="output"></pre>
+		<input type="text" name="" id="llff">
+		<button id="haha" disabled="disabled">button</button>
+	</form> -->
+	<p id="copystr">fdkfjlaskfjlkajf</p>
+	<div id="message"></div>
+	<div id="log"></div>
+</body>
+<script>
+'use strict';
+/*var promiseCount = 0;
+function testPromise() {
+	var thisPromiseCount = ++promiseCount;
+
+	var log = document.getElementById('log');
+	log.insertAdjacentHTML('beforeend', thisPromiseCount + ') 开始(同步代码开始)<br/>');
+
+	// 我们创建一个新的promise: 然后用'result'字符串完成这个promise (3秒后)
+	var p1 = new Promise(function(resolve, reject) {
+		// 完成函数带着完成（resolve）或拒绝（reject）promise的能力被执行
+		log.insertAdjacentHTML('beforeend', thisPromiseCount + ') Promise开始(异步代码开始)<br/>');
+
+		// 这只是个创建异步完成的示例
+		window.setTimeout(function() {
+			// 我们满足（fullfil）了这个promise!
+			resolve(thisPromiseCount)
+		}, Math.random() * 2000 + 1000);
+	});
+
+	// 定义当promise被满足时应做什么
+	p1.then(function(val) {
+		// 输出一段信息和一个值
+		log.insertAdjacentHTML('beforeend', val + ') Promise被满足了(异步代码结束)<br/>');
+	});
+
+	log.insertAdjacentHTML('beforeend', thisPromiseCount + ') 建立了Promise(同步代码结束)<br/><br/>');
+}
+testPromise()*/
+function $http(url) {
+	// A small example of object
+	var core = {
+		// Method that performs the ajax request
+		ajax: function(method, url, args) {
+			// Creating a promise
+			var promise = new Promise(function(resolve, reject) {
+				// Instantiates the XMLHttpRequest
+				var client = new XMLHttpRequest();
+				var uri = url;
+
+				if (args && (method === 'POST' || method === 'PUT')) {
+					uri += '?';
+					var argcount = 0;
+					for (var key in args) {
+						if (args.hasOwnProperty(key)) {
+							if (argcount++) {
+								uri += '&';
+							}
+							uri += encodeURIComponent(key) + '=' + encodeURIComponent(args[key]);
+						}
+					}
+				}
+
+				client.open(method, uri);
+				client.send();
+
+				client.onload = function() {
+					if (this.status >= 200 && this.status < 300) {
+						// Performs the function "resolve" when this.status is equal to 2xx
+						resolve(this.response);
+					} else {
+						// Performs the function "reject" when this.status is different than 2xx
+						reject(this.statusText);
+					}
+				};
+				client.onerror = function() {
+					reject(this.statusText);
+				};
+			});
+
+			// Return the promise
+			return promise;
+		}
+	};
+
+	// Adapter pattern
+	return {
+		'get': function(args) {
+			return core.ajax('GET', url, args);
+		},
+		'post': function(args) {
+			return core.ajax('POST', url, args);
+		},
+		'put': function(args) {
+			return core.ajax('PUT', url, args);
+		},
+		'delete': function(args) {
+			return core.ajax('DELETE', url, args);
+		}
+	};
+};
+// End A
+
+// B-> Here you define its functions and its payload
+var mdnAPI = 'https://developer.mozilla.org/en-US/search.json';
+var payload = {
+	'topic': 'js',
+	'q': 'Promise'
+};
+
+var callback = {
+	success: function(data) {
+		console.log(1, 'success', JSON.parse(data));
+	},
+	error: function(data) {
+		throw(data);
+		console.log(2, 'error');
+	}
+};
+// End B
+
+// Executes the method call 
+$http(mdnAPI)
+	.get(payload)
+	.then(callback.success)
+	.catch(callback.error);
+
+// Executes the method call but an alternative way (1) to handle Promise Reject case 
+$http(mdnAPI)
+	.get(payload)
+	.then(callback.success, callback.error);
+
+// Executes the method call but an alternative way (2) to handle Promise Reject case 
+$http(mdnAPI)
+	.get(payload)
+	.then(callback.success)
+	.then(undefined, callback.error);
+
+
+let a = new Set([1, 2, 3]);
+let b = new Set([4, 3, 2]);
+
+
+
+// 并集
+// let union = new Set([...a, ...b]);
+
+/*$("body").on({
+	copy: function(e) { //copy事件  
+		var cpTxt = "复制的数据", cpstr;
+		var clipboardData = window.clipboardData; //for IE  
+		if (!clipboardData) { // for chrome  
+			clipboardData = e.originalEvent.clipboardData;
+		}
+		cpstr = clipboardData.getData('text');//可以获取用户选中复制的数据  
+		clipboardData.setData('Text', cpTxt);
+		$("#copystr").html(cpTxt);
+		$('#message').text('Copy Data : ' + cpTxt);
+		return false; //否则设不生效  
+	},
+	paste: function(e) { //paste事件  
+		var eve = e.originalEvent
+		var cp = eve.clipboardData;
+		var data = null;
+		var clipboardData = window.clipboardData; // IE  
+		if (!clipboardData) { //chrome  
+			clipboardData = e.originalEvent.clipboardData
+		}
+		data = clipboardData.getData('Text');
+		$('#message').html(data);
+	},
+	click: function(e) {
+		console.debug()
+		// $(this).trigger("copy");//触发的不生效,事件类型不同
+	}
+
+})*/
+/*var defer = $.Deferred(function(resolve) {
+	setTimeout(function(argument) {
+		console.log(12);
+	}, 500)
+}).then(function(val) {
+	console.log(11)
+})
+*/
+function unique(a, b, c) {
+	return a && b || c
+}
+/*var p1 = new Promise(function (resolve, reject) {
+  setTimeout(() => reject(new Error('fail')), 3000)
+})
+var p2 = new Promise(function (resolve, reject) {
+  setTimeout(() => resolve(p1), 1000)
+})
+p2.then(result => console.log(result))
+p2.catch(error => console.log(error))*/
+/*
+var pro = new Promise(function (resolve, reject) {
+	var flag = false;
+	setTimeout(function() {
+		resolve("haha");
+	},2000)
+
+})*/
+
+/*var getJSON = function(url) {
+	var promise = new Promise(function(resolve, reject) {
+		var client = new XMLHttpRequest();
+		client.open("GET", url);
+		client.onreadystatechange = handler;
+		client.responseType = "json";
+		client.setRequestHeader("Accept", "application/json");
+		client.send();
+
+		function handler() {
+			if (this.readyState !== 4) {
+				return;
+			}
+			if (this.status === 200) {
+				resolve(this.response);
+			} else {
+				reject(new Error(this.statusText));
+			}
+		};
+	});
+
+	return promise;
+};
+
+getJSON("/posts.json").then(function(json) {
+	console.log('Contents: ' + json);
+}, function(error) {
+	console.error('出错了', error);
+});*/
+
+
+/*
+var element1 = document.getElementById("istouch"),
+	element2 = document.getElementById("wangsf");
+// Read
+var h1 = element1.clientHeight;
+// Write
+requestAnimationFrame(function() {
+	element1.style.height = (h1 * 2) + 'px';
+}, 4000);
+
+// Read
+var h2 = element2.clientHeight;
+
+// Write
+requestAnimationFrame(function() {
+	element2.style.height = (h2 * 2) + 'px';
+});
+var lastTime = 0;
+//如果当前浏览器不支持requestAnimationFrame和cancelAnimationFrame，则会退到setTimeout
+// if ( !requestAnimationFrame || !cancelAnimationFrame ) {
+requestAnimationFrame = function(callback, element) {
+	var currTime = new Date().getTime();
+	//为了使setTimteout的尽可能的接近每秒60帧的效果
+	var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+	var id = window.setTimeout(function() {
+		// console.log(timeToCall);
+		callback(currTime + timeToCall);
+	}, 2);
+	lastTime = currTime + timeToCall;
+	return id;
+};
+
+cancelAnimationFrame = function(id) {
+	window.clearTimeout(id);
+};
+// }
+var demo = document.getElementById('demo');
+
+function rander() {
+	demo.style.left = parseInt(demo.style.left) + 1 + 'px'; //每一帧向右移动1px
+}
+requestAnimationFrame(function() {
+	rander();
+	//当超过300px后才停止
+	if (parseInt(demo.style.left) <= 50) {
+		requestAnimationFrame(arguments.callee);
+	}
+});*/
+
+//"use strict"
+// document.body.onselectstart=function() {return false;}
+/*document.body.oncontextmenu=function() {return false;}
+document.oncontextmenu=function (e) {
+	//e.preventDefault();
+	//return false;
+};
+document.getElementById("wangsf").onmousedown=function (e) {
+	e.preventDefault();
+	console.log(11);
+
+}*/
+
+/*var Un;
+(function () {
+	var ins;
+	Un = function() {
+		if (ins) {
+			return ins;
+		}
+		ins = this;
+
+		this.start_time = 0;
+		this.bang = "big";
+		console.log(this)
+	}
+}())*/
+
+/*function Universe(arg) {
+	var instance;
+	Universe = function(a) {
+		console.log(a)
+		console.count()
+		return instance;
+	}
+	Universe.prototype = this;
+	console.log(this)
+	instance = new Universe(100);
+	instance.constructor = Universe;
+	instance.start_time = 0;
+	instance.bang = "Big";
+	return instance;
+}
+Universe.prototype.nothing = true;
+var uni = new Universe(1);
+Universe.prototype.everything = true;
+var uni2 = new Universe(2);
+console.log(uni === uni2)*/
+
+/*function foo(x = 5) {
+  // let x = 1; // error
+  // const x = 2; // error
+  var x=10;
+  console.log(x)
+}
+foo(3);*/
+/*// 写法一
+function m1({x = 0, y = 0 } = {}) {
+	return [x, y];
+}
+
+// 写法二
+function m2({x, y } = {x: 0, y: 0 }) {
+	return [x, y];
+}*/
+/*var n={
+	ii(){
+		console.log('ii')
+	}
+}
+var h={
+	i(){
+		console.log('i')
+	},
+	__proto__:n
+}
+var l={
+	f(){},
+	__proto__:h
+}*/
+/*var arg = [1, 2, 3, 4, 6, 8];
+//(function() {console.log(...arguments)}).apply(null, arg) 同下
+(function() {
+	var i = 0,
+		len = arguments.length
+	for (; i < len; i++) {
+		console.log(arguments[i])
+	}
+}).call(null, ...arg)*/
+</script>
+
+</html>

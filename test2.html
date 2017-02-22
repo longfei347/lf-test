@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Test2</title>
+	<script src="js/jquery-1.10.1.js"></script>
+	<!-- <script type="module" src="js/test.js"></script> -->
+	<!-- <script src="NetworkBundleActivity.js"></script> -->
+	<!-- <script src="js/base.js"></script>
+	<script src="js/lodash.js"></script>
+	<script src="js/angular.js"></script> -->
+</head>
+<style>
+.postTitle a {
+	font-size: 14px;
+	display: inline-block;
+}
+
+body {
+	line-height: 2;
+	/* -webkit-font-smoothing: antialiased;
+	-webkit-text-stroke-width: 0.2px;
+	-moz-osx-font-smoothing: grayscale; */
+}
+
+
+/* ul {
+	transform: rotate(180deg)
+}
+
+li {
+	transform: rotate(180deg)
+} */
+
+.item {
+	display: inline-block;
+	width: 100px;
+}
+
+.btn-tt {
+	position: absolute;
+	left: 20px;
+	top: 20px;
+	height: 30px;
+	width: 50px;
+	background-color: #f90;
+	z-index: 100;
+}
+
+
+/*.icon {
+	width: 22px;
+	height: 22px;
+	background-image: image(logo.jpg#xywh=1, 1, 20, 20); 这种还不支持
+	 background:url(logo.jpg) -1px -1px no-repeat; 
+}
+
+.icon:hover {
+	width: 22px;
+	height: 22px;
+	background: url(logo.jpg) -1px -27px no-repeat;
+}*/
+
+.none {
+	display: none;
+}
+
+
+/* ::-webkit-scrollbar-track-piece {
+	background-color: #fff;
+	-webkit-border-radius: 0;
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+	height: 50px;
+	background-color: #999;
+	-webkit-border-radius: 4px;
+	outline: 2px solid #fff;
+	outline-offset: -2px;
+	border: 2px solid #fff;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	height: 50px;
+	background-color: #9f9f9f;
+	-webkit-border-radius: 4px;
+} */
+
+form {
+	height: 100px;
+	-webkit-appearance: button;
+	overflow: auto;
+}
+
+.btn {
+	width: 80px;
+	height: 30px;
+	/*-webkit-appearance: button;*/
+	/* outline: 5px solid #f90;
+	outline-offset: 2px; */
+	box-sizing: border-box;
+	background-color: #09f;
+	/*resize: both;*/
+}
+
+ol {
+	margin: 0;
+	padding: 0 0 0 2em;
+	list-style: none;
+	counter-reset: item;
+}
+
+li:before {
+	counter-increment: item;
+	content: counter(item)".";
+	color: #f00;
+}
+
+.counter1 li {
+	counter-increment: testname 2;
+}
+
+.counter1 li:before {
+	content: counter(testname)".";
+	/*counter-reset: testname;*/
+}
+
+.counter1 li:nth-child(3) {
+	counter-reset: testname 20
+}
+
+.counter2 li {
+	counter-increment: testname2 -1;
+}
+
+.counter2 li:before {
+	content: counter(testname2)".";
+	/*counter-reset: testname2 20;*/
+}
+
+form {
+	min-height: 100px;
+}
+</style>
+</head>
+
+<body>
+	<ul class="test">
+		<li class="counter1">
+			<strong>将计算器按2递增：</strong>
+			<ol>
+				<li>列表项</li>
+				<li>列表项</li>
+				<li>列表项</li>
+			</ol>
+		</li>
+		<li class="counter2">
+			<strong>将计算器按-1递减：</strong>
+			<ol>
+				<li>列表项</li>
+				<li>列表项</li>
+				<li>列表项</li>
+			</ol>
+		</li>
+	</ul>
+	<!-- <ol class="test">
+		<li>Node1
+			<ol>
+				<li>Node2
+					<ol>
+						<li>Node3.1</li>
+						<li>Node3.2</li>
+						<li>Node3.3</li>
+					</ol>
+				</li>
+				<li>Node</li>
+			</ol>
+		</li>
+		<li>Node</li>
+		<li>Node</li>
+	</ol> -->
+	<!-- <div class="icon">longfei</div> -->
+	<div class="btn none" contenteditable="">11</div>
+	<form action="">
+		<!-- <input type="text" id="fei" pattern="\w{3,8}"> -->
+		<input type="text" id="long">
+		<span>event.keyCode: <output></output></span>
+		<!-- <p class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/keepfool/p/5637834.html">Vue.js——60分钟组件快速入门（下篇）</a>
+		</p> -->
+		<!-- <item name="item3" class="mark" label="指标类型:" width="50%">
+			<dropdown name="metric_type" id="metric_type" valueField="code" textField="name" datafield="formData.metric_type" showClearBtn="false">
+				<attr name="rule">{required:true}</attr>
+				<attr name="dataset">{"source": {"url" : "services/saasDictItemSearch?class_code=METRIC_TYPE"}}</attr>
+			</dropdown>
+		</item> -->
+		<br>
+		<button type="submit">提交</button>
+	</form>
+	<!-- <p>点击复制后在右边textarea CTRL+V看一下</p>
+	<input type="text" id="inputText" value="测试文本" />
+	<input type="button" id="btn" value="复制" />
+	<textarea rows="4"></textarea> -->
+</body>
+<script>
+/*
+// typescript 继承方法
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}, a={a:1,b:2}, aa={c:3,d:4};
+__extends(a,aa);*/
+
+// console.log('%clong',"color:#f90")
+
+/*var NetworkBundleActivity = {};
+NetworkBundleActivity.NetworkBundleActivity$0 = {
+    NetworkBundleActivity$0(__parent) {
+        var _this = _super.call(this) || this;
+        _this.__parent = __parent;
+        return _this;
+    },
+    __proto__: {
+        onResponse: function (headers, s) {
+            Toast.makeText(this.__parent, s, Toast.LENGTH_SHORT).show();
+        },
+        onFailure: function (code, throwable) {
+            Toast.makeText(this.__parent, "code:" + code + "," + throwable.message, Toast.LENGTH_SHORT).show();
+        }
+    }
+}*/
+/*const haha =11;
+const o = {a:1, b:22};
+let {a: newName1, b: newName2} = o; */
+
+//let cc = {a: string, b?: number}
+/*function f({a, b}: cc): void {
+// ...
+}*/
+/*function f({a = "", b} = {b: 0}) {
+	console.log(arguments.length,a,b)
+}
+f({a:22,b:33}); // ok, default to {a: "", b: 0}*/
+
+/*// 这里的语法开始变得混乱。 你可以将  a: newName1  读做 " a  作为
+// newName1  "。 方向是从左到右，好像你写成了以下样子：
+let newName1 = o.a;
+let newName2 = o.b;
+// 令人困惑的是，这里的冒号不是指示类型的。 如果你想指定它的类型， 仍然需要 在其后写上完整的模式。
+let {a, b}: {a: string, b: number} = o;*/
+
+$(function() {
+	$("#long").on("keydown", function(e) {
+		$("output").html(e.keyCode);
+	})
+
+	// document.styleSheets[0].addRule("body .postTitle", "background-color:red;font-size:16px;")
+	/*document.getElementById('btn').addEventListener('click', function() {
+		var inputText = document.getElementById('inputText');
+		var currentFocus = document.activeElement;
+		inputText.focus();
+		inputText.setSelectionRange(0, inputText.value.length);
+		document.execCommand('copy', true);
+		currentFocus.focus();
+	});*/
+})
+
+/*class Person {
+	@nonenumerable
+	get kidCount() {
+		return 42;
+	}
+}
+function nonenumerable(target, name, descriptor) {
+	descriptor.enumerable = false;
+	return descriptor;
+}*/
+/*var p1 = new Promise((resolve, reject) => { 
+  setTimeout(resolve, 1000, "one"); 
+}); 
+var p2 = new Promise((resolve, reject) => { 
+  setTimeout(resolve, 2000, "two"); 
+});
+var p3 = new Promise((resolve, reject) => {
+  setTimeout(resolve, 3000, "three");
+});
+var p4 = new Promise((resolve, reject) => {
+  setTimeout(resolve, 4000, "four");
+});
+var p5 = new Promise((resolve, reject) => {
+  reject("reject");
+});
+
+Promise.all([p1, p2, p3, p4, p5]).then(values => { 
+  console.log(values);
+}, reason => {
+  console.log(reason)
+});*/
+
+/*var p1 = Promise.resolve(3);
+p1.then(value=>console.log(value))
+var p2 = 1337;
+var p3 = new Promise((resolve, reject) => {
+	console.log(resolve.toString())
+	resolve(1,22,3,54,55)
+  // setTimeout(resolve, 100, "foo");
+}); 
+
+Promise.all([p1, p2, p3]).then(values => { 
+  console.log(values); // [3, 1337, "foo"] 
+});*/
+/*function ll() {
+	// console.log([].slice.apply(arguments))
+	console.log(arguments)
+}
+ll.apply(null,[1,2,3]);
+ll([1,2,3])
+*/
+
+/*for (let i = 0; i < 10 ; i++) {
+	setTimeout(function() {console.log(i); }, 100 * i);
+}*/
+/*let o = {
+	a: "foo",
+	b: 12,
+	c: "bar"
+}
+let {a, b} = o;
+console.log(a,b);*/
+
+
+/*console.log(new Error("hello world" + o.a));
+// throw "hello world" + o.a;
+throw new Error("hello world " + o.c)*/
+
+/*var O = {
+	name: "long",
+	sex: "nan"
+}
+
+function Animal(obj) {
+	this.name = obj.name;
+	this.sex = obj.sex;
+	return this;
+}
+var myo = Animal.call(O, O);*/
+
+/*class long {
+	static l() {}
+	fei() {
+		console.log(123)
+	}
+}
+var lo = {
+	l() {
+		console.log(1)
+	},
+	o() {
+		console.log("o")
+	}
+}*/
+/*class ll {
+	l() {}
+}
+class ll {
+	l() {}
+	static f() {
+		console.log(1)
+	}
+}
+ll.f = () => {
+	console.log(2)
+}*/
+
+
+/*var a = 1,
+    b = function a(x) {
+    	console.count()
+        x && a(--x);
+    };
+console.log(a)*/
+
+// import haha from "./test";
+// haha();
+/*var arr = [2, 88, 6, 8, 3, 0, 34, 72];
+var sort = {};
+sort.insertionSort = function(arr) {
+	for (var i = 0; i < arr.length - 1; i++) {
+		var insert = arr[i + 1]; //要被插入的元素
+		// console.log(insert);
+		var index = i + 1; //要被插入的元素的下标
+		for (var j = i; j >= 0; j--) {
+			//被插入的元素比前面j项元素谁小就插入到谁的前面
+			if (insert < arr[j]) {
+				arr[j + 1] = arr[j];
+				index = j;
+			} else {
+				break;
+			}
+			console.count("执行次数");
+		}
+		arr[index] = insert;
+		console.log(arr + "\n");
+	}
+}
+sort.insertionSort(arr);*/
+
+// $('.feif').offsetParent().css('background-color', 'red');
+
+/*var stag = 
+`<!-- <aa name="dlfk">--> 
+    <!-- <bfd><f name="fdf"></f></bfd>  -->
+<!-- </aa>  -->
+<!--<a>
+	<b></b
+</a>-->`;
+var ntag = stag.replace(/(?:<!--\s*<)([\s\S]+?)(?:>\s*-->)+/g, function(sAll,group) {
+	// console.count();
+	// console.log(i);
+	var str = group.match(/[\w-]+/)[0];
+	if (group.indexOf("<") > 0) {
+		return "<code_" +  group.slice(0, -str.length) + "code_" + str +">";
+	} else {
+		return "<code_" +  group + ">";
+	}
+})
+// console.log(ntag)*/
+
+/*var ntag = stag.replace(/<!--<\/?([\w-])+/g, function(v,i) {
+	return v.substr(4).replace(/([\w-]+)$/, "code_$1");
+}).replace(/<\/([\w-]+)>-->/g, "</code_$1>").replace(">-->",">");*/
+
+/*var myFrame = document.createElement('iframe');
+document.body.appendChild(myFrame);
+var myArray = window.frames[window.frames.length-1].Array;
+var arr = new myArray(1,2,10); // [a,b,10]  
+// myArray 的构造器已经丢失，instanceof 的结果将不正常
+// 构造器是不能跨 frame 共享的
+console.log(arr instanceof Array)// false*/
+
+/*function getCategory(age) {
+	var category = "";
+	switch (true) {
+		case isNaN(age):
+			category = "not an age";
+			break;
+		case (age >= 50):
+			category = "Old";
+			break;
+		case (age <= 20):
+			category = "Baby";
+			break;
+		default:
+			category = "Young";
+			break;
+	};
+	return category;
+}
+console.log(getCategory(5)); // 将返回 "Baby"*/
+
+
+/*$(document).on("keydown", function(e) {
+	if (e.ctrlKey && event.keyCode === 80) {//ctrl+p 并阻止弹出打印
+		e.preventDefault();
+		// console.count();
+		return false;
+	}
+})*/
+</script>
+
+</html>

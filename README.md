@@ -1,6 +1,6 @@
-# lf-test
+## lf-test
+###工作  
 
-###工作
 [a2-test](http://blog.csdn.net/u010130282/article/details/53462805)
 [dev-mCloud](http://nkweb-sit.huawei.com/mcloud/ide/develop.html?projectId=24313857) | 
 [sit-mCloud](http://mcloudnkg-sit.huawei.com/mcloud/ide/develop.html?projectId=182517764) | 
@@ -8,7 +8,9 @@
 [font.html](http://localhost.huawei.com/mcloud/font.html) | 
 [移动云配置平台](http://localhost.huawei.com:8080/mcloud/home1.html) | 
 [vscode shortcut](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf)
-###前端
+
+###前端  
+
 [W3Cfuns](http://www.w3cfuns.com/) | 
 [博客园](http://www.cnblogs.com/) | 
 [JavaScript-MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference) | 
@@ -23,7 +25,9 @@
 [Unix技术网](http://www.chinaunix.net/) | 
 [Bootstrap](http://www.bootcss.com/) | 
 [CSS参考手册](http://css.doyoe.com/) | 
-###技术
+
+###技术  
+
 [js正则](http://blog.csdn.net/xinying0424/article/details/8113908) | 
 [ES6入门](http://es6.ruanyifeng.com/) | 
 [jasmine-intro](http://jasmine.github.io/2.4/introduction.html) | 
@@ -60,14 +64,18 @@
 [webpack 前端构建](http://www.cnblogs.com/yangjunhua/p/5615118.html) | 
 [ jQuery性能优化](http://www.ido321.com/82.html) | 
 [React Redux](http://www.zcfy.cc/article/863) | 
-[JavaScript](http://www.zcfy.cc/article/901) | [前端JSer装逼手册](http://www.w3cfuns.com/notes/24611/1581e84f8f1c67ac2b883f44945da00b.html) | [前端e路|36镇](http://www.36zhen.com/my?id=3751) | 
+[JavaScript](http://www.zcfy.cc/article/901) | 
+[前端JSer装逼手册](http://www.w3cfuns.com/notes/24611/1581e84f8f1c67ac2b883f44945da00b.html) |
+[前端e路|36镇](http://www.36zhen.com/my?id=3751) | 
 [CSS Reset](http://cssreset.com/) | 
 [Font Awesome](http://fontawesome.io/) | 
 [Bootstrap v3 font](http://v3.bootcss.com/components/) | 
 [Webpack+React+ES6](http://www.cnblogs.com/skylar/p/React-Webpack-ES6.html) | 
 [React Native](http://www.cnblogs.com/maomishen/p/5303976.html) | 
 [React Native2](https://my.oschina.net/osccreate/blog/778348) | 
-###资源
+
+###资源  
+
 [front-end-collect](https://github.com/jikeytang/front-end-collect) | 
 [最全前端资源汇集](http://www.w3cfuns.com/notes/17755/423092d927775ae297a390f646079a64.html) | 
 [前端地址大全](http://www.w3cfuns.com/notes/16438/db8e9e0bf80676f32b2cafb9b4932313.html) | 
@@ -80,17 +88,11 @@
 [Bootstrap可视布局](http://www.bootcss.com/p/layoutit/) | 
 [部署前端代码](http://www.zhihu.com/question/20790576) | 
 [JavaScript Style](https://github.com/airbnb/javascript) | 
-###本地
-[ace-Editor](file:///D:/webdesign/myTest/ace/ace-builds-master/editor.html) | 
-[Test](file:///D:/webdesign/myTest/test2.html) | 
-[Bookmarks](file:///D:/webdesign/%E5%85%B6%E4%BB%96/bookmarks_16_2_26-company.html) | 
-[zTree_demo](file:///D:/webdesign/myTest/zTree_v3-master/demo/cn/core/) | 
-[ace-editor](file:///D:/webdesign/myTest/ace/ace-new/ace-master/api/editor.html) | 
-[ace-selection](file:///D:/webdesign/myTest/ace/ace-new/ace-master/api/selection.html) | 
 [Ace - Web](https://ace.c9.io/#api) | 
-[API Ext JS](file:///D:/webdesign/Ext4.1.0/index.html) | 
 [IDE Server](http://localhost.huawei.com:8080/mcloud/sseChannelTest.html) | 
-###综合
+
+###综合  
+
 [百科](http://baike.baidu.com/) | 
 [百度音乐](http://play.baidu.com/) | 
 [我的自选](http://quote.yztz.com/favorite/) | 
@@ -122,8 +124,6 @@
 [Taocode](http://code.taobao.org/login/) | 
 [log](http://nkweb-sit.huawei.com/mcloud/channel/sse/server?X-User-Hash=bbb555&param={%22type%22:%22BUSINESS%22,%22to%22:%22bbb555%22}) | 
 [Server-Sent Events](http://nkgtsv9687rhl:8080/mcloud/channel/sseChannelTest.html) | 
-[个税计算器](http://www.gerensuodeshui.cn/) | 
-[松山湖](http://xinsheng.huawei.com/cn/index.php?app=forum&mod=Detail&act=index&id=2829471&p=12#p24251669) | 
 [华为班车](http://117.78.17.233/huaweibus/!index.action) | 
 [Discuz! 资料库](http://faq.comsenz.com/library/template/cssextend/cssextend_index.htm) | 
 [layer API 帮助手册](http://sentsin.com/jquery/layer/api.html) | 

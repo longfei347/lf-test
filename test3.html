@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>你可能不需要jquery</title>
+	<script src="js/jquery.js"></script>
+</head>
+
+<body>
+	<div id="el">
+		<span class="child"></span>
+	</div>
+</body>
+<script>
+'use strict';
+var //$ = function() {},
+	el = document.querySelector("#el"),
+	$el = $(el);
+// throw Error("long")
+// 2.2 Width & Height
+
+// Width 与 Height 获取方法相同，下面以 Height 为例：
+
+// Window height
+
+// jQuery
+$(window).height();
+
+// Native
+// 不含 scrollbar，与 jQuery 行为一致
+window.document.documentElement.clientHeight;
+// 含 scrollbar
+window.innerHeight;
+// Document height
+
+// jQuery
+$(document).height();
+
+// Native
+document.documentElement.scrollHeight;
+// Element height
+
+// jQuery
+$el.height();
+
+// Native
+// 与 jQuery 一致（一直为 content 区域的高度）
+function getHeight(el) {
+	const styles = this.getComputedStyle(el);
+	const height = el.offsetHeight;
+	const borderTopWidth = parseFloat(styles.borderTopWidth);
+	const borderBottomWidth = parseFloat(styles.borderBottomWidth);
+	const paddingTop = parseFloat(styles.paddingTop);
+	const paddingBottom = parseFloat(styles.paddingBottom);
+	return height - borderBottomWidth - borderTopWidth - paddingTop - paddingBottom;
+}
+// 精确到整数（border-box 时为 height - border 值，content-box 时为 height + padding 值）
+el.clientHeight;
+// 精确到小数（border-box 时为 height 值，content-box 时为 height + padding + border 值）
+el.getBoundingClientRect().height;
+
+// 2.3 Position & Offset
+// Position
+
+// jQuery
+$el.position();
+
+// Native
+// { left: el.offsetLeft, top: el.offsetTop }
+// Offset
+
+// jQuery
+$el.offset();
+
+// Native
+function getOffset(el) {
+	const box = el.getBoundingClientRect();
+
+	return {
+		top: box.top + window.pageYOffset - document.documentElement.clientTop,
+		left: box.left + window.pageXOffset - document.documentElement.clientLeft
+	}
+}
+
+// 2.4 Scroll Top
+
+// jQuery
+$(window).scrollTop();
+
+// Native
+(document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+
+// 5.3 Trigger
+// jQuery
+$(el).trigger('custom-event', {
+	key1: 'data'
+});
+
+// Native
+let customEvent;
+if (window.CustomEvent) {
+	customEvent = new CustomEvent('custom-event', {
+		detail: {
+			key1: 'data'
+		}
+	});
+} else {
+	customEvent = document.createEvent('CustomEvent');
+	customEvent.initCustomEvent('custom-event', true, true, {
+		key1: 'data'
+	});
+}
+
+el.dispatchEvent(customEvent);
+
+// 6.3 jQuery
+let defaultOpts = {},
+	opts = {};
+$.extend({}, defaultOpts, opts);
+
+// Native
+Object.assign({}, defaultOpts, opts);
+
+// 6.3 Globaleval
+// Execute some JavaScript code globally.
+
+// jQuery
+let code = 'var long';
+$.globalEval(code);
+
+// Native
+function Globaleval(code) {
+	const script = document.createElement('script');
+	script.text = code;
+
+	document.head.appendChild(script).parentNode.removeChild(script);
+}
+
+// Use eval, but context of eval is current, context of $.Globaleval is global.
+eval(code);
+
+// 6.4 Contains
+// jQuery
+let child = $(".child")[0];
+$.contains(el, child);
+// Native
+el !== child && el.contains(child);
+
+// 6.4 parse
+// parseHTML
+// Parses a string into an array of DOM nodes.
+
+// jQuery
+let htmlString = '<book>javascript</book>';
+$.parseHTML(htmlString);
+
+// Native
+function parseHTML(string) {
+	const context = document.implementation.createHTMLDocument();
+
+	// Set the base href for the created document so any parsed elements with URLs
+	// are based on the document's URL
+	const base = context.createElement('base');
+	base.href = document.location.href;
+	context.head.appendChild(base);
+
+	context.body.innerHTML = string;
+	return context.body.children;
+}
+
+// 7.1 done, fail, always
+// done is called when promise is resolved, fail is called when promise is rejected, always is called when promise is either resolved or rejected.
+
+// jQuery
+// $promise.done(doneCallback).fail(failCallback).always(alwaysCallback)
+
+// Native
+// promise.then(doneCallback, failCallback).then(alwaysCallback, alwaysCallback)
+// 7.2 when
+// when is used to handle multiple promises. It will resolve when all promises are resolved, and reject if either one is rejected.
+
+// jQuery
+// $.when($promise1, $promise2).done((promise1Result, promise2Result) => { });
+
+// Native
+// Promise.all([$promise1, $promise2]).then(([promise1Result, promise2Result]) => {});
+// 7.3 Deferred
+// Deferred is a way to create promises.
+
+// jQuery
+function asyncFunc() {
+	const defer = new $.Deferred();
+	setTimeout(() => {
+		if (true) {
+			defer.resolve('some_value_computed_asynchronously');
+		} else {
+			defer.reject('failed');
+		}
+	}, 1000);
+
+	return defer.promise();
+}
+
+// Native
+function asyncFunc() {
+	return new Promise((resolve, reject) => {
+		setTimeout(() => {
+			if (true) {
+				resolve('some_value_computed_asynchronously');
+			} else {
+				reject('failed');
+			}
+		}, 1000);
+	});
+}
+
+// Deferred way
+function defer() {
+	const deferred = {};
+	const promise = new Promise((resolve, reject) => {
+		deferred.resolve = resolve;
+		deferred.reject = reject;
+	});
+
+	deferred.promise = () => {
+		return promise;
+	};
+
+	return deferred;
+}
+
+function asyncFunc() {
+	const defer = defer();
+	setTimeout(() => {
+		if (true) {
+			defer.resolve('some_value_computed_asynchronously');
+		} else {
+			defer.reject('failed');
+		}
+	}, 1000);
+
+	return defer.promise();
+}
+
+
+// 8.1 Show & Hide
+
+// jQuery
+$el.show();
+$el.hide();
+
+// Native
+// More detail about show method, please refer to https://github.com/oneuijs/oui-dom-utils/blob/master/src/index.js#L363
+el.style.display = '' | 'inline' | 'inline-block' | 'inline-table' | 'block'; //todo
+el.style.display = 'none';
+
+// 8.3 FadeIn & FadeOut
+
+// jQuery
+$el.fadeIn(3000);
+$el.fadeOut(3000);
+
+// Native
+el.style.transition = 'opacity 3s';
+// fadeIn
+el.style.opacity = '1';
+// fadeOut
+el.style.opacity = '0';
+
+// 8.4 FadeTo
+// Adjust the opacity of the element.
+
+// jQuery
+$el.fadeTo('slow', 0.15);
+// Native
+el.style.transition = 'opacity 3s'; // assume 'slow' equals 3 seconds
+el.style.opacity = '0.15';
+// 8.5 FadeToggle
+// Display or hide the element by animating their opacity.
+
+// jQuery
+$el.fadeToggle();
+
+// Native
+el.style.transition = 'opacity 3s';
+const {
+	opacity
+} = el.ownerDocument.defaultView.getComputedStyle(el, null);
+if (opacity === '1') {
+	el.style.opacity = '0';
+} else {
+	el.style.opacity = '1';
+}
+// 8.6 SlideUp & SlideDown
+
+// jQuery
+$el.slideUp();
+$el.slideDown();
+
+// Native
+var originHeight = '100px';
+el.style.transition = 'height 3s';
+// slideUp
+el.style.height = '0px';
+// slideDown
+el.style.height = originHeight;
+
+// 8.7 SlideToggle
+// Display or hide the element with a sliding motion.
+
+// jQuery
+$el.slideToggle();
+
+// Native
+originHeight = '100px';
+el.style.transition = 'height 3s';
+const {
+	height
+} = el.ownerDocument.defaultView.getComputedStyle(el, null);
+if (parseInt(height, 10) === 0) {
+	el.style.height = originHeight;
+} else {
+	el.style.height = '0px';
+}
+// 8.8 Animate
+// Perform a custom animation of a set of CSS properties.
+
+// jQuery
+let params = {
+		height: "50px"
+	},
+	speed = 500;
+$el.animate({
+	params
+}, speed);
+
+// Native
+el.style.transition = 'all ' + speed;
+Object.keys(params).forEach((key) =>
+	el.style[key] = params[key]
+)
+</script>
+
+</html>

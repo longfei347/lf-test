@@ -1,5 +1,5 @@
 ## lf-test
-###工作  
+### 工作  
 
 [a2-test](http://blog.csdn.net/u010130282/article/details/53462805)
 [dev-mCloud](http://nkweb-sit.huawei.com/mcloud/ide/develop.html?projectId=24313857) | 
@@ -9,7 +9,7 @@
 [移动云配置平台](http://localhost.huawei.com:8080/mcloud/home1.html) | 
 [vscode shortcut](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf)
 
-###前端  
+### 前端  
 
 [W3Cfuns](http://www.w3cfuns.com/) | 
 [博客园](http://www.cnblogs.com/) | 
@@ -26,7 +26,7 @@
 [Bootstrap](http://www.bootcss.com/) | 
 [CSS参考手册](http://css.doyoe.com/) | 
 
-###技术  
+### 技术  
 
 [js正则](http://blog.csdn.net/xinying0424/article/details/8113908) | 
 [ES6入门](http://es6.ruanyifeng.com/) | 
@@ -74,7 +74,7 @@
 [React Native](http://www.cnblogs.com/maomishen/p/5303976.html) | 
 [React Native2](https://my.oschina.net/osccreate/blog/778348) | 
 
-###资源  
+### 资源  
 
 [front-end-collect](https://github.com/jikeytang/front-end-collect) | 
 [最全前端资源汇集](http://www.w3cfuns.com/notes/17755/423092d927775ae297a390f646079a64.html) | 
@@ -91,7 +91,7 @@
 [Ace - Web](https://ace.c9.io/#api) | 
 [IDE Server](http://localhost.huawei.com:8080/mcloud/sseChannelTest.html) | 
 
-###综合  
+### 综合  
 
 [百科](http://baike.baidu.com/) | 
 [百度音乐](http://play.baidu.com/) | 

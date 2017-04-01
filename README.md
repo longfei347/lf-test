@@ -29,7 +29,7 @@
 [掘金](https://juejin.im/) |  
 [css-weekly](http://css-weekly.com/) | 
 [奇舞](https://weekly.75team.com/) |  
-[Echo JS] ( http://www.echojs.com/) |  
+[Echo JS](http://www.echojs.com/) |  
 [FEX 技术周刊百度](http://fex.baidu.com/weekly/)|
 [Web Designer News](http://www.webdesignernews.com/category/web-development)|
 [众成翻译每周精选](http://zcfy.baomitu.com/ )|  
@@ -122,12 +122,6 @@
 [4G套餐联通](http://www.10010.com/goodsdetail/511405139289.html) | 
 [bat薪资](http://www.zhihu.com/question/27108669?rf=27108605) | 
 [Google 翻译](http://translate.google.cn/) | 
-[火车票查询](http://train.qunar.com/) | 
-[dev](http://localhost.huawei.com/mcloud/develop.html?projectId=103874569) | 
-[dev-d](http://localhost.huawei.com/mcloud/develop-d.html?projectId=103874569) | 
-[m-new](http://localhost.huawei.com/mcloud/index.html) | 
-[new-liu](http://10.63.248.167:8080/mcloud/index.html) | 
-[百度](http://www.baidu.com/) | 
 [W3](http://w3.huawei.com/next/indexa.html) | 
 [defect](http://btit-rally.huawei.com/#/1581840d/defects?tpsV=sq%3A33694564) | 
 [mCloud-pub](http://mcloud-pub.huawei.com/mcloud/ide/home.html?projectId=143392777) | 
@@ -139,9 +133,6 @@
 [Server-Sent Events](http://nkgtsv9687rhl:8080/mcloud/channel/sseChannelTest.html) | 
 [华为班车](http://117.78.17.233/huaweibus/!index.action) | 
 [Discuz! 资料库](http://faq.comsenz.com/library/template/cssextend/cssextend_index.htm) | 
-[layer API 帮助手册](http://sentsin.com/jquery/layer/api.html) | 
-[layer-jQuery弹层](http://sentsin.com/jquery/layer/) | 
-[jQuery UI Dialog ](http://www.codesky.net/article/201208/170544.html) | 
 [fullPage.js](http://www.dowebok.com/demo/2014/77/index8.html#page2) | 
 [mongodb由浅入深](http://linux.cn/article-4117-1-qqmail.html) | 
 [Egret](http://www.egret-labs.org/) | 
@@ -151,5 +142,5 @@
 [npm使用jQuery 插件](http://www.css88.com/archives/5537) | 
 [海量数据处理](http://m.blog.csdn.net/blog/v_JULY_v/7382693) | 
 [unwinder](http://unwinder.test.h5jun.com/) | 
-[买房必看!2016武汉](http://mt.sohu.com/20160507/n448205169.shtml)
+
 

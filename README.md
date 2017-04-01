@@ -40,7 +40,7 @@
 [前端周刊](http://www.feweekly.com/) | 
 [JSK Weekly](https://javascriptkicks.com/) |
 ### 技术  
-
+[你可能不需要gulp,grunt](http://www.css88.com/archives/7041/comment-page-1#comment-293571) | 
 [js正则](http://blog.csdn.net/xinying0424/article/details/8113908) | 
 [ES6入门](http://es6.ruanyifeng.com/) | 
 [jasmine-intro](http://jasmine.github.io/2.4/introduction.html) | 

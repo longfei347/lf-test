@@ -25,8 +25,21 @@
 [Unix技术网](http://www.chinaunix.net/) | 
 [Bootstrap](http://www.bootcss.com/) | 
 [CSS参考手册](http://css.doyoe.com/) | 
-
-### 技术  
+[js weekly](http://javascriptweekly.com/) | 
+[掘金](https://juejin.im/) |  
+[css-weekly](http://css-weekly.com/) | 
+[奇舞](https://weekly.75team.com/) |  
+[Echo JS] ( http://www.echojs.com/) |  
+[FEX 技术周刊百度](http://fex.baidu.com/weekly/)|
+[Web Designer News](http://www.webdesignernews.com/category/web-development)|
+[众成翻译每周精选](http://zcfy.baomitu.com/ )|  
+[开发者头条和码农周刊](https://toutiao.io/c/fe) |
+[Front-End Front](http://frontendfront.com/)|
+[FrontEnd Focus](http://frontendfocus.co/) |
+[DDFE 技术周刊](https://zhuanlan.zhihu.com/ddfe-weekly) |
+[前端周刊](http://www.feweekly.com/) | 
+[JSK Weekly](https://javascriptkicks.com/) |
+### 技术  
 
 [js正则](http://blog.csdn.net/xinying0424/article/details/8113908) | 
 [ES6入门](http://es6.ruanyifeng.com/) | 

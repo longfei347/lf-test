@@ -110,6 +110,7 @@
 [百度音乐](http://play.baidu.com/) | 
 [我的自选](http://quote.yztz.com/favorite/) | 
 [文库](http://wenku.baidu.com/) | 
+[三阶魔方](http://jingyan.baidu.com/article/a3f121e408820dfc9052bb1c.html) |  
 [车票预订](https://kyfw.12306.cn/otn/leftTicket/init) | 
 [挑战1000分](http://www.nxmam.cn/yx/yxc.php?oid=bxpdviec) | 
 [百家](http://baijia.baidu.com/) | 

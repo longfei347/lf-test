@@ -40,6 +40,8 @@
 [前端周刊](http://www.feweekly.com/) | 
 [JSK Weekly](https://javascriptkicks.com/) |
 ### 技术  
+[h5制作工具](http://next.36kr.com/posts/collections/61) |  
+[艺术字体在线生成](http://www.qt86.com/?sukey=16298ae1a3e336313a241a2c4c09e3f267d1dfaf5f68bf8095739eaffdcbe1323a9ebace63dcb240a4610d605e6b467f) | 
 [你可能不需要gulp,grunt](http://www.css88.com/archives/7041/comment-page-1#comment-293571) | 
 [js正则](http://blog.csdn.net/xinying0424/article/details/8113908) | 
 [ES6入门](http://es6.ruanyifeng.com/) | 

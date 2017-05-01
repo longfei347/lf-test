@@ -1,7 +1,7 @@
 ## lf-test
 ### 工作  
-
-[a2-test](http://blog.csdn.net/u010130282/article/details/53462805)
+[pub-gl](http://haepub-gl.huawei.com/mcloud/ide/develop.html?projectid=196609) |  
+[a2-test](http://blog.csdn.net/u010130282/article/details/53462805) |  
 [dev-mCloud](http://nkweb-sit.huawei.com/mcloud/ide/develop.html?projectId=24313857) | 
 [sit-mCloud](http://mcloudnkg-sit.huawei.com/mcloud/ide/develop.html?projectId=182517764) | 
 [sit-local](http://localhost.huawei.com/mcloud/develop.html?projectId=182517764) | 

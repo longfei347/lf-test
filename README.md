@@ -105,6 +105,7 @@
 [JavaScript Style](https://github.com/airbnb/javascript) | 
 [Ace - Web](https://ace.c9.io/#api) | 
 [IDE Server](http://localhost.huawei.com:8080/mcloud/sseChannelTest.html) | 
+[mobx](https://github.com/ascoders/blog/issues/16) |  
 
 ### 综合  
 

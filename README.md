@@ -88,6 +88,8 @@
 [Webpack+React+ES6](http://www.cnblogs.com/skylar/p/React-Webpack-ES6.html) | 
 [React Native](http://www.cnblogs.com/maomishen/p/5303976.html) | 
 [React Native2](https://my.oschina.net/osccreate/blog/778348) | 
+[js隐式转换](https://github.com/jawil/blog/issues/5)|  
+[Math与位应用](http://louiszhai.github.io/2016/07/01/Math/?utm_source=75teamweekly&utm_medium=referral) |  位
 
 ### 资源  
 

@@ -545,7 +545,8 @@ $(function() {
 	$("#rowcol").on("keyup", function(e) {
 		var index = $(e.target).index("#rowcol input"),
 			tar = e.target;
-		if (e.keyCode == 38) {
+		if (e.keyCode == 8 || e.keyCode == 9) {
+		} else if (e.keyCode == 38) {
 			if (index > 8) {
 				$("#rowcol input").eq(index - 9).focus();
 			} else {
@@ -557,8 +558,8 @@ $(function() {
 			} else {
 				$("#rowcol input").eq(index + 9).focus();
 			}
-		} else if (e.keyCode > 48 && e.keyCode < 58) {
-			tar.value = e.keyCode - 48;
+		} else if (e.key > 0 && e.key <= 9) {// e.keyCode > 48 && e.keyCode < 58
+			tar.value = e.key;//e.keyCode - 48;
 		} else if (e.keyCode == 37) {
 			if (index % 9 > 0) {
 				$("#rowcol input").eq(index - 1).focus();

@@ -544,10 +544,10 @@ function clacImgZoomParam(maxWidth, maxHeight, width, height) {
 }
 function checkVideo() {
 	if (!!document.createElement('video').canPlayType) {
-		var vidTest = document.createElement("video");
-		oggTest = vidTest.canPlayType('video/ogg; codecs="theora, vorbis"');
+		var vidTest = document.createElement("video"),
+			oggTest = vidTest.canPlayType('video/ogg; codecs="theora, vorbis"');
 		if (!oggTest) {
-			h264Test = vidTest.canPlayType('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
+			let h264Test = vidTest.canPlayType('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
 			if (!h264Test) {
 				document.getElementById("checkVideoResult").innerHTML = "Sorry. No video support."
 			} else {

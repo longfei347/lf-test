@@ -50,13 +50,33 @@ h2, p {
 				<td></td>
 				<td></td>
 				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
 			</tr>
 			<tr>
 				<td></td>
 				<td></td>
 				<td></td>
+				<td></td>
+				<td></td>
 			</tr>
 			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
 				<td></td>
 				<td></td>
 				<td></td>
@@ -64,16 +84,16 @@ h2, p {
 		</tbody>
 	</table>
 	<form name="numbercheck" style="margin:10px auto; text-align:center">
-		请输入奇数行的表格:
+		<!-- 请输入奇数行的表格:
 		<input type="text" name="col">
 		<button type="button" name="modifyCol">修改行列数</button>
-		<br><br>
+		<br><br> -->
 		<button id="ttt" name="ok" type="button" onClick="check()">确定</button>
 	</form>
 </body>
 <script>
-document.forms[0].modifyCol.addEventListener("click", function() {
-	var tmp = document.numbercheck.col.value;
+/*document.forms[0].modifyCol.addEventListener("click", function() {
+	var tmp = +document.numbercheck.col.value;
 	if (isNaN(tmp) || tmp < 1 || tmp % 2 == 0) {
 		alert("请输入大于1的奇数!");
 		return false
@@ -87,7 +107,7 @@ document.forms[0].modifyCol.addEventListener("click", function() {
 			table1Body.rows[i].insertCell(j); //.innerHTML = ""
 		}
 	}
-});
+});*/
 document.getElementById("table1").addEventListener("keyup", function(e) {
 	var tar = e.target,
 		val = tar.innerText,
@@ -99,14 +119,6 @@ document.getElementById("table1").addEventListener("keyup", function(e) {
 		return false;
 	}
 }, true)
-/*document.getElementById("table1").addEventListener("keyup", function(e) {
-	if (e.target.nodeName == "TD") {
-		e.target.innerHTML = e.target.innerHTML.replace(/[^1-9]/,"");
-	}
-})*/
-var num = [],
-	total = 0,
-	f;
 
 function check() {
 	var cols = table1Body.rows[0].cells.length,

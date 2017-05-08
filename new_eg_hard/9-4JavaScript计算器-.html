@@ -1,21 +1,21 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<title>JavaScript¼ÆËãÆ÷</title>
+	<meta charset="UTF-8">
+	<title>JavaScriptè®¡ç®—å™¨</title>
 </head>
-<script language="JavaScript">
-<!--
-var curState;	//µ±Ç°´¦ÓÚµÄ×´Ì¬
-var curOper;	//µ±Ç°´¦ÓÚµÄ²Ù×÷
-var num1;		//Ë«±ßÔËËã·ûµÄÇ°Ò»²Ù×÷Êý
-var preOper;	//²¼¶ûÖµ,±íÊ¾µ±Ç°ÊÇ·ñµ¥»÷¹ýË«±ßÔËËã·û
+<script>
+var curState; //å½“å‰å¤„äºŽçš„çŠ¶æ€
+var curOper; //å½“å‰å¤„äºŽçš„æ“ä½œ
+var num1; //åŒè¾¹è¿ç®—ç¬¦çš„å‰ä¸€æ“ä½œæ•°
+var preOper; //å¸ƒå°”å€¼,è¡¨ç¤ºå½“å‰æ˜¯å¦å•å‡»è¿‡åŒè¾¹è¿ç®—ç¬¦
 
 /*******************************************************
-*function setStartState()
-*¹¦ÄÜ: ³õÊ¼»¯³ÌÐòÖÐ¸÷±äÁ¿
-*²ÎÊý: ÎÞ
-*******************************************************/
-function setStartState()
-{
+ *function setStartState()
+ *åŠŸèƒ½: åˆå§‹åŒ–ç¨‹åºä¸­å„å˜é‡
+ *å‚æ•°: æ— 
+ *******************************************************/
+function setStartState() {
 	curState = "beStart";
 	num1 = 0;
 	curOper = "start";
@@ -23,273 +23,258 @@ function setStartState()
 }
 
 /*******************************************************
-*function addNum(i)
-*¹¦ÄÜ:½«Êý×ÖÌí¼Óµ½ÎÄ±¾¿òÖÐ
-*²ÎÊý:i ÒªÌí¼ÓµÄÖµ
-*******************************************************/
-function addNum(i)
-{
-	//±íÊ¾ÔÚ´ËÖ®Ç°¸Õµ¥»÷¹ýË«±ßÔËËã·û,¸Õ¿ªÊ¼µÚ2¸öÊýµÄÊäÈë
-	if(preOper)	
-	{
-	form_cal.text_total.value = i;	//text_totalÎª½á¹ûÎÄ±¾¿ò
-	preOper = false;
-	}
-	else	//±íÊ¾ÕýÔÚ½øÐÐ»òÕß¿ªÊ¼Ò»¸öÊýµÄÊäÈë
-	{
-	  if(form_cal.text_total.value == "0")
-	  {
-	  form_cal.text_total.value = i;
-	  curState="beInteger";
-	  }
-	  else
-	  form_cal.text_total.value += i;	
-	  //ÊäÈë¶àÎ»Êý,ÕâÀïÒòÎªtext_total.value·µ»ØµÄÊÇ×Ö·û´®,
-	  //ËùÒÔ += ÊÇ×Ö·û´®Á¬½ÓÔËËã·û,¶ø²»ÊÇ"¼Ó"ÔËËã
-	  //½«µ±Ç°Êý×ÖÓëÇ°ÃæÊý×ÖÁ¬½ÓÆðÀ´µÃµ½¶àÎ»Êý
+ *function addNum(i)
+ *åŠŸèƒ½:å°†æ•°å­—æ·»åŠ åˆ°æ–‡æœ¬æ¡†ä¸­
+ *å‚æ•°:i è¦æ·»åŠ çš„å€¼
+ *******************************************************/
+function addNum(i) {
+	//è¡¨ç¤ºåœ¨æ­¤ä¹‹å‰åˆšå•å‡»è¿‡åŒè¾¹è¿ç®—ç¬¦,åˆšå¼€å§‹ç¬¬2ä¸ªæ•°çš„è¾“å…¥
+	if (preOper) {
+		form_cal.text_total.value = i; //text_totalä¸ºç»“æžœæ–‡æœ¬æ¡†
+		preOper = false;
+	} else {
+		if (form_cal.text_total.value == "0") {
+			form_cal.text_total.value = i;
+			curState = "beInteger";
+		} else
+			form_cal.text_total.value += i;
+		//è¾“å…¥å¤šä½æ•°,è¿™é‡Œå› ä¸ºtext_total.valueè¿”å›žçš„æ˜¯å­—ç¬¦ä¸²,
+		//æ‰€ä»¥ += æ˜¯å­—ç¬¦ä¸²è¿žæŽ¥è¿ç®—ç¬¦,è€Œä¸æ˜¯"åŠ "è¿ç®—
+		//å°†å½“å‰æ•°å­—ä¸Žå‰é¢æ•°å­—è¿žæŽ¥èµ·æ¥å¾—åˆ°å¤šä½æ•°
 	}
 }
 
 /*******************************************************
-*function addPoint()
-*¹¦ÄÜ: Ìí¼ÓÐ¡Êýµã
-*²ÎÊý: ÎÞ
-*******************************************************/
-function addPoint()
-{
-  if(curState=="beStart"||curState=="beInteger")
-  {
-  form_cal.text_total.value += ".";
-  curState = "beFloat";		//½«µ±Ç°ÊýÖµ×´Ì¬ÉèÖÃÎªfloat
-  }
+ *function addPoint()
+ *åŠŸèƒ½: æ·»åŠ å°æ•°ç‚¹
+ *å‚æ•°: æ— 
+ *******************************************************/
+function addPoint() {
+	if (curState == "beStart" || curState == "beInteger") {
+		form_cal.text_total.value += ".";
+		curState = "beFloat"; //å°†å½“å‰æ•°å€¼çŠ¶æ€è®¾ç½®ä¸ºfloat
+	}
 }
 
 /*******************************************************
-*function clearText()
-*¹¦ÄÜ: ÖØÖÃÎÄ±¾¿òÄÚÈÝÎª0,²¢³õÊ¼»¯×´Ì¬±äÁ¿
-*²ÎÊý: ÎÞ
-*******************************************************/
-function clearText()
-{
-form_cal.text_total.value = "0";
-curState = "beStart";
-curOper = "start"
+ *function clearText()
+ *åŠŸèƒ½: é‡ç½®æ–‡æœ¬æ¡†å†…å®¹ä¸º0,å¹¶åˆå§‹åŒ–çŠ¶æ€å˜é‡
+ *å‚æ•°: æ— 
+ *******************************************************/
+function clearText() {
+	form_cal.text_total.value = "0";
+	curState = "beStart";
+	curOper = "start"
 }
 
 /*******************************************************
-*function count()
-*¹¦ÄÜ: Ö´ÐÐ¼Ó¼õ³Ë³ýµÈË«±ß¼ÆËã
-*²ÎÊý: ÎÞ
-*******************************************************/
-function count()
-{
-	if(curOper!="start")
-	{
-		switch(curOper)
-		{
-		case "+":
-		num1 = parseFloat(num1) + parseFloat(form_cal.text_total.value);
-		break;
-		case "-":
-		num1 = parseFloat(num1) - parseFloat(form_cal.text_total.value);
-		break;
-		case "*":
-		num1 = parseFloat(num1) * parseFloat(form_cal.text_total.value);
-		break;
-		case "/":
-		num1 = parseFloat(num1) / parseFloat(form_cal.text_total.value);
-		break;
+ *function count()
+ *åŠŸèƒ½: æ‰§è¡ŒåŠ å‡ä¹˜é™¤ç­‰åŒè¾¹è®¡ç®—
+ *å‚æ•°: æ— 
+ *******************************************************/
+function count() {
+	if (curOper != "start") {
+		switch (curOper) {
+			case "+":
+				num1 = parseFloat(num1) + parseFloat(form_cal.text_total.value);
+				break;
+			case "-":
+				num1 = parseFloat(num1) - parseFloat(form_cal.text_total.value);
+				break;
+			case "*":
+				num1 = parseFloat(num1) * parseFloat(form_cal.text_total.value);
+				break;
+			case "/":
+				num1 = parseFloat(num1) / parseFloat(form_cal.text_total.value);
+				break;
 		}
-	form_cal.text_total.value = num1;
-	preOper = true;	
+		form_cal.text_total.value = num1;
+		preOper = true;
 	}
-	curOper="start";
+	curOper = "start";
 }
 
 /*******************************************************
-*function setOper(oper)
-*¹¦ÄÜ: ÉèÖÃµ±Ç°²Ù×÷×´Ì¬,²¢Ö´ÐÐÏàÓ¦ÉèÖÃÓë¼ÆËã
-*²ÎÊý: oper ÒªÉèÖÃµÄ²Ù×÷×´Ì¬Öµ
-*******************************************************/
-function setOper(oper)
-{
-preOper = true;	//±íÊ¾µ±Ç°ÒÑµ¥»÷ÁËË«±ßÔËËã·û
-	if(curOper=="start")
-	{
-	//È¡ÊäÈëµÄµÚÒ»¸ö²Ù×÷Êý´æ´¢ÓÚnum1
-	num1 = parseFloat(form_cal.text_total.value);	
-	curOper = oper;
-	}
-	else	//±íÊ¾Ö®Ç°ÒÑµ¥»÷¹ýË«±ßÔËËã·û,µ«²¢Ã»ÓÐ¼ÆËã
-	{
-	count();	//ÏÈ¼ÆËãÇ°´ÎµÄÔËËã,ÔÙÉèÖÃ±¾´ÎÔËËã×÷Îªµ±Ç°×´Ì¬
-	curOper = oper;
+ *function setOper(oper)
+ *åŠŸèƒ½: è®¾ç½®å½“å‰æ“ä½œçŠ¶æ€,å¹¶æ‰§è¡Œç›¸åº”è®¾ç½®ä¸Žè®¡ç®—
+ *å‚æ•°: oper è¦è®¾ç½®çš„æ“ä½œçŠ¶æ€å€¼
+ *******************************************************/
+function setOper(oper) {
+	preOper = true; //è¡¨ç¤ºå½“å‰å·²å•å‡»äº†åŒè¾¹è¿ç®—ç¬¦
+	if (curOper == "start") {
+		//å–è¾“å…¥çš„ç¬¬ä¸€ä¸ªæ“ä½œæ•°å­˜å‚¨äºŽnum1
+		num1 = parseFloat(form_cal.text_total.value);
+		curOper = oper;
+	} else {
+		//è¡¨ç¤ºä¹‹å‰å·²å•å‡»è¿‡åŒè¾¹è¿ç®—ç¬¦,ä½†å¹¶æ²¡æœ‰è®¡ç®—
+		count(); //å…ˆè®¡ç®—å‰æ¬¡çš„è¿ç®—,å†è®¾ç½®æœ¬æ¬¡è¿ç®—ä½œä¸ºå½“å‰çŠ¶æ€
+		curOper = oper;
 	}
 }
 
 /*******************************************************
-*function useFunc(func)
-*¹¦ÄÜ: Ö´ÐÐ¸÷ÖÖµ¥±ßÔËËã
-*²ÎÊý: func ÒªÖ´ÐÐµÄµ¥±ßÔËËã·û
-*******************************************************/
-function useFunc(func)
-{
-	switch(func)
-	{
-	case "sin":
-	form_cal.text_total.value = Math.sin(form_cal.text_total.value);
-	preOper = true;
-	break;
-	case "cos":
-	form_cal.text_total.value = Math.cos(form_cal.text_total.value);
-	preOper = true;
-	break;
-	case "asin":
-	form_cal.text_total.value = Math.asin(form_cal.text_total.value);
-	preOper=true;
-	break;
-	case "acos":
-	form_cal.text_total.value = Math.acos(form_cal.text_total.value);
-	preOper = true;
-	break;
-	case "tan":
-	form_cal.text_total.value = Math.tan(form_cal.text_total.value);
-	preOper = true;
-	break;
-	case "atan":
-	form_cal.text_total.value = Math.atan(form_cal.text_total.value);
-	preOper = true;
-	break;
-	case "log":
-	form_cal.text_total.value = Math.log(form_cal.text_total.value);
-	preOper = true;
-	break;
-	case "exp":
-	form_cal.text_total.value = Math.exp(form_cal.text_total.value);
-	preOper = true;
-	break;
-	case "sqrt":
-	form_cal.text_total.value = Math.sqrt(form_cal.text_total.value);
-	preOper = true;
-	break;
-	case "1/x":
-	form_cal.text_total.value = 1/form_cal.text_total.value;
-	preOper = true;
-	break;
+ *function useFunc(func)
+ *åŠŸèƒ½: æ‰§è¡Œå„ç§å•è¾¹è¿ç®—
+ *å‚æ•°: func è¦æ‰§è¡Œçš„å•è¾¹è¿ç®—ç¬¦
+ *******************************************************/
+function useFunc(func) {
+	switch (func) {
+		case "sin":
+			form_cal.text_total.value = Math.sin(form_cal.text_total.value);
+			preOper = true;
+			break;
+		case "cos":
+			form_cal.text_total.value = Math.cos(form_cal.text_total.value);
+			preOper = true;
+			break;
+		case "asin":
+			form_cal.text_total.value = Math.asin(form_cal.text_total.value);
+			preOper = true;
+			break;
+		case "acos":
+			form_cal.text_total.value = Math.acos(form_cal.text_total.value);
+			preOper = true;
+			break;
+		case "tan":
+			form_cal.text_total.value = Math.tan(form_cal.text_total.value);
+			preOper = true;
+			break;
+		case "atan":
+			form_cal.text_total.value = Math.atan(form_cal.text_total.value);
+			preOper = true;
+			break;
+		case "log":
+			form_cal.text_total.value = Math.log(form_cal.text_total.value);
+			preOper = true;
+			break;
+		case "exp":
+			form_cal.text_total.value = Math.exp(form_cal.text_total.value);
+			preOper = true;
+			break;
+		case "sqrt":
+			form_cal.text_total.value = Math.sqrt(form_cal.text_total.value);
+			preOper = true;
+			break;
+		case "1/x":
+			form_cal.text_total.value = 1 / form_cal.text_total.value;
+			preOper = true;
+			break;
 	}
 }
-//-->
 </script>
+
 <body onload="setStartState()" align="center">
-<form name="form_cal">
-<table border="2" align="center">
-<tr>
-	<td colspan="12">
-	<font size=5>JavaScript¼ÆËãÆ÷</font>
-	</td>
-</tr>
-<tr align="center">
-	<td colspan="6">
-	<input type="Text" name="text_total" size="40" value="0">
-	</td>
-</tr>
-<tr align="center">
-	<td>
-	<input type="Button" value="sin " onclick="useFunc('sin')">
-	</td>
-	<td>
-	<input type="Button" value="cos " onclick="useFunc('cos')">
-	</td>
-	<td>
-	<input type="Button" value=" 1  " onclick="addNum('1')">
-	</td>
-	<td>
-	<input type="Button" value=" 2  " onclick="addNum('2')">
-	</td>
-	<td>
-	<input type="Button" value=" 3  " onclick="addNum('3')">
-	</td>
-	<td><input type="Button" value=" +  " onclick="setOper('+')">
-	</td>
-</tr>
-<tr align="center">
-	<td>
-	<input type="Button" value="asin" onclick="useFunc('asin')">
-	</td>
-	<td><input type="Button" value="acos" onclick="useFunc('acos')">
-	</td>
-	<td><input type="Button" value=" 4  " onclick="addNum('4')">
-	</td>
-	<td><input type="Button" value=" 5  " onclick="addNum('5')">
-	</td>
-	<td><input type="Button" value=" 6  " onclick="addNum('6')">
-	</td>
-	<td><input type="Button" value=" -  " onclick="setOper('-')">
-	</td>
-</tr>
-<tr align="center">
-	<td>
-	<input type="Button" value="tan " onclick="useFunc('tan')">
-	</td>
-	<td>
-	<input type="Button" value="atan" onclick="useFunc('atan')">
-	</td>
-	<td>
-	<input type="Button" value=" 7  " onclick="addNum('7')">
-	</td>
-	<td>
-	<input type="Button" value=" 8  " onclick="addNum('8')">
-	</td>
-	<td>
-	<input type="Button" value=" 9  " onclick="addNum('9')">
-	</td>
-	<td>
-	<input type="Button" value=" *  " onclick="setOper('*')">
-	</td>
-</tr>
-<tr align="center">
-	<td>
-	<input type="Button" value="log " onclick="useFunc('log')">
-	</td>
-	<td>
-	<input type="Button" value="exp " onclick="useFunc('exp')">
-	</td>
-	<td>
-	<input type="Button" value=" 0  " onclick="addNum('0')">
-	</td>
-	<td>
-	<input type="Button" value=" .  " onclick="addPoint()">
-	</td>
-	<td>
-	<input type="Button" value=" =  " onclick="count()">
-	</td>
-	<td>
-	<input type="Button" value=" /  " onclick="setOper('/')">
-	</td>
-</tr>
-<tr align="center">
-	<td>
-	<input type="Button" value="sqrt" onclick="useFunc('sqrt')">
-	</td>
-	<td>
-	<input type="Button" value="1/x " onclick="useFunc('1/x')">
-	</td>
-	<td>
-	<input type="Button" value=" pi " 
-	onclick="JavaScript:form_cal.text_total.value=Math.PI">
-	</td>
-	<td>
-	<input type="Button" value=" E  " 
-	onclick="JavaScript:form_cal.text_total.value=Math.E">
-	</td>
-	<td colspan=2>
-	<input type="Button" value="  Çå ³ý  " onclick="clearText()">
-	</td>
-</tr>
-</table>
-</form>
+	<form name="form_cal">
+		<table border="2" align="center">
+			<tr>
+				<td colspan="12">
+					<font size=5>JavaScriptè®¡ç®—å™¨</font>
+				</td>
+			</tr>
+			<tr align="center">
+				<td colspan="6">
+					<input type="Text" name="text_total" size="40" value="0">
+				</td>
+			</tr>
+			<tr align="center">
+				<td>
+					<input type="Button" value="sin " onclick="useFunc('sin')">
+				</td>
+				<td>
+					<input type="Button" value="cos " onclick="useFunc('cos')">
+				</td>
+				<td>
+					<input type="Button" value=" 1  " onclick="addNum('1')">
+				</td>
+				<td>
+					<input type="Button" value=" 2  " onclick="addNum('2')">
+				</td>
+				<td>
+					<input type="Button" value=" 3  " onclick="addNum('3')">
+				</td>
+				<td>
+					<input type="Button" value=" +  " onclick="setOper('+')">
+				</td>
+			</tr>
+			<tr align="center">
+				<td>
+					<input type="Button" value="asin" onclick="useFunc('asin')">
+				</td>
+				<td>
+					<input type="Button" value="acos" onclick="useFunc('acos')">
+				</td>
+				<td>
+					<input type="Button" value=" 4  " onclick="addNum('4')">
+				</td>
+				<td>
+					<input type="Button" value=" 5  " onclick="addNum('5')">
+				</td>
+				<td>
+					<input type="Button" value=" 6  " onclick="addNum('6')">
+				</td>
+				<td>
+					<input type="Button" value=" -  " onclick="setOper('-')">
+				</td>
+			</tr>
+			<tr align="center">
+				<td>
+					<input type="Button" value="tan " onclick="useFunc('tan')">
+				</td>
+				<td>
+					<input type="Button" value="atan" onclick="useFunc('atan')">
+				</td>
+				<td>
+					<input type="Button" value=" 7  " onclick="addNum('7')">
+				</td>
+				<td>
+					<input type="Button" value=" 8  " onclick="addNum('8')">
+				</td>
+				<td>
+					<input type="Button" value=" 9  " onclick="addNum('9')">
+				</td>
+				<td>
+					<input type="Button" value=" *  " onclick="setOper('*')">
+				</td>
+			</tr>
+			<tr align="center">
+				<td>
+					<input type="Button" value="log " onclick="useFunc('log')">
+				</td>
+				<td>
+					<input type="Button" value="exp " onclick="useFunc('exp')">
+				</td>
+				<td>
+					<input type="Button" value=" 0  " onclick="addNum('0')">
+				</td>
+				<td>
+					<input type="Button" value=" .  " onclick="addPoint()">
+				</td>
+				<td>
+					<input type="Button" value=" =  " onclick="count()">
+				</td>
+				<td>
+					<input type="Button" value=" /  " onclick="setOper('/')">
+				</td>
+			</tr>
+			<tr align="center">
+				<td>
+					<input type="Button" value="sqrt" onclick="useFunc('sqrt')">
+				</td>
+				<td>
+					<input type="Button" value="1/x " onclick="useFunc('1/x')">
+				</td>
+				<td>
+					<input type="Button" value=" pi " onclick="JavaScript:form_cal.text_total.value=Math.PI">
+				</td>
+				<td>
+					<input type="Button" value=" E  " onclick="JavaScript:form_cal.text_total.value=Math.E">
+				</td>
+				<td colspan=2>
+					<input type="Button" value="  æ¸… é™¤  " onclick="clearText()">
+				</td>
+			</tr>
+		</table>
+	</form>
 </body>
+
 </html>
-
-
-

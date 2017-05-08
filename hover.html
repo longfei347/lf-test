@@ -47,11 +47,10 @@
         color: #999; 
     }
     </style>
-    <script src="http://yuanoook.com/cdn/jquery.min.js"></script>
+    <script src="js/jquery.min.js"></script>
 </head>
 
 <body>
-    <input type="text" name="" id="" placeholder="店连店科技股份有限公司">
     <div class="hover-slideout" hover-slideout>
         <h1>Hover me</h1>
         <div class="smelly-cat" smelly-cat>
@@ -68,21 +67,15 @@
     </div>
 </body>
 <script>
-// 非原创，来自
-// http://www.w3cfuns.com
-// http://cdn.res.w3cfuns.com/js/common/global.js
-
 $(function() {
-    $('[hover-slideout]').each(function() {
-        $(this).hover(function(e) {
-            $(this).find('[smelly-cat]').css(induction_position($(this), e)).stop(true, true).animate({
-                "left": 0,
-                "top": 0
-            }, 200);
-        }, function(e) {
-            $(this).find('[smelly-cat]').stop(true, true).animate(induction_position($(this), e), 200);
-        });
-    });
+    $(".hover-slideout").hover(function(e) {
+        $(this).find('[smelly-cat]').css(induction_position($(this), e)).stop(true, true).animate({
+            "left": 0,
+            "top": 0
+        }, 200);
+    }, function(e) {
+        $(this).find('[smelly-cat]').stop(true, true).animate(induction_position($(this), e), 200);
+    })
 
     //鼠标进入方向
     function induction_position(elem, e) {

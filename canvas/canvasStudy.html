@@ -8,11 +8,152 @@
 </head>
 
 <body>
-	<canvas id="my_canvas" width="800" height="600"></canvas>
+	<canvas id="my_canvas" width="800" height="600" style="background-color: grey"></canvas>
 </body>
 <script>
+var ctx = document.getElementById('my_canvas').getContext('2d');
+function drawLineJoin() {
+	var line_join = ['miter', 'round', 'bevel'];
+	ctx.lineWidth = 15;
+	for (i = 0; i < line_join.length; i++) {
+		ctx.lineJoin = line_join[i];
+		ctx.beginPath();
+		ctx.moveTo(5, 5 + i * 40);
+		ctx.lineTo(45, 65 + i * 40);
+		ctx.lineTo(95, 5 + i * 40);
+		ctx.lineTo(145, 65 + i * 40);
+		ctx.lineTo(195, 5 + i * 40);
+		ctx.stroke();
+	}
+}
+
+function drawLineCap() {
+	var line_cap = ['butt', 'round', 'square'];
+	// Draw guides
+	ctx.strokeStyle = '#09f';
+	ctx.beginPath();
+	ctx.moveTo(30, 20);
+	ctx.lineTo(30, 180);
+	ctx.moveTo(210, 20);
+	ctx.lineTo(210, 180);
+	ctx.stroke();
+
+	// Draw lines
+	ctx.strokeStyle = 'black';
+	ctx.lineWidth = 15;
+	for (i = 0; i < line_cap.length; i++) {
+		ctx.lineCap = line_cap[i];
+		ctx.beginPath();
+		ctx.moveTo(30, 40 + i * 40);
+		ctx.lineTo(210, 40 + i * 40);
+		ctx.stroke();
+	}
+	/*
+	ctx.beginPath();
+	ctx.arc(110,70,30,0,Math.PI,true);
+
+	//ctx.fill();
+	//ctx.beginPath();
+	ctx.arc(210,70,30,Math.PI,2*Math.PI,true);
+	ctx.fill();*/
+}
+function smile() {
+	ctx.beginPath();
+	//画圆
+	ctx.arc(500, 300, 200, 0, 2 * Math.PI);
+	var grd = ctx.createRadialGradient(500, 300, 140, 500, 300, 200);
+	grd.addColorStop(0, "#f0e720");
+	grd.addColorStop(1, "#ffca3c");
+	ctx.fillStyle = grd;
+	ctx.fill();
+	//画的笑脸
+	ctx.beginPath();
+	ctx.arc(500, 300, 140, 0, 2 * Math.PI);
+	ctx.fillStyle = "#7f2e00";
+	ctx.fill();
+	ctx.beginPath();
+	ctx.arc(500, 290, 140, 0, 2 * Math.PI);
+	ctx.fillStyle = "#f0e720";
+	ctx.fill();
+	//左眉毛
+	ctx.beginPath();
+	ctx.moveTo(430, 170);
+	ctx.quadraticCurveTo(390, 90, 350, 150);
+	ctx.moveTo(350, 150);
+	ctx.quadraticCurveTo(386, 120, 430, 170);
+	ctx.fillStyle = "#0c0c0e"
+	ctx.fill();
+	//右眉毛
+	ctx.beginPath();
+	ctx.moveTo(560, 170);
+	ctx.quadraticCurveTo(620, 90, 650, 150);
+	ctx.moveTo(650, 150);
+	ctx.quadraticCurveTo(616, 120, 560, 170);
+	ctx.fillStyle = "#0c0c0e"
+	ctx.fill();
+	//左眼睛
+	ctx.beginPath();
+	ctx.moveTo(310, 210);
+	ctx.quadraticCurveTo(410, 170, 470, 215);
+	ctx.quadraticCurveTo(469, 225, 460, 235);
+	ctx.quadraticCurveTo(417, 200, 315, 230);
+	ctx.quadraticCurveTo(310, 225, 310, 210);
+	ctx.lineWidth = 3;
+	ctx.strokeStyle = "#7b3f00"
+	ctx.stroke();
+	ctx.fillStyle = "#fff";
+	ctx.fill();
+	//右眼睛
+	ctx.beginPath();
+	ctx.moveTo(520, 205);
+	ctx.quadraticCurveTo(620, 170, 690, 212);
+	ctx.quadraticCurveTo(689, 222, 680, 232);
+	ctx.quadraticCurveTo(627, 200, 530, 227);
+	ctx.quadraticCurveTo(525, 222, 520, 205);
+	ctx.lineWidth = 3;
+	ctx.strokeStyle = "#7b3f00"
+	ctx.stroke();
+	ctx.fillStyle = "#fff";
+	ctx.fill();
+	//眼珠
+	ctx.beginPath();
+	ctx.arc(340, 210, 14, 0, 2 * Math.PI)
+	ctx.fillStyle = "#000";
+	ctx.fill();
+	ctx.beginPath();
+	ctx.arc(550, 210, 14, 0, 2 * Math.PI)
+	ctx.fillStyle = "#000";
+	ctx.fill();
+	//画椭圆脸蛋
+	ctx.beginPath();
+	var grd1 = ctx.createRadialGradient(395, 250, 24, 395, 250, 12);
+	var grd2 = ctx.createRadialGradient(600, 250, 24, 395, 250, 12);
+	grd1.addColorStop(0, "#f5b201");
+	grd1.addColorStop(1, "#fc9900");
+	ctx.fillStyle = grd1;
+	ctx.shadowBlur = 10;
+	ctx.shadowColor = "#fe9b00";
+	grd2.addColorStop(0, "#f5b201");
+	grd2.addColorStop(1, "#fc9900");
+	ctx.fillStyle = grd2;
+	ctx.shadowBlur = 10;
+	ctx.shadowColor = "#fe9b00";
+	var EllipseTwo = function(context, x, y, a, b) {
+		context.save();
+		var r = (a > b) ? a : b;
+		var ratioX = a / r;
+		var ratioY = b / r;
+		context.scale(ratioX, ratioY);
+		context.beginPath();
+		context.arc(x / ratioX, y / ratioY, r, 0, 2 * Math.PI, false);
+		context.closePath();
+		context.restore();
+		context.fill();
+	}
+	EllipseTwo(ctx, 395, 250, 24, 12);
+	EllipseTwo(ctx, 600, 250, 24, 12)
+}
 function drawGraph() {
-	var ctx = document.getElementById('my_canvas').getContext('2d');
 	var data_arr = [30, 50, 90, 20, 80, 40, 70];
 	var max = 90;
 	var canvas_h = 250;
@@ -46,8 +187,6 @@ function drawGraph() {
 }
 
 function drawArc() {
-	var ctx = document.getElementById('my_canvas').getContext('2d');
-
 	ctx.strokeStyle = '#0099ff';
 	ctx.fillStyle = '#0099ff';
 
@@ -74,20 +213,15 @@ function drawArc() {
 }
 
 function drawRect() {
-	var canvas = document.getElementById('my_canvas');
-	if (canvas.getContext) {
-		var ctx = canvas.getContext('2d');
-		ctx.fillStyle = "#FFCC33";
-		ctx.strokeStyle = "#FF99FF";
-		ctx.lineWidth = "4";
-		ctx.fillRect(30,10,300,100);
-		ctx.clearRect(50,30,260,60);
-		//ctx.strokeRect(70,50,220,20);
-	}
+	ctx.fillStyle = "#FFCC33";
+	ctx.strokeStyle = "#FF99FF";
+	ctx.lineWidth = "4";
+	ctx.fillRect(30,10,300,100);
+	ctx.clearRect(50,30,260,60);
+	//ctx.strokeRect(70,50,220,20);
 }
 
 function drawImage() {
-	var ctx = document.getElementById('my_canvas').getContext('2d');
 	//===微笑
 	//ctx.moveTo(500,200)
 	ctx.beginPath();
@@ -164,7 +298,6 @@ function drawImage() {
 }
 
 function drawGradient() {
-	var ctx = document.getElementById('my_canvas').getContext('2d');
 	//===stroke
 	ctx.beginPath();
 	ctx.moveTo(20, 30);
@@ -234,7 +367,6 @@ function drawGradient() {
 }
 
 function drawGradientRect() {
-	var ctx = document.getElementById('my_canvas').getContext('2d');
 	for (i = 0; i < 6; i++) {
 		for (j = 0; j < 12; j++) {
 			ctx.fillStyle = 'rgb(' + Math.floor(255 - 20 * i) + ',' +
@@ -245,7 +377,7 @@ function drawGradientRect() {
 }
 
 function drawOpacityRect() {
-	var ctx = document.getElementById('my_canvas').getContext('2d');
+	let i,j;
 	ctx.fillStyle = 'rgb(255,221,0)';
 	ctx.fillRect(0, 0, 200, 40);
 	ctx.fillStyle = 'rgb(102,204,0)';
@@ -265,8 +397,6 @@ function drawOpacityRect() {
 }
 
 function drawPath() {
-	var ctx = document.getElementById('my_canvas').getContext('2d');
-
 	ctx.beginPath();
 	ctx.strokeStyle = "red";
 	ctx.moveTo(20, 20);
@@ -291,8 +421,7 @@ function drawPath() {
 }
 
 function drawLine() {
-	var ctx = document.getElementById('my_canvas').getContext('2d');
-	var left = 10;
+	let left = 10,i;
 	ctx.beginPath();
 
 	for (i = 0; i < 8; i++) {
@@ -312,8 +441,6 @@ function drawLine() {
 }
 
 function drawLinearGradient() {
-	var ctx = document.getElementById('my_canvas').getContext('2d');
-
 	var grad_h = ctx.createLinearGradient(0, 0, 120, 0);
 	grad_h.addColorStop(0, "green");
 	grad_h.addColorStop(0.8, "#ff0");
@@ -336,7 +463,7 @@ function drawLinearGradient() {
 }
 
 function drawPolygon() {
-	var ctx = document.getElementById('my_canvas').getContext('2d');
+	let i;
 	ctx.fillStyle = "#663300";
 	ctx.fillRect(0, 0, 150, 70);
 	ctx.fillStyle = "#FFCC00";
@@ -373,7 +500,6 @@ function drawPolygon() {
 }
 
 function drawCirclePercent() {
-	var ctx = document.getElementById("my_canvas").getContext('2d');
 	//移动到圆心位置(100,100)
 	ctx.translate(150, 100); //状态一
 	//绘制扇形
@@ -426,17 +552,14 @@ function drawCirclePercent() {
 }
 
 function drawFromImage() {
-	var ctx = document.getElementById('my_canvas').getContext('2d');
 	var pat_img = new Image();
-	pat_img.src = "../images/002.gif";
+	pat_img.src = "../images/kefu2.jpg";
 	var pat = ctx.createPattern(pat_img, 'repeat');
 	ctx.fillStyle = pat;
 	ctx.fillRect(0, 0, 300, 100);
 }
 
 function drawRadialGradient() {
-	var ctx = document.getElementById('my_canvas').getContext('2d');
-
 	var rad_grad = ctx.createRadialGradient(50, 50, 20, 50, 50, 60);
 	rad_grad.addColorStop(0, "#000000");
 	rad_grad.addColorStop(0.2, "#99CCFF");
@@ -458,8 +581,7 @@ function drawRadialGradient() {
 }
 
 function drawSmallGraph() {
-	var ctx = document.getElementById('my_canvas').getContext('2d'),
-		drawSpirograph = function(ctx, R, r, O) {
+	var drawSpirograph = function(ctx, R, r, O) {
 			var x1 = R - O;
 			var y1 = 0;
 			var i = 1;
@@ -489,8 +611,6 @@ function drawSmallGraph() {
 }
 
 function drawLinearGradient() {
-	var ctx = document.getElementById('my_canvas').getContext('2d');
-
 	ctx.font = "20px Georgia";
 	ctx.strokeText("Hello World!", 10, 50);
 
@@ -504,6 +624,28 @@ function drawLinearGradient() {
 	ctx.strokeStyle = gradient;
 	ctx.strokeText("w3school.com.cn", 10, 90);
 
+}
+function drawText() {
+	let letters = Array(255).fill(1),
+		textArr = ["朱", "晓", "芬", "我", "爱", "你"];
+	// ctx.canvas.style.width = screen.width + "px"; TODO为何有style样式定义,字体大小有变化
+	ctx.canvas.width = screen.width;
+	// ctx.canvas.style.height = screen.height + "px";
+	ctx.canvas.height = screen.height;
+	// ctx.font = "14px Microsoft Yahei";
+	function draw() {
+		ctx.fillStyle = 'rgba(0,0,0,.05)';
+		ctx.fillRect(0, 0, screen.width, screen.height);
+		ctx.fillStyle = '#0F0';
+		letters.map(function(y_pos, index) {
+			//text = String.fromCharCode(3e4+Math.random()*33);
+			text = textArr[Math.round(Math.random() * 5)];
+			x_pos = index * 14;
+			ctx.fillText(text, x_pos, y_pos);
+			letters[index] = (y_pos > 300 + Math.random() * 1e4) ? 0 : y_pos + 14;
+		});
+	};
+	setInterval(draw, 333);
 }
 </script>
 </html>

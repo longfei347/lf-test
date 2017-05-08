@@ -304,19 +304,19 @@
 	var mm = document.getElementById('m');
 	var ss = document.getElementById('s');
 	var t;
-	hh.style.cssText = "-moz-transform:rotate(" + hours + ");-webkit-transform:rotate(" + hours + ");-o-transform:rotate(" + hours + ");";
-	mm.style.cssText = "-moz-transform:rotate(" + mins + ");-webkit-transform:rotate(" + mins + ");-o-transform:rotate(" + mins + ");";
-	ss.style.cssText = "-moz-transform:rotate(" + seconds + ");-webkit-transform:rotate(" + seconds + ");-o-transform:rotate(" + seconds + ");";
+	hh.style.cssText = "transform:rotate(" + hours + ");";
+	mm.style.cssText = "transform:rotate(" + mins + ");";
+	ss.style.cssText = "transform:rotate(" + seconds + ");";
 	t = setInterval(function() {
 		seconds = new Date().getSeconds() * 360 / 60 + 90;
 		mins = new Date().getMinutes() * 360 / 60 + 90;
-		ss.style.cssText = "-moz-transform:rotate(" + seconds + "deg);-webkit-transform:rotate(" + seconds + "deg);-o-transform:rotate(" + seconds + "deg);";
+		ss.style.cssText = "transform:rotate(" + seconds + "deg);";
 		if (seconds == 90) {
-			mm.style.cssText = "-moz-transform:rotate(" + mins + "deg);-webkit-transform:rotate(" + mins + "deg);-o-transform:rotate(" + mins + "deg);";
+			mm.style.cssText = "transform:rotate(" + mins + "deg);";
 		}
 		if (mins == 90) {
 			hours = new Date().getHours() * 360 / 12 + 90 + "deg";
-			hh.style.cssText = "-moz-transform:rotate(" + hours + ");-webkit-transform:rotate(" + hours + ");-o-transform:rotate(" + hours + ");";
+			hh.style.cssText = "transform:rotate(" + hours + ");";
 		}
 	}, 1000);
 	</script>

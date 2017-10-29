@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Test2</title>
-	<script src="js/jquery-1.10.1.js"></script>
+	<script src="js/jquery.js"></script>
 	<!-- <script type="module" src="js/test.js"></script> -->
 	<!-- <script src="NetworkBundleActivity.js"></script> -->
 	<!-- <script src="js/base.js"></script>
@@ -20,17 +20,17 @@
 body {
 	line-height: 2;
 	/* -webkit-font-smoothing: antialiased;
-	-webkit-text-stroke-width: 0.2px;
-	-moz-osx-font-smoothing: grayscale; */
+-webkit-text-stroke-width: 0.2px;
+-moz-osx-font-smoothing: grayscale; */
 }
 
 
 /* ul {
-	transform: rotate(180deg)
+transform: rotate(180deg)
 }
 
 li {
-	transform: rotate(180deg)
+transform: rotate(180deg)
 } */
 
 .item {
@@ -50,16 +50,16 @@ li {
 
 
 /*.icon {
-	width: 22px;
-	height: 22px;
-	background-image: image(logo.jpg#xywh=1, 1, 20, 20); 这种还不支持
-	 background:url(logo.jpg) -1px -1px no-repeat; 
+width: 22px;
+height: 22px;
+background-image: image(logo.jpg#xywh=1, 1, 20, 20); 这种还不支持
+ background:url(logo.jpg) -1px -1px no-repeat; 
 }
 
 .icon:hover {
-	width: 22px;
-	height: 22px;
-	background: url(logo.jpg) -1px -27px no-repeat;
+width: 22px;
+height: 22px;
+background: url(logo.jpg) -1px -27px no-repeat;
 }*/
 
 .none {
@@ -68,28 +68,28 @@ li {
 
 
 /* ::-webkit-scrollbar-track-piece {
-	background-color: #fff;
-	-webkit-border-radius: 0;
+background-color: #fff;
+-webkit-border-radius: 0;
 }
 
 ::-webkit-scrollbar {
-	width: 8px;
-	height: 8px;
+width: 8px;
+height: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-	height: 50px;
-	background-color: #999;
-	-webkit-border-radius: 4px;
-	outline: 2px solid #fff;
-	outline-offset: -2px;
-	border: 2px solid #fff;
+height: 50px;
+background-color: #999;
+-webkit-border-radius: 4px;
+outline: 2px solid #fff;
+outline-offset: -2px;
+border: 2px solid #fff;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	height: 50px;
-	background-color: #9f9f9f;
-	-webkit-border-radius: 4px;
+height: 50px;
+background-color: #9f9f9f;
+-webkit-border-radius: 4px;
 } */
 
 form {
@@ -103,7 +103,7 @@ form {
 	height: 30px;
 	/*-webkit-appearance: button;*/
 	/* outline: 5px solid #f90;
-	outline-offset: 2px; */
+outline-offset: 2px; */
 	box-sizing: border-box;
 	background-color: #09f;
 	/*resize: both;*/
@@ -147,10 +147,15 @@ li:before {
 form {
 	min-height: 100px;
 }
+long {
+	font-size: 18px;
+	color: #f90;
+}
 </style>
 </head>
 
 <body>
+	<long>hello,world</long>
 	<ul class="test">
 		<li class="counter1">
 			<strong>将计算器按2递增：</strong>
@@ -186,7 +191,7 @@ form {
 		<li>Node</li>
 	</ol> -->
 	<!-- <div class="icon">longfei</div> -->
-	<div class="btn none" contenteditable="">11</div>
+	<div class="btn" contenteditable="">11</div>
 	<form action="">
 		<!-- <input type="text" id="fei" pattern="\w{3,8}"> -->
 		<input type="text" id="long">
@@ -205,10 +210,47 @@ form {
 	</form>
 	<!-- <p>点击复制后在右边textarea CTRL+V看一下</p>
 	<input type="text" id="inputText" value="测试文本" />
-	<input type="button" id="btn" value="复制" />
 	<textarea rows="4"></textarea> -->
+	<input type="button" id="btn" value="复制" />
+	<div id="long">
+		<div id="fei">123</div>
+	</div>
 </body>
 <script>
+/*var obj = new Proxy({}, {
+  get: function (target, key, receiver) {
+    console.log(`getting ${key}!`, target,receiver);
+    return Reflect.get(target, key, receiver);
+  },
+  set: function (target, key, value, receiver) {
+    console.log(`setting ${key}: ${value}!`, target,receiver);
+    return Reflect.set(target, key, value, receiver);
+  }
+});
+obj.count = 1
+//  setting count!
+++obj.count
+//  getting count!
+//  setting count!
+//  2*/
+let long = {
+	l: 1,
+	f: 2
+};
+let ha = {
+	long,
+	ff() {
+		console.log(22)
+	}
+}
+Object.assign(window, {
+	ha: "ha",
+	he: "12"
+})
+
+function lon(a) {
+	console.log(a.b)
+}
 /*
 // typescript 继承方法
 var __extends = (this && this.__extends) || function (d, b) {

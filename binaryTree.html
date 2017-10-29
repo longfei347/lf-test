@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>binary tree</title>
+	<link rel="stylesheet" href="js/jquery.fullpage.css">
+</head>
+<style>
+#fullpage {
+	text-align: center;
+}
+
+.slides {
+	/*background-color: #f90;*/
+	text-align: center;
+}
+
+.section:nth-child(1) {
+	background-color: #39f;
+}
+
+.section:nth-child(2) {
+	background-color: #3f9;
+}
+
+.section:nth-child(3) {
+	background-color: #f93;
+}
+
+.section:nth-child(4) {
+	background-color: #9f3;
+}
+
+#header {
+	position: fixed;
+	top: 0;
+	left: 100px;
+	z-index: 6;
+	color: red;
+}
+</style>
+
+<body>
+	<!-- <h1>hello binary tree</h1>
+	<h3 id="header">longfei</h3> -->
+	<div id="fullpage">
+		<div class="section section1">
+			<h2>一些内容</h2>
+			<p>page one 1</p>
+		</div>
+		<div class="section slides section2">
+			<!-- <p>page two 2</p> -->
+			<div class=" slide ">Slide 1</div>
+			<div class="slide ">Slide 2</div>
+			<div class="slide ">Slide 3</div>
+			<div class="slide ">Slide 4</div>
+		</div>
+		<div class="section section3">
+			<h2>一些内容</h2>
+			<p>page  3</p>
+		</div>
+		<div class="section section4">
+			<h2>一些内容</h2>
+			<p>page 4</p>
+		</div>
+	</div>
+	<!-- <div class="section ">
+		<div class="slide ">Slide 1</div>
+		<div class="slide ">Slide 2</div>
+		<div class="slide ">Slide 3</div>
+		<div class="slide ">Slide 4</div>
+	</div> -->
+</body>
+<script src='js/jquery.js'></script>
+<script src='js/jquery.fullpage.js'></script>
+<script src='js/move.js'></script>
+<script>
+$(function() {
+	$('#fullpage').fullpage({
+		//Navigation
+		// menu: '#menu',
+		// lockAnchors: false,
+		// anchors:['firstPage', 'secondPage'],
+		// navigation: true,
+		// navigationPosition: 'right',
+		// navigationTooltips: ['firstSlide', 'secondSlide'],
+		// showActiveTooltip: false,
+		// slidesNavigation: false,
+		// slidesNavPosition: 'bottom',
+
+		// //Scrolling
+		// css3: true,
+		// scrollingSpeed: 700,
+		// autoScrolling: true,
+		// fitToSection: true,
+		// fitToSectionDelay: 1000,
+		// scrollBar: false,
+		// easing: 'easeInOutCubic',
+		// easingcss3: 'ease',
+		// loopBottom: false,
+		// loopTop: false,
+		// loopHorizontal: true,
+		// continuousVertical: false,
+		// continuousHorizontal: false,
+		// scrollHorizontally: false,
+		// interlockedSlides: false,
+		// dragAndMove: false,
+		// offsetSections: false,
+		// resetSliders: false,
+		// fadingEffect: false,
+		// normalScrollElements: '#element1, .element2',
+		// scrollOverflow: false,
+		// scrollOverflowReset: false,
+		// scrollOverflowOptions: null,
+		// touchSensitivity: 15,
+		// normalScrollElementTouchThreshold: 5,
+		// bigSectionsDestination: null,
+
+		// //Accessibility
+		// keyboardScrolling: true,
+		// animateAnchor: true,
+		// recordHistory: true,
+
+		// //Design
+		// controlArrows: true,
+		// verticalCentered: true,
+		// sectionsColor : ['#ccc', '#fff'],
+		// paddingTop: '3em',
+		// paddingBottom: '10px',
+		// fixedElements: '#header, .footer',
+		// responsiveWidth: 0,
+		// responsiveHeight: 0,
+		// responsiveSlides: false,
+		// parallax: false,
+		// parallaxOptions: {type: 'reveal', percentage: 62, property: 'translate'},
+
+		// //Custom selectors
+		// sectionSelector: '.section',
+		// slideSelector: '.slide',
+
+		// lazyLoading: true,
+
+		//events
+		// onLeave: function(index, nextIndex, direction){},
+		afterLoad: function(anchorLink, index){
+			switch(index){
+				case 1:
+					move('.section1 h2').scale(0.7).end();
+					move('.section1 p').set('margin-top','5%').end();
+					break;
+				case 2:
+					// move('.section2 p').scale(1.5).end();
+					break;
+				case 3:
+					move('.section3 h2').set('margin-left','20%').end();
+					move('.section3 p').set('margin-left','15%').end();
+					break;
+				case 4:
+					move('.section4 h2').scale(1.5).end();
+					move('.section4 p').set('margin-top','5%').end();
+					break;
+				default:
+					break;
+			}
+		},
+		// afterRender: function(){},
+		// afterResize: function(){},
+		// afterResponsive: function(isResponsive){},
+		// afterSlideLoad: function(anchorLink, index, slideAnchor, slideIndex){},
+		// onSlideLeave: function(anchorLink, index, slideIndex, direction, nextSlideIndex){}
+	});
+})
+/*function BinaryTree() {
+	var Node = function(key) {
+		this.key = key;
+		this.left = null;
+		this.right = null;
+
+	}
+	this.root = null;
+	var insertNode = function(node, newNode) {
+		if (newNode.key < node.key) {
+			if (node.left === null) {
+				node.left = newNode;
+			} else {
+				insertNode(node.left, newNode);
+			}
+		} else {
+			if (node.right === null) {
+				node.right = newNode;
+			} else {
+				insertNode(node.right, newNode);
+			}
+		}
+	}
+	this.insert = function(key) {
+		var newNode = new Node(key);
+		if (this.root === null) {
+			this.root = newNode;
+		} else {
+			insertNode(this.root, newNode);
+		}
+	}
+	var inOrderTraverseNode = function(node, callback = function(key) {
+		console.log(key)
+	}) {
+		if (node !== null) {
+			inOrderTraverseNode(node.left, callback);
+			callback(node.key);
+			inOrderTraverseNode(node.right, callback);
+		}
+	}
+	this.inOrderTraverse = function(callback) {
+		inOrderTraverseNode(this.root, callback);
+	}
+	var preOrderTraverseNode = function(node, callback = function(key) {
+		console.log(key)
+	}) {
+		if (node !== null) {
+			callback(node.key);
+			preOrderTraverseNode(node.left, callback);
+			preOrderTraverseNode(node.right, callback);
+		}
+	}
+	this.preOrderTraverse = function(callback) {
+		preOrderTraverseNode(this.root, callback);
+	}
+	var postOrderTraverseNode = function(node, callback = function(key) {
+		console.log(key)
+	}) {
+		if (node !== null) {
+			postOrderTraverseNode(node.left, callback);
+			postOrderTraverseNode(node.right, callback);
+			callback(node.key);
+		}
+	}
+	this.postOrderTraverse = function(callback) {
+		postOrderTraverseNode(this.root, callback);
+	}
+	var minNode = function(node) {
+		if (node) {
+			while (node && node.left !== null) {
+				node = node.left;
+			}
+			return node.key;
+		}
+		return null;
+	}
+	this.min = function() {
+		return minNode(this.root)
+	}
+	var maxNode = function(node) {
+		if (node) {
+			while (node && node.right !== null) {
+				node = node.right;
+			}
+			return node.key;
+		}
+		return null;
+	}
+	this.max = function() {
+		return maxNode(this.root)
+	}
+	var searchNode = function(node, key) {
+		if (node === null) {
+			return false;
+		}
+		if (key < node.key) {
+			return searchNode(node.left, key);
+		} else if (key > node.key) {
+			return searchNode(node.right, key);
+		} else {
+			return true;
+		}
+	}
+	this.search = function(key) {
+		return searchNode(this.root, key)
+	}
+	var findMinNode=function(node) {
+		if(node){
+			while(node&&node.left!==null){
+				node=node.left;
+			}
+			return node;
+		}
+		return null;
+	}
+	var removeNode = function(node, key) {
+		if (node === null) {
+			return null;
+		}
+		if (key < node.key) {
+			node.left = removeNode(node.left, key);
+			return node;
+		} else if (key > node.key) {
+			node.right = removeNode(node.right, key);
+			return node;
+		} else {
+			if (node.left === null && node.right === null) {
+				node = null;
+				return node;
+			}
+			if (node.left === null) {
+				node = node.right;
+				return node;
+			} else if (node.right === null) {
+				node = node.left;
+				return node;
+			}
+			var aux=findMinNode(node.right);
+			node.key=aux.key;
+			node.right=removeNode(node.right,aux.key);
+			return node;
+		}
+	}
+	this.remove = function(key) {
+		return removeNode(this.root, key);
+	}
+}
+var nodes = [8, 3, 10, 1, 6, 14, 4, 7, 13];
+var binaryTree = new BinaryTree();
+nodes.forEach(function(key) {
+	binaryTree.insert(key);
+});*/
+// binaryTree.inOrderTraverse(function(key){console.log(key)})
+// binaryTree.preOrderTraverse(function(key){console.log(key)})
+// binaryTree.postOrderTraverse(function(key){console.log(key)})
+// console.log('min node is: '+binaryTree.min());
+// console.log('max node is: '+binaryTree.max());
+// console.log(binaryTree.search(7)?'7 is find':'7 is not find');
+// console.log(binaryTree.search(9)?'9 is find':'9 is not find');
+// console.log(binaryTree.remove(7)?'7 is remove':'7 is not find');
+</script>
+
+</html>

@@ -853,3 +853,17 @@
   "webkitURL",
   "window"
 ]
+
+
+var arr = useCommon.bankListData.filter(function(item, index) {
+  if (index === 0) {
+    // continue;
+    return ;
+  } else {
+    if (item.bank_code === useCommon.bankListData[index - 1].bank_code) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+}).map(item=> item.bank_name);

@@ -296,7 +296,7 @@ var EventUtil = {
 	}
 
 };
-jQuery.cookie = function (name, value, options) {
+$.cookie = function (name, value, options) {
 	if (typeof value != 'undefined') { // name and value given, set cookie
 		options = options || {};
 		if (value === null) {
@@ -1029,3 +1029,31 @@ var getParams = function(url) {
 	}
 	return params;
 };
+
+//绑定在了body上，也可以绑定在其他可用元素行，但是不是所有元素都支持copy和past事件。  
+$(document.body).bind({  
+    copy: function(e) {//copy事件  
+        var cpTxt = "复制的数据";  
+        var clipboardData = window.clipboardData; //for IE  
+        if (!clipboardData) { // for chrome  
+            clipboardData = e.originalEvent.clipboardData;  
+        }  
+        //e.clipboardData.getData('text');//可以获取用户选中复制的数据  
+        clipboardData.setData('Text', cpTxt);  
+        alert(cpTxt);  
+        $('#message').text('Copy Data : ' + cpTxt);  
+        return false;//否则设不生效  
+    },paste: function(e) {//paste事件  
+        var eve = e.originalEvent  
+        var cp = eve.clipboardData;  
+        var data = null;  
+        var clipboardData = window.clipboardData; // IE  
+        if (!clipboardData) { //chrome  
+            clipboardData = e.originalEvent.clipboardData  
+        }  
+        data = clipboardData.getData('Text');  
+        $('#message').html(data);  
+    }  
+});  
+
+

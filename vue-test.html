@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>vue test</title>
+	<script src="js/vue.js"></script>
+</head>
+<style>
+.none {
+	display: none;
+}
+
+
+/*模拟对角线*/
+
+.out {
+	border-top: 60px #D6D3D6 solid;
+	/*上边框宽度等于表格第一行行高*/
+	width: 0px;
+	/*让容器宽度为0*/
+	height: 0px;
+	/*让容器高度为0*/
+	border-left: 180px #BDBABD solid;
+	/*左边框宽度等于表格第一行第一格宽度*/
+	position: relative;
+	/*让里面的两个子容器绝对定位*/
+}
+
+.tr {
+	font-style: normal;
+	display: block;
+	position: absolute;
+	top: -45px;
+	left: -60px;
+}
+
+.lb {
+	font-style: normal;
+	display: block;
+	position: absolute;
+	top: -25px;
+	left: -140px;
+}
+
+.title-slash {
+	position: relative;
+	height: 60px;
+	background-color: #ccc;
+}
+
+.title-slash:after {
+	content: " ";
+	position: absolute;
+	width: 100%;
+	border-top: 1px solid red;
+	transform: rotate(45deg);
+}
+
+
+/* .title-slash em{
+	position: absolute;
+	border-top: 1px solid red;
+	transform: rotate(45deg);
+} */
+
+.slash-l {
+	position: absolute;
+}
+
+.slash-r {
+	position: absolute;
+}
+
+.dl-thead {
+	width: 100px;
+}
+
+.x {
+	border: solid 1px red;
+	width: 100px;
+	height: 100px;
+	position: relative;
+	background-color: transparent;
+}
+
+.x:before {
+	position: absolute;
+	top: 0px;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	border-bottom: 100px solid red;
+	border-left: 100px solid transparent;
+	content: "";
+}
+
+.x:after {
+	position: absolute;
+	left: 1px;
+	right: 0;
+	top: 1px;
+	bottom: 0;
+	border-bottom: 99px solid white;
+	border-left: 99px solid transparent;
+	content: "";
+}
+
+.f {
+	border: solid 1px red;
+	width: 100px;
+	height: 100px;
+	position: relative;
+	background-color: transparent;
+}
+
+.f:before {
+position: absolute;
+border-bottom: 100px solid red;
+border-right: 100px solid transparent;
+content: "";
+}
+
+.f:after {
+position: absolute;
+border-bottom: 99px solid white;
+border-right: 99px solid transparent;
+content: "";
+}
+
+#demo16{
+  position: relative;
+}
+#demo16:after, #demo16:before {
+  border: 10px solid transparent;
+  border-left: 10px solid #fff;
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 0;
+  right: -20px;
+  content: ' '
+}
+
+#demo16:before {
+  border-left-color: #f00;
+  right: -21px;
+}
+</style>
+
+<body>
+	<input type="file" name="fff" id="" accept="image/*">
+	<span id="demo16">文字内容</span>
+	<div class="x none"></div>
+	<div class="f none"></div>
+	<table class="none">
+		<tbody>
+			<tr>
+				<!-- <td height="41" colspan="2" style="background-color: #f2f2f2; padding: 8.0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font6">厚度（</span><span class="font0">mm</span><span class="font6">）<br />名称</span></td> -->
+				<td height="41" colspan="2" style="background-color: #f2f2f2; padding: 0.0px;">
+					<div class="out">
+						<em class="tr">厚度(mm)</em>
+						<em class="lb">名称</em>
+					</div>
+				</td>
+				<td>25</td>
+				<td>40</td>
+				<td>50</td>
+				<td>65</td>
+				<td>75</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="tinymce-module fd-clr">
+		<div id="app" class="none">{{ message }}</div>
+		<div id="app-2" class="none">
+			<span v-bind:title="message">
+		    鼠标悬停几秒钟查看此处动态绑定的提示信息！
+		</span>
+		</div>
+		<div id="app-3">
+			<p v-if="seen">现在你看到我了</p>
+		</div>
+		<div id="app-4" class="none">
+			<ol>
+				<li v-for="todo in todos">
+					{{ todo.text }}
+				</li>
+			</ol>
+		</div>
+		<div id="app-5" class="none">
+			<p>{{ message }}</p>
+			<button v-on:click="reverseMessage">逆转消息</button>
+		</div>
+		<div id="app-6" class="none">
+			<p>{{ message }}</p>
+			<input v-model="message">
+		</div>
+		<div id="app-7">
+			<ol>
+				<!-- 现在我们为每个todo-item提供待办项对象    -->
+				<!-- 待办项对象是变量，即其内容可以是动态的 -->
+				<todo-item v-for="item in groceryList" v-bind:todo="item"></todo-item>
+			</ol>
+		</div>
+		<div id="app-8">
+			<template v-if="loginType === 'username'">
+			  <label>Username</label>
+			  <input placeholder="Enter your username">
+			</template>
+			<template v-else>
+			  <label>Email</label>
+			  <input placeholder="Enter your email address">
+			</template>
+			<button v-on:click='tog'>toggle</button>
+		</div>
+
+	</div>
+	
+</body>
+<script>
+/*try {
+	long
+} catch (e) {
+	throw e;
+}*/
+var err=new Error();
+console.log(err);
+var app = new Vue({
+		el: '#app',
+		data: {
+			message: 'Hello Vue!'
+		}
+	}),
+	app2 = new Vue({
+		el: '#app-2',
+		data: {
+			message: '页面加载于 ' + new Date()
+		}
+	}),
+	app3 = new Vue({
+		el: '#app-3',
+		data: {
+			seen: true
+		}
+	}),
+	app4 = new Vue({
+		el: '#app-4',
+		data: {
+			todos: [{
+				text: '学习 JavaScript'
+			}, {
+				text: '学习 Vue'
+			}, {
+				text: '整个牛项目'
+			}]
+		}
+	}),
+	app5 = new Vue({
+		el: '#app-5',
+		data: {
+			message: 'Hello Vue.js!'
+		},
+		methods: {
+			reverseMessage: function() {
+				this.message = this.message.split('').reverse().join('')
+			}
+		}
+	}),
+	app6 = new Vue({
+		el: '#app-6',
+		data: {
+			message: 'Hello Vue!'
+		}
+	});
+Vue.component('todo-item', {
+	props: ['todo'],
+	template: '<li>{{ todo.text }}<button v-on:click="$emit(\'remove\')">X</button></li>'
+});
+var app7 = new Vue({
+	el: '#app-7',
+	data: {
+		groceryList: [{
+			text: '蔬菜'
+		}, {
+			text: '奶酪'
+		}, {
+			text: '随便其他什么人吃的东西'
+		}]
+	}
+});
+
+var app8 = new Vue({
+	el: '#app-8',
+	data: {
+		loginType: 'username'
+	},
+	methods: {
+		tog() {
+			if (this.loginType=== 'username') {
+				this.loginType = 'email';
+			} else {
+				this.loginType = 'username';
+			}
+		}
+	}
+});
+let long = {
+	l:0,
+	f:2
+},data=long.f;
+long.l && (data=3,console.log('yes'));
+
+</script>
+
+</html>

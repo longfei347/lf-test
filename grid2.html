@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style>
+.Prose {
+  display: grid;
+  grid-template-columns: [full-start] minmax(1em, 1fr) [main-start] minmax(0, 40em) [main-end] minmax(1em, 1fr) [full-end];
+}
+
+.Prose > * {
+  grid-column: main;
+}
+
+.Prose-tiles {
+  display: grid;
+  grid-column: full;
+  grid-gap: 1em;
+  grid-template-columns: repeat(auto-fit, minmax(8em, 1fr));
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.Tile {
+  background-color: #35C98D;
+  min-height: 10em;
+}
+</style>
+<body>
+	<div class="Prose">
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lobortis enim sit amet metus laoreet, ut condimentum metus dapibus. Phasellus sed gravida augue, eu finibus felis. Integer augue libero, aliquam lacinia nisl sed, sagittis fringilla nisl. Phasellus sapien mi, porttitor in metus sed, iaculis dignissim mauris.</p>
+  <div class="Prose-tiles">
+    <div class="Tile"></div>
+    <div class="Tile"></div>
+    <div class="Tile"></div>
+    <div class="Tile"></div>
+    <div class="Tile"></div>
+    <div class="Tile"></div>
+  </div>
+  <p>Vivamus fringilla orci dui, vitae aliquet tortor hendrerit eget. Nam nec dui accumsan, posuere ligula sed, dictum velit. Praesent in lorem ac libero lacinia luctus. Duis sed ante sit amet massa tempus dignissim. Mauris vitae finibus risus. In nec diam velit. Aenean pulvinar urna ut ligula elementum tincidunt. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut libero tortor, lacinia eu pharetra at, bibendum vitae turpis. Aenean at bibendum dui. Curabitur sit amet tempus nisi, at molestie ligula. Aliquam tristique ligula a hendrerit luctus. Curabitur tristique quis erat et egestas.</p>
+  <p>Praesent scelerisque tellus et ex mollis, vel venenatis quam auctor. Pellentesque nibh ante, rhoncus vulputate nisl quis, gravida dapibus nunc. Vestibulum facilisis mi a hendrerit convallis. Sed consectetur purus id turpis efficitur, id eleifend velit vestibulum. Maecenas vestibulum aliquet urna et pulvinar. Donec consectetur in nibh quis consectetur. Quisque semper dictum eros et accumsan. Morbi sit amet mollis nisl. Morbi sagittis lectus vel nisi sollicitudin rutrum. Cras consectetur risus hendrerit tortor auctor fringilla. Vestibulum efficitur consectetur ante ac pellentesque. Vivamus laoreet mollis euismod. Vestibulum in finibus tellus, eu vestibulum leo. Morbi luctus enim neque, et sagittis mauris aliquet nec.</p>
+  <p>Ut rutrum egestas lectus tempus pellentesque. Suspendisse vulputate risus at justo iaculis viverra. Integer ligula nisl, facilisis at justo vel, sodales lobortis nisl. Pellentesque eget tempor ex. Donec neque lacus, consequat eget fermentum at, sodales sit amet augue. Donec turpis ipsum, tincidunt et venenatis ac, hendrerit nec mauris. Sed tristique justo sed est finibus euismod. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In pulvinar ut justo sit amet vestibulum. Fusce quis risus ac ligula varius rhoncus vitae id nisi. Proin ullamcorper imperdiet gravida. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam accumsan congue enim, eu fermentum nibh fringilla ut.</p>
+  <p>Vivamus porta purus in libero tempor gravida. Nullam elementum nunc sit amet tortor blandit, id gravida diam convallis. Nam in erat interdum, pharetra turpis eu, pellentesque arcu. Cras lobortis placerat ligula, ac venenatis libero blandit a. Pellentesque vehicula nec augue non ullamcorper. Pellentesque viverra at mauris at egestas. Sed at tortor sed lacus aliquet gravida. Sed ullamcorper imperdiet ipsum, scelerisque ultrices magna dapibus a. Nam blandit vestibulum gravida. Phasellus lorem lorem, convallis ut massa nec, interdum varius elit. Sed at metus diam. Aliquam erat volutpat. Morbi ante tortor, aliquam sit amet eleifend sed, aliquam eu ex. Pellentesque ipsum turpis, consectetur quis ornare vel, aliquet ac sem. Quisque molestie, urna et malesuada dapibus, urna ipsum tincidunt enim, mollis dapibus velit lacus sed metus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia.</p>
+</div>
+</body>
+</html>

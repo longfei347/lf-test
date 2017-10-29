@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<script src="js/jquery-1.11.0.js"></script>
+	<!-- <script src="js/zepto.js"></script> -->
 	<script src="js/base.js"></script>
 </head>
 <style>
@@ -14,9 +15,166 @@
 	height: 200px;
 	background-color: #ccc;
 }
+
+.div {
+	position: relative;
+	display: flex;
+	height: 300px;
+	flex-direction: column;
+}
+
+.div1 {
+	height: 30px;
+	background-color: #f90;
+}
+
+.div2 {
+	position: absolute;
+	flex: 1;
+	height: calc(100% - 30px);
+}
+
+.div21 {
+	height: 30px;
+	background-color: #456;
+}
+
+.div22 {
+	flex: 1;
+	background-color: #39F;
+	overflow: scroll;
+}
+
+.div23 {
+	height: 30px;
+	background-color: #123;
+}
+
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+#main {
+	width: 30%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	border: 5px solid black;
+}
+
+.d1 {
+	width: 98%;
+	margin-top: 5px;
+	display: flex;
+	justify-content: flex-start;
+	align-content: center;
+	border: 5px solid red;
+}
+
+.d2 {
+	width: 98%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	border: 5px solid red;
+}
+
+.d3 {
+	width: 15%;
+	height: 90px;
+	margin-right: 5px;
+	border: 5px solid yellow;
+}
+
+.d4 {
+	width: 98%;
+	height: 140px;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-content: flex-start;
+	border: 5px solid orange;
+}
+
+.d5 {
+	width: 98%;
+	height: 50px;
+	border: 5px solid orange;
+}
+
+.d6 {
+	margin-top: 5px;
+	margin-right: 5px;
+	width: 10%;
+	height: 50px;
+	border: 5px solid green;
+}
+
+.test {
+	width: 600px;
+	border: 10px solid #000;
+	/* -moz-column-count:2;
+	-moz-column-gap:20px;
+	-moz-column-rule:3px solid #090;
+	-moz-column-fill:balance;
+	-webkit-column-count:2;
+	-webkit-column-gap:20px;
+	-webkit-column-rule:3px solid #090;
+	-webkit-column-fill:balance; */
+	column-count: 2;
+	column-gap: 20px;
+	column-rule: 3px solid #090;
+	column-fill: balance;
+}
+
+.test p {
+	margin: 0;
+	padding: 5px 10px;
+	background: #eee;
+}
 </style>
 
 <body>
+	<button class='down'>click me</button>
+	<div id="some-id">some-id</div>
+	<iframe height="0" width="0" src="images/001.gif" name="saveImage" id="saveImage"></iframe>
+	<a href="#" onclick="saveImage.document.execCommand('saveAs');">Click Me</ a>
+	<!-- <div class="test">
+		<p>This module describes multi-column layout in CSS. By using functionality described in this document, style sheets can declare that the content of an element is to be laid out in multiple columns.</p>
+	</div> -->
+	<input type="number" name="kkk" id="">
+	<!-- <div id="main">
+		<div class="d1" style="height:100px;">
+			<div class="d3"></div>
+			<div class="d3"></div>
+			<div class="d3"></div>
+		</div>
+		<div class="d2" style="height:300px;">
+			<div class="d4">
+				<div class="d6"></div>
+				<div class="d6"></div>
+				<div class="d6"></div>
+				<div class="d6"></div>
+			</div>
+			<div class="d5"></div>
+		</div>
+	</div> -->
+	<!-- <div class="div">
+		<div class="div1"></div>
+		<div class="div2">
+			<div class="div21"></div>
+			<div class="div22">
+				<br>
+			</div>
+			<div class="div23"></div>
+		</div>
+	</div> -->
 	<div>
 		<ol>
 			<li>Hello</li>
@@ -25,7 +183,7 @@
 	<div>How are you?</div>
 	<div class="protected"></div>
 	<div></div>
-	<ul class="level-1">
+	<!-- <ul class="level-1">
 		<li class="item-i">I</li>
 		<li class="item-ii">II
 			<ul class="level-2">
@@ -41,32 +199,108 @@
 			</ul>
 		</li>
 		<li class="item-iii">III</li>
-	</ul>
+	</ul> -->
+	<button class="ttt">测试</button>
+
 </body>
 <script>
-/*var mystr="Many people spell MySQL incorrectly",output="";
-console.log(mystr.replace(/[\w-]+/g,function(s,i,ss){
-	if (i == 0) {
-		s = s.charAt(0).toLowerCase() + s.substr(1,s.length -2) + s.charAt(s.length - 1).toUpperCase();
+var target = document.getElementById('some-id');
+ 
+// create an observer instance
+var observer = new MutationObserver(function(mutations) {
+  mutations.forEach(function(mutation) {
+    console.log(mutation.type);
+  });    
+});
+ 
+// configuration of the observer:
+var config = { attributes: true, childList: true, characterData: true };
+ 
+// pass in the target node, as well as the observer options
+observer.observe(target, config);
+ 
+// later, you can stop observing
+// observer.disconnect();
+var ll = JSON.stringify({l:1,f:2,o:3,n:true}, function(key,value){
+	console.log(key,value);
+	if (typeof value === 'number') {
+		return value+1;
+	} else {
+		return value;
 	}
-	return s.split("").reverse().join("")
-	// output += s.split("").reverse().join("") + " ";
-	// return output;
-}))*/
-//output = output.substr(0,output.length -1);
-// window1.filter(item=> !window2.includes(item))
+})
+console.log(ll);
+/*var obj = {
+  foo: 'foo',
+  toJSON: function() {
+    return 'bar';
+  }
+};
+console.log(JSON.stringify(obj));        // '"bar"'
+console.log(JSON.stringify({ x: obj })); // '{"x":"bar"}'
+
+var obj2 = {
+  foo: 'foo',
+  toJSON: function(key) {
+    if (key === '') {
+      return 'bar only';
+    } else {
+      return 'bar in ' + key;
+    }
+  }
+};
+
+console.log(JSON.stringify(obj2));         // '"bar only"'
+console.log(JSON.stringify({ x: obj2 }));  // '{ "x":"bar in x"}'
+console.log(JSON.stringify([obj2, obj2])); // '["bar in 0", "bar in 1"]'*/
+/*var xmlHttp = new XMLHttpRequest();
+xmlHttp.open("get", "/heartbeat");
+
+//设置回调函数
+xmlHttp.onreadystatechange = function() {
+	if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+		console.log(xmlHttp)
+			// document.getElementById("result").innerHTML = xmlHttp.responseText;
+	}
+}
+xmlHttp.send(null);
+//发送请求
+http_request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');*/
+function getCookie(name) {
+    // var search = /\?/.test(url) ? url.split('?')[1] : url;
+    var reg = new RegExp("(^|; )"+ name +"=([^; ]*)(; |$)");
+    return reg.test(search) ? RegExp.$2 : '';
+}
+$('.ttt').on('click', function(e) {
+		this.disabled = true;
+		console.count()
+		setTimeout(() => this.disabled = false, 100)
+	})
+	/*var mystr="Many people spell MySQL incorrectly",output="";
+	console.log(mystr.replace(/[\w-]+/g,function(s,i,ss){
+		if (i == 0) {
+			s = s.charAt(0).toLowerCase() + s.substr(1,s.length -2) + s.charAt(s.length - 1).toUpperCase();
+		}
+		return s.split("").reverse().join("")
+		// output += s.split("").reverse().join("") + " ";
+		// return output;
+	}))*/
+	//output = output.substr(0,output.length -1);
+	// window1.filter(item=> !window2.includes(item))
 function l() {}
+
 function f(argument) {
 	// body...
 }
+
 function ff(argument) {
 	// body...
 }
-f.prototype.ff=1;
-ff.prototype.fff=11;
-Object.assign(l.prototype,f.prototype,ff.prototype)
-// l.prototype = new f;
-f.prototype.lf=2;
+f.prototype.ff = 1;
+ff.prototype.fff = 11;
+Object.assign(l.prototype, f.prototype, ff.prototype)
+	// l.prototype = new f;
+f.prototype.lf = 2;
 var mystr = "Many people  spell MySQL incorrectly";
 
 function strReverse(str) {

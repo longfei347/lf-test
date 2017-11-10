@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>jquery1</title>
+</head>
+<style>
+.focused {
+	background: #F00;
+}
+
+input[type=text] {
+	/*[type="text"] 加不加引号都行*/
+}
+
+select {
+	background: transparent;
+	width: 268px;
+	padding: 5px;
+	font-size: 16px;
+	border: 1px solid #ccc;
+	height: 34px;
+	-webkit-appearance: none;
+}
+
+select:hover {
+	background-color: #f90;
+}
+
+
+/*多行文本实现省略号*/
+
+.overfl {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
+}
+
+p.overd {
+	position: relative;
+	line-height: 20px;
+	max-height: 40px;
+	overflow: hidden;
+	width: 300px;
+}
+
+p.overd::after {
+	content: "...";
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	padding-left: 40px;
+	background: linear-gradient(to right, transparent, #fff 55%);
+}
+
+.justify {
+	position: relative;
+	width: 800px;
+	height: 300px;
+}
+
+.main {
+	position: absolute;
+	left: 200px;
+	right: 200px;
+	background-color: #f00;
+}
+
+.left {
+	float: left;
+	width: 200px;
+	height: 100%;
+	background-color: #0f0;
+}
+
+.right {
+	float: right;
+	width: 200px;
+	height: 100%;
+	background-color: #00f;
+}
+</style>
+
+<body class="ss">
+	<!-- <form id="form" name="form" method="get">
+		<del>二十</del>
+		<ins>十二</ins>
+		<u>thought</u>
+		<div id="content">
+			<select tabIndex="3">
+				<option>select menu</option>
+			</select>
+		</div>
+		<select name="sel" autofocus>
+			<option value="0">0</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+		</select>
+		<input type="button" value="test" name="long" >
+		<fieldset>
+			<legend>health information</legend>
+			<div>
+				<label for="two">2</label>
+				<input type="checkbox" value="2" id="two" name="number[]">
+			</div>
+			<div>
+				<label for="four">4</label>
+				<input type="checkbox" value="4" id="four" name="number[]">
+			</div>
+		</fieldset>
+	</form> -->
+	<!-- <div class="test-wrap">
+		<p>Hello</p>
+		<p>World</p>
+		<p>cruel</p>
+		<a>123</a>
+	</div> -->
+	<!-- <p class="overd">1,将height设置为line-height的整数倍，防止超出的文字露出。
+		<br> 2, 给p::after添加渐变背景可避免文字只显示一半。
+		<br> 3,由于ie6-7不显示content内容，所以要添加标签兼容ie6-7（如：
+		<span>…<span/>）；兼容ie8需要将::after替换成:after。
+	</p> -->
+	<!-- <div class="justify">
+		<div class="main">main</div>
+		<div class="left">left</div>
+		<div class="right">right</div>
+	</div> -->
+	<!-- <table style="width:300px; border-collapse:collapse;" border="1" id="ipMac">
+		<tr>
+			<td id="sort_ip">ip</td>
+			<td id="mac">mac</td>
+		</tr>
+		<tr>
+			<td>192.168.0.12</td>
+			<td>12:12:12:12:12:12</td>
+		</tr>
+		<tr>
+			<td>192.168.0.1</td>
+			<td>12:12:12:12:12:10</td>
+		</tr>
+		<tr>
+			<td>192.168.0.10</td>
+			<td>12:12:12:12:12:03</td>
+		</tr>
+		<tr>
+			<td>192.168.0.5</td>
+			<td>12:12:12:12:12:11</td>
+		</tr>
+	</table> -->
+	<!-- <video src="aa.mp4"></video> -->
+	<div class="deferred">
+		显示结果：
+		<p class="deferred-result"></p>
+		<button id="deferred1">嵌套回调异步</button>
+		<button id="deferred2">$.Deferred异步</button>
+	</div>
+</body>
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js"></script> -->
+<script type="text/javascript" src="js/jquery.js"></script>
+<script>
+// $.holdReady(3);
+$(function() {
+	//console.log($("p").wrapAll($(".doublediv")));
+	//console.log($("p").wrapInner("<b></b>"));
+
+	/*var str='long';
+	var n=5;
+	console.log("str=%s,n=%d,n=%s,n=%c,str=%x,str=%a,str=%p",str,n,n,"n",str,n,str);//只识别%d,%s
+	var tt=document.getElementsByClassName("ss")[0];//document.querySelector("body");
+	var i=5;
+	var str = "wo men shi zhong guo ren",s='';
+	//console.log(str.replace(/\w+/g));
+	//第一种方法
+	console.log(str.replace(/\w+/g,function(str){
+			return str.match(/\w+/g)+i++;}));
+	//第二种方法
+	var arr=str.split(' ');
+	for(var j=0;j<arr.length;j++)
+		s+=(arr[j]+i+++" ");
+	console.log(s);
+	//第三种方法
+	s=str.replace(/(?=\s)/g,function(){return i++})
+	console.log(s+i);*/
+
+	/*console.log(document.documentElement.clientWidth,window.innerWidth);//后者比前者多一个垂直滚动条宽度
+	console.log(String.prototype.toString==Object.prototype.toString);//不等
+	console.log(String.prototype.__proto__.toString==Object.prototype.toString);//相等*/
+	//jquery数组方法实例
+	/*var arr = ["long", 12, "fei", 5, "fei"];
+	arr = $.map(arr, function(value, index) {
+		if (value == 12)
+			return;
+		else return value;
+	})
+	var i = $.inArray("fei", arr); //返回第一个索引
+	var arr1 = $.unique(arr); //修改了原数组
+	$.merge(arr,["ll","lll"])//修改了原数组，返回第一个数组
+	console.log(arr, i);*/
+	//eval("document.form.fei"+1).value=12;
+	/*$("#content").delegate("*", "focus blur", function(event) {
+		var elem = $(this);
+		setTimeout(function() {
+			elem.toggleClass("focused", elem.is(":focus"));
+		}, 0);
+	});*/
+	// $("td:parent").fadeTo(1500, 0.3);
+	/*$("#sort_ip").click(function(a, b) {
+		var row = $(this).parents("table").find("tr:gt(0)"),
+			len = row.length,
+			arr = row.map(function() {
+				return +$(this).children("td:first").html().match(/\d+$/)[0];
+			}),
+			arrSort = [],
+			i, j, tmp;
+		for (i in arr) {
+			arrSort[i] = arr[i];
+		}
+		if (arr[0] > arr[1]) {
+			arrSort.sort(function(a, b) {
+				if (a - b >= 0) {
+					return 1;
+				} else return -1;
+			});
+		} else {
+			arrSort.sort(function(a, b) {
+				if (a - b >= 0) {
+					return -1;
+				} else return 1;
+			});
+		}
+		$(this).closest("table").children("tr:gt(0)").remove();
+		for (i = 0; i < len; i++) {
+			tmp = arr.index(arrSort[i]);
+			$(this).closest("table").append(row[tmp]);
+		}
+	})*/
+	$("button:first").on("click", function() {
+		//模拟异步A
+		function A(callback) {
+			setTimeout(function() {
+				callback(1)
+			}, 500)
+		}
+		//模拟异步A
+		function B(callback, value) {
+			setTimeout(function() {
+				callback(value + 2)
+			}, 1000)
+		}
+		//A执行完毕后，在执行B
+		A(function(data1) {
+			B(function(data2) {
+				$(".deferred-result").html("嵌套异步:" + data2)
+			}, data1)
+		})
+	})
+	$("button:last").on("click", function() {
+		//模拟异步C
+		function C() {
+			var dtd = $.Deferred(); //创建
+			setTimeout(function() {
+				dtd.resolve(3)
+			}, 500)
+			return dtd;
+		}
+		//模拟异步D
+		function D(value) {
+			var dtd = $.Deferred(); //创建
+			setTimeout(function() {
+				dtd.resolve(value + 4)
+			}, 500)
+			return dtd;
+		}
+		//模拟异步E
+		function E(value) {
+			var dtd = $.Deferred(); //创建
+			setTimeout(function() {
+				dtd.resolve(value + 5)
+			}, 1000)
+			return dtd;
+		}
+		C().then(function(data) {
+				return D(data)
+			})
+			.then(function(data) {
+				return E(data)
+			})
+			.then(function(data) {
+				$(".deferred-result").html("Deferred异步处理:" + data)
+			})
+	})
+})
+
+{
+	const s = "a",
+		b = s + 'b',
+		c = 12,
+		r = /^(\d|[1-9]\d{1,})$/; //^\d|[1-9]\d{1,}$/;必须有小括号，不然是错的，不能匹配正数
+	//console.log(s,b);
+	//console.log(parseInt('02f',10));
+	//console.log('01'.charCodeAt());//默认为索引0
+	//console.log(top,top.mainFrame)
+	console.log(Number('012a'), +'010' === 10, +'0101s');
+	console.log('abc'.split(".").length, c.length);
+	console.log(parseInt('012a'), +'012a');
+	console.log('012a' > 0);
+	console.log(r.test('1201'), r.test('01'));
+	//return document.forms[0].elements[name].value;
+}
+</script>
+
+</html>

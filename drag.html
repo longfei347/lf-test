@@ -19,6 +19,23 @@ html, body{height: 100%;margin: 0;padding: 0;}
 right: 0;bottom: 0;"></div>
 	</div>
 	<input type="number" maxlength="3" max="100" min="10" step="5" onkeypress="if(event.keyCode<48||event.keyCode>57)return false;">
+	<form id="form" onsubmit="return false;">
+		<input type="text" list="long">
+		<datalist id="long">
+			<option>1</option>
+			<option>2</option>
+		</datalist>
+		<details>
+			<summary>long fei</summary>
+			<p id="">oh yes you are right</p>
+			<mark id="">you are welcome</mark>
+		</details>
+		<progress>
+			<span id="objprogress">85</span>%
+		</progress>
+		<meter min="0" max="20" high="30" value="5">5</meter>
+		<button type="submit" onclick="document.getElementById('form').submit()">提交</button>
+	</form>
 	<div class="dustbin">
 		<br />垃
 		<br />圾
@@ -52,7 +69,7 @@ document.body.ondragover = function(ev) {
 	ev.preventDefault();
 	return true;
 };
-/*var eleDustbin = $(".dustbin")[0],
+var eleDustbin = $(".dustbin")[0],
 	eleDrags = $(".draglist"),
 	lDrags = eleDrags.length,
 	eleRemind = $(".dragremind")[0],
@@ -96,28 +113,25 @@ eleDustbin.ondrop = function(ev) {
 	this.style.color = "#000000";
 
 	return false;
-};*/
+};
 
 /*! function() {
 	var a = b = c = 0; //等价于var a=(b=(c=0)) c=0 即全局变量为0,表达式返回0 赋给b,再返回0赋给a
 }()*/
 
 
-/*(function () {
-	"use strict"
-	var a = {n: 1}
-	var b = a,c;
-	a.x = a = {n: 2}
-	console.log(a.x);
-	console.log(b)
-})()*/
+/*var a = {n: 1}
+var b = a;
+console.log(a.x = a = {n: 2});
+console.log(a.x);
+console.log(b)*/
 /*var a = {n: 1}
 var b = a;
 a = {n: 2}
 a.x = a
 console.log(a.x);
-console.log(b.x)
-*/
+console.log(b.x)*/
+
 /*function Foo() {};
 var foo = new Foo();
 //Foo为foo的构造函数

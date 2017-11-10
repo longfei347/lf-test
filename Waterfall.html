@@ -132,37 +132,13 @@
 </div>
 <script>
     /*单例模式*/
-    var addEvent=(function() {//返回兼容旧浏览器的事件监听
-        var instance;
-        function init() {
-            function temp(target,event,fn) {
-                if(window.addEventListener){
-                    return target.addEventListener(event, fn);
-                }else if(window.attachEvent) {
-                    return target.attachEvent('on'+event, fn);
-                }
+    var addEvent= function temp(target,event,fn) {
+            if(window.addEventListener){
+                return target.addEventListener(event, fn);
+            }else if(window.attachEvent) {
+                return target.attachEvent('on'+event, fn);
             }
-            return temp
-        }
-        return{
-            getInstance: function() {
-                if(!instance){
-                    instance = init();
-                }
-                return instance;
-            }
-        }
-    }());
-    /*模块模式*/
-    function loadModule(moduleArr) {//页面初始化完成时载入模块
-        var event = addEvent.getInstance();
-        event(window,'load',function() {
-            moduleArr.forEach(function(el) {
-                el.init();
-            });
-        });
-        return moduleArr;
-    }
+        };
     var pubuliuModule = (function() {
         var parentEle = document.querySelector('.pubuliu-box');
         var childEle = document.querySelectorAll('.img-box');
@@ -204,8 +180,7 @@
         }
         function scrollAjax(cols) {//测试数据		
             var ajaxData =[{src:'https://img.alicdn.com/imgextra/i4/749565866/TB2Wx2HhVXXXXXZXpXXXXXXXXXX_!!749565866.jpg'},{src:'https://img.alicdn.com/imgextra/i2/749565866/TB2n5PShVXXXXb3XXXXXXXXXXXX_!!749565866.jpg'},{src:'https://img.alicdn.com/imgextra/i3/749565866/TB2Zq_6hVXXXXXtXXXXXXXXXXXX_!!749565866.jpg'},{src:'https://img.alicdn.com/imgextra/i3/749565866/TB2MNnthVXXXXceXpXXXXXXXXXX_!!749565866.jpg'},{src:'https://img.alicdn.com/imgextra/i4/749565866/TB2mIDFhVXXXXX_XpXXXXXXXXXX_!!749565866.jpg'},{src:'https://img.alicdn.com/imgextra/i1/749565866/TB25ujKhVXXXXXpXpXXXXXXXXXX_!!749565866.jpg'},{src:'https://img.alicdn.com/imgextra/i3/749565866/TB2wUjMhVXXXXcNXXXXXXXXXXXX_!!749565866.jpg'},{src:'https://img.alicdn.com/imgextra/i1/749565866/TB28DH0hVXXXXagXXXXXXXXXXXX_!!749565866.jpg'},{src:'https://img.alicdn.com/imgextra/i2/749565866/TB2YBzJhVXXXXXmXpXXXXXXXXXX_!!749565866.jpg'},{src:'https://img.alicdn.com/imgextra/i1/749565866/TB2GZLZhVXXXXaoXXXXXXXXXXXX_!!749565866.jpg'}];
-            var event = addEvent.getInstance();
-            event(window,'scroll',function() {
+            addEvent(window,'scroll',function() {
                 if(scrollFlag()){
                     ajaxData.forEach(function(el) {
                         var imgBox = document.createElement('div');
@@ -240,7 +215,9 @@
             init:init
         }
     }());
-    loadModule([pubuliuModule]);
+    addEvent(window,'load', function() {
+        pubuliuModule.init();
+    });
 </script>
 </body>
 </html>

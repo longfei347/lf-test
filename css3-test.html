@@ -5,43 +5,50 @@
 <title>user-drag_CSS参考手册_web前端开发参考手册系列</title>
 <meta name="author" content="Joy Du(飘零雾雨), dooyoe@gmail.com, www.doyoe.com" />
 <style>
-img {
-    width: 100px;
-    height: 100px;
-}
+
 .element {
     -webkit-user-drag: element;
     cursor: move;
     -webkit-user-select: none;
 }
-.none {
-    -webkit-user-drag: none;
+h1.text {
+    text-align: center;
+    color: #f90;
+    font-size: 48px;
+    font-family: 'Fruktur', cursive;
+    text-shadow: 1px 1px 1px #ccc, 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de;
+    animation: run ease-in-out 9s infinite;
 }
-.wrapper {
-    width: 200px;
-    height: 200px;
-    margin: 50px auto;
+
+@keyframes run {
+    0% {
+        transform: rotateX(-5deg) rotateY(0);
+    }
+    50% {
+        transform: rotateX(0) rotateY(180deg);
+        text-shadow: 1px 1px 1px #ccc, 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #3EFF3E, 0 0 70px #3EFFff, 0 0 80px #3EFFff, 0 0 100px #3EFFee, 0 0 150px #3EFFee;
+    }
+    100% {
+        transform: rotateX(5deg) rotateY(360deg);
+    }
+}
+.perspective {
+    width: 150px;
+    height: 150px;
+    margin: 5px auto;
     border: 1px solid #000;
     perspective: 50px;
     transform-style: preserve-3d;
-    animation: test 4s infinite;
+    animation: test 2s infinite;
 }
-.wrapper > div {
-    width: 180px;
-    height: 120px;
+.perspective > div {
+    width: 150px;
+    height: 100px;
     margin: 40px 10px;
     background-color: #ccc;
-    -webkit-transform: rotatex(45deg);
     transform: rotatex(45deg);
 }
-/* @-webkit-keyframes test {
-    from {
-        -webkit-perspective: 50px;
-    }
-    to {
-        -webkit-perspective: 300px;
-    }
-} */
+
 @keyframes test {
     from {
         perspective: 50px;
@@ -50,43 +57,57 @@ img {
         perspective: 300px;
     }
 }
+/* 逐帧动画 */
+.bird {
+    position: absolute;
+    top: 0;
+    width: 170px;
+}
 
-.cover p{background-size:cover;}
-.contain p{background-size:contain;}
-.length p{background-size:100px 140px;}
+.birdFly {
+    width: 90px;
+    height: 70px;
+    background: url(images/bird.png) no-repeat;
+    /*写法1*/
+    animation: bird-slow 400ms steps(3) infinite;
+    /*写法2*/
+    /* animation-name: bird-slow;
+    animation-duration: 400ms;
+    animation-timing-function: steps(3);
+    animation-iteration-count: infinite; */
+}
+
+@keyframes bird-slow {
+    0% {background-position-x: 0}
+    100% {background-position-x: -273px}
+}
 </style>
 </head>
 <body>
-<dl>
-    <dt>auto</dt>
-    <dd><a href="#">我是一个链接</a></dd>
-    <dd><img src="" alt="支付宝二维码" /></dd>
-    <dd>我是一些纯文字</dd>
-    <dt>element</dt>
-    <dd class="element"><a href="#">我是一个链接</a></dd>
-    <dd class="element"><img src="" alt="支付宝二维码" /></dd>
-    <dd class="element">我是一些纯文字</dd>
-    <dt>none</dt>
-    <dd><a class="none" href="#">我是一个链接</a></dd>
-    <dd><img class="none" src="" alt="支付宝二维码" /></dd>
-    <dd class="none">我是一些纯文字</dd>
-    <div class="wrapper">
-        <div>1</div>
-    </div>
-</dl>
-<ul class="test none">
-    <li class="cover">
-        <h2>cover</h2>
-        <p>将背景图像等比缩放到完全覆盖容器，背景图像有可能超出容器。</p>
-    </li>
-    <li class="contain">
-        <h2>contain</h2>
-        <p>将背景图像等比缩放到宽度或高度与容器的宽度或高度相等，背景图像始终被包含在容器内。</p>
-    </li>
-    <li class="length">
-        <h2>length</h2>
-        <p>自定义背景图像大小</p>
-    </li>
-</ul>
+<h1 class="text">Hello CSS3</h1>
+<div class="perspective">
+    <div>1</div>
+</div>
+<div class="bird">
+    <p>steps(3)实现帧动画</p>
+    <div class="birdFly"></div>
+</div>
 </body>
+<script>
+
+/*
+var docEl = document.documentElement,
+    resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+    // 设置html的font-size 当设备的方向变化（设备横向持或纵向持）此事件被触发。绑定此事件时，
+    // 注意现在当浏览器不支持orientationChange事件的时候我们绑定了resize 事件。
+    // 总来的来就是监听当然窗口的变化，一旦有变化就需要重新设置根字体的值
+    recalc = function() {
+        //设置根字体大小
+        docEl.style.fontSize = 20 * (docEl.clientWidth / 320) + 'px';
+    };
+
+//绑定浏览器缩放与加载时间
+window.addEventListener(resizeEvt, recalc, false);
+document.addEventListener('DOMContentLoaded', recalc, false);*/
+</script>
 </html>

@@ -12,151 +12,140 @@
 	<script src="js/angular.js"></script> -->
 </head>
 <style>
-.postTitle a {
-	font-size: 14px;
-	display: inline-block;
-}
+	.postTitle a {
+		font-size: 14px;
+		display: inline-block;
+	}
 
-body {
-	line-height: 2;
-	/* -webkit-font-smoothing: antialiased;
--webkit-text-stroke-width: 0.2px;
--moz-osx-font-smoothing: grayscale; */
-}
-
-
-/* ul {
-transform: rotate(180deg)
-}
-
-li {
-transform: rotate(180deg)
-} */
-
-.item {
-	display: inline-block;
-	width: 100px;
-}
-
-.btn-tt {
-	position: absolute;
-	left: 20px;
-	top: 20px;
-	height: 30px;
-	width: 50px;
-	background-color: #f90;
-	z-index: 100;
-}
+	body {
+		line-height: 2;
+		/* -webkit-font-smoothing: antialiased;
+	-webkit-text-stroke-width: 0.2px;
+	-moz-osx-font-smoothing: grayscale; */
+	}
 
 
-/*.icon {
-width: 22px;
-height: 22px;
-background-image: image(logo.jpg#xywh=1, 1, 20, 20); 这种还不支持
- background:url(logo.jpg) -1px -1px no-repeat; 
-}
 
-.icon:hover {
-width: 22px;
-height: 22px;
-background: url(logo.jpg) -1px -27px no-repeat;
-}*/
+	/* ul {
+	transform: rotate(180deg)
+	}
 
-.none {
-	display: none;
-}
+	li {
+	transform: rotate(180deg)
+	} */
+
+	.item {
+		display: inline-block;
+		width: 100px;
+	}
+
+	.btn-tt {
+		position: absolute;
+		left: 20px;
+		top: 20px;
+		height: 30px;
+		width: 50px;
+		background-color: #f90;
+		z-index: 100;
+	}
 
 
-/* ::-webkit-scrollbar-track-piece {
-background-color: #fff;
--webkit-border-radius: 0;
-}
 
-::-webkit-scrollbar {
-width: 8px;
-height: 8px;
-}
+	/*.icon {
+	width: 22px;
+	height: 22px;
+	background-image: image(logo.jpg#xywh=1, 1, 20, 20); 这种还不支持
+	 background:url(logo.jpg) -1px -1px no-repeat;
+	}
 
-::-webkit-scrollbar-thumb {
-height: 50px;
-background-color: #999;
--webkit-border-radius: 4px;
-outline: 2px solid #fff;
-outline-offset: -2px;
-border: 2px solid #fff;
-}
+	.icon:hover {
+	width: 22px;
+	height: 22px;
+	background: url(logo.jpg) -1px -27px no-repeat;
+	}*/
 
-::-webkit-scrollbar-thumb:hover {
-height: 50px;
-background-color: #9f9f9f;
--webkit-border-radius: 4px;
-} */
+	.none {
+		display: none;
+	}
+	/* ::-webkit-scrollbar-track-piece {
+	background-color: #fff;
+	-webkit-border-radius: 0;
+	}
 
-form {
-	height: 100px;
-	-webkit-appearance: button;
-	overflow: auto;
-}
+	::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+	}
+	::-webkit-scrollbar-thumb {
+	height: 50px;
+	background-color: #999;
+	-webkit-border-radius: 4px;
+	outline: 2px solid #fff;
+	outline-offset: -2px;
+	border: 2px solid #fff;
+	}
+	::-webkit-scrollbar-thumb:hover {
+	height: 50px;
+	background-color: #9f9f9f;
+	-webkit-border-radius: 4px;
+	} */
 
-.btn {
-	width: 80px;
-	height: 30px;
-	/*-webkit-appearance: button;*/
-	/* outline: 5px solid #f90;
-outline-offset: 2px; */
-	box-sizing: border-box;
-	background-color: #09f;
-	/*resize: both;*/
-}
-
-ol {
-	margin: 0;
-	padding: 0 0 0 2em;
-	list-style: none;
-	counter-reset: item;
-}
-
-li:before {
-	counter-increment: item;
-	content: counter(item)".";
-	color: #f00;
-}
-
-.counter1 li {
-	counter-increment: testname 2;
-}
-
-.counter1 li:before {
-	content: counter(testname)".";
-	/*counter-reset: testname;*/
-}
-
-.counter1 li:nth-child(3) {
-	counter-reset: testname 20
-}
-
-.counter2 li {
-	counter-increment: testname2 -1;
-}
-
-.counter2 li:before {
-	content: counter(testname2)".";
-	/*counter-reset: testname2 20;*/
-}
-
-form {
-	min-height: 100px;
-}
-long {
-	font-size: 18px;
-	color: #f90;
-}
+	form {
+		height: 100px;
+		-webkit-appearance: button;
+		overflow: auto;
+	}
+	.btn {
+		width: 80px;
+		height: 30px;
+		/*-webkit-appearance: button;*/
+		/* outline: 5px solid #f90;
+	outline-offset: 2px; */
+		box-sizing: border-box;
+		background-color: #09f;
+		/*resize: both;*/
+	}
+	ol {
+		margin: 0;
+		padding: 0 0 0 2em;
+		list-style: none;
+		counter-reset: item;
+	}
+	li:before {
+		counter-increment: item;
+		content: counter(item)".";
+		color: #f00;
+	}
+	.counter1 li {
+		counter-increment: testname 2;
+	}
+	.counter1 li:before {
+		content: counter(testname)".";
+		/*counter-reset: testname;*/
+	}
+	.counter1 li:nth-child(3) {
+		counter-reset: testname 20
+	}
+	.counter2 li {
+		counter-increment: testname2 -1;
+	}
+	.counter2 li:before {
+		content: counter(testname2)".";
+		/*counter-reset: testname2 20;*/
+	}
+	form {
+		min-height: 100px;
+	}
+	long {
+		font-size: 18px;
+		color: #f90;
+	}
 </style>
 </head>
 
 <body>
-	<long>hello,world</long>
-	<ul class="test">
+	<!-- <long>hello,world</long> -->
+	<!-- <ul class="test">
 		<li class="counter1">
 			<strong>将计算器按2递增：</strong>
 			<ol>
@@ -173,7 +162,7 @@ long {
 				<li>列表项</li>
 			</ol>
 		</li>
-	</ul>
+	</ul> -->
 	<!-- <ol class="test">
 		<li>Node1
 			<ol>
@@ -191,7 +180,7 @@ long {
 		<li>Node</li>
 	</ol> -->
 	<!-- <div class="icon">longfei</div> -->
-	<div class="btn" contenteditable="">11</div>
+	<!-- <div class="btn" contenteditable="">11</div> -->
 	<form action="">
 		<!-- <input type="text" id="fei" pattern="\w{3,8}"> -->
 		<input type="text" id="long">
@@ -245,39 +234,17 @@ __extends(a,aa);*/
 
 // console.log('%clong',"color:#f90")
 
-/*var NetworkBundleActivity = {};
-NetworkBundleActivity.NetworkBundleActivity$0 = {
-    NetworkBundleActivity$0(__parent) {
-        var _this = _super.call(this) || this;
-        _this.__parent = __parent;
-        return _this;
-    },
-    __proto__: {
-        onResponse: function (headers, s) {
-            Toast.makeText(this.__parent, s, Toast.LENGTH_SHORT).show();
-        },
-        onFailure: function (code, throwable) {
-            Toast.makeText(this.__parent, "code:" + code + "," + throwable.message, Toast.LENGTH_SHORT).show();
-        }
-    }
-}*/
 /*const haha =11;
-const o = {a:1, b:22};
-let {a: newName1, b: newName2} = o; */
+const o = {a:1, b:22,haha};
+let {a: newName1, b: newName2} = o;*/
 
-//let cc = {a: string, b?: number}
-/*function f({a, b}: cc): void {
-// ...
-}*/
-/*function f({a = "", b} = {b: 0}) {
+/*let cc = {a: string, b?: number}
+function f({a, b}: cc): void {}
+function f({a = "", b} = {b: 0}) {
 	console.log(arguments.length,a,b)
 }
-f({a:22,b:33}); // ok, default to {a: "", b: 0}*/
+f({a:22,b:33}); // ok, default to {a: "", b: 0}
 
-/*// 这里的语法开始变得混乱。 你可以将  a: newName1  读做 " a  作为
-// newName1  "。 方向是从左到右，好像你写成了以下样子：
-let newName1 = o.a;
-let newName2 = o.b;
 // 令人困惑的是，这里的冒号不是指示类型的。 如果你想指定它的类型， 仍然需要 在其后写上完整的模式。
 let {a, b}: {a: string, b: number} = o;*/
 
@@ -307,11 +274,11 @@ function nonenumerable(target, name, descriptor) {
 	descriptor.enumerable = false;
 	return descriptor;
 }*/
-/*var p1 = new Promise((resolve, reject) => { 
-  setTimeout(resolve, 1000, "one"); 
-}); 
-var p2 = new Promise((resolve, reject) => { 
-  setTimeout(resolve, 2000, "two"); 
+/*var p1 = new Promise((resolve, reject) => {
+  setTimeout(resolve, 1000, "one");
+});
+var p2 = new Promise((resolve, reject) => {
+  setTimeout(resolve, 2000, "two");
 });
 var p3 = new Promise((resolve, reject) => {
   setTimeout(resolve, 3000, "three");
@@ -323,7 +290,7 @@ var p5 = new Promise((resolve, reject) => {
   reject("reject");
 });
 
-Promise.all([p1, p2, p3, p4, p5]).then(values => { 
+Promise.all([p1, p2, p3, p4, p5]).then(values => {
   console.log(values);
 }, reason => {
   console.log(reason)
@@ -333,13 +300,13 @@ Promise.all([p1, p2, p3, p4, p5]).then(values => {
 p1.then(value=>console.log(value))
 var p2 = 1337;
 var p3 = new Promise((resolve, reject) => {
-	console.log(resolve.toString())
+	// console.log(resolve.toString())
 	resolve(1,22,3,54,55)
   // setTimeout(resolve, 100, "foo");
-}); 
+});
 
-Promise.all([p1, p2, p3]).then(values => { 
-  console.log(values); // [3, 1337, "foo"] 
+Promise.all([p1, p2, p3]).then(values => {
+  console.log(values); // [3, 1337, 1]
 });*/
 /*function ll() {
 	// console.log([].slice.apply(arguments))
@@ -439,8 +406,8 @@ sort.insertionSort(arr);*/
 
 // $('.feif').offsetParent().css('background-color', 'red');
 
-/*var stag = 
-`<!-- <aa name="dlfk">--> 
+/*var stag =
+`<!-- <aa name="dlfk">-->
     <!-- <bfd><f name="fdf"></f></bfd>  -->
 <!-- </aa>  -->
 <!--<a>
@@ -465,7 +432,7 @@ var ntag = stag.replace(/(?:<!--\s*<)([\s\S]+?)(?:>\s*-->)+/g, function(sAll,gro
 /*var myFrame = document.createElement('iframe');
 document.body.appendChild(myFrame);
 var myArray = window.frames[window.frames.length-1].Array;
-var arr = new myArray(1,2,10); // [a,b,10]  
+var arr = new myArray(1,2,10); // [a,b,10]
 // myArray 的构造器已经丢失，instanceof 的结果将不正常
 // 构造器是不能跨 frame 共享的
 console.log(arr instanceof Array)// false*/

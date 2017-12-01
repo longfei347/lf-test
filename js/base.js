@@ -141,7 +141,13 @@ function selectFrom(lowerValue, upperValue) {
 	var choices = upperValue - lowerValue + 1;
 	return Math.floor(Math.random() * choices + lowerValue);
 }
-function getCookie(key) {
+function getCookie(name) {
+    // var search = /\?/.test(url) ? url.split('?')[1] : url;
+    var reg = new RegExp("(^|; )"+ name +"=([^; ]*)(; |$)");
+    return reg.test(search) ? RegExp.$2 : '';
+}
+
+/*function getCookie(key) {
 	var search = key + "=",
 		begin = document.cookie.indexOf(search);
 	if (begin != -1) {
@@ -152,7 +158,7 @@ function getCookie(key) {
 		}
 		return document.cookie.substring(begin, end);
 	}
-}
+}*/
 var CookieUtil = {
 	get : function (name) {
 		var cookieName = encodeURIComponent(name) + "=",
@@ -926,7 +932,7 @@ function addAnchors(e) {
 // var items = [12, 548 , 'a' , 2 , 5478 , 'foo' , 8852, , 'Doe' , 2145 , 119];
 // var randomItem = items[Math.floor(Math.random() * items.length)];
 
-// 从一个指定的范围中取出一个随机数  这个功能在生成测试用的假数据时特别有用。比如取一个指定范围内的工资数。       
+// 从一个指定的范围中取出一个随机数  这个功能在生成测试用的假数据时特别有用。比如取一个指定范围内的工资数。
 // var x = Math.floor(Math.random() * (max - min + 1)) + min;
 
 /*生成一个从0开始到指定数字的序列
@@ -954,7 +960,7 @@ var array1 = [12 , "foo" , {name "Joe"} , -2458];
 var array2 = ["Doe" , 555 , 100];
 Array.prototype.push.apply(array1, array2);*/
 
-/*将 argruments转换成数组  
+/*将 argruments转换成数组
 var argArray = Array.prototype.slice.call(arguments);*/
 
 /*  检验一个参数是否为数字
@@ -1030,30 +1036,30 @@ var getParams = function(url) {
 	return params;
 };
 
-//绑定在了body上，也可以绑定在其他可用元素行，但是不是所有元素都支持copy和past事件。  
-$(document.body).bind({  
-    copy: function(e) {//copy事件  
-        var cpTxt = "复制的数据";  
-        var clipboardData = window.clipboardData; //for IE  
-        if (!clipboardData) { // for chrome  
-            clipboardData = e.originalEvent.clipboardData;  
-        }  
-        //e.clipboardData.getData('text');//可以获取用户选中复制的数据  
-        clipboardData.setData('Text', cpTxt);  
-        alert(cpTxt);  
-        $('#message').text('Copy Data : ' + cpTxt);  
-        return false;//否则设不生效  
-    },paste: function(e) {//paste事件  
-        var eve = e.originalEvent  
-        var cp = eve.clipboardData;  
-        var data = null;  
-        var clipboardData = window.clipboardData; // IE  
-        if (!clipboardData) { //chrome  
-            clipboardData = e.originalEvent.clipboardData  
-        }  
-        data = clipboardData.getData('Text');  
-        $('#message').html(data);  
-    }  
-});  
+//绑定在了body上，也可以绑定在其他可用元素行，但是不是所有元素都支持copy和past事件。
+$(document.body).bind({
+    copy: function(e) {//copy事件
+        var cpTxt = "复制的数据";
+        var clipboardData = window.clipboardData; //for IE
+        if (!clipboardData) { // for chrome
+            clipboardData = e.originalEvent.clipboardData;
+        }
+        //e.clipboardData.getData('text');//可以获取用户选中复制的数据
+        clipboardData.setData('Text', cpTxt);
+        alert(cpTxt);
+        $('#message').text('Copy Data : ' + cpTxt);
+        return false;//否则设不生效
+    },paste: function(e) {//paste事件
+        var eve = e.originalEvent
+        var cp = eve.clipboardData;
+        var data = null;
+        var clipboardData = window.clipboardData; // IE
+        if (!clipboardData) { //chrome
+            clipboardData = e.originalEvent.clipboardData
+        }
+        data = clipboardData.getData('Text');
+        $('#message').html(data);
+    }
+});
 
 

@@ -19,7 +19,7 @@
 	.none {
 		display: none;
 	}
-	
+
 	#demo {
 		position: relative;
 		width: 100px;
@@ -45,12 +45,12 @@
 		/*display: none;*/
 		height: 400px;
 	}
-	
+
 	input[type=checkbox][disabled] {
 		width: 30px;
 		height: 30px;
 	}
-	
+
 	.sanjiao {
 		display: inline-block;
 		height: 50px;
@@ -58,7 +58,7 @@
 		background-color: #ccc;
 		background-size: 30px 30px;
 	}
-	
+
 	.sanjiao::after {
 		position: absolute;
 		display: block;
@@ -71,7 +71,7 @@
 		border-left: 50px solid green;
 		content: "";
 	}
-	
+
 	.entry {
 		margin: 0 auto;
 		margin-top: 20px;
@@ -83,7 +83,7 @@
 		-moz-border-radius: 5px;
 		border-radius: 5px;
 	}
-	
+
 	.entry-trangle {
 		position: absolute;
 		margin-left: -19px;
@@ -94,38 +94,38 @@
 		border-right: 10px solid #f90;
 		z-index: -1;
 	}
-	
+
 	[class^="long_"] {
 		width: 20px;
 		height: 20px;
 	}
-	
+
 	#test {
 		background-color: #f90;
 	}
-	
+
 	.long.long1.long2 {
 		background-color: #f00;
 	}
-	
+
 	.positionDiv {
 		position: absolute;
 		width: 75px;
 		height: 75px;
 		background: green;
 	}
-	
+
 	input::selection {
 		background-color: #f90;
 	}
-	
+
 	::selection {
 		background-color: #e60;
 	}
 	/* select:hover {
 		background-color: #f90;
 	} */
-	
+
 	select:hover {
 		background-color: #eee;
 	}
@@ -136,7 +136,7 @@
 	<input type="file" accept="image/*" capture="camera">
     <input type="file" accept="video/*" capture="camcorder">
     <input type="file" accept="audio/*" capture="microphone">
-	<!-- 
+	<!--
 	<form action="">
 		<div id="fei">
 		</div>
@@ -166,6 +166,35 @@
 </body>
 <script>
 'use strict';
+/*Function.prototype.uncurrying = function() {
+    var _this = this;
+    return function() {
+        return Function.prototype.call.apply(_this, arguments);
+        //在下面的例子中Array.prototype.push == _this
+        //因为call 本身也是个函数
+        //Function.prototype.call.apply 就是去调用call()方法
+        //也就是Array.prototype.push.call(arguments);
+        //例子中push(arr,"a") arguments 就是[arr,"a"];
+        //所以实际上到最后我们得到的是
+        //Array.prototype.push.call(arr , "a");
+        //即 arr.push("a")
+    };
+};
+function uncurrying(fn) {
+    return function() {
+        return Function.prototype.call.apply(fn, arguments);
+    }
+} <===>等价于
+ function uncurrying(fn) {
+    return function() {
+        var context = [].shift.call(arguments);
+        fn.apply(context, arguments);
+    }
+}
+var push = Array.prototype.push.uncurrying();
+var obj = {};
+push(obj, "a",'b','d');//Object {0: "a", 1: "b", length: 2}
+console.log(obj);*/
 /*var promiseCount = 0;
 function testPromise() {
 	var thisPromiseCount = ++promiseCount;
@@ -276,18 +305,18 @@ var callback = {
 };
 // End B
 
-// Executes the method call 
+// Executes the method call
 $http(mdnAPI)
 	.get(payload)
 	.then(callback.success)
 	.catch(callback.error);
 
-// Executes the method call but an alternative way (1) to handle Promise Reject case 
+// Executes the method call but an alternative way (1) to handle Promise Reject case
 $http(mdnAPI)
 	.get(payload)
 	.then(callback.success, callback.error);
 
-// Executes the method call but an alternative way (2) to handle Promise Reject case 
+// Executes the method call but an alternative way (2) to handle Promise Reject case
 $http(mdnAPI)
 	.get(payload)
 	.then(callback.success)
@@ -303,24 +332,24 @@ let b = new Set([4, 3, 2]);
 // let union = new Set([...a, ...b]);
 
 /*$("body").on({
-	copy: function(e) { //copy事件  
+	copy: function(e) { //copy事件
 		var cpTxt = "复制的数据", cpstr;
-		var clipboardData = window.clipboardData; //for IE  
-		if (!clipboardData) { // for chrome  
+		var clipboardData = window.clipboardData; //for IE
+		if (!clipboardData) { // for chrome
 			clipboardData = e.originalEvent.clipboardData;
 		}
-		cpstr = clipboardData.getData('text');//可以获取用户选中复制的数据  
+		cpstr = clipboardData.getData('text');//可以获取用户选中复制的数据
 		clipboardData.setData('Text', cpTxt);
 		$("#copystr").html(cpTxt);
 		$('#message').text('Copy Data : ' + cpTxt);
-		return false; //否则设不生效  
+		return false; //否则设不生效
 	},
-	paste: function(e) { //paste事件  
+	paste: function(e) { //paste事件
 		var eve = e.originalEvent
 		var cp = eve.clipboardData;
 		var data = null;
-		var clipboardData = window.clipboardData; // IE  
-		if (!clipboardData) { //chrome  
+		var clipboardData = window.clipboardData; // IE
+		if (!clipboardData) { //chrome
 			clipboardData = e.originalEvent.clipboardData
 		}
 		data = clipboardData.getData('Text');

@@ -165,6 +165,96 @@ p.overd::after {
 <script>
 // $.holdReady(3);
 $(function() {
+	$("button:last").on("click", function() {
+		//模拟异步C
+		function C() {
+			var dtd = $.Deferred(); //创建
+			setTimeout(function() {
+				$(".deferred-result").append('<p>step C');
+				dtd.resolve(3)
+			}, 500)
+			return dtd;
+		}
+		//模拟异步D
+		function D(value) {
+			var dtd = $.Deferred(); //创建
+			setTimeout(function() {
+				$(".deferred-result").append('<p>step D');
+
+				dtd.resolve(value + 4)
+			}, 500)
+			return dtd;
+		}
+		//模拟异步E
+		function E(value) {
+			var dtd = $.Deferred(); //创建
+			setTimeout(function() {
+				$(".deferred-result").append('<p>step E');
+				dtd.resolve(value + 5)
+			}, 1000)
+			return dtd;
+		}
+		function fn1() {
+		    $('.deferred-result').append(" 1 ");
+		}
+
+		function fn2() {
+		    $('.deferred-result').append(" 2 ");
+		}
+
+		function fn3(n) {
+		    $('.deferred-result').append(n + " 3 " + n);
+		}
+		var dfd = $.Deferred();
+		dfd /* .done() can take any number of functions or arrays of functions */
+		.done([fn1, fn2], fn3, [fn2, fn1])
+		.done(function(n) {
+		    $('.deferred-result').append(n + " we're done.");
+		});
+		dfd.resolve("and");
+
+		C().then(function(data) {
+			return D(data)
+		})
+		.then(function(data) {
+			return E(data)
+		})
+		.then(function(data) {
+			$(".deferred-result").append("Deferred异步处理:" + data)
+		})
+	})
+	$("button:first").on("click", function() {
+		/*//模拟异步A
+		function A(callback) {
+			setTimeout(function() {
+				callback(1)
+			}, 500)
+		}
+		//模拟异步A
+		function B(callback, value) {
+			setTimeout(function() {
+				callback(value + 2)
+			}, 1000)
+		}
+		//A执行完毕后，在执行B
+		A(function(data1) {
+			B(function(data2) {
+				$(".deferred-result").html("嵌套异步:" + data2)
+			}, data1)
+		})*/
+		//模拟异步A
+		let promise = new Promise(function(resolve, reject) {
+			$(".deferred-result").append('Promise<br>');
+			resolve();
+		});
+
+		promise.then(function() {
+			$(".deferred-result").append('resolved.<br>');
+		});
+
+		$(".deferred-result").append('Hi!<br>');
+	})
+
 	//console.log($("p").wrapAll($(".doublediv")));
 	//console.log($("p").wrapInner("<b></b>"));
 
@@ -239,79 +329,12 @@ $(function() {
 			$(this).closest("table").append(row[tmp]);
 		}
 	})*/
-	$("button:first").on("click", function() {
-		//模拟异步A
-		function A(callback) {
-			setTimeout(function() {
-				callback(1)
-			}, 500)
-		}
-		//模拟异步A
-		function B(callback, value) {
-			setTimeout(function() {
-				callback(value + 2)
-			}, 1000)
-		}
-		//A执行完毕后，在执行B
-		A(function(data1) {
-			B(function(data2) {
-				$(".deferred-result").html("嵌套异步:" + data2)
-			}, data1)
-		})
-	})
-	$("button:last").on("click", function() {
-		//模拟异步C
-		function C() {
-			var dtd = $.Deferred(); //创建
-			setTimeout(function() {
-				dtd.resolve(3)
-			}, 500)
-			return dtd;
-		}
-		//模拟异步D
-		function D(value) {
-			var dtd = $.Deferred(); //创建
-			setTimeout(function() {
-				dtd.resolve(value + 4)
-			}, 500)
-			return dtd;
-		}
-		//模拟异步E
-		function E(value) {
-			var dtd = $.Deferred(); //创建
-			setTimeout(function() {
-				dtd.resolve(value + 5)
-			}, 1000)
-			return dtd;
-		}
-		C().then(function(data) {
-				return D(data)
-			})
-			.then(function(data) {
-				return E(data)
-			})
-			.then(function(data) {
-				$(".deferred-result").html("Deferred异步处理:" + data)
-			})
-	})
-})
 
-{
-	const s = "a",
-		b = s + 'b',
-		c = 12,
-		r = /^(\d|[1-9]\d{1,})$/; //^\d|[1-9]\d{1,}$/;必须有小括号，不然是错的，不能匹配正数
-	//console.log(s,b);
-	//console.log(parseInt('02f',10));
-	//console.log('01'.charCodeAt());//默认为索引0
-	//console.log(top,top.mainFrame)
-	console.log(Number('012a'), +'010' === 10, +'0101s');
-	console.log('abc'.split(".").length, c.length);
-	console.log(parseInt('012a'), +'012a');
-	console.log('012a' > 0);
-	console.log(r.test('1201'), r.test('01'));
-	//return document.forms[0].elements[name].value;
-}
+})
+// const r = /^(\d|[1-9]\d{1,})$/; // 必须有小括号,注意优先级
+//console.log(parseInt('02f',10));
+//console.log('01'.charCodeAt());//默认为索引0
+// console.log(parseInt('012a'),Number('012a'), +'012a'); //12,NaN,NaN
 </script>
 
 </html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>photo</title>
+</head>
+<style>
+input[type=radio] {
+	background-color: #f90;
+	border: 1px solid #f90;
+	color: #f90;
+	/* border: 1px solid #f90;
+	-webkit-appearance: none;
+		width: 16px;
+		height: 16px;
+		outline: none;
+		margin: 0px 0.5rem 0 0;
+		position: relative;
+		top: 3px; */
+}
+.log {
+	margin: 10px 16px;
+	border: 1px solid #EEE;
+	padding: 0 16px;
+	height: 56px;
+	line-height: 56px;
+	border-radius: 10px;
+	box-sizing: border-box;
+	background-color: #fff;
+
+}
+.log:before{
+	content: '';
+	float: left;
+	display: inline-block;
+	margin-left: -26px;
+	width: 26px;
+	height: 56px;
+	border-radius: 20px;
+	border-left: 15px solid #9ACE48
+}
+</style>
+<body>
+	<form action="">
+		<div class="log">
+			<a data-href="log" href="#">
+				<label>新人日志</label><span class="rank">3</span>
+			</a>
+		</div>
+		<!-- <input type="radio" name="haha" value="1" id="">1
+		<input type="radio" name="haha" value="2" id="">2
+		<br> -->
+		<!-- <input type="file" accept="image/*" capture="camera">
+		<input type="file" accept="video/*" capture="camcorder">
+		<input type="file" accept="audio/*" capture="microphone"> -->
+		<video id="video" width="640" height="480" controls autoplay></video>
+		<button type="button" id="snap">Snap Photo</button>
+		<button type="button" id="stop">stop</button>
+		<button type="button" id="start">start</button>
+		<canvas id="canvas" width="640" height="480"></canvas>
+	</form>
+</body>
+<script src="js/jsbridge.js"></script>
+<script>
+// Grab elements, create settings, etc.
+var video = document.getElementById('video');
+var mediaStream = null,
+	track=null;
+// Get access to the camera!
+// 方法一: old 反对
+/*navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+function playVideo() {
+	navigator.getUserMedia({ video: true }, function(stream) {
+		video.src = window.URL.createObjectURL(stream);
+		mediaStream = stream;
+		track = stream.getTracks()[0];
+		video.play();
+	}, function(err) {
+		console.log("The following error occured:" + err);
+	});
+}*/
+// 方法二:
+/*function playVideo(argument) {
+	navigator.mediaDevices.getUserMedia({video: true}).then(function(stream) {
+		video.src = window.URL.createObjectURL(stream);
+		mediaStream = stream;
+		track = stream.getTracks()[0];
+		video.play();
+	})
+}
+playVideo();
+
+// Elements for taking the snapshot, Trigger photo take
+document.getElementById("snap").addEventListener("click", function(e) {
+	e.preventDefault();
+	var context = document.getElementById('canvas').getContext('2d');
+	context.drawImage(video, 0, 0, 640, 480);
+});
+document.getElementById("stop").addEventListener("click", function(e) {
+	e.preventDefault();
+	if (mediaStream && mediaStream.stop) {
+		mediaStream.stop();
+	} else if (track) {
+		track.stop();
+	}
+});
+document.getElementById("start").addEventListener("click", function(e) {
+	e.preventDefault();
+	playVideo()
+});*/
+</script>
+</html>

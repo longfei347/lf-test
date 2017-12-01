@@ -50,71 +50,6 @@
 	background-color: #123;
 }
 
-* {
-	margin: 0px;
-	padding: 0px;
-}
-
-#main {
-	width: 30%;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	align-items: center;
-	border: 5px solid black;
-}
-
-.d1 {
-	width: 98%;
-	margin-top: 5px;
-	display: flex;
-	justify-content: flex-start;
-	align-content: center;
-	border: 5px solid red;
-}
-
-.d2 {
-	width: 98%;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
-	border: 5px solid red;
-}
-
-.d3 {
-	width: 15%;
-	height: 90px;
-	margin-right: 5px;
-	border: 5px solid yellow;
-}
-
-.d4 {
-	width: 98%;
-	height: 140px;
-	display: flex;
-	flex-direction: column;
-	flex-wrap: wrap;
-	justify-content: flex-start;
-	align-content: flex-start;
-	border: 5px solid orange;
-}
-
-.d5 {
-	width: 98%;
-	height: 50px;
-	border: 5px solid orange;
-}
-
-.d6 {
-	margin-top: 5px;
-	margin-right: 5px;
-	width: 10%;
-	height: 50px;
-	border: 5px solid green;
-}
 
 .test {
 	width: 600px;
@@ -141,29 +76,11 @@
 </style>
 
 <body>
-	<button class='down'>click me</button>
-	<div id="some-id">some-id</div>
-	<iframe height="0" width="0" src="images/001.gif" name="saveImage" id="saveImage"></iframe>
-	<a href="#" onclick="saveImage.document.execCommand('saveAs');">Click Me</ a>
+	<!-- <div id="some-id">some-id</div> -->
+	<!-- <iframe height="0" width="0" src="images/001.gif" name="saveImage" id="saveImage"></iframe>
+	<a href="#" onclick="saveImage.document.execCommand('saveAs');">Click Me</a> -->
 	<!-- <div class="test">
 		<p>This module describes multi-column layout in CSS. By using functionality described in this document, style sheets can declare that the content of an element is to be laid out in multiple columns.</p>
-	</div> -->
-	<input type="number" name="kkk" id="">
-	<!-- <div id="main">
-		<div class="d1" style="height:100px;">
-			<div class="d3"></div>
-			<div class="d3"></div>
-			<div class="d3"></div>
-		</div>
-		<div class="d2" style="height:300px;">
-			<div class="d4">
-				<div class="d6"></div>
-				<div class="d6"></div>
-				<div class="d6"></div>
-				<div class="d6"></div>
-			</div>
-			<div class="d5"></div>
-		</div>
 	</div> -->
 	<!-- <div class="div">
 		<div class="div1"></div>
@@ -175,53 +92,24 @@
 			<div class="div23"></div>
 		</div>
 	</div> -->
-	<div>
-		<ol>
-			<li>Hello</li>
-		</ol>
-	</div>
-	<div>How are you?</div>
 	<div class="protected"></div>
-	<div></div>
-	<!-- <ul class="level-1">
-		<li class="item-i">I</li>
-		<li class="item-ii">II
-			<ul class="level-2">
-				<li class="item-a">A</li>
-				<li class="item-b">B
-					<ul class="level-3">
-						<li class="item-1">1</li>
-						<li class="item-2">2</li>
-						<li class="item-3">3</li>
-					</ul>
-				</li>
-				<li class="item-c">C</li>
-			</ul>
-		</li>
-		<li class="item-iii">III</li>
-	</ul> -->
-	<button class="ttt">测试</button>
-
 </body>
 <script>
-var target = document.getElementById('some-id');
- 
+/*var target = document.getElementById('some-id');
 // create an observer instance
 var observer = new MutationObserver(function(mutations) {
   mutations.forEach(function(mutation) {
     console.log(mutation.type);
-  });    
+  });
 });
- 
 // configuration of the observer:
 var config = { attributes: true, childList: true, characterData: true };
- 
 // pass in the target node, as well as the observer options
 observer.observe(target, config);
- 
+
 // later, you can stop observing
-// observer.disconnect();
-var ll = JSON.stringify({l:1,f:2,o:3,n:true}, function(key,value){
+// observer.disconnect();*/
+/*var ll = JSON.stringify({l:1,f:2,o:3,n:true}, function(key,value){
 	console.log(key,value);
 	if (typeof value === 'number') {
 		return value+1;
@@ -229,7 +117,7 @@ var ll = JSON.stringify({l:1,f:2,o:3,n:true}, function(key,value){
 		return value;
 	}
 })
-console.log(ll);
+console.log(ll);*/
 /*var obj = {
   foo: 'foo',
   toJSON: function() {
@@ -263,33 +151,12 @@ xmlHttp.onreadystatechange = function() {
 			// document.getElementById("result").innerHTML = xmlHttp.responseText;
 	}
 }
-xmlHttp.send(null);
+XMLHttpRequest.send(null);
 //发送请求
 http_request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');*/
-function getCookie(name) {
-    // var search = /\?/.test(url) ? url.split('?')[1] : url;
-    var reg = new RegExp("(^|; )"+ name +"=([^; ]*)(; |$)");
-    return reg.test(search) ? RegExp.$2 : '';
-}
-$('.ttt').on('click', function(e) {
-		this.disabled = true;
-		console.count()
-		setTimeout(() => this.disabled = false, 100)
-	})
-	/*var mystr="Many people spell MySQL incorrectly",output="";
-	console.log(mystr.replace(/[\w-]+/g,function(s,i,ss){
-		if (i == 0) {
-			s = s.charAt(0).toLowerCase() + s.substr(1,s.length -2) + s.charAt(s.length - 1).toUpperCase();
-		}
-		return s.split("").reverse().join("")
-		// output += s.split("").reverse().join("") + " ";
-		// return output;
-	}))*/
-	//output = output.substr(0,output.length -1);
-	// window1.filter(item=> !window2.includes(item))
-var mystr = "Many people  spell MySQL incorrectly";
 
-function strReverse(str) {
+
+/*function strReverse(str) {
 	return (str.replace(/[\w-]+/g, function(s, i, ss) {
 		if (i == 0) {
 			s = s.charAt(0).toLowerCase() + s.substr(1, s.length - 2) + s.charAt(s.length - 1).toUpperCase();
@@ -297,8 +164,8 @@ function strReverse(str) {
 		return s.split("").reverse().join("")
 	}));
 }
-strReverse(mystr)
-$("div").click(function() {
+console.log(strReverse("Many people spell MySQL incorrectly"))*/
+/*$(".protected").click(function() {
 	if ($(this).hasClass("protected")) {
 		$(this).animate({
 			left: -10
@@ -312,7 +179,7 @@ $("div").click(function() {
 			left: 0
 		});
 	}
-});
+});*/
 </script>
 
 </html>

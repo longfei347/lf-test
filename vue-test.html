@@ -172,7 +172,17 @@ content: "";
 		</tbody>
 	</table>
 	<div class="tinymce-module fd-clr">
-		<div id="app" class="none">{{ message }}</div>
+		<div id="app">
+			<p>{{ message }}</p>
+			<input type="" name="" v-model="long">
+		</div>
+		<div id="app-1">
+			<input type="radio" name="lloo" value="1" v-model="lloo">
+			<input type="radio" name="lloo" value="2" v-model="lloo" id="">
+			<input type="radio" name="lloo" value="3" v-model="lloo" id="">
+			<input type="radio" name="lloo" value="4" v-model="lloo" id="">
+			<input type="radio" name="lloo" value="5" v-model="lloo" id="">
+		</div>
 		<div id="app-2" class="none">
 			<span v-bind:title="message">
 		    鼠标悬停几秒钟查看此处动态绑定的提示信息！
@@ -216,7 +226,7 @@ content: "";
 		</div>
 
 	</div>
-	
+
 </body>
 <script>
 /*try {
@@ -229,6 +239,14 @@ console.log(err);
 var app = new Vue({
 		el: '#app',
 		data: {
+			message: 'Hello Vue!',
+			long: 'long'
+		}
+	}),
+	app1 = new Vue({
+		el: '#app-1',
+		data: {
+			lloo: '1',
 			message: 'Hello Vue!'
 		}
 	}),

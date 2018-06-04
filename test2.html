@@ -10,6 +10,9 @@
 	<!-- <script src="js/base.js"></script>
 	<script src="js/lodash.js"></script>
 	<script src="js/angular.js"></script> -->
+	<script src="js/_30s.js"></script>
+	<script src="js/base.js"></script>
+	<script src="js/axios.js"></script>
 </head>
 <style>
 	.postTitle a {
@@ -92,7 +95,7 @@
 
 	form {
 		height: 100px;
-		-webkit-appearance: button;
+		/*-webkit-appearance: button;*/
 		overflow: auto;
 	}
 	.btn {
@@ -100,7 +103,7 @@
 		height: 30px;
 		/*-webkit-appearance: button;*/
 		/* outline: 5px solid #f90;
-	outline-offset: 2px; */
+		outline-offset: 2px; */
 		box-sizing: border-box;
 		background-color: #09f;
 		/*resize: both;*/
@@ -140,10 +143,79 @@
 		font-size: 18px;
 		color: #f90;
 	}
+	.submitBox button:nth-child(1) {
+		color: red;
+	}
+	@supports (-webkit-appearance: none) {
+	  #chrome_detect::after {
+	    /* content: url('images/001.gif'); */
+	    content: attr(title);
+	    color:red;
+	  }
+	}
+	ol {
+		counter-reset: item;
+	}
+	li:before {
+		counter-increment: item;
+		content: counters(item, ".");
+	}
+	ol {
+		list-style-type: toggle(disk, circle, square, box);
+	}
+	.box2 {
+		width: 100px;
+		height: 100px;
+		background-color: #f90;
+		user-select: none;
+	}
+	#demo:target{color:#f00;}
+	.dd{
+		border: 3px dashed #000;
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		border-color: #f90;
+		border-bottom-color: transparent;
+		animation: dd-ddd 1s linear infinite;
+
+	}
+	@keyframes dd-ddd {
+		0%	{
+			transform:rotate(0deg);
+		}
+		100% {
+			transform:rotate(360deg);
+		}
+	}
 </style>
 </head>
 
 <body>
+	<!-- <input type="number" id="yearId" pattern="/^\d$/g" /> -->
+	<div class="dd none"></div>
+	<!-- <div id="demo">
+		<p>E:target伪类使用方法</p>
+	</div> -->
+	<!-- <div class="box1">
+		<div class="box2">dfaksjfllajsflajsflj</div>
+	</div> -->
+	<!-- <ol class="test">
+		<li>Node
+			<ol>
+				<li>Node</li>
+				<li>
+					<ol>
+						<li>java</li>
+					</ol>
+				</li>
+			</ol>
+		</li>
+		<li>Node</li>
+		<li>Node</li>
+	</ol> -->
+	<!-- <div id="chrome_detect" title="chrome">haha</div> -->
+	<!-- <div class="submitBox"><button class="ok">确定</button><button class="ok">确定</button></div> -->
 	<!-- <long>hello,world</long> -->
 	<!-- <ul class="test">
 		<li class="counter1">
@@ -181,10 +253,15 @@
 	</ol> -->
 	<!-- <div class="icon">longfei</div> -->
 	<!-- <div class="btn" contenteditable="">11</div> -->
-	<form action="">
+	<ul>
+		<li>test:<input type="text"></li>
+		<li>test:<input type="text"></li>
+		<li>test:<input type="text"></li>
+	</ul>
+	<input type="text" id="long">
+	<span>event.keyCode: <output></output></span>
+	<form action="" class="none">
 		<!-- <input type="text" id="fei" pattern="\w{3,8}"> -->
-		<input type="text" id="long">
-		<span>event.keyCode: <output></output></span>
 		<!-- <p class="postTitle">
 			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/keepfool/p/5637834.html">Vue.js——60分钟组件快速入门（下篇）</a>
 		</p> -->
@@ -200,12 +277,225 @@
 	<!-- <p>点击复制后在右边textarea CTRL+V看一下</p>
 	<input type="text" id="inputText" value="测试文本" />
 	<textarea rows="4"></textarea> -->
-	<input type="button" id="btn" value="复制" />
-	<div id="long">
-		<div id="fei">123</div>
-	</div>
+	<!-- <button type="button" onclick="copyToClipboard('复制内容')">复制内容</button> -->
 </body>
+
 <script>
+var instance = axios.create({
+  baseURL: 'http://rapapi.org/mockjs/31038',
+  timeout: 1000,
+  // headers: {'X-Custom-Header': 'foobar'}
+});
+instance.get('/long/first').then(res=>console.log(res.data))
+/*let dd=1;
+let a = {
+    oneThing(a){
+        let b = a * 2;
+        (()=> this.otherThing(b))()
+    },
+    otherThing: ( b ) => {console.log(b)},
+    [dd]:2
+};
+a.oneThing(6);*/
+let yearDom = document.getElementById('yearId');
+yearDom&&yearDom.addEventListener('blur', function(e) {
+	let year = parseInt(yearDom.value);
+	if(year < 1949 || year > new Date().getFullYear()) {
+		alert('年份必须在1949到至今');
+		return false;
+	}
+})
+
+
+const isValidJSON = obj => {
+  try {
+    JSON.parse(obj);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+const isArrayLike = val => {
+  try {
+    return [...val], true;
+  } catch (e) {
+    return false;
+  }
+};
+const isPlainObject = val => !!val && typeof val === 'object' && val.constructor === Object;
+const getURLParameters = url =>
+  (url.match(/([^?=&]+)(=([^&]*))/g) || []).reduce(
+    (a, v) => ((a[v.slice(0, v.indexOf('='))] = v.slice(v.indexOf('=') + 1)), a),
+    {}
+  );
+
+const hexToRGB = hex => {
+  let alpha = false,
+    h = hex.slice(hex.startsWith('#') ? 1 : 0);
+  if (h.length === 3) h = [...h].map(x => x + x).join('');
+  else if (h.length === 8) alpha = true;
+  h = parseInt(h, 16);
+  return (
+    'rgb' +
+    (alpha ? 'a' : '') +
+    '(' +
+    (h >>> (alpha ? 24 : 16)) +
+    ', ' +
+    ((h & (alpha ? 0x00ff0000 : 0x00ff00)) >>> (alpha ? 16 : 8)) +
+    ', ' +
+    ((h & (alpha ? 0x0000ff00 : 0x0000ff)) >>> (alpha ? 8 : 0)) +
+    (alpha ? `, ${h & 0x000000ff}` : '') +
+    ')'
+  );
+};
+
+const httpGet = (url, callback, err = console.error) => {
+  const request = new XMLHttpRequest();
+  request.open('GET', url, true);
+  request.onload = () => callback(request.responseText);
+  request.onerror = () => err(request);
+  request.send();
+};
+
+const httpPost = (url, data, callback, err = console.error) => {
+  const request = new XMLHttpRequest();
+  request.open('POST', url, true);
+  request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+  request.onload = () => callback(request.responseText);
+  request.onerror = () => err(request);
+  request.send(data);
+};
+
+const isBrowser = () => ![typeof window, typeof document].includes('undefined');
+
+let cookieStr='long=1;fei=2'
+const parseCookie = str =>
+  str.split(';').map(v => v.split('=')).reduce((acc, v) => {
+      acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
+      return acc;
+    }, {});
+// parseCookie(cookieStr)
+const prettyBytes = (num, precision = 3, addSpace = true) => {
+  const UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+  if (Math.abs(num) < 1) return num + (addSpace ? ' ' : '') + UNITS[0];
+  const exponent = Math.min(Math.floor(Math.log10(num < 0 ? -num : num) / 3), UNITS.length - 1);
+  const n = Number(((num < 0 ? -num : num) / 1000 ** exponent).toPrecision(precision));
+  return (num < 0 ? '-' : '') + n + (addSpace ? ' ' : '') + UNITS[exponent];
+};
+// console.log(prettyBytes(1000))
+const RGBToHex = (r, g, b) => ((r << 16) + (g << 8) + b).toString(16).padStart(6, '0');
+// console.log(RGBToHex(255, 165, 1)); // 'ffa501'
+const toCurrency = (n, curr, LanguageFormat = undefined) =>
+  Intl.NumberFormat(LanguageFormat, { style: 'currency', currency: curr }).format(n);
+// console.log(toCurrency(123456.789, 'USD', 'en-us')); // $123,456.79  | currency: US Dollar | currencyLangFormat: English (United States)
+// console.log(toCurrency(123456.789, 'USD', 'fa')); // ۱۲۳٬۴۵۶٫۷۹ ؜$ | currency: US Dollar | currencyLangFormat: Farsi
+const toOrdinalSuffix = num => {
+  const int = parseInt(num),
+    digits = [int % 10, int % 100],
+    ordinals = ['st', 'nd', 'rd', 'th'],
+    oPattern = [1, 2, 3, 4],
+    tPattern = [11, 12, 13, 14, 15, 16, 17, 18, 19];
+  return oPattern.includes(digits[0]) && !tPattern.includes(digits[1])
+    ? int + ordinals[digits[0] - 1]
+    : int + ordinals[3];
+};
+var home={
+	0:2,
+	1:12,
+	2:23,
+	length:2
+};
+let hh=1;
+let fff=aa=>aa.filter((a,v)=>(a=1,a),{});
+let haha=(hh=2,hh,{});
+const objectFromPairs = arr => arr.reduce((a, v) => (a[v[0]] = v[1], a), {});
+objectFromPairs([['a',1],['b',2]])// -> {a: 1, b: 2}
+const speak = message => {
+  const msg = new SpeechSynthesisUtterance(message);
+  msg.voice = window.speechSynthesis.getVoices()[0];
+  window.speechSynthesis.speak(msg);
+};
+// speak('Hello, World');// -> plays the message
+// 复制到剪贴板
+const copyToClipboard = str => {
+  const el = document.createElement('textarea');
+  el.value = str;
+  el.setAttribute('readonly', '');
+  el.style.position = 'absolute';
+  el.style.left = '-9999px';
+  document.body.appendChild(el);
+  const selected =
+    document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+  if (selected) {
+    document.getSelection().removeAllRanges();
+    document.getSelection().addRange(selected);
+  }
+};
+
+// const compose = (...fns) => fns.reduce((f, g) => (...args) => f(g(...args)));
+const compose = function(...fns) {
+	return fns.reduce(function (f, g) {
+		// console.log(f,g)
+		return function(...args) {
+			return f(g(...args))
+		}
+	})
+}
+/*const add5 = x => x + 5;
+const multiply = (x, y) => x * y;
+const multiplyAndAdd5 = compose(add5, multiply);
+console.log(multiplyAndAdd5(5,2))
+console.log(compose(()=>console.log(1),()=>console.log(2),(a,b,c)=>console.log(a,b,c))(1,2))*/
+/*Observe(home)
+// 创建一个Observe构造函数
+// 写数据劫持的主要逻辑
+function Observe(data) {
+  // 所谓数据劫持就是给对象增加get,set
+  // 先遍历一遍对象再说
+  for (let key in data) { // 把data属性通过defineProperty的方式定义属性
+    let val = data[key];
+    observe(val); // 递归继续向下找，实现深度的数据劫持
+    Object.defineProperty(data, key, {
+      configurable: true,
+      get() {
+        return val;
+      },
+      set(newVal) { // 更改值的时候
+        if (val === newVal) { // 设置的值和以前值一样就不理它
+          return;
+        }
+        val = newVal; // 如果以后再获取值(get)的时候，将刚才设置的值再返回去
+        observe(newVal); // 当设置为新值后，也需要把新值再去定义成属性
+      }
+    });
+  }
+}
+
+// 外面再写一个函数
+// 不用每次调用都写个new
+// 也方便递归调用
+function observe(data) {
+  // 如果不是对象的话就直接return掉
+  // 防止递归溢出
+  if (!data || typeof data !== 'object') return;
+  return new Observe(data);
+}*/
+
+
+/*const initArr = (end, start = 0) =>
+  Array.apply(null, Array(end - start)).map((v, i) => i + start);*/
+/*function Fibonacci2 (n , ac1 = 1 , ac2 = 1) {
+  if( n <= 1 ) {return ac2};
+  console.count();
+  console.log(ac2, ac1 + ac2)
+  return Fibonacci2 (n - 1, ac2, ac1 + ac2);
+}
+
+Fibonacci2(100) // 573147844013817200000
+// Fibonacci2(1000) // 7.0330367711422765e+208*/
 /*var obj = new Proxy({}, {
   get: function (target, key, receiver) {
     console.log(`getting ${key}!`, target,receiver);

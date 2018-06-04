@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="gb2312" />
+<meta charset="utf-8" />
 <style type="text/css">
 div,ul,li,body { margin: 0; padding: 0; font-size: 12px; }
 #containet {
@@ -10,52 +10,24 @@ div,ul,li,body { margin: 0; padding: 0; font-size: 12px; }
 	padding: 19px;
 	margin: auto;
 }
-#pageMain li {
-	list-style: none;
-	line-height: 22px;
-}
-#pageBox { padding: 10px 0 0 0; }
-#pageBox span {
-	display: inline-block;
-	width: 60px;
-	height: 24px;
-	line-height: 24px;
-	text-align: center;
-	color: #fff;
-	background: #08a586;
-}
-#pageNav { display: inline-block; }
-#pageNav a {
-	display: inline-block;
-	width: 24px;
-	height: 24px;
-	line-height: 24px;
-	text-align: center;
-	color: #08a586;
-	text-decoration:none;
-}
-#pageNav a.active,
-#pageNav a:hover {
-	background: #08a586;
-	color: #fff;
-}
+
 </style>
-<script src="js/jquery-1.9.1.js"></script>
-<button id="showNotice">ÏÔÊ¾×ÀÃæÍ¨Öª</button>
+<script src="js/jquery.js"></script>
+<button id="showNotice">æ˜¾ç¤ºæ¡Œé¢é€šçŸ¥</button>
 	<script type="text/javascript">
 		var oBtn = document.querySelector("#showNotice");
 		oNotifications = window.Notification;
 		if(oNotifications){
 			oBtn.addEventListener("click", showMsg, false);
 		}else{
-			console.log("ä¯ÀÀÆ÷²»Ö§³Ö×ÀÃæÍ¨ÖªßÏ£¬Ê¹ÓÃchrome»òÕßfirefox¿´¿´Ğ§¹û°É¡£");
+			console.log("æµè§ˆå™¨ä¸æ”¯æŒæ¡Œé¢é€šçŸ¥å‘¦ï¼Œä½¿ç”¨chromeæˆ–è€…firefoxçœ‹çœ‹æ•ˆæœå§ã€‚");
 		}
-		
+
 		function showMsg(){
 			if(oNotifications.permission == "granted"){
-				
-				var demo = new Notification("ÕâÀïÊÇ±êÌâ", {icon: "http://rguanghui.sinaapp.com/lib/images/portrait.jpg", body: "µ¯³öµÄÄ³Ò»Ğ©ÄÚÈİµ¯³öµÄÄ³Ò»Ğ©ÄÚÈİµ¯³öµÄÄ³Ò»Ğ©ÄÚÈİµ¯³öµÄÄ³Ò»Ğ©ÄÚÈİµ¯³öµÄÄ³Ò»Ğ©ÄÚÈİµ¯³öµÄÄ³Ò»Ğ©ÄÚÈİ"});
-				
+
+				var demo = new Notification("è¿™é‡Œæ˜¯æ ‡é¢˜", {icon: "/images/001.gif", body: "Notificationå¼¹å‡ºçš„æŸä¸€äº›å†…å®¹"});
+
 				demo.onshow = function(){
 					console.log("The notification is showed");
 					setTimeout(function(){
@@ -74,112 +46,6 @@ div,ul,li,body { margin: 0; padding: 0; font-size: 12px; }
 		}
 	</script>
 
-<div id="containet">
-	<div id="pageMain">
-		<li>1</li>
-		<li>2</li>
-		<li>3</li>
-		<li>4</li>
-		<li>5</li>
-		<li>6</li>
-		<li>7</li>
-		<li>8</li>
-		<li>9</li>
-		<li>10</li>
-	</div>
-    <div id="pageBox">
-    	<span id="prev" style="cursor:pointer;">ÉÏÒ»Ò³</span>
-        <ul id="pageNav">
-        </ul>
-        <span id="next" style="cursor:pointer;">ÏÂÒ»Ò³</span>
-    </div>
-</div>
+
 </body>
 </html>
-<script>
-window.onload = function(){
-	tabPage({
-		pageMain : 'pageMain',
-		pageNav : 'pageNav',
-		pagePrev: 'prev',
-		pageNext: 'next',
-		curNum: 7,      //Ã¿Ò³ÏÔÊ¾µÄÌõÊı
-		activeClass: 'active',   //¸ß¹âÏÔÊ¾µÄclass
-		ini: 0    //³õÊ¼»¯ÏÔÊ¾µÄÒ³Ãæ
-	});
-	
-	function tabPage(tabPage){
-		var pageMain = document.getElementById(tabPage.pageMain);   //»ñÈ¡ÄÚÈİÁĞ±í
-		var pageNav = document.getElementById(tabPage.pageNav);     //»ñÈ¡·ÖÒ³
-		var pagePrev = document.getElementById(tabPage.pagePrev);   //ÉÏÒ»Ò³
-		var pageNext = document.getElementById(tabPage.pageNext);   //ÏÂÒ»Ò³
-		
-		var curNum = tabPage.curNum;                                //Ã¿Ò³ÏÔÊ¾Êı
-		var len = Math.ceil(pageMain.children.length / curNum);     //¼ÆËã×ÜÒ³Êı
-		var pageList = '';                                          //Éú³ÉÒ³Âë
-		var iNum = 0;                                               //µ±Ç°µÄË÷ÒıÖµindex
-		
-		for(var i = 0; i < len; i++){
-			pageList+='<a href="javascript:;">'+ ( i + 1)+'</a>';
-		}
-		pageNav.innerHTML = pageList;
-		
-		pageNav.children[0].className = tabPage.activeClass;        //Í·Ò»Ò³¼Ó¸ßÁÁÏÔÊ¾
-		
-		for(var i = 0; i < pageNav.children.length; i++){
-			pageNav.children[i].index = i;
-			pageNav.children[i].onclick = function(){
-				for(var t = 0; t < pageNav.children.length; t++){
-					pageNav.children[t].className = '';
-				}
-				this.className = tabPage.activeClass;
-				iNum = this.index;
-				ini(iNum);
-			};
-		}
-		
-		
-		//ÏÂÒ»Ò³
-		pageNext.onclick = function(){
-			if(iNum == len - 1){
-				alert('ÒÑ¾­ÊÇ×îºóÒ»Ò³');
-				return false;
-			}else{
-				for(var t = 0; t < pageNav.children.length; t++){
-					pageNav.children[t].className = '';
-				}
-				iNum++;
-				pageNav.children[iNum].className = tabPage.activeClass;
-				ini(iNum);
-			}
-		};
-		
-		//ÉÏÒ»Ò³
-		pagePrev.onclick = function(){
-			if(iNum == 0){
-				alert('µ±Ç°ÊÇµÚÒ»Ò³');
-				return false;
-			}else{
-				for(var t = 0; t < pageNav.children.length; t++){
-					pageNav.children[t].className = '';
-				}
-				iNum--;
-				pageNav.children[iNum].className = tabPage.activeClass;
-				ini(iNum);
-			}
-		};
-		
-		function ini(iNum){
-			for(var i = 0; i < pageMain.children.length; i++){
-				pageMain.children[i].style.display = 'none';
-			}
-			
-			for(var i = 0; i < curNum; i++){
-				if(pageMain.children[(iNum * curNum + i)] == undefined){ continue; }
-				pageMain.children[(iNum * curNum + i)].style.display = 'block';
-			}
-		}
-		ini(iNum);
-	}
-};
-</script>

@@ -20,7 +20,7 @@ Person.prototype = {
 
 var Class = function () {
 	var klass = function () {
-		console.log(this);
+		// console.log(this);
 		this.init.apply(this, arguments);
 	};
 	//改变klass的原型
@@ -30,9 +30,7 @@ var Class = function () {
 		klass.prototype = new subclass;
 	};
 	klass.prototype.init = function (a, b) {
-		//console.log(this);
 	};
-	//console.log(this);
 	klass.fn = klass.prototype;
 	klass.fn.parent = klass;
 	klass._super = klass.__proto__;
@@ -42,8 +40,9 @@ var Class = function () {
 		for (var i in obj) {
 			klass[i] = obj[i];
 		}
-		if (extended)
+		if (extended) {
 			extended(klass);
+		}
 	};
 
 	//给实例添加属性
@@ -91,13 +90,6 @@ function countdown(dom, timestr) {
 	}, 1000);
 };
 /*
-//IE8不支持bind, Function.prototype.bind 内部实现
-Function.prototype.bind = function (scope) {
-	var fn = this;
-	return function () {
-		return fn.apply(scope);
-	};
-}
 //解决IE8兼容可用如下代码
 if (!Function.prototype.bind) {
 	Function.prototype.bind = function (obj) {
@@ -762,8 +754,7 @@ if (!Array.prototype.some) {
 }
 //ES5加入every
 if (!Array.prototype.every) {
-	Array.prototype.every = function (fun /*, thisArg */
-	) {
+	Array.prototype.every = function (fun) {
 		'use strict';
 
 		if (this === void 0 || this === null)
@@ -939,12 +930,12 @@ function addAnchors(e) {
 var numbersArray = [] , max = 100;
 for( var i=1; numbersArray.push(i++) < max;);  // numbers = [1,2,3 ... 100]*/
 
-/*生成一个随机的字母数字序列
+/*生成一个随机的字母数字序列*/
 function generateRandomAlphaNum(len) {
     var rdmString = "";
     for( ;rdmString.length < len; rdmString  += Math.random().toString(36).substr(2));
     return  rdmString.substr(0, len);
-}*/
+}
 
 /*打乱一个数字数组的顺序
 var numbers = [5, 458 , 120 , -215 , 228 , 400 , 122205, -85411];
@@ -1061,5 +1052,34 @@ $(document.body).bind({
         $('#message').html(data);
     }
 });
+/**
+ * 获取字符串中出现次数最多的字符
+ * @param  {string} str 查询字符串
+ * @return {object}     返回重复的字符与次数
+ */
+function checkCountMax(str) {
+	str =str.split("").sort();
+	var i = 1,j =str[0],s=1,count=1;
+	for (;i<str.length;i++) {
+		if (str[i-1] ==str[i]) {
+			s++;
+			if (s>count) {
+				count = s;
+				j=str[i];
+			}
+		} else {
+			s=1;
+		}
+	}
+	return {
+		str:j,
+		count:count
+	}
+}
 
-
+function GetQueryString(name) {
+	// location.search.match(/day=([^&]*)(&|$)/)
+	var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+	var r = location.search.substr(1).match(reg);
+	return r?unescape(r[2]): null;
+}

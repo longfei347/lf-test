@@ -11,15 +11,18 @@
 	<script src="js/j.js"></script>
 </head>
 <style>
-html, body{height: 100%;margin: 0;padding: 0;}
+.dustbin {
+	width: 100px;
+	height: 100px;
+	border: 1px solid #f00;
+}
 </style>
 <body>
 	<div id="box" draggable="true" style="background-color:#ccc; width: 40px; height:40px; cursor:move; position:absolute;left:200px;">
-		<div id="coor" style="width: 10px;height: 10px;background: #c00;overflow: hidden;cursor: se-resize;position: absolute;
-right: 0;bottom: 0;"></div>
+		<div id="coor" style="width: 10px;height: 10px;background: #c00;overflow: hidden;cursor: se-resize;position: absolute; right: 0;bottom: 0;"></div>
 	</div>
-	<input type="number" maxlength="3" max="100" min="10" step="5" onkeypress="if(event.keyCode<48||event.keyCode>57)return false;">
-	<form id="form" onsubmit="return false;">
+	<!-- <form id="form" onsubmit="return false;">
+		<input type="number" maxlength="3" max="100" min="10" step="5" onkeypress="if(event.keyCode<48||event.keyCode>57)return false;">
 		<input type="text" list="long">
 		<datalist id="long">
 			<option>1</option>
@@ -35,7 +38,7 @@ right: 0;bottom: 0;"></div>
 		</progress>
 		<meter min="0" max="20" high="30" value="5">5</meter>
 		<button type="submit" onclick="document.getElementById('form').submit()">提交</button>
-	</form>
+	</form> -->
 	<div class="dustbin">
 		<br />垃
 		<br />圾
@@ -51,34 +54,11 @@ right: 0;bottom: 0;"></div>
 </html>
 <script>
 var eleDrag = null, pos={};
-box.ondragstart = function(ev) {
-	eleDrag = this;
-	console.log(ev.offsetX,ev.offsetY)
-	pos.x=ev.offsetX;
-	pos.y=ev.offsetY;
-}
-
-document.body.addEventListener("drop", function(ev) {
-	console.log(ev,ev.clientX, ev.clientY)
-	eleDrag.style.left = ev.clientX -pos.x + "px";
-	eleDrag.style.top = ev.clientY -pos.y + "px";
-
-})
-document.body.ondragover = function(ev) {
-	//拖拽元素在目标元素头上移动的时候 
-	ev.preventDefault();
-	return true;
-};
-var eleDustbin = $(".dustbin")[0],
-	eleDrags = $(".draglist"),
-	lDrags = eleDrags.length,
-	eleRemind = $(".dragremind")[0],
-	eleDrag = null;
-for (var i = 0; i < lDrags; i += 1) {//
-	eleDrags[i].onselectstart = function() {
+$(".draglist").each((i, item)=>{
+	item.onselectstart = function() {
 		return false;
 	};
-	eleDrags[i].ondragstart = function(ev) {
+	item.ondragstart = function(ev) {
 		//拖拽开始
 		//拖拽效果
 		ev.dataTransfer.effectAllowed = "move";
@@ -87,63 +67,43 @@ for (var i = 0; i < lDrags; i += 1) {//
 		eleDrag = ev.target;
 		return true;
 	};
-	eleDrags[i].ondragend = function(ev) {
+	item.ondragend = function(ev) {
 		//拖拽结束
 		ev.dataTransfer.clearData("text");
 		eleDrag = null;
 		return false
 	};
-}
-eleDustbin.ondragover = function(ev) {
-	//拖拽元素在目标元素头上移动的时候
-	ev.preventDefault();
-	return true;
-};
-eleDustbin.ondragenter = function(ev) {
-	//拖拽元素进入目标元素头上的时候
-	this.style.color = "#f90";
-	return true;
-};
-eleDustbin.ondrop = function(ev) {
-	//拖拽元素进入目标元素头上，同时鼠标松开的时候
-	if (eleDrag) {
-		eleRemind.innerHTML = '"' + eleDrag.innerHTML + '"被扔进了垃圾箱';
-		eleDrag.parentNode.removeChild(eleDrag);
+})
+$(".dustbin").on({
+	dragover(ev){
+		//拖拽元素在目标元素头上移动的时候
+		ev.preventDefault();
+		return true;
+	},
+	dragenter(ev) {
+		//拖拽元素进入目标元素头上的时候
+		this.style.color = "#f90";
+		return true;
+	},
+	dragover(ev) {
+		//拖拽元素在目标元素头上移动的时候
+		ev.preventDefault();
+		return true;
+	},
+	drop(ev) {
+		//拖拽元素进入目标元素头上，同时鼠标松开的时候
+		if (eleDrag) {
+			$(".dragremind").html('"' + eleDrag.innerHTML + '"被扔进了垃圾箱');
+			eleDrag.parentNode.removeChild(eleDrag);
+		}
+		this.style.color = "#000000";
+
+		return false;
 	}
-	this.style.color = "#000000";
-
-	return false;
-};
-
-/*! function() {
-	var a = b = c = 0; //等价于var a=(b=(c=0)) c=0 即全局变量为0,表达式返回0 赋给b,再返回0赋给a
-}()*/
-
-
-/*var a = {n: 1}
-var b = a;
-console.log(a.x = a = {n: 2});
-console.log(a.x);
-console.log(b)*/
-/*var a = {n: 1}
-var b = a;
-a = {n: 2}
-a.x = a
-console.log(a.x);
-console.log(b.x)*/
-
-/*function Foo() {};
-var foo = new Foo();
-//Foo为foo的构造函数
-console.log(foo instanceof Foo); // true
-//但是Function并不是foo的构造函数
-console.log(foo instanceof Function); // false
-//Function为Foo的构造函数
-console.log(Foo instanceof Function);//true*/
+})
 
 var $box = $('#box').mousedown(function(e) {
 	var offset = $(this).offset();
-
 	this.posix = {
 		'x': e.pageX - offset.left,
 		'y': e.pageY - offset.top
@@ -153,7 +113,7 @@ var $box = $('#box').mousedown(function(e) {
 		'move_target': this
 	});
 	// console.log("clientY:"+e.clientY, "pageY:"+e.pageY);
-	console.log("offsetX:" + e.offsetX, "offsetY:" + e.offsetY);
+	// console.log("offsetX:" + e.offsetX, "offsetY:" + e.offsetY);
 }).on('mousedown', '#coor', function(e) {
 	var posix = {
 		'w': $box.width(),
@@ -172,33 +132,49 @@ var $box = $('#box').mousedown(function(e) {
 		}
 	});
 	return false;
+}).on('dragstart', function(ev) {
+	eleDrag = this;
+	// console.log(ev.offsetX,ev.offsetY)
+	pos.x=ev.offsetX;
+	pos.y=ev.offsetY;
 });
-$(document).mousemove(function(e) {
-	if (!!this.move) {
-		//console.log(document.move_target);
-		var posix = !document.move_target ? {
-				'x': 0,
-				'y': 0
-			} : document.move_target.posix,
-			callback = document.call_down || function() {
-				$(this.move_target).css({
-					'top': e.pageY - posix.y,
-					'left': e.pageX - posix.x
-				});
-			};
 
-		callback.call(this, e, posix);
-	}
-}).mouseup(function(e) {
-	if (!!this.move) {
-		var callback = document.call_up || function() {};
-		callback.call(this, e);
-		$.extend(this, {
-			'move': false,
-			'move_target': null,
-			'call_down': false,
-			'call_up': false
-		});
+$(document).on({
+	mousemove: function(e) {
+		if (this.move) {
+			var posix = !document.move_target ? {
+					'x': 0,
+					'y': 0
+				} : document.move_target.posix,
+				callback = document.call_down || function() {
+					$(this.move_target).css({
+						'top': e.pageY - posix.y,
+						'left': e.pageX - posix.x
+					});
+				};
+
+			callback.call(this, e, posix);
+		}
+	},
+	mouseup:function(e) {
+		if (!!this.move) {
+			console.count();
+			$.extend(this, {
+				'move': false,
+				'move_target': null,
+				'call_down': false
+			});
+		}
+	},
+	drop: function(ev) {
+		console.log(ev,ev.clientX, ev.clientY)
+		eleDrag.style.left = ev.clientX -pos.x + "px";
+		eleDrag.style.top = ev.clientY -pos.y + "px";
+	},
+	dragover:function(ev) {
+		//拖拽元素在目标元素头上移动的时候
+		ev.preventDefault();
+		return true;
 	}
 });
 </script>

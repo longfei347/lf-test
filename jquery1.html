@@ -84,9 +84,16 @@ p.overd::after {
 	height: 100%;
 	background-color: #00f;
 }
+
+
+
 </style>
 
 <body class="ss">
+	<div class="haha">
+		<input type="file" name="" id="ff">
+		<!-- <img src="" alt=""> -->
+	</div>
 	<!-- <form id="form" name="form" method="get">
 		<del>二十</del>
 		<ins>十二</ins>
@@ -163,8 +170,23 @@ p.overd::after {
 <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js"></script> -->
 <script type="text/javascript" src="js/jquery.js"></script>
 <script>
+// document.designMode='on';
 // $.holdReady(3);
 $(function() {
+	$('#ff').on('change', function(e) {
+		console.log(this.files[0]);
+		var fr = new FileReader();
+        if (this.files[0].type.indexOf('image') != -1) {
+            fr.readAsDataURL(this.files[0]);
+            fr.onload = function() {
+                var oLi = document.createElement('li');
+                var oImg = document.createElement('img');
+                oImg.src = this.result;
+                oLi.appendChild(oImg);
+				$('#ff').after(oLi);
+            };
+        }
+	})
 	$("button:last").on("click", function() {
 		//模拟异步C
 		function C() {

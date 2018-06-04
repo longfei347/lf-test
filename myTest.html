@@ -21,11 +21,31 @@ input[type=text]{
 </style>
 <body>
 	<form method="post" id="s_form">
-		<input type="text" class="long" name="long" id="long" onkeypress="console.log(event.keyCode)">
+		<input type="text" class="long" name="long" id="long" onkeydown="console.log(event.keyCode,event.key)">
 	</form>
 	<p id="time"></p>
 </body>
 <script>
+/*window.onerror = function(message,url,line){
+	// 汇报错误
+	console.log("文件" + url + "中的第" + line + "行代码出错，错误信息：" + message);
+	// 不希望此错误继续扩散
+	return true;
+};
+function isJson(str) {
+	if (typeof str == 'string') {
+		try {
+			var obj = JSON.parse(str);
+			return obj
+		} catch(error) {
+			throw error
+			return false;
+		}
+	}
+}
+isJson('long')*/
+
+
 /*// async/await
 var sleep = function (time) {
     return new Promise(function (resolve, reject) {
@@ -53,7 +73,7 @@ var v3 = 10;
 var v4 = Symbol("foo")
 var v5 = 2;
 
-var obj = Object.assign({}, v1, null, v2, undefined, v3, v4); 
+var obj = Object.assign({}, v1, null, v2, undefined, v3, v4);
 // 原始类型会被包装，null 和 undefined 会被忽略。
 // 注意，只有字符串的包装对象才可能有自身可枚举属性。
 console.log(obj); // { "0": "a", "1": "b", "2": "c" }

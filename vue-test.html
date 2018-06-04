@@ -172,7 +172,9 @@ content: "";
 		</tbody>
 	</table>
 	<div class="tinymce-module fd-clr">
-		<div id="app" class="none">{{ message }}</div>
+		<div id="app">
+			<p class="p1">{{ message }}</p>
+		</div>
 		<div id="app-2" class="none">
 			<span v-bind:title="message">
 		    鼠标悬停几秒钟查看此处动态绑定的提示信息！
@@ -216,7 +218,7 @@ content: "";
 		</div>
 
 	</div>
-	
+
 </body>
 <script>
 /*try {
@@ -226,10 +228,12 @@ content: "";
 }*/
 var err=new Error();
 console.log(err);
+var aaa={};
 var app = new Vue({
 		el: '#app',
 		data: {
-			message: 'Hello Vue!'
+			message: 'Hello Vue!',
+			arr:[{msg:'A'},{msg:'B'}]
 		}
 	}),
 	app2 = new Vue({

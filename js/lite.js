@@ -1,25 +1,27 @@
-(function ($) {
-	$.fn.touchwipe = function (settings) {
+(function($) {
+	$.fn.touchwipe = function(settings) {
 		var config = {
-			min_move_x : 20,
-			min_move_y : 20,
-			wipeLeft : function () {},
-			wipeRight : function () {},
-			wipeUp : function () {},
-			wipeDown : function () {},
-			preventDefaultEvents : true
+			min_move_x: 20,
+			min_move_y: 20,
+			wipeLeft: function() {},
+			wipeRight: function() {},
+			wipeUp: function() {},
+			wipeDown: function() {},
+			preventDefaultEvents: true
 		};
 		if (settings)
 			$.extend(config, settings);
-		this.each(function () {
+		this.each(function() {
 			var startX;
 			var startY;
 			var isMoving = false;
+
 			function cancelTouch() {
 				this.removeEventListener('touchmove', onTouchMove);
 				startX = null;
 				isMoving = false
 			}
+
 			function onTouchMove(e) {
 				if (config.preventDefaultEvents) {
 					e.preventDefault()
@@ -46,6 +48,7 @@
 					}
 				}
 			}
+
 			function onTouchStart(e) {
 				if (e.touches.length == 1) {
 					startX = e.touches[0].pageX;
@@ -61,16 +64,3 @@
 		return this
 	}
 })(jQuery);
-
-var arr = useCommon.bankListData.filter(function(item, index) {
-  if (index === 0) {
-    // continue;
-    return ;
-  } else {
-    if (item.bank_code === useCommon.bankListData[index - 1].bank_code) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-}).map(item=> item.bank_name);

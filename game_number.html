@@ -9,6 +9,13 @@
 .red {
 	color: #f00;
 }
+#result span {
+	cursor: pointer;
+}
+#result .del {
+	color: red;
+	text-decoration: line-through;
+}
 </style>
 <body>
 	<h2>猜数字</h2>
@@ -20,6 +27,7 @@
 		<input type="text" name="number3" id="num3" size="2" maxlength="1" onkeyup="toNext(this,event)">
 		<input type="text" name="number4" id="num4" size="2" maxlength="1" onkeyup="toNext(this,event)">
 		<button id="ttt" name="ok" type="button" onClick="check()">确定</button>
+		<div id="result"></div>
 	</form>
 </body>
 <script>
@@ -37,6 +45,11 @@ window.onload = function() {
 		}
 	}
 	console.log(num);
+	document.getElementById("result").addEventListener("click",function(e) {
+		if(e.target.nodeName === 'SPAN') {
+			e.target.classList.toggle('del');
+		}
+	})
 }
 
 function check() {
@@ -65,8 +78,8 @@ function check() {
 	} else {
 		total++;
 		var nodeP = document.createElement("p");
-		nodeP.innerHTML = "第" + total + "组:" + num1.value + ", " + num2.value + ", " + num3.value + ", " + num4.value + "; " + As + "A, " + (Bs - As) + "B";
-		f.appendChild(nodeP)
+		nodeP.innerHTML = `第${total}组: <span>${num1.value}</span>, <span>${num2.value}</span>, <span>${num3.value}</span>, <span>${num4.value}</span>; ${As}A, ${Bs-As}B`;
+		document.getElementById("result").appendChild(nodeP);
 		num1.value = '';
 		num2.value = "";
 		num3.value = '';
@@ -76,11 +89,15 @@ function check() {
 
 function toNext(t, e) {
 	//console.log(e.keyCode)
-	//if (e.keyCode < 48 || e.keyCode > 57) {
-	if (isNaN(t.value) || t.value < 0 || t.value > 9) {
-		t.value = "";
-	} else if (e.keyCode != 8) {
+	if (e.key == 'ArrowLeft') {
+		t.previousElementSibling&&t.previousElementSibling.focus();
+	} else if (e.key == 'ArrowRight') {
+		t.nextElementSibling&&t.nextElementSibling.focus();
+	} else if (e.key >= 0 && e.key <= 9) {
+		t.value = e.key;
 		t.nextElementSibling.focus();
+	} else {
+		t.value = '';
 	}
 }
 </script>

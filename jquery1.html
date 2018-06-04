@@ -29,6 +29,7 @@ select:hover {
 }
 
 
+
 /*多行文本实现省略号*/
 
 .overfl {
@@ -85,16 +86,164 @@ p.overd::after {
 	background-color: #00f;
 }
 
+.none {
+	display: none;
+}
+
+.imgs {
+	position: relative;
+	width: 80px;
+	background-color: #ccc;
+}
+
+.imgs:after {
+	content: '';
+	position: absolute;
+	width: 12px;
+	height: 12px;
+	top: 5px;
+	right: 5px;
+	font-size: 12px;
+	background-color: #f33;
+	color: #333;
+	border-radius: 50%;
+}
+
+input:not(:focus)+.popTips {
+	transform: scale(0);
+	transition: transform .25s cubic-bezier(.25, .1, .25, .1);
+}
+
+input:focus+.popTips {
+	transform: scale(1);
+	transition: transform .4s cubic-bezier(.29, .15, .5, 1.46);
+}
+
+.float-left {
+	float: left;
+	width: 100px;
+	height: 100px;
+	background-color: lightpink;
+}
+
+.clear-box {
+	background-color: lightgreen;
+	font-size: 16px;
+}
+
+.clear-box:after {
+	content: '';
+	display: block;
+	clear: right; //both left
+}
+
+.float-right {
+	width: 100px;
+	height: 75px;
+	float: right;
+	background-color: red;
+	border: 1px solid black;
+}
 
 
+/*单行显示省略号*/
+
+.ell {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+
+/*多行显示省略号*/
+
+.multi-lline {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+}
+#fu{
+	margin-top: 20px;
+	background-color: yellowgreen;
+}
+#fu p{
+  display: inline;
+  margin: 20px;
+  padding: 20px;
+  border: 5px solid transparent;
+  background-color: #0e8cf6;
+}
+svg {
+	width: 100%;
+	height: 500px;
+	background-color: #eee;
+}
+
+.custom-checkbox {
+      -webkit-appearance: none;
+      width: 100px;
+      height: 100px;
+      background-image: paint(checkbox);
+      outline: 0;
+      --status: unchecked;
+      --border-color: #dcdfe6;
+      --bg-color: #fff;
+      --line-color: #fff;
+    }
+    .custom-checkbox:checked {
+      --status: checked;
+      --bg-color: #409eff;
+      --line-color: #fff;
+      --border-color: #fff;
+    }
+    .custom-checkbox:indeterminate {
+      --status: indeterminate;
+      --bg-color: #409eff;
+      --line-color: #fff;
+    }
+    .custom-checkbox:disabled {
+      --disabled: disabled;
+      --bg-color: #edf2fc;
+      --line-color: #c0c4cc;
+      --border-color: #dcdfe6;
+    }
 </style>
 
 <body class="ss">
-	<div class="haha">
-		<input type="file" name="" id="ff">
-		<!-- <img src="" alt=""> -->
-	</div>
+	<input autofocus="" class="put" id="number-password-input" type="tel" maxlength="12" tabindex="6" onkeyup="dealKeyup(this);" value="longfei">
+	<!--<input type="checkbox" class="custom-checkbox">
+	<input type="checkbox" disabled class="custom-checkbox">
+	 <h2>&#60;&lt;</h2> -->
+	<!-- <svg xmlns="http://www.w3.org/2000/svg" version="1.1"> -->
+	<!-- <svg>
+	       <path d="M300,200 h-150 a150,150 0 1,0 150,-150 z"
+	                fill="red" stroke="blue" stroke-width="5"/>
+	        <path d="M275,175 v-150 a150,150 0 0,0 -150,150 z"
+	                 fill="yellow" stroke="blue" stroke-width="5"/>
+	       <path d="M600,350 l 50,-25
+	                 a25,25 -30 0,1 50,-25 l 50,-25
+	                 a25,50 -30 0,1 50,-25 l 50,-25
+	                 a25,75 -30 0,1 50,-25 l 50,-25
+	                 a25,100 -30 0,1 50,-25 l 50,-25"
+	                 fill="none" stroke="red" stroke-width="5"/>
+	</svg> -->
+	<!-- <div id="fu">
+	    <p>1505</p>
+	    <p>计科</p>
+	</div> -->
+	<!-- <div class="float-left">
+        这是左边浮动元素
+    </div>
+    <div class="clear-box">
+        <div class="float-right">这是右侧浮动元素</div>
+        <div>这是正常布局文档流元素。</div>
+    </div> -->
 	<!-- <form id="form" name="form" method="get">
+		<div class="imgs">fdfjls</div>
+		<h1 class="" style="font-size: 5rem">福</h1>
+		<input type="text" name="">
+		<div class="popTips">longfei</div>
 		<del>二十</del>
 		<ins>十二</ins>
 		<u>thought</u>
@@ -120,72 +269,201 @@ p.overd::after {
 				<input type="checkbox" value="4" id="four" name="number[]">
 			</div>
 		</fieldset>
+		<div class="test-wrap">
+			<p>Hello</p>
+			<p>World</p>
+			<p>cruel</p>
+			<a>123</a>
+		</div>
+		<p class="overd">1,将height设置为line-height的整数倍，防止超出的文字露出。
+			<br> 2, 给p::after添加渐变背景可避免文字只显示一半。
+			<br> 3,由于ie6-7不显示content内容，所以要添加标签兼容ie6-7（如：
+			<span>…<span/>）；兼容ie8需要将::after替换成:after。
+		</p>
+		<div class="justify">
+			<div class="main">main</div>
+			<div class="left">left</div>
+			<div class="right">right</div>
+		</div>
+		<table style="width:300px; border-collapse:collapse;" border="1" id="ipMac">
+			<tr>
+				<td id="sort_ip">ip</td>
+				<td id="mac">mac</td>
+			</tr>
+			<tr>
+				<td>192.168.0.12</td>
+				<td>12:12:12:12:12:12</td>
+			</tr>
+			<tr>
+				<td>192.168.0.1</td>
+				<td>12:12:12:12:12:10</td>
+			</tr>
+			<tr>
+				<td>192.168.0.10</td>
+				<td>12:12:12:12:12:03</td>
+			</tr>
+			<tr>
+				<td>192.168.0.5</td>
+				<td>12:12:12:12:12:11</td>
+			</tr>
+		</table>
+		<input type="file" name="" id="ff">
 	</form> -->
-	<!-- <div class="test-wrap">
-		<p>Hello</p>
-		<p>World</p>
-		<p>cruel</p>
-		<a>123</a>
-	</div> -->
-	<!-- <p class="overd">1,将height设置为line-height的整数倍，防止超出的文字露出。
-		<br> 2, 给p::after添加渐变背景可避免文字只显示一半。
-		<br> 3,由于ie6-7不显示content内容，所以要添加标签兼容ie6-7（如：
-		<span>…<span/>）；兼容ie8需要将::after替换成:after。
-	</p> -->
-	<!-- <div class="justify">
-		<div class="main">main</div>
-		<div class="left">left</div>
-		<div class="right">right</div>
-	</div> -->
-	<!-- <table style="width:300px; border-collapse:collapse;" border="1" id="ipMac">
-		<tr>
-			<td id="sort_ip">ip</td>
-			<td id="mac">mac</td>
-		</tr>
-		<tr>
-			<td>192.168.0.12</td>
-			<td>12:12:12:12:12:12</td>
-		</tr>
-		<tr>
-			<td>192.168.0.1</td>
-			<td>12:12:12:12:12:10</td>
-		</tr>
-		<tr>
-			<td>192.168.0.10</td>
-			<td>12:12:12:12:12:03</td>
-		</tr>
-		<tr>
-			<td>192.168.0.5</td>
-			<td>12:12:12:12:12:11</td>
-		</tr>
-	</table> -->
 	<!-- <video src="aa.mp4"></video> -->
+	<input type="password" name="" id="">
 	<div class="deferred">
 		显示结果：
 		<p class="deferred-result"></p>
 		<button id="deferred1">嵌套回调异步</button>
 		<button id="deferred2">$.Deferred异步</button>
 	</div>
+	<div id="testable">
+		longfei
+	</div>
+	<a href="http://baidu.com" id="fftt">百度</a>
+	<!-- <select name="" id="">
+		<option value="">1</option>
+		<option value="">2</option>
+		<option value="">3</option>
+	</select>
+	<div class="div">
+		<p>p1</p>
+		<p>p2</p>
+		<p>p3</p>
+	</div> -->
 </body>
 <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js"></script> -->
 <script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/moment.min.js"></script>
 <script>
-// document.designMode='on';
+$("#fftt").on('click',function(e) {
+	console.log('preventDefault')
+	e.preventDefault()
+})
+// 光标定位
+function dealKeyup(that) {
+	console.log(this)
+    var input_val = $(that).val();
+    var input_arr = input_val.split("-");
+    for(var i=0;i<input_arr.length;i++) {
+        if (input_arr[i] == ' ') {
+            setCaretPosition(that, i*2);
+            return;
+        }
+    }
+}
+// $("#number-password-input")[0].setSelectionRange(1,1)
+// 获取光标位置
+function getCursortPosition(ctrl) {
+    var CaretPos = 0;   // IE Support
+    if (document.selection) {
+        ctrl.focus();
+        var Sel = document.selection.createRange();
+        Sel.moveStart ('character', -ctrl.value.length);
+        CaretPos = Sel.text.length;
+    } else if (ctrl.selectionStart || ctrl.selectionStart == '0') {
+	    // Firefox support
+        CaretPos = ctrl.selectionStart;
+    }
+    return (CaretPos);
+}
+
+// 设置光标位置
+function setCaretPosition(ctrl, pos){
+    if(ctrl.setSelectionRange) {
+        ctrl.focus();
+        ctrl.setSelectionRange(pos,pos);
+    } else if (ctrl.createTextRange) {
+        var range = ctrl.createTextRange();
+        range.collapse(true);
+        range.moveEnd('character', pos);
+        range.moveStart('character', pos);
+        range.select();
+    }
+}
+// CSS.paintWorklet.addModule('checkbox.js')
+// const average = arr => arr.reduce((acc, val) => acc + val, 0)
+
+/*let total = 60,arr=[],fee=0;
+function aa(s) {
+	while(total--) {
+		let real=Math.floor(s/100)*100, temp;
+		fee += real*0.014;
+		console.log('本: %f, 利息: %f',s,fee);
+		// temp = (s+fee)
+		// arr.push(temp);
+		return aa(s+fee+1000);
+	}
+}
+aa(3000);*/
+/*@testable
+class MyTestableClass {
+  // ...
+}
+
+function testable(target) {
+  target.isTestable = true;
+}
+
+MyTestableClass.isTestable // true*/
+/*if ( true) {
+    function baz() { console.log('I passed') }
+} else {
+    function baz() { console.log('I didn\'t pass') }
+}
+baz();*/
+/*let obj = {};
+for (let i=0;i<100;i++) {
+	obj[Math.random().toString(36).slice(-6)]=i;
+}
+Object.keys(obj).sort().forEach(function(item) {
+	console.log(item, obj[item])
+})*/
+/*function reportError(sMessage, sUrl, sLine) {
+    var str = "";
+    str += " 错误信息:" + sMessage + "\n";
+    str += " 错误地址:" + sUrl + "\n";
+    str += " 错误行数:" + sLine + "\n";
+    str += "<=========调用堆栈=========>\n";
+    var func = window.onerror.caller;
+    var index = 0;
+    while (func != null) {
+        //str += "第" + index + "个函数：" + func + "\n";
+        //str += "第" + index + "个函数：参数表："
+        //for(var i=0;i<func.arguments.count;i++)
+        //str += func.arguments[i] + ",";
+        //}
+        str += func;
+        str += "\n===================\n";
+        func = func.caller;
+        index++;
+    }
+    alert(str);
+    return true;
+}
+
+window.onerror = reportError;
+/^[1-9]\d*\~[1-9]\d*$|^[1-9]\d*(,[1-9]\d*)*(,[1-9]\d*\~[1-9]\d*)?$/
+*/
 // $.holdReady(3);
 $(function() {
 	$('#ff').on('change', function(e) {
-		console.log(this.files[0]);
-		var fr = new FileReader();
-        if (this.files[0].type.indexOf('image') != -1) {
-            fr.readAsDataURL(this.files[0]);
-            fr.onload = function() {
-                var oLi = document.createElement('li');
-                var oImg = document.createElement('img');
-                oImg.src = this.result;
-                oLi.appendChild(oImg);
-				$('#ff').after(oLi);
-            };
-        }
+		console.log(this.files[0])
+		if (this.files[0].type.indexOf('image') != -1) {
+			var fr = new FileReader();
+			fr.readAsDataURL(this.files[0]);
+			fr.onload = function() {
+				var img = document.createElement('img');
+				img.src = this.result;
+				if (img.complete) {
+					console.log(img.width, img.height)
+				} else {
+					img.onload = () => {
+						console.log(img.width, img.height)
+					}
+				}
+			}
+		}
 	})
 	$("button:last").on("click", function() {
 		//模拟异步C
@@ -216,34 +494,35 @@ $(function() {
 			}, 1000)
 			return dtd;
 		}
+
 		function fn1() {
-		    $('.deferred-result').append(" 1 ");
+			$('.deferred-result').append(" 1 ");
 		}
 
 		function fn2() {
-		    $('.deferred-result').append(" 2 ");
+			$('.deferred-result').append(" 2 ");
 		}
 
 		function fn3(n) {
-		    $('.deferred-result').append(n + " 3 " + n);
+			$('.deferred-result').append(n + " 3 " + n);
 		}
 		var dfd = $.Deferred();
 		dfd /* .done() can take any number of functions or arrays of functions */
-		.done([fn1, fn2], fn3, [fn2, fn1])
-		.done(function(n) {
-		    $('.deferred-result').append(n + " we're done.");
-		});
+			.done([fn1, fn2], fn3, [fn2, fn1])
+			.done(function(n) {
+				$('.deferred-result').append(n + " we're done.");
+			});
 		dfd.resolve("and");
 
 		C().then(function(data) {
-			return D(data)
-		})
-		.then(function(data) {
-			return E(data)
-		})
-		.then(function(data) {
-			$(".deferred-result").append("Deferred异步处理:" + data)
-		})
+				return D(data)
+			})
+			.then(function(data) {
+				return E(data)
+			})
+			.then(function(data) {
+				$(".deferred-result").append("Deferred异步处理:" + data)
+			})
 	})
 	$("button:first").on("click", function() {
 		/*//模拟异步A
@@ -280,24 +559,26 @@ $(function() {
 	//console.log($("p").wrapAll($(".doublediv")));
 	//console.log($("p").wrapInner("<b></b>"));
 
-	/*var str='long';
-	var n=5;
-	console.log("str=%s,n=%d,n=%s,n=%c,str=%x,str=%a,str=%p",str,n,n,"n",str,n,str);//只识别%d,%s
-	var tt=document.getElementsByClassName("ss")[0];//document.querySelector("body");
-	var i=5;
-	var str = "wo men shi zhong guo ren",s='';
+	/*var str = 'long';
+	var n = 5;
+	console.log("str=%s,n=%d,n=%s,n=%c,str=%x,str=%a,str=%p", str, n, n, "n", str, n, str); //只识别%d,%s
+	var tt = document.getElementsByClassName("ss")[0]; //document.querySelector("body");
+	var i = 5;
+	var str = "wo men shi zhong guo ren",
+		s = '';
 	//console.log(str.replace(/\w+/g));
 	//第一种方法
-	console.log(str.replace(/\w+/g,function(str){
-			return str.match(/\w+/g)+i++;}));
+	console.log(str.replace(/\w+/g, function(str) {
+		return str.match(/\w+/g) + i++;
+	}));
 	//第二种方法
-	var arr=str.split(' ');
-	for(var j=0;j<arr.length;j++)
-		s+=(arr[j]+i+++" ");
+	var arr = str.split(' ');
+	for (var j = 0; j < arr.length; j++)
+		s += (arr[j] + i++ + " ");
 	console.log(s);
 	//第三种方法
-	s=str.replace(/(?=\s)/g,function(){return i++})
-	console.log(s+i);*/
+	s = str.replace(/(?=\s)/g, function() { return i++ })
+	console.log(s + i);*/
 
 	/*console.log(document.documentElement.clientWidth,window.innerWidth);//后者比前者多一个垂直滚动条宽度
 	console.log(String.prototype.toString==Object.prototype.toString);//不等
@@ -354,7 +635,6 @@ $(function() {
 
 })
 // const r = /^(\d|[1-9]\d{1,})$/; // 必须有小括号,注意优先级
-//console.log(parseInt('02f',10));
 //console.log('01'.charCodeAt());//默认为索引0
 // console.log(parseInt('012a'),Number('012a'), +'012a'); //12,NaN,NaN
 </script>

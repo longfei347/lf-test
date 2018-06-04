@@ -7,11 +7,11 @@
 	<title>Test1</title>
 	<script src="js/jquery-1.12.4.js"></script>
 	<!-- <script src="js/underscore.js"></script>
-<script src="js/require.js"></script>
-<script src="js/PinYin.js"></script> -->
+	<script src="js/require.js"></script>
+	<script src="js/PinYin.js"></script> -->
 	<!-- <script src="js/lite2.js"></script> -->
 	<!-- <script src="js/beautify.js"></script>
-<script src="js/xmllint-m.js"></script> -->
+	<script src="js/xmllint-m.js"></script> -->
 	<!--<script src="js/jquery.cookie.js"></script>-->
 	<script src="js/ttt.js"></script>
 	<link href="css/base.css" rel="stylesheet">
@@ -166,6 +166,22 @@
 </body>
 <script>
 'use strict';
+/*! function() {
+	var a = b = c = 0; //等价于var a=(b=(c=0)) c=0 即全局变量为0,表达式返回0 赋给b,再返回0赋给a
+}()*/
+
+
+/*var a = {n: 1}
+var b = a;
+console.log(a.x = a = {n: 2});
+console.log(a.x);
+console.log(b)*/
+/*var a = {n: 1}
+var b = a;
+a = {n: 2}
+a.x = a
+console.log(a.x);
+console.log(b.x)*/
 /*Function.prototype.uncurrying = function() {
     var _this = this;
     return function() {
@@ -325,8 +341,6 @@ $http(mdnAPI)
 
 let a = new Set([1, 2, 3]);
 let b = new Set([4, 3, 2]);
-
-
 
 // 并集
 // let union = new Set([...a, ...b]);

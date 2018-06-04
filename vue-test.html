@@ -173,7 +173,15 @@ content: "";
 	</table>
 	<div class="tinymce-module fd-clr">
 		<div id="app">
-			<p class="p1">{{ message }}</p>
+			<p>{{ message }}</p>
+			<input type="" name="" v-model="long">
+		</div>
+		<div id="app-1">
+			<input type="radio" name="lloo" value="1" v-model="lloo">
+			<input type="radio" name="lloo" value="2" v-model="lloo" id="">
+			<input type="radio" name="lloo" value="3" v-model="lloo" id="">
+			<input type="radio" name="lloo" value="4" v-model="lloo" id="">
+			<input type="radio" name="lloo" value="5" v-model="lloo" id="">
 		</div>
 		<div id="app-2" class="none">
 			<span v-bind:title="message">
@@ -228,12 +236,18 @@ content: "";
 }*/
 var err=new Error();
 console.log(err);
-var aaa={};
 var app = new Vue({
 		el: '#app',
 		data: {
 			message: 'Hello Vue!',
-			arr:[{msg:'A'},{msg:'B'}]
+			long: 'long'
+		}
+	}),
+	app1 = new Vue({
+		el: '#app-1',
+		data: {
+			lloo: '1',
+			message: 'Hello Vue!'
 		}
 	}),
 	app2 = new Vue({

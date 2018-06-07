@@ -1,36 +1,170 @@
 <!doctype html>
 <html>
 <head>
-	<title>开花导航DEMO</title>
-	<meta charset="utf-8">
-	<style type="text/css">
-	.nav-btn,.nav-item{
-		width:50px;
-		height:50px;
-		text-align: center;
-		padding:10px;
-		line-height: 45px;
-		color:#fff;
-		-webkit-border-radius:50%;
-		position:absolute;
-		right:50%;
-		bottom:50%;
-		-webkit-transition:all 0.8s;
-	}
-	.nav-btn{
-		background:green;
-		z-index:2;
-	}
-	.nav-btn:after{content:"展开";}
-	.nav-btn.active:after{content:"关闭";}
-	.nav-item{
-		background:blue;
-	}
-	</style>
+<title>开花导航</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+<style type="text/css">
+.nav {
+	position: relative;
+	width: 300px;
+	height: 300px;
+	background-color: #eee;
+}
+.nav-btn,.nav-item{
+	position:absolute;
+	left:50%;
+	top:50%;
+	width:50px;
+	height:50px;
+	margin-top: -25px;
+	margin-left: -25px;
+	text-align: center;
+	line-height: 45px;
+	color:#fff;
+	border-radius:50%;
+	transition:all 0.8s;
+}
+.nav-btn{
+	background:green;
+	z-index:2;
+}
+.nav-btn:after{content:"展开";}
+.nav-btn.active:after{content:"关闭";}
+.nav-item{
+	background:blue;
+}
+/* 伪元素,before,after
+1,多列均匀布局 2,梯形标签 3,平行四边形 4,清浮 5,画分隔线 6,计数器
+ */
+.clearfix:after{
+    content: "";
+    display: block;
+    clear:both;
+}
+.line {
+
+}
+.line:after, .line:before {
+	content: '';
+	position: absolute;
+	width: 100px;
+}
+.button {
+	position: relative;
+	display: inline-block;
+	padding: .5em 1em;
+	border: 0;
+	background: transparent;
+	text-transform: uppercase;
+	outline: none;
+}
+
+.button::before {
+	content: '';
+	position: absolute;
+	top: 0; right: 0; bottom: 0; left: 0;
+	z-index: -1;
+	background: #58a;
+	transform: skew(-45deg);
+}
+#nav {
+	display: none;
+}
+nav {
+	position: relative;
+	z-index: 1;
+	padding-left: 1em;
+}
+
+nav > a {
+	position: relative;
+	display: inline-block;
+	padding: .3em 1em 0;
+	color: inherit;
+	text-decoration: none;
+	margin: 0 -.3em;
+}
+
+nav > a::before,
+main {
+	border: .1em solid rgba(0,0,0,.4);
+}
+
+nav a::before {
+	content: ''; /* To generate the box */
+	position: absolute;
+	top: 0; right: 0; bottom: 0; left: 0;
+	z-index: -1;
+	border-bottom: none;
+	border-radius: .5em .5em 0 0;
+	background: #ccc linear-gradient(hsla(0,0%,100%,.6), hsla(0,0%,100%,0));
+	box-shadow: 0 .15em white inset;
+	transform: scale(1.1, 1.3) perspective(.5em) rotateX(5deg);
+	transform-origin: bottom;
+}
+
+nav a.selected { z-index: 2;}
+
+nav a.selected::before {
+	background-color: #eee;
+	margin-bottom: -.08em;
+}
+
+main {
+	display: block;
+	margin-bottom: 1em;
+	background: #eee;
+	padding: 1em;
+	border-radius: .15em;
+}
+
+nav.left > a::before {
+	transform: scale(1.2, 1.3) perspective(.5em) rotateX(5deg);
+	transform-origin: bottom left;
+}
+
+nav.right { padding-left: 2em; }
+
+nav.right > a::before {
+	transform: scale(1.2, 1.3) perspective(.5em) rotateX(5deg);
+	transform-origin: bottom right;
+}
+</style>
 </head>
 	<body>
-		<div class="nav-btn"></div>
+		<!-- <button id="showNotice">显示桌面通知</button> -->
+		<button class="button" id="showNotice">click me显示桌面通知</button>
+		<div id="nav">
+			<nav>
+				<a href="#">Home</a>
+				<a href="#" class="selected">Projects</a>
+				<a href="#">About</a>
+			</nav>
+			<main>
+				Content area
+			</main>
+
+			<nav class="left">
+				<a href="#">Home</a>
+				<a href="#" class="selected">Projects</a>
+				<a href="#">About</a>
+			</nav>
+			<main>
+				Content area
+			</main>
+
+			<nav class="right">
+				<a href="#">Home</a>
+				<a href="#" class="selected">Projects</a>
+				<a href="#">About</a>
+			</nav>
+			<main>
+				Content area
+			</main>
+		</div>
 		<div class="nav">
+			<div class="nav-btn"></div>
 			<div class="nav-item">A</div>
 			<div class="nav-item">B</div>
 			<div class="nav-item">C</div>
@@ -40,32 +174,50 @@
 			<div class="nav-item">G</div>
 			<div class="nav-item">H</div>
 			<div class="nav-item">I</div>
-			<!-- <div class="nav-item">J</div>
-			<div class="nav-item">K</div>
-			<div class="nav-item">L</div>
-			<div class="nav-item">M</div> -->
-			 
 		</div>
 <script type="text/javascript">
 //(function () {
-	var btn = document.querySelector(".nav-btn");
-	var items = document.querySelectorAll(".nav-item");
-	var l = items.length;
-	var r = 250;
-	var n = l,
-	m = Math.ceil(l / 2);
-	var deg = (2 * Math.PI) / l,
-	transform = function (x) {
-		this.style.transform = this.style.webkitTransform = this.style.mozTransform = this.style.oTransform = this.style.msTransform = x;
+var oBtn = document.querySelector("#showNotice");
+oNotifications = window.Notification;
+if(oNotifications){
+	oBtn.addEventListener("click", showMsg, false);
+}else{
+	console.log("浏览器不支持桌面通知呦，使用chrome或者firefox看看效果吧。");
+}
+
+function showMsg(){
+	if(oNotifications.permission == "granted"){
+		var demo = new Notification("这里是标题", {icon: "/images/001.gif", body: "Notification弹出的某一些内容"});
+		demo.onshow = function(){
+			console.log("The notification is showed");
+			setTimeout(function(){
+				demo.close();
+			}, 10000);
+		};
+		demo.onclick = function(){
+			console.log("You Click The notification");
+			window.focus();
+		}
+		demo.onclose = function(){ /*do something*/ }
+		demo.onerror = function(){ /*do something*/ }
+	}else{
+		oNotifications.requestPermission();
 	}
+}
+
+var navObj = function(opt) {
+	let {btn,items,n,r,transform} = Object.assign({
+		btn: document.querySelector(".nav-btn"),
+		items: document.querySelectorAll(".nav-item"),
+		n: document.querySelectorAll(".nav-item").length,
+		r: 120,
+		transform(x){this.style.transform = x;}
+	},opt)
+	var deg = (2 * Math.PI) / n;
 	while (n--) {
-		var degg = n * deg;
-		items[n].data_transform = "translate(" + r * Math.cos(n * deg) + "px," + r * Math.sin(n * deg) + "px)"
-		//degg <= (Math.PI / 2) ? (items[n].data_transform = "translate(" + r * Math.cos(n * deg) + "px," + -r * Math.sin(n * deg) + "px)") : (degg < Math.PI ? (items[n].data_transform = "translate(" + r * Math.cos(n * deg) + "px," + -r * Math.sin(n * deg) + "px)") : (degg < ((Math.PI * 3) / 2) ? (items[n].data_transform = "translate(" + r * Math.cos(n * deg) + "px," + -r * Math.sin(n * deg) + "px)") : (items[n].data_transform = "translate(" + r * Math.cos(n * deg) + "px," + -r * Math.sin(n * deg) + "px)")));
-		//items[n].style.transitionDelay=items[n].style.webkitTransitionDelay=items[n].style.mozTransitionDelay=items[n].style.msTransitionDelay=items[n].style.oTransitionDelay=(n*50)+"ms";
+		items[n].data_transform = "translate(" + r * Math.cos(n * deg) + "px," + r * Math.sin(n * deg) + "px)";
 		items[n].style.transitionDelay=(n*50)+"ms";
 	}
-
 	btn.addEventListener("click", function (e) {
 		this.classList.toggle("active");
 		var i = items.length;
@@ -78,7 +230,9 @@
 				transform.call(items[i], 'translate(0,0)')//,
 				//items[i].style.transitionDelay = items[i].style.webkitTransitionDelay = items[i].style.mozTransitionDelay = items[i].style.msTransitionDelay = items[i].style.oTransitionDelay = ((items.length - i) * 50) + "ms";
 		}
-	}, false);
+	})
+}
+navObj({r:100})
 
 //})();
 

@@ -25,6 +25,7 @@ h2,p{margin:0;padding:10px;font-size:16px;}
 </style>
 </head>
 <body>
+	<div id="observer">some-id</div>
 	<!-- <div class="test">
 		<div class="hd nav">
 			<a href="#panel1">前往区块1</a>
@@ -60,7 +61,74 @@ h2,p{margin:0;padding:10px;font-size:16px;}
 
 <script src="js/lite2.js"></script>
 <script>
+/*var target = document.getElementById('observer');
+// create an observer instance
+var observer = new MutationObserver(function(mutations) {
+  mutations.forEach(function(mutation) {
+    console.log(mutation.type);
+  });
+});
+// configuration of the observer:
+var config = { attributes: true, childList: true, characterData: true };
+// pass in the target node, as well as the observer options
+observer.observe(target, config);
 
+// later, you can stop observing
+// observer.disconnect();*/
+
+
+/*var ll = JSON.stringify({l:1,f:2,o:3,n:true}, function(key,value){
+	console.log(key,value);
+	if (typeof value === 'number') {
+		return value+1;
+	} else {
+		return value;
+	}
+})
+console.log(ll);*/
+/*var obj = {
+  foo: 'foo',
+  toJSON: function() {
+    return 'bar';
+  }
+};
+console.log(JSON.stringify(obj));        // '"bar"'
+console.log(JSON.stringify({ x: obj })); // '{"x":"bar"}'
+
+var obj2 = {
+  foo: 'foo',
+  toJSON: function(key) {
+  	console.log(key)
+    if (key === '') {
+      return 'bar only';
+    } else {
+      return 'bar in ' + key;
+    }
+  }
+};
+
+console.log(JSON.stringify(obj2));         // '"bar only"'
+console.log(JSON.stringify({ x: obj2 }));  // '{ "x":"bar in x"}'
+console.log(JSON.stringify([obj2, obj2])); // '["bar in 0", "bar in 1"]'*/
+
+/*function CmdSave() {
+	// todo
+  var OW = window.open("", "_blank", "");
+  // var OW = window.open("001.gif", location.origin+"/images/001.gif", "");
+  // OW.document.open();
+  var name = location.origin+"/images/001.gif";
+  OW.document.execCommand("saveAs", false, '001.gif');//执行保存，IE6,IE7,IE8有效
+  OW.close();
+}*/
+/*function strReverse(str) {
+	return (str.replace(/[\w-]+/g, function(s, i, ss) {
+		if (i == 0) {
+			s = s.charAt(0).toLowerCase() + s.substr(1, s.length - 2) + s.charAt(s.length - 1).toUpperCase();
+		}
+		return s.split("").reverse().join("")
+	}));
+}
+console.log(strReverse("Many people spell MySQL incorrectly"))*/
 /*var s = new Set();
 
 [2,3,5,4,5,2,2].map(x => s.add(x))

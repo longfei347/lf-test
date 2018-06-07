@@ -15,7 +15,11 @@ function get_days_in_mongh(the_year, the_month) {
 
 //===获取指定月份日历信息,并将该信息保存为二维数组并返回
 function make_calendar(the_year, the_month) {
-	var my_month = new Array();
+	var my_month = Array(7),
+		days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+	/*my_month.forEach((item,index)=> {
+		item.length=7,item[0]=days[index],console.log(item)
+	})*/
 	my_month[0] = new Array(7);
 	my_month[1] = new Array(7);
 	my_month[2] = new Array(7);
@@ -31,14 +35,14 @@ function make_calendar(the_year, the_month) {
 	var i, c, r; //r为表格中行号,c为表格中列号
 
 	//===my_month[0]为表格标题行,第0行
-	my_month[0][0] = "Sun";
+	my_month[0] = days;
+	/*my_month[0][0] = "Sun";
 	my_month[0][1] = "Mon";
 	my_month[0][2] = "Tue";
 	my_month[0][3] = "Wed";
 	my_month[0][4] = "Thu";
 	my_month[0][5] = "Fri";
-	my_month[0][6] = "Sat";
-
+	my_month[0][6] = "Sat";*/
 	//===第1行日期
 	for (c = first_day; c < 7; c++) {
 		my_month[1][c] = the_date;
@@ -62,36 +66,36 @@ function draw_calendar(the_year, the_month) {
 	var r = 0,
 		c = 0;
 	var my_month;
-	var rowid = ""; //为单元格指定根据行、列号确定的id，使其可以访问
+	var rowid = "",strTable=''; //为单元格指定根据行、列号确定的id，使其可以访问
 	my_month = make_calendar(the_year, the_month);
 
 	//===绘制表格
-	document.write("<table border='0'>")
+	strTable += "<table border='0'><tr>"
 		//===绘制标题行,写入标题行
-	document.write("<tr>");
 	for (r = 0; r < 7; r++) {
-		document.write("<td align='center' " + " style='font-size:12px;font-weight:bold'>" + my_month[0][r] + "</td>");
+		strTable += "<td align='center' " + " style='font-size:12px;font-weight:bold'>" + my_month[0][r] + "</td>";
 	}
-	document.write("</tr>");
+	strTable += "</tr>"
 
 	//===绘制其他行日期
 	for (r = 1; r < 7; r++) {
-		document.write("<tr>")
+		strTable += "<tr>"
 		for (c = 0; c < 7; c++) {
 			rowid = "td" + r + c; //由行、列编号确定单元格id，供后面使用
 
-			document.write("<td id=" + rowid + " align=center width=30 height=30'>");
+			strTable += "<td id=" + rowid + " align=center width=30 height=30'>";
 			//===判断该单元格对应数据是否有内容
 			if (my_month[r][c] > 0) {
-				document.write("<font style='cursor:hand;" + "font-size:13px;font-weight:bold'>" + my_month[r][c] + "</font>");
+				strTable += "<font style='cursor:hand;" + "font-size:13px;font-weight:bold'>" + my_month[r][c] + "</font>";
 			} else {
-				document.write("<font style='cursor:hand;" + "font-size:13px;font-weight:bold'>" + "&nbsp;</font>");
+				strTable += "<font style='cursor:hand;" + "font-size:13px;font-weight:bold'>" + "&nbsp;</font>";
 			}
-			document.write("</td>")
+			strTable += "</td>"
 		}
-		document.write("</tr>");
+		strTable += "</tr>";
 	}
-	document.write("</table>")
+	strTable += "</table>"
+	return document.write(strTable)
 }
 
 //===更新日历
@@ -119,8 +123,7 @@ function update_calendar(the_year, the_month) {
 		<table border="1">
 			<tr>
 				<td>
-					<select name="selected_month" onchange='update_calendar(form_calendar.selected_year.value,
-	form_calendar.selected_month.value)' style="width:120">
+					<select name="selected_month" onchange='update_calendar(form_calendar.selected_year.value, form_calendar.selected_month.value)' style="width:120">
 						<option value="1">January</option>
 						<option value="2">February</option>
 						<option value="3">March</option>
@@ -136,14 +139,6 @@ function update_calendar(the_year, the_month) {
 					</select>
 					&nbsp;
 					<select name="selected_year" onchange='update_calendar(form_calendar.selected_year.value, form_calendar.selected_month.value)' style="width:120">
-						<option value="1999">1999</option>
-						<option value="2000">2000</option>
-						<option value="2001">2001</option>
-						<option value="2002">2002</option>
-						<option value="2003">2003</option>
-						<option value="2004">2004</option>
-						<option value="2005">2005</option>
-						<option value="2006">2006</option>
 						<option value="2007">2007</option>
 						<option value="2008">2008</option>
 						<option value="2009">2009</option>
@@ -155,6 +150,7 @@ function update_calendar(the_year, the_month) {
 						<option value="2015">2015</option>
 						<option value="2016">2016</option>
 						<option value="2017">2017</option>
+						<option value="2018">2018</option>
 					</select>
 				</td>
 			</tr>

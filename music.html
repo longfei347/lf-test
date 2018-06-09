@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>music</title>
+</head>
+<style>
+ul {
+  display: flex;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  /*flex-direction: column;*/
+  padding: 0;
+  list-style: none;
+  counter-reset: item;
+}
+li {
+  display: inline-block;
+  width: 250px;
+  cursor: pointer;
+}
+li:before {
+  content: counter(item)'. ';
+  counter-increment: item;
+}
+.btn {
+  border: none;
+  margin-left: 15px;
+  height: 28px;
+  line-height: 28px;
+  background-color: #f90;
+  border-radius: 5px;
+  color: #fff;
+}
+</style>
+<body>
+  <div style="display: flex;align-items: center;">
+    <audio src="" autoplay="" controls="" volume="0.1" id="audio"></audio>
+    <button class="btn" id="prev" title="ctrl+left">上一首</button>
+    <button class="btn" id="next" title="ctrl+right">下一首</button>
+  </div>
+  <div id="list"></div>
+</body>
+<script src="list.js"></script>
+<script>
+let ulStr = '<ul>'
+let audio = document.getElementById('audio')
+let listDom = document.getElementById('list')
+list.forEach(item=>ulStr+='<li data-src=".'+item+'">'+item.match(/[^\/]+$/)[0].slice(0,-4))
+listDom.innerHTML = ulStr;
+listDom.addEventListener('click', function(e) {
+  if (e.target.nodeName === 'LI') {
+    curDom = e.target;
+    // console.log(e.target.dataset.src)
+    audio.src=e.target.dataset.src;
+    audio.play();
+  }
+})
+let curDom = listDom.childNodes[0].childNodes[0];
+audio.src = curDom.dataset.src;
+audio.addEventListener('ended', function(e) {
+  curDom.nextSibling&&curDom.nextSibling.click();
+})
+document.getElementById('prev').addEventListener('click', function(e) {
+  curDom.previousSibling&&curDom.previousSibling.click();
+})
+document.getElementById('next').addEventListener('click', function(e) {
+  curDom.nextSibling&&curDom.nextSibling.click()
+})
+document.addEventListener('keydown', function(e) {
+  // console.log(e.keyCode)
+  if (e.key === ' ') {
+    e.preventDefault();
+    audio.paused ? audio.play() : audio.pause();
+  } else if (e.keyCode === 37 && e.ctrlKey) {
+    curDom.previousSibling&&curDom.previousSibling.click();
+  } else if (e.keyCode === 39 && e.ctrlKey) {
+    curDom.nextSibling&&curDom.nextSibling.click()
+  }
+})
+</script>
+</html>

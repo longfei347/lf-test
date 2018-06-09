@@ -51,22 +51,6 @@
 		background-color: #f90;
 		z-index: 100;
 	}
-
-
-
-	/*.icon {
-	width: 22px;
-	height: 22px;
-	background-image: image(logo.jpg#xywh=1, 1, 20, 20); 这种还不支持
-	 background:url(logo.jpg) -1px -1px no-repeat;
-	}
-
-	.icon:hover {
-	width: 22px;
-	height: 22px;
-	background: url(logo.jpg) -1px -27px no-repeat;
-	}*/
-
 	.none {
 		display: none;
 	}
@@ -99,42 +83,20 @@
 		overflow: auto;
 	}
 	.btn {
-		width: 80px;
 		height: 30px;
-		/*-webkit-appearance: button;*/
-		/* outline: 5px solid #f90;
+		/*-webkit-appearance: button;
+		outline: 5px solid #f90;
+		resize: both;
 		outline-offset: 2px; */
+		border: none;
 		box-sizing: border-box;
 		background-color: #09f;
-		/*resize: both;*/
 	}
 	ol {
 		margin: 0;
 		padding: 0 0 0 2em;
 		list-style: none;
 		counter-reset: item;
-	}
-	li:before {
-		counter-increment: item;
-		content: counter(item)".";
-		color: #f00;
-	}
-	.counter1 li {
-		counter-increment: testname 2;
-	}
-	.counter1 li:before {
-		content: counter(testname)".";
-		/*counter-reset: testname;*/
-	}
-	.counter1 li:nth-child(3) {
-		counter-reset: testname 20
-	}
-	.counter2 li {
-		counter-increment: testname2 -1;
-	}
-	.counter2 li:before {
-		content: counter(testname2)".";
-		/*counter-reset: testname2 20;*/
 	}
 	form {
 		min-height: 100px;
@@ -143,9 +105,6 @@
 		font-size: 18px;
 		color: #f90;
 	}
-	.submitBox button:nth-child(1) {
-		color: red;
-	}
 	@supports (-webkit-appearance: none) {
 	  #chrome_detect::after {
 	    /* content: url('images/001.gif'); */
@@ -153,34 +112,18 @@
 	    color:red;
 	  }
 	}
-	ol {
-		counter-reset: item;
-	}
-	li:before {
-		counter-increment: item;
-		content: counters(item, ".");
-	}
-	ol {
-		list-style-type: toggle(disk, circle, square, box);
-	}
-	.box2 {
-		width: 100px;
-		height: 100px;
-		background-color: #f90;
-		user-select: none;
-	}
 	#demo:target{color:#f00;}
-	.dd{
+	.loading{
 		border: 3px dashed #000;
 		width: 20px;
 		height: 20px;
 		border-radius: 50%;
 		border-color: #f90;
 		border-bottom-color: transparent;
-		animation: dd-ddd 1s linear infinite;
+		animation: ddd 1s linear infinite;
 
 	}
-	@keyframes dd-ddd {
+	@keyframes ddd {
 		0%	{
 			transform:rotate(0deg);
 		}
@@ -192,79 +135,15 @@
 </head>
 
 <body>
-	<!-- <input type="number" id="yearId" pattern="/^\d$/g" /> -->
-	<div class="dd none"></div>
-	<!-- <div id="demo">
-		<p>E:target伪类使用方法</p>
-	</div> -->
-	<!-- <div class="box1">
-		<div class="box2">dfaksjfllajsflajsflj</div>
-	</div> -->
-	<!-- <ol class="test">
-		<li>Node
-			<ol>
-				<li>Node</li>
-				<li>
-					<ol>
-						<li>java</li>
-					</ol>
-				</li>
-			</ol>
-		</li>
-		<li>Node</li>
-		<li>Node</li>
-	</ol> -->
+	<!-- <div class="loading"></div> -->
+	<!-- <div id="demo">E:target伪类使用方法	</div> -->
 	<!-- <div id="chrome_detect" title="chrome">haha</div> -->
-	<!-- <div class="submitBox"><button class="ok">确定</button><button class="ok">确定</button></div> -->
 	<!-- <long>hello,world</long> -->
-	<!-- <ul class="test">
-		<li class="counter1">
-			<strong>将计算器按2递增：</strong>
-			<ol>
-				<li>列表项</li>
-				<li>列表项</li>
-				<li>列表项</li>
-			</ol>
-		</li>
-		<li class="counter2">
-			<strong>将计算器按-1递减：</strong>
-			<ol>
-				<li>列表项</li>
-				<li>列表项</li>
-				<li>列表项</li>
-			</ol>
-		</li>
-	</ul> -->
-	<!-- <ol class="test">
-		<li>Node1
-			<ol>
-				<li>Node2
-					<ol>
-						<li>Node3.1</li>
-						<li>Node3.2</li>
-						<li>Node3.3</li>
-					</ol>
-				</li>
-				<li>Node</li>
-			</ol>
-		</li>
-		<li>Node</li>
-		<li>Node</li>
-	</ol> -->
-	<!-- <div class="icon">longfei</div> -->
-	<!-- <div class="btn" contenteditable="">11</div> -->
-	<ul>
-		<li>test:<input type="text"></li>
-		<li>test:<input type="text"></li>
-		<li>test:<input type="text"></li>
-	</ul>
+
 	<input type="text" id="long">
 	<span>event.keyCode: <output></output></span>
 	<form action="" class="none">
 		<!-- <input type="text" id="fei" pattern="\w{3,8}"> -->
-		<!-- <p class="postTitle">
-			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/keepfool/p/5637834.html">Vue.js——60分钟组件快速入门（下篇）</a>
-		</p> -->
 		<!-- <item name="item3" class="mark" label="指标类型:" width="50%">
 			<dropdown name="metric_type" id="metric_type" valueField="code" textField="name" datafield="formData.metric_type" showClearBtn="false">
 				<attr name="rule">{required:true}</attr>
@@ -273,39 +152,34 @@
 		</item> -->
 		<br>
 		<button type="submit">提交</button>
+		<input type="text" id="inputText" value="测试文本" />
+		<button class="btn">复制文本框内容</button>
+		<button type="button" onclick="copyToClipboard(this.innerHTML)">复制自身</button>
 	</form>
-	<!-- <p>点击复制后在右边textarea CTRL+V看一下</p>
-	<input type="text" id="inputText" value="测试文本" />
-	<textarea rows="4"></textarea> -->
-	<!-- <button type="button" onclick="copyToClipboard('复制内容')">复制内容</button> -->
 </body>
 
 <script>
-var instance = axios.create({
+/*var instance = axios.create({
   baseURL: 'http://rapapi.org/mockjs/31038',
   timeout: 1000,
   // headers: {'X-Custom-Header': 'foobar'}
 });
-instance.get('/long/first').then(res=>console.log(res.data))
-/*let dd=1;
-let a = {
-    oneThing(a){
-        let b = a * 2;
-        (()=> this.otherThing(b))()
-    },
-    otherThing: ( b ) => {console.log(b)},
-    [dd]:2
-};
-a.oneThing(6);*/
-let yearDom = document.getElementById('yearId');
-yearDom&&yearDom.addEventListener('blur', function(e) {
-	let year = parseInt(yearDom.value);
-	if(year < 1949 || year > new Date().getFullYear()) {
-		alert('年份必须在1949到至今');
-		return false;
-	}
-})
+instance.get('/long/first').then(res=>console.log(res.data))*/
+/*function* foo(x) {
+  var y = 2 * (yield x + 1);
+  var z = yield y / 3;
+  return (x + y + z);
+}
 
+var a = foo(5);
+console.log(a.next()) // Object{value:6, done:false}
+console.log(a.next()) // Object{value:NaN, done:false}
+console.log(a.next()) // Object{value:NaN, done:true}
+
+var b = foo(5);
+console.log(b.next()) // { value:6, done:false }
+console.log(b.next(12)) // { value:8, done:false }
+console.log(b.next(13)) // { value:42, done:true }*/
 
 const isValidJSON = obj => {
   try {
@@ -399,15 +273,6 @@ const toOrdinalSuffix = num => {
     ? int + ordinals[digits[0] - 1]
     : int + ordinals[3];
 };
-var home={
-	0:2,
-	1:12,
-	2:23,
-	length:2
-};
-let hh=1;
-let fff=aa=>aa.filter((a,v)=>(a=1,a),{});
-let haha=(hh=2,hh,{});
 const objectFromPairs = arr => arr.reduce((a, v) => (a[v[0]] = v[1], a), {});
 objectFromPairs([['a',1],['b',2]])// -> {a: 1, b: 2}
 const speak = message => {
@@ -544,7 +409,7 @@ $(function() {
 	})
 
 	// document.styleSheets[0].addRule("body .postTitle", "background-color:red;font-size:16px;")
-	/*document.getElementById('btn').addEventListener('click', function() {
+	/*document.getElementsByClassName('btn') && document.getElementsByClassName('btn')[0].addEventListener('click', function() {
 		var inputText = document.getElementById('inputText');
 		var currentFocus = document.activeElement;
 		inputText.focus();

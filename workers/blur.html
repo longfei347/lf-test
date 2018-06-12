@@ -1,15 +1,9 @@
 <!DOCTYPE html>
 <title>HTML5 Web Workers</title>
-<link rel="stylesheet" href = "styles.css">
-
 <h1>HTML5 Web Workers</h1>
-
-<p id="status">Your browser does not support HTML5 Web Workers.</p>
-
-
 <button id="startBlurButton" disabled>Blur</button>
 <button id="stopButton" disabled>Stop Workers</button>
-<button onclick="document.location = document.location;">Reload</button>
+<button onclick="location.reload()">Reload</button>
 
 <label for="workerCount">Number of Workers</label>
 <select id="workerCount">
@@ -24,7 +18,7 @@
 <div id="logOutput"></div>
 <script>
 
-var imageURL = "example2.png";
+var imageURL = "example.png";
 var image;
 var ctx;
 var workers = [];
@@ -139,13 +133,9 @@ function loadDemo() {
     log("Loading image data");
 
     if (typeof(Worker) !== "undefined") {
-        document.getElementById("status").innerHTML = "Your browser supports HTML5 Web Workers";
-
         document.getElementById("stopButton").onclick = stopBlur;
         document.getElementById("startBlurButton").onclick = startBlur;
-
         loadImageData(imageURL);
-
         document.getElementById("startBlurButton").disabled = true;
         document.getElementById("stopButton").disabled = true;
     }

@@ -1211,3 +1211,20 @@ function playSound(buffer){
     source.connect(context.destination);// 连接到输出源
     source.start(0);//开始播放
 }
+$.each 在each代码块内不能使用break和continue,要实现break和continue的功能的话，要使用return 
+break----用return false; 
+continue --用return ture; 
+
+xhr.upload.onprogress = function(e) {
+    var ratio = e.loaded / e.total;
+    setProgress(ratio + "% uploaded");
+}
+
+xhr.onprogress = function(e) {
+    var ratio = e.loaded / e.total;
+    setProgress(ratio + "% downloaded");
+}
+
+xhr.onload = function(e) {
+    setProgress("finished");
+}

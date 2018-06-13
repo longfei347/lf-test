@@ -10,7 +10,7 @@ Racer name: <input type="text" id="racerName" value="Racer X"/>
 <button onclick="startSendingLocation()">Start</button>
 <div><strong>Geolocation</strong>: <p id="geoStatus">HTML5 Geolocation not started.</p></div>
 <div><strong>WebSocket</strong>: <p id="socketStatus">HTML5 WebSocket is <strong>not</strong> supported in your browser.</p></div>
-
+<script src="../js/socket.io.js" type="text/javascript" charset="utf-8"></script>
 <script>
 // reference to the Web Socket
 var socket;
@@ -45,10 +45,12 @@ function handleLocationError(error) {
 function loadDemo() {
     // test to make sure that Web Sockets are supported
     let url = "ws://127.0.0.1:8080";
-    socket = new WebSocket(url);
-    socket.onopen = function() {
+    // socket = new WebSocket(url);
+    socket=io.connect('localhost:8080')
+    // socket.on('open', function() {
+    socket.on('connect', function() {
         updateSocketStatus("Connected to WebSocket race broadcast server");
-    }
+    })
 }
 
 function updateLocation(position) {

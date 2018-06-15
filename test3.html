@@ -2,65 +2,105 @@
 <html>
 
 <head>
-	<meta charset="utf-8">
-	<title>test</title>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<script src="js/jquery-1.11.0.js"></script>
-<script src="js/underscore-src.js"></script>
-<script src="js/console_snippets.js"></script>
-<script src="js/tenda-common.js"></script>
-<script src="js/base.js"></script>
-<style>
-.none {
-	display: none;
-}
-.test .hd{padding:10px 0;}
-.test .nav{position:fixed;right:10px;left: 540px;}
-.test .nav a{display:block;margin: 10px 0;}
-.test .bd .panel{width:500px;margin-top:5px;border:1px solid #ddd;}
-.test .bd h2{border-bottom:1px solid #ddd;}
-.test .bd .panel:target{border-color:#f60;}
-.test .bd .panel:target h2{border-color:#f60;}
-h2,p{margin:0;padding:10px;font-size:16px;}
-</style>
+  <meta charset="utf-8">
+  <title>test</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <script src="js/jquery-1.11.0.js"></script>
+  <script src="js/underscore-src.js"></script>
+  <script src="js/console_snippets.js"></script>
+  <script src="js/tenda-common.js"></script>
+  <script src="js/base.js"></script>
+  <style>
+  .none {
+    display: none;
+  }
+  #div1 {
+    height: 80px;
+    background: #ccc;
+    color: #f90;
+  }
+  </style>
 </head>
-<body>
-	<div id="observer">some-id</div>
-	<!-- <div class="test">
-		<div class="hd nav">
-			<a href="#panel1">前往区块1</a>
-			<a href="#panel2">前往区块2</a>
-			<a href="#panel3">前往区块3</a>
-			<a href="#panel4">前往区块4</a>
-			<a href="#panel5">前往区块5</a>
-		</div>
-		<div class="bd">
-			<div id="panel1" class="panel">
-				<h2>区块1</h2>
-				<div><p>区块1内容</p><p>区块1内容</p><p>区块1内容</p></div>
-			</div>
-			<div id="panel2" class="panel">
-				<h2>区块2</h2>
-				<div><p>区块2内容</p><p>区块2内容</p><p>区块2内容</p></div>
-			</div>
-			<div id="panel3" class="panel">
-				<h2>区块3</h2>
-				<div><p>区块3内容</p><p>区块3内容</p><p>区块3内容</p></div>
-			</div>
-			<div id="panel4" class="panel">
-				<h2>区块4</h2>
-				<div><p>区块4内容</p><p>区块4内容</p><p>区块4内容</p></div>
-			</div>
-			<div id="panel5" class="panel">
-				<h2>区块5</h2>
-				<div><p>区块5内容</p><p>区块5内容</p><p>区块5内容</p></div>
-			</div>
-		</div>
-	</div> -->
-</body>
 
+<body>
+  <div id="observer">MutationObserver observe dom</div>
+  <p>
+    <lable>请选择一个文件：</label>
+      <input type="file" id="file">
+      <input type="button" value="读取图像" onClick="readAsDataURL()">
+      <input type="button" value="读取二进制数据" onClick="readAsBinaryString()">
+      <input type="button" value="读取文本文件" onClick="readAsText()">
+  </p>
+  <div name="result" id="result"></div>
+  <div id="div1">
+    <p>请拖拽到此区域</p>
+  </div>
+  <ul id="ul1"></ul>
+</body>
 <script src="js/lite2.js"></script>
 <script>
+var result = document.getElementById("result");
+var file = document.getElementById("file");
+
+function readAsDataURL() {
+  var file = document.getElementById("file").files[0],
+    reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onload = function(e) {
+    var result = document.getElementById("result");
+    result.innerHTML = '<img src="' + this.result + '" alt="" />';
+  }
+}
+
+function readAsBinaryString() {
+  var file = document.getElementById("file").files[0],
+    reader = new FileReader();
+  reader.readAsBinaryString(file);
+  reader.onload = function(e) {
+    var result = document.getElementById("result");
+    result.innerHTML = this.result;
+  }
+}
+
+function readAsText() {
+  var file = document.getElementById("file").files[0],
+    reader = new FileReader();
+  reader.readAsText(file);
+  reader.onload = function(e) {
+    var result = document.getElementById("result");
+    result.innerHTML = this.result;
+  }
+}
+var oUl = document.getElementById('ul1');
+var oDiv = document.getElementById('div1');
+oDiv.ondragenter = function() {
+  this.innerHTML = '可以释放';
+};
+oDiv.ondragover = function(ev) {
+  ev.preventDefault();
+};
+oDiv.ondragleave = function() {
+  this.innerHTML = '请拖拽到此区域';
+};
+oDiv.ondrop = function(ev) {
+  ev.preventDefault();
+  var fs = ev.dataTransfer.files;
+  for (var i = 0; i < fs.length; i++) {
+    var fr = new FileReader();
+    if (fs[i].type.indexOf('image') != -1) {
+      fr.readAsDataURL(fs[i]);
+      fr.onload = function() {
+        var oLi = document.createElement('li');
+        var oImg = document.createElement('img');
+        oImg.src = this.result;
+        oLi.appendChild(oImg);
+        oUl.appendChild(oLi);
+      };
+    } else {
+      alert('亲,请拖拽图片格式');
+    }
+  }
+};
 /*var target = document.getElementById('observer');
 // create an observer instance
 var observer = new MutationObserver(function(mutations) {
@@ -134,19 +174,6 @@ console.log(strReverse("Many people spell MySQL incorrectly"))*/
 [2,3,5,4,5,2,2].map(x => s.add(x))
 for (i of s) {console.log(i)}*/
 
-/*Function.prototype.bind = function (obj) {
-		var slice = [].slice,
-		args = slice.call(arguments, 1),
-		self = this,
-		nop = function() {},
-		bound = function() {
-			return self.apply(this instanceof nop ? this : (obj || {}),
-			args.concat(slice.call(arguments)));
-		};
-		nop.prototype = self.prototype;
-		bound.prototype = new nop;
-		return bound;
-	};*/
 /*function ll() {
 	var i=0,sum=0;
 	let a=99;

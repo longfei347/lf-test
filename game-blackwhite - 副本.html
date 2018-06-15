@@ -17,13 +17,17 @@
 		margin-top: 20px;
 		text-align: center;
 	}
+	#checkboard td {
+		width: 40px;
+		height: 40px;
+	}
 	.black {
 		width: 40px;
 		height: 40px;
 		border-radius: 20px;
 		background-color: #000;
 	}
-	
+
 	.white {
 		border: 1px solid black;
 		width: 40px;
@@ -39,20 +43,18 @@
 		<p class="note">规则：执黑先行，处于两个异色棋子之间的棋子，颜色会转换,棋盘上填满棋子时结束，拥有较多棋子的人获胜. <br>
  		说明：每一步必须转换至少一个棋子，若不能，该回合将被自动放弃，算分时，棋盘的空位属于胜方 </p>
 		<div id="notice">
-			my-black:<span id="bp"></span>
-			&nbsp;&nbsp;pc-white:<span id="wp"></span>
+			my-black:<span id="bp"></span>&nbsp;&nbsp;
+			pc-white:<span id="wp"></span>
 		</div>
 		<table id="checkboard" style="margin:auto; margin-top: 20px;" border="1">
 		</table>
-		<div id="tips">
-			black first
-		</div>
+		<div id="tips"> black first </div>
 	</div>
 </body>
-<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="js/j.js"></script>
 <script>
 /* Othello.js
- * 目标：8×8黑白棋，带AI  
+ * 目标：8×8黑白棋，带AI
  */
 var totalPoints = 0; //当前总分
 var maxPoints = 0; //最大数目
@@ -64,9 +66,7 @@ var blackChess = document.createElement('div');
 blackChess.setAttribute('class', 'black'); //黑子
 var whiteChess = document.createElement('div');
 whiteChess.setAttribute('class', 'white'); //白子
-$(document).ready(function() {
-	createBoard();
-});
+createBoard();
 //创建NxN的棋盘
 function createBoard(n) {
 	n = n || 8;
@@ -76,13 +76,11 @@ function createBoard(n) {
 	for (var i = 0; i < n; i++) { //绘制棋盘
 		var row = document.createElement('tr'); //行
 		row.setAttribute('id', 'r' + i);
-		row.setAttribute('height', '40px');
 		var col = [];
 		for (var j = 0; j < n; j++) {
 			var cell = document.createElement('td'); //列
 			col[j] = ''; //棋子颜色
 			cell.setAttribute('id', 'c' + j);
-			cell.setAttribute('width', '40px');
 			cell.setAttribute('onmousedown', 'done(this)');
 			row.appendChild(cell);
 		}
@@ -206,12 +204,10 @@ function judge() {
 }
 
 function tip(s) {
-	var tips = document.getElementById('tips')
-	tips.innerHTML = s;
+	document.getElementById('tips').innerHTML = s;
 }
 //落子时，四（八）个方向上至少有一个邻居
 function checkNeb(row, col) {
-
 	var _w = chesses[row][col - 1] ? chesses[row][col - 1] : '' ;
 	var _e = chesses[row][col + 1] ? chesses[row][col + 1] : '' ;
 	var _n = chesses[row + 1] ? chesses[row + 1][col] ? chesses[row + 1][col] : '' : '';
@@ -225,7 +221,7 @@ function effects(row, col, player, flag) {
 	var board = document.getElementById('checkboard');
 	//if (chesses[row] == undefined) return;
 	if (!flag) {
-		chesses[row][col] = player; //假装放上去    
+		chesses[row][col] = player; //假装放上去
 	}
 	var num = board.rows.length;
 	var horizon = chesses[row]; //水平方向
@@ -284,7 +280,7 @@ function effects(row, col, player, flag) {
 		total.push(lb_ast[_lb[j]]);
 	}
 	if (!flag) {
-		chesses[row][col] = ''; //记得拿掉    
+		chesses[row][col] = ''; //记得拿掉
 	}
 	return total;
 }

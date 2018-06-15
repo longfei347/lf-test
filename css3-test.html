@@ -152,6 +152,68 @@ li:before {
 .counter3 li li li:before {
     content: counter(testname3, decimal)"."counter(testname4, decimal)"."counter(testname5, decimal)".";
 } */
+.demo-div {
+    position: relative;
+    min-height: 120px;
+    padding: 10px;
+}
+.clip {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    position: absolute;
+}
+
+.clip span {
+    display: block;
+    width: 100px;
+    height: 100px;
+    position: absolute;/*必须将position: absolute; clip才可使用 */
+    clip: rect(auto, 50px, auto, auto);
+    border-radius: 50px;
+    overflow: hidden;
+    background: #f40;
+    transition: transform 2s linear;
+}
+
+.clip span:nth-of-type(1) {
+    transform: rotate(180deg);
+}
+
+.clip-playA span:nth-of-type(1) {
+    transform: rotate(360deg);
+}
+
+.clip-playB {
+    clip: rect(0, 50px, 100px, 0);
+}
+
+.clip-playB span:nth-of-type(1) {
+    display: none;
+}
+
+.clip-playB span:nth-of-type(2) {
+    transform: rotate(180deg);
+}
+
+.demo-div button {
+    margin-top: 50px;
+    margin-left: 120px;
+    border: none;
+    padding: 8px 15px;
+    background: #1abc9c;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#clip{
+    position: absolute;
+    display: none;
+    height: 150px;
+    width: 150px;
+    background-color: #ccc;
+    clip: rect(10px,120px,130px, 20px);
+}
 </style>
 </head>
 <body>
@@ -186,7 +248,13 @@ li:before {
             </ol>
         </li>
     </ul>
-
+    <div id="clip"></div>
+    <div class="demo-div">
+        <div class="clip" id="Jdiv">
+            <span></span><span></span>
+        </div>
+        <button id="Jbtn">播放</button>
+    </div>
     <form>
         <input name="range1" type="range" id="range1" oninput="result1.value = parseInt(range1.value) + parseInt(range2.value)" min="1" max="100">
         <input name="range2" type="text" value="50">
@@ -202,7 +270,14 @@ li:before {
 </div>
 </body>
 <script>
-
+document.querySelector('#Jbtn').addEventListener('click', function() {
+    var ele = document.querySelector('#Jdiv');
+    ele.classList.add('clip-playA');
+    setTimeout(function() {
+        ele.classList.remove('clip-playA')
+        ele.classList.add('clip-playB');
+    }, 2000)
+});
 /*
 var docEl = document.documentElement,
     resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',

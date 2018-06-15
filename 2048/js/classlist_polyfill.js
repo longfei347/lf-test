@@ -4,10 +4,9 @@
     return;
   }
 
-  var prototype = Array.prototype,
-      push = prototype.push,
-      splice = prototype.splice,
-      join = prototype.join;
+  var push = [].push,
+      splice = [].splice,
+      join = [].join;
 
   function DOMTokenList(el) {
     this.el = el;

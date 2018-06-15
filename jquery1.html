@@ -320,7 +320,6 @@ svg {
 	<div id="testable">
 		longfei
 	</div>
-	<a href="http://baidu.com" id="fftt">百度</a>
 	<!-- <select name="" id="">
 		<option value="">1</option>
 		<option value="">2</option>
@@ -336,13 +335,19 @@ svg {
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/moment.min.js"></script>
 <script>
-$("#fftt").on('click',function(e) {
-	console.log('preventDefault')
-	e.preventDefault()
-})
+/*$(document).on('keydown',function (e) {
+	console.log(e.keyCode)
+})*/
+/*var arr=[[1,2,3],[2,3,4],[3,5,7],[4,6,9]]
+var newArray = arr[0].map(function(col, i) {
+    return arr.map(function(row) {
+    	return row[i];
+  	})
+});
+console.log(newArray)*/
+
 // 光标定位
 function dealKeyup(that) {
-	console.log(this)
     var input_val = $(that).val();
     var input_arr = input_val.split("-");
     for(var i=0;i<input_arr.length;i++) {

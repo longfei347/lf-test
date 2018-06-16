@@ -345,7 +345,12 @@ var newArray = arr[0].map(function(col, i) {
   	})
 });
 console.log(newArray)*/
-
+[12,4,4,5].forEach((item)=> {
+	if(item==4) {
+		return false;
+	}
+	console.log(item)
+})
 // 光标定位
 function dealKeyup(that) {
     var input_val = $(that).val();

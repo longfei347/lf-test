@@ -364,10 +364,8 @@ function judge(row, col, cplayer) {
 	changeTds = [];
 	chesses.forEach(function(v, i) {
 		var num = row + col;
-		if (num < 8) {
-			num >= i && (en_arr.push(v[num - i]), en_td.push(chessboard.rows[i].cells[num - i]));
-		} else if (num > 7) {
-			num - 7 <= i && (en_arr.push(v[num - i]), en_td.push(chessboard.rows[i].cells[num - i]));
+		if ((num < 8 && num >= i) || (num > 7 && num - 7 <= i)) {
+			en_arr.push(v[num - i]), en_td.push(chessboard.rows[i].cells[num - i]);
 		}
 		if (row === i) {
 			en_arr.start = en_arr.length - 1;
@@ -375,10 +373,9 @@ function judge(row, col, cplayer) {
 	});
 	chesses.forEach(function(v, i) {
 		var num = 7 - col + row;
-		if (num < 8) {
-			num >= i && (wn_arr.push(v[i + 7 - num]), wn_td.push(chessboard.rows[i].cells[i + 7 - num]));
-		} else if (num > 7) {
-			num - 7 <= i && (wn_arr.push(v[i + 7 - num]), wn_td.push(chessboard.rows[i].cells[i + 7 - num]));
+		if ((num < 8 && num >= i)||(num > 7 && num - 7 <= i)) {
+			wn_arr.push(v[i + 7 - num]);
+			wn_td.push(chessboard.rows[i].cells[i + 7 - num]);
 		}
 		if (row === i) {
 			wn_arr.start = wn_arr.length - 1;

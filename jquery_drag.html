@@ -13,17 +13,14 @@ $(function () {
 			console.log("end");
 		}
 	});
-	$("#close").click(function () {
-		console.log("close");
-	});
-	
+
 	var move=false;
 	var _x,_y;
 	$("#test").mousedown(function(e){//e=event,e.pageX,e.clientX
 		move=true;
 		_x=e.pageX-parseInt($("#test").css("left"));
 		_y=e.pageY-parseInt($("#test").css("top"));
-		console.log(e,event,e.pageX,e.pageY,e.clientY);
+		console.log(/*e,event,*/e.pageX,e.pageY,e.clientY);
 		$("#test").fadeTo(20, 0.5);
 		$(document).mousemove(
 			function(e){
@@ -52,9 +49,6 @@ jQuery.fn.extend({
 			}, opts || {});
 		_self.mousemove = function (e) {
 			e.stopPropagation();
-			if ($.browser.msie) {
-				e = window.event;
-			}
 			var x = e.clientX - posX;
 			var y = e.clientY - posY;
 			if (opts.IsLimit) {
@@ -77,9 +71,6 @@ jQuery.fn.extend({
 		}
 		_this.find(opts.DrapMove).mousedown(function (e) {
 			e.stopPropagation();
-			if ($.browser.msie) {
-				e = window.event;
-			}
 			posX = e.clientX - parseInt(_this.offset().left);
 			posY = e.clientY - parseInt(_this.offset().top);
 			$(document).mousemove(function (ev) {

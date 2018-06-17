@@ -1228,7 +1228,7 @@ xhr.onprogress = function(e) {
 xhr.onload = function(e) {
     setProgress("finished");
 }
-
+**添加了 draggable="true"属性后,document绑定事件mouseup第一次不生效
 npm install -g express-generator
 Create the app: 在当前目录根目录创建/tmp/foo
 $ express --view=jade /tmp/foo && cd /tmp/foo

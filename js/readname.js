@@ -5,7 +5,7 @@ let files = [],len=__dirname.length;
 function ScanDir(path) {
   if (fs.statSync(path).isFile()) {
     let temPath = path.substr(len);
-    if (/\.acc$|\.mp3$/.test(temPath)) {
+    if (/\.aac$|\.mp3$/.test(temPath)) {
       return files.push(path.substr(len));
     }
   }

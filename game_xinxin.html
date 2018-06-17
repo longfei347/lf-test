@@ -10,11 +10,11 @@
 		margin: 0;
 		padding: 0;
 	}
-	
+
 	img {
 		border: 0;
 	}
-	
+
 	#gameBox {
 		position: relative;
 		width: 447px;
@@ -24,12 +24,12 @@
 		padding: 8px;
 		text-align: center;
 	}
-	
+
 	#gameBox span {
 		position: absolute;
 		font-size: 24px;
 	}
-	
+
 	#board {
 		top: 6px;
 		right: 6px;
@@ -39,20 +39,20 @@
 		font-weight: bold;
 		border-radius: 6px;
 	}
-	
+
 	#score {
 		display: none;
 		/* background-color: #00a; */
 		color: green;
 	}
-	
+
 	#loading {
 		position: absolute;
 		top: 50%;
 		left: 50%;
 		margin: -33px 0 0 -33px;
 	}
-	
+
 	#gameBox ul {
 		position: relative;
 		float: left;
@@ -63,16 +63,16 @@
 		list-style: none;
 		overflow: hidden;
 	}
-	
+
 	#gameBox ul:first-child {
 		margin-left: 0;
 	}
-	
+
 	#gameBox ul li {
 		position: absolute;
 		left: 0;
 	}
-	
+
 	#gameBox ul li img {
 		display: block;
 		border-radius: 6px;
@@ -126,7 +126,7 @@ $(function() {
 				// 选中多个时，执行消除，否则无变化
 				// 执行消除有两步：1、同颜色星星消除动画；2、填补空位
 				var len = $('#gameBox img.cur').length;
-				if (len > 1) {
+				if (len > 2) {
 					var count = 0;
 
 					$('#gameBox ul').each(function() {
@@ -165,7 +165,7 @@ $(function() {
 								} else {
 									return true;
 								}
-								
+
 							})
 							Game.opts.totalScore += len;
 							$('#board').html(Game.opts.totalScore);

@@ -80,21 +80,20 @@ var chess = new Vue({
     chesses: Array(8).fill(0).map(item => Array(8).fill(0)), //二维数组,0是初值,1是黑棋,2是白棋
     // bp_count: this.chesses.join(',').match(/1/g)?this.chesses.join(',').match(/1/g).length:0,
     // wp_count: this.chesses.join(',').match(/2/g)?this.chesses.join(',').match(/2/g).length:0,
-    player: "black"
+    // player: "black"
   },
   wacth: {
-    chesses(news,old) {
+    /*chesses(news,old) {
       console.log(news,old)
       this.bp_count = this.chesses.join(',').match(/1/g) ? this.chesses.join(',').match(/1/g).length : 0
       // this.wp_count = chesses.join(',').match(/2/g)?chesses.join(',').match(/2/g).length:0,
-    }
+    }*/
   },
   mounted() {
     $("#chessboard").on("mousedown", "div", (e) => {
       var tar = e.target,
         col = tar.parentNode.cellIndex,
         row = tar.parentNode.parentNode.rowIndex;
-      // this.judge(row, col, player);
       if (tar.className !== "") {
         return 0;
       }
@@ -104,11 +103,11 @@ var chess = new Vue({
         setTimeout(this.pcPlayer, 500);
       }
       this.judge(row, col, player);
-
+      console.log(changeTds)
       if (changeTds.length > 0) {
         this.putchess(row, col, player);
       } else {
-        tar.backgroundColor = "red";
+        tar.style.backgroundColor = "red";
         $(tar).one("mouseup", function() {
           this.removeAttribute("style");
         });
@@ -135,16 +134,15 @@ var chess = new Vue({
       player = curplayer === "white" ? "black" : "white";
       // bp.innerHTML = document.getElementsByClassName("black").length;
       // wp.innerHTML = document.getElementsByClassName("white").length;
-      bp.innerHTML = this.chesses.join(',').match(/1/g) ? this.chesses.join(',').match(/1/g).length : 0
-      wp.innerHTML = this.chesses.join(',').match(/2/g) ? this.chesses.join(',').match(/2/g).length : 0
       changeTds.forEach(item=> {
         let [row,col] = item.substr(1).split('');
         this.$set(this.chesses[row],col,playerObj[curplayer])
       })
+      bp.innerHTML = this.chesses.join(',').match(/1/g) ? this.chesses.join(',').match(/1/g).length : 0
+      wp.innerHTML = this.chesses.join(',').match(/2/g) ? this.chesses.join(',').match(/2/g).length : 0
       changeTds = [];
     },
     checkNei(start, arr, player, tds) { // 判断是否可放子
-      var flag = false;
       if (arr.length < 3 || arr[start] > 0 ||
         !((arr[start - 1] > 0 && arr[start - 1] != playerObj[player]) ||
           (arr[start + 1] > 0 && arr[start + 1] != playerObj[player]))) {
@@ -152,30 +150,25 @@ var chess = new Vue({
       }
       if (player === "black") {
         if (/^2+1/.test(arr.slice(start + 1).join(""))) {
-          flag = true;
           changeTds = changeTds.concat(tds.slice(start + 1, arr.indexOf(1, start)));
         }
         if (/12+$/.test(arr.slice(0, start).join(""))) {
-          flag = true;
           changeTds = changeTds.concat(tds.slice(arr.lastIndexOf(1, start) + 1, start));
         }
 
       } else {
         if (/^1+2/.test(arr.slice(start + 1).join(""))) {
-          flag = true;
           changeTds = changeTds.concat(tds.slice(start + 1, arr.indexOf(2, start)));
         }
         if (/21+$/.test(arr.slice(0, start).join(""))) {
-          flag = true;
           changeTds = changeTds.concat(tds.slice(arr.lastIndexOf(2, start) + 1, start));
         }
       }
-      return flag;
     },
     judge(row, col, cplayer) {
       var h_arr = this.chesses[row], //横向
         h_td = Array(8).fill(0).map((item,index)=>'c'+row+index),
-        v_td = Array(8).fill(0).map((item,index)=>'c'+index+row),
+        v_td = Array(8).fill(0).map((item,index)=>'c'+index+col),
         en_td = [],
         es_td = [],
         v_arr = this.chesses.map((v, i) => v[col]), //竖向
@@ -209,8 +202,8 @@ var chess = new Vue({
       });
       this.checkNei(col, h_arr, player, h_td);
       this.checkNei(row, v_arr, player, v_td);
-      this.checkNei(es_arr.start, es_arr, player, en_td);
-      this.checkNei(en_arr.start, en_arr, player, es_td);
+      this.checkNei(es_arr.start, es_arr, player, es_td);
+      this.checkNei(en_arr.start, en_arr, player, en_td);
     },
     doPut() {
       var i = 0,
@@ -248,7 +241,7 @@ var chess = new Vue({
         return 0;
       }
       canPut.sort((a, b) => a.chTds.length > b.chTds.length ? -1 : 1);
-      $(canPut).each(function(i, v) {
+      $(canPut).each((i, v)=> {
         if ((v.row == 0 || v.row == 7) && (v.col == 0 || v.col == 7)) {
           changeTds = v.chTds;
           this.putchess(v.row, v.col, player);

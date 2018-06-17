@@ -191,32 +191,34 @@ function init(argument) {
 	})
 }
 init();
-var modTds = [], count=0;
-function putModify(row,col, direction ) {
+var modTds = [], count=0,
+	chessboard = document.getElementById('chessboard'),curTd;
+function putModify(row,col) {
 	var curDirection;
-	
-	if (direction != 1 && modTds.indexOf(chessboard.rows[row].cells[col]) !== -1) {
+	chessboard.rows[row].cells[col].classList.add('cur');
+	/*if (chessboard.rows[row].cells[col].classList.contains('cur')) {
 		return 0;
-	}
+	}*/
+	console.log(row,col)
 	count++;
-	if (row > 0 && chessboard.rows[row-1].cells[col].className === curColor && 
-		direction !== "down") {//上
-		putModify(row-1,col,"up");
+	if (row > 0 && chessboard.rows[row-1].cells[col].className === curColor &&
+		!chessboard.rows[row-1].cells[col].classList.contains('cur')) {//上
+		putModify(row-1,col);
 		modTds.push(chessboard.rows[row-1].cells[col]);
 	}
 	if (row < 9 && chessboard.rows[row+1].cells[col].className === curColor &&
-		direction !== "up") {// 下
-		putModify(row+1,col,"down");
+		!chessboard.rows[row+1].cells[col].classList.contains('cur')) {// 下
+		putModify(row+1,col);
 		modTds.push(chessboard.rows[row+1].cells[col]);
 	}
 	if (col > 0 && chessboard.rows[row].cells[col-1].className === curColor &&
-		direction !== "left") {// 右
-		putModify(row,col-1,"right");
+		!chessboard.rows[row].cells[col-1].classList.contains('cur')) {// 右
+		putModify(row,col-1);
 		modTds.push(chessboard.rows[row].cells[col-1]);
 	}
 	if (col < 9 && chessboard.rows[row].cells[col+1].className === curColor &&
-		direction !== "right") {// 左
-		putModify(row,col+1,"left");
+		!chessboard.rows[row].cells[col+1].classList.contains('cur')) {// 左
+		putModify(row,col+1);
 		modTds.push(chessboard.rows[row].cells[col+1]);
 	}
 }
@@ -230,7 +232,8 @@ $("#chessboard").on("click","td", function() {
 	}
 	modTds = [];
 	modTds.push(this);
-	putModify(row, col, 1);
+	// this.classList.add('cur');
+	putModify(row,col);
 	if (modTds.length === 1) {
 		return 0;
 	}
@@ -247,7 +250,10 @@ $("#chessboard").on("click","td", function() {
 				return 0;
 			}
 		}))
-		
+		/*if (chessboard.rows[i].cells[0].className === '') {
+			chessboard.deleteRow(i);
+			chessboard.insertRow(9);
+		}*/
 	}
 
 	/*var j=0,tdArr=[],trs = [].slice.call(chessboard.rows);

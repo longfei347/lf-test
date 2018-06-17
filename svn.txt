@@ -1256,3 +1256,7 @@ vue list
   ★  webpack - A full-featured Webpack + vue-loader setup with hot reload, linting, testing & css extraction.
   ★  webpack-simple - A simple Webpack + vue-loader setup for quick prototyping.
 
+screenX:鼠标位置相对于用户屏幕水平偏移量
+pageX,pageY包含滚动条的距离,不随滚动条的移动而移动
+clientX,clintY会随滚动条的移动而移动
+pageX>=clientX

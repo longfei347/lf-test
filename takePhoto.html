@@ -18,35 +18,10 @@ input[type=radio] {
 		position: relative;
 		top: 3px; */
 }
-.log {
-	margin: 10px 16px;
-	border: 1px solid #EEE;
-	padding: 0 16px;
-	height: 56px;
-	line-height: 56px;
-	border-radius: 10px;
-	box-sizing: border-box;
-	background-color: #fff;
-
-}
-.log:before{
-	content: '';
-	float: left;
-	display: inline-block;
-	margin-left: -26px;
-	width: 26px;
-	height: 56px;
-	border-radius: 20px;
-	border-left: 15px solid #9ACE48
-}
 </style>
 <body>
 	<form action="">
-		<div class="log">
-			<a data-href="log" href="#">
-				<label>新人日志</label><span class="rank">3</span>
-			</a>
-		</div>
+		<h3>需在http服务器下访问</h3>
 		<!-- <input type="radio" name="haha" value="1" id="">1
 		<input type="radio" name="haha" value="2" id="">2
 		<br> -->
@@ -80,7 +55,7 @@ function playVideo() {
 	});
 }*/
 // 方法二:
-/*function playVideo(argument) {
+function playVideo(argument) {
 	navigator.mediaDevices.getUserMedia({video: true}).then(function(stream) {
 		video.src = window.URL.createObjectURL(stream);
 		mediaStream = stream;
@@ -107,6 +82,6 @@ document.getElementById("stop").addEventListener("click", function(e) {
 document.getElementById("start").addEventListener("click", function(e) {
 	e.preventDefault();
 	playVideo()
-});*/
+});
 </script>
 </html>

@@ -318,7 +318,7 @@ svg {
 		<button id="deferred2">$.Deferred异步</button>
 	</div>
 	<div id="testable">
-		longfei
+		<span class="long">longfei</span>
 	</div>
 	<!-- <select name="" id="">
 		<option value="">1</option>
@@ -333,6 +333,7 @@ svg {
 </body>
 <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js"></script> -->
 <script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/base.js"></script>
 <script type="text/javascript" src="js/moment.min.js"></script>
 <script>
 /*$(document).on('keydown',function (e) {
@@ -345,12 +346,23 @@ var newArray = arr[0].map(function(col, i) {
   	})
 });
 console.log(newArray)*/
-[12,4,4,5].forEach((item)=> {
-	if(item==4) {
-		return false;
-	}
-	console.log(item)
-})
+
+function parsePath (path) {
+	var bailRE = /[^\w.$]/;// 含有\w.$之外字符,则返回函数
+  if (bailRE.test(path)) {
+    return
+  }
+  var segments = path.split('.');
+  return function (obj) {
+    for (var i = 0; i < segments.length; i++) {
+      if (!obj) { return }
+      obj = obj[segments[i]];
+    }
+    return obj
+  }
+}
+// console.log(parsePath(location.href)());
+
 // 光标定位
 function dealKeyup(that) {
     var input_val = $(that).val();

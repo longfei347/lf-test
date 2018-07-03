@@ -18,24 +18,23 @@ Person.prototype = {
 	}
 };*/
 
-var Class = function () {
-	var klass = function () {
+var Class = function() {
+	var klass = function() {
 		// console.log(this);
 		this.init.apply(this, arguments);
 	};
 	//改变klass的原型
 	if (parent) {
-		var subclass = function () {};
+		var subclass = function() {};
 		subclass.prototype = parent.prototype;
 		klass.prototype = new subclass;
 	};
-	klass.prototype.init = function (a, b) {
-	};
+	klass.prototype.init = function(a, b) {};
 	klass.fn = klass.prototype;
 	klass.fn.parent = klass;
 	klass._super = klass.__proto__;
 	//给类添加属性
-	klass.extend = function (obj) {
+	klass.extend = function(obj) {
 		var extended = obj.extended;
 		for (var i in obj) {
 			klass[i] = obj[i];
@@ -46,7 +45,7 @@ var Class = function () {
 	};
 
 	//给实例添加属性
-	klass.include = function (obj) {
+	klass.include = function(obj) {
 		var included = obj.included;
 		for (var i in obj) {
 			klass.fn[i] = obj[i];
@@ -55,9 +54,10 @@ var Class = function () {
 			included(klass);
 	}
 	//添加一个proxy函数
-	klass.proxy = function (func) {
-		var self = this;document.createElement("ul")
-		return (function () {
+	klass.proxy = function(func) {
+		var self = this;
+		document.createElement("ul")
+		return (function() {
 			return func.apply(self, arguments);
 		});
 	}
@@ -67,25 +67,25 @@ var Person = new Class;
 //Person.prototype.init = function(a) {};
 //var person = new Person;
 Person.include({
-	init : function (element) {
+	init: function(element) {
 		this.element = $(element);
 		//代理这个click函数
 		this.element.click(this.proxy(this.click));
 	},
-	click : function () {}
+	click: function() {}
 })
 //计算倒计时
 function countdown(dom, timestr) {
 	var a = b = c = 0;
 	var D2016 = new Date(timestr); //2016,0,1
-	setInterval(function () {
+	setInterval(function() {
 		var D = new Date(),
-		val = Math.round((D2016.getTime() - D.getTime()) / 1000),
-		daytimes = val % (86400), //60*60*24
-		days = Math.floor(val / 86400),
-		hours = Math.floor(daytimes / 3600) % 24,
-		minutes = Math.floor(daytimes / 60) % 60,
-		seconds = daytimes % 60;
+			val = Math.round((D2016.getTime() - D.getTime()) / 1000),
+			daytimes = val % (86400), //60*60*24
+			days = Math.floor(val / 86400),
+			hours = Math.floor(daytimes / 3600) % 24,
+			minutes = Math.floor(daytimes / 60) % 60,
+			seconds = daytimes % 60;
 		$(dom).html("还剩" + days + "天, " + hours + "时, " + minutes + "分, " + seconds + "秒")
 	}, 1000);
 };
@@ -107,7 +107,7 @@ if (!Function.prototype.bind) {
 	};
 }*/
 var forEach = Function.prototype.call.bind(Array.prototype.forEach);
-forEach(document.querySelectorAll('.klasses'), function (el) {
+forEach(document.querySelectorAll('.klasses'), function(el) {
 	el.addEventListener('click', someFunction);
 });
 //在页面中显示文件与图片
@@ -116,12 +116,12 @@ function handleFiles(files) {
 		var file = files[0];
 		var reader = new FileReader();
 		if (/text\/\w+/.test(file.type)) {
-			reader.onload = function () {
+			reader.onload = function() {
 				$('<pre>' + this.result + '</pre>').appendTo('body');
 			}
 			reader.readAsText(file);
 		} else if (/image\/\w+/.test(file.type)) {
-			reader.onload = function () {
+			reader.onload = function() {
 				$('<img src="' + this.result + '"/>').appendTo('body');
 			}
 			reader.readAsDataURL(file);
@@ -133,10 +133,11 @@ function selectFrom(lowerValue, upperValue) {
 	var choices = upperValue - lowerValue + 1;
 	return Math.floor(Math.random() * choices + lowerValue);
 }
+
 function getCookie(name) {
-    // var search = /\?/.test(url) ? url.split('?')[1] : url;
-    var reg = new RegExp("(^|; )"+ name +"=([^; ]*)(; |$)");
-    return reg.test(search) ? RegExp.$2 : '';
+	// var search = /\?/.test(url) ? url.split('?')[1] : url;
+	var reg = new RegExp("(^|; )" + name + "=([^; ]*)(; |$)");
+	return reg.test(search) ? RegExp.$2 : '';
 }
 
 /*function getCookie(key) {
@@ -152,11 +153,11 @@ function getCookie(name) {
 	}
 }*/
 var CookieUtil = {
-	get : function (name) {
+	get: function(name) {
 		var cookieName = encodeURIComponent(name) + "=",
-		cookieStart = document.cookie.indexOf(cookieName),
-		cookieValue = null,
-		cookieEnd;
+			cookieStart = document.cookie.indexOf(cookieName),
+			cookieValue = null,
+			cookieEnd;
 		if (cookieStart > -1) {
 			cookieEnd = document.cookie.indexOf(";", cookieStart);
 			if (cookieEnd == -1) {
@@ -166,7 +167,7 @@ var CookieUtil = {
 		}
 		return cookieValue;
 	},
-	set : function (name, value, expires, path, domain, secure) {
+	set: function(name, value, expires, path, domain, secure) {
 		var cookieText = encodeURIComponent(name) + "=" + encodeURIComponent(value);
 		if (expires instanceof Date) {
 			cookieText += "; expires=" + expires.toGMTString();
@@ -182,12 +183,12 @@ var CookieUtil = {
 		}
 		document.cookie = cookieText;
 	},
-	unset : function (name, path, domain, secure) {
+	unset: function(name, path, domain, secure) {
 		this.set(name, "", new Date(0), path, domain, secure);
 	}
 };
 var EventUtil = {
-	addHandler : function (element, type, handler) {
+	addHandler: function(element, type, handler) {
 		if (element.addEventListener) {
 			element.addEventListener(type, handler, false);
 		} else if (element.attachEvent) {
@@ -197,27 +198,27 @@ var EventUtil = {
 		}
 	},
 
-	getButton : function (event) {
+	getButton: function(event) {
 		if (document.implementation.hasFeature("MouseEvents", "2.0")) {
 			return event.button;
 		} else {
 			switch (event.button) {
-			case 0:
-			case 1:
-			case 3:
-			case 5:
-			case 7:
-				return 0;
-			case 2:
-			case 6:
-				return 2;
-			case 4:
-				return 1;
+				case 0:
+				case 1:
+				case 3:
+				case 5:
+				case 7:
+					return 0;
+				case 2:
+				case 6:
+					return 2;
+				case 4:
+					return 1;
 			}
 		}
 	},
 
-	getCharCode : function (event) {
+	getCharCode: function(event) {
 		if (typeof event.charCode == "number") {
 			return event.charCode;
 		} else {
@@ -225,16 +226,16 @@ var EventUtil = {
 		}
 	},
 
-	getClipboardText : function (event) {
+	getClipboardText: function(event) {
 		var clipboardData = (event.clipboardData || window.clipboardData);
 		return clipboardData.getData("text");
 	},
 
-	getEvent : function (event) {
+	getEvent: function(event) {
 		return event ? event : window.event;
 	},
 
-	getRelatedTarget : function (event) {
+	getRelatedTarget: function(event) {
 		if (event.relatedTarget) {
 			return event.relatedTarget;
 		} else if (event.toElement) {
@@ -247,11 +248,11 @@ var EventUtil = {
 
 	},
 
-	getTarget : function (event) {
+	getTarget: function(event) {
 		return event.target || event.srcElement;
 	},
 
-	getWheelDelta : function (event) {
+	getWheelDelta: function(event) {
 		if (event.wheelDelta) {
 			return (client.engine.opera && client.engine.opera < 9.5 ? -event.wheelDelta : event.wheelDelta);
 		} else {
@@ -259,7 +260,7 @@ var EventUtil = {
 		}
 	},
 
-	preventDefault : function (event) {
+	preventDefault: function(event) {
 		if (event.preventDefault) {
 			event.preventDefault();
 		} else {
@@ -267,7 +268,7 @@ var EventUtil = {
 		}
 	},
 
-	removeHandler : function (element, type, handler) {
+	removeHandler: function(element, type, handler) {
 		if (element.removeEventListener) {
 			element.removeEventListener(type, handler, false);
 		} else if (element.detachEvent) {
@@ -277,7 +278,7 @@ var EventUtil = {
 		}
 	},
 
-	setClipboardText : function (event, value) {
+	setClipboardText: function(event, value) {
 		if (event.clipboardData) {
 			event.clipboardData.setData("text/plain", value);
 		} else if (window.clipboardData) {
@@ -285,7 +286,7 @@ var EventUtil = {
 		}
 	},
 
-	stopPropagation : function (event) {
+	stopPropagation: function(event) {
 		if (event.stopPropagation) {
 			event.stopPropagation();
 		} else {
@@ -294,7 +295,7 @@ var EventUtil = {
 	}
 
 };
-$.cookie = function (name, value, options) {
+$.cookie = function(name, value, options) {
 	if (typeof value != 'undefined') { // name and value given, set cookie
 		options = options || {};
 		if (value === null) {
@@ -335,9 +336,9 @@ $.cookie = function (name, value, options) {
 
 function shuffle(aArr) {
 	var iLength = aArr.length,
-	i = iLength,
-	mTemp,
-	iRandom;
+		i = iLength,
+		mTemp,
+		iRandom;
 	while (i--) {
 		if (i !== (iRandom = Math.floor(Math.random() * iLength))) {
 			mTemp = aArr[i];
@@ -349,62 +350,62 @@ function shuffle(aArr) {
 }
 
 function shuffleUseSort(aArr) {
-	return aArr.sort(function (a, b) {
+	return aArr.sort(function(a, b) {
 		return (0.5 - Math.random());
 	});
 }
 //var isTouch = typeof document.body.ontouchstart != "undefined"; //是否支持触摸
 var Regexs = {
-	email : (/^[0-9a-z][0-9a-z\-\_\.]+@([0-9a-z][0-9a-z\-]*\.)+[a-z]{2,}$/i), //邮箱
-	phone : (/^0[0-9]{2,3}[2-9][0-9]{6,7}$/), //座机手机号码
-	ydphpne : (/^((13[4-9])|(15[012789])|147|182|187|188)[0-9]{8}$/), //移动手机号码
-	allphpne : (/^((13[0-9])|(15[0-9])|(18[0-9]))[0-9]{8}$/), //所有手机号码
-	ltphpne : (/^((13[0-2])|(15[56])|(186)|(145))[0-9]{8}$/), //联通手机号码
-	dxphpne : (/^((133)|(153)|(180)|(189))[0-9]{8}$/), //电信手机号码
-	url : (/^http:\/\/([0-9a-z][0-9a-z\-]*\.)+[a-z]{2,}(:\d+)?\/[0-9a-z%\-_\/\.]+/i), //网址
-	num : (/[^0-9]/), //数字
-	cnum : (/[^0-9a-zA-Z_.-]/),
-	photo : (/\.jpg$|\.jpeg$|\.gif$/i), //图片格式
-	row : (/\n/ig)
+	email: (/^[0-9a-z][0-9a-z\-\_\.]+@([0-9a-z][0-9a-z\-]*\.)+[a-z]{2,}$/i), //邮箱
+	phone: (/^0[0-9]{2,3}[2-9][0-9]{6,7}$/), //座机手机号码
+	ydphpne: (/^((13[4-9])|(15[012789])|147|182|187|188)[0-9]{8}$/), //移动手机号码
+	allphpne: (/^((13[0-9])|(15[0-9])|(18[0-9]))[0-9]{8}$/), //所有手机号码
+	ltphpne: (/^((13[0-2])|(15[56])|(186)|(145))[0-9]{8}$/), //联通手机号码
+	dxphpne: (/^((133)|(153)|(180)|(189))[0-9]{8}$/), //电信手机号码
+	url: (/^http:\/\/([0-9a-z][0-9a-z\-]*\.)+[a-z]{2,}(:\d+)?\/[0-9a-z%\-_\/\.]+/i), //网址
+	num: (/[^0-9]/), //数字
+	cnum: (/[^0-9a-zA-Z_.-]/),
+	photo: (/\.jpg$|\.jpeg$|\.gif$/i), //图片格式
+	row: (/\n/ig)
 };
 //身份证验证
 function IdentityCodeValid(code) {
 	var city = {
-		11 : "北京",
-		12 : "天津",
-		13 : "河北",
-		14 : "山西",
-		15 : "内蒙古",
-		21 : "辽宁",
-		22 : "吉林",
-		23 : "黑龙江 ",
-		31 : "上海",
-		32 : "江苏",
-		33 : "浙江",
-		34 : "安徽",
-		35 : "福建",
-		36 : "江西",
-		37 : "山东",
-		41 : "河南",
-		42 : "湖北 ",
-		43 : "湖南",
-		44 : "广东",
-		45 : "广西",
-		46 : "海南",
-		50 : "重庆",
-		51 : "四川",
-		52 : "贵州",
-		53 : "云南",
-		54 : "西藏 ",
-		61 : "陕西",
-		62 : "甘肃",
-		63 : "青海",
-		64 : "宁夏",
-		65 : "新疆",
-		71 : "台湾",
-		81 : "香港",
-		82 : "澳门",
-		91 : "国外 "
+		11: "北京",
+		12: "天津",
+		13: "河北",
+		14: "山西",
+		15: "内蒙古",
+		21: "辽宁",
+		22: "吉林",
+		23: "黑龙江 ",
+		31: "上海",
+		32: "江苏",
+		33: "浙江",
+		34: "安徽",
+		35: "福建",
+		36: "江西",
+		37: "山东",
+		41: "河南",
+		42: "湖北 ",
+		43: "湖南",
+		44: "广东",
+		45: "广西",
+		46: "海南",
+		50: "重庆",
+		51: "四川",
+		52: "贵州",
+		53: "云南",
+		54: "西藏 ",
+		61: "陕西",
+		62: "甘肃",
+		63: "青海",
+		64: "宁夏",
+		65: "新疆",
+		71: "台湾",
+		81: "香港",
+		82: "澳门",
+		91: "国外 "
 	};
 	var tip = "";
 	var pass = true;
@@ -491,7 +492,7 @@ function previewImage(file) {
 	if (file.files && file.files[0]) {
 		div.innerHTML = '<img id=imghead>';
 		var img = document.getElementById('imghead');
-		img.onload = function () {
+		img.onload = function() {
 			var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
 			img.width = rect.width;
 			img.height = rect.height;
@@ -499,7 +500,7 @@ function previewImage(file) {
 			img.style.marginTop = rect.top + 'px';
 		}
 		var reader = new FileReader();
-		reader.onload = function (evt) {
+		reader.onload = function(evt) {
 			img.src = evt.target.result;
 		}
 		reader.readAsDataURL(file.files[0]);
@@ -516,12 +517,13 @@ function previewImage(file) {
 		div.innerHTML = "<div id=divhead style='width:" + rect.width + "px;height:" + rect.height + "px;margin-top:" + rect.top + "px;" + sFilter + src + "\"'></div>";
 	}
 }
+
 function clacImgZoomParam(maxWidth, maxHeight, width, height) {
 	var param = {
-		top : 0,
-		left : 0,
-		width : width,
-		height : height
+		top: 0,
+		left: 0,
+		width: width,
+		height: height
 	};
 	if (width > maxWidth || height > maxHeight) {
 		rateWidth = width / maxWidth;
@@ -540,6 +542,7 @@ function clacImgZoomParam(maxWidth, maxHeight, width, height) {
 	param.top = Math.round((maxHeight - param.height) / 2);
 	return param;
 }
+
 function checkVideo() {
 	if (!!document.createElement('video').canPlayType) {
 		var vidTest = document.createElement("video"),
@@ -570,35 +573,35 @@ function checkVideo() {
 //线性表类
 function List() {
 	var dataArray = [];
-	this.getDataArray = function () {
+	this.getDataArray = function() {
 		return dataArray;
 	}
-	this.setDataArray = function (array) {
+	this.setDataArray = function(array) {
 		dataArray = array;
 	}
 }
 List.prototype = {
-	constructor : List,
-	destroy : function () {
+	constructor: List,
+	destroy: function() {
 		this.setDataArray(null);
 	},
-	clear : function () {
+	clear: function() {
 		this.setDataArray(new Array());
 	},
-	empty : function () {
+	empty: function() {
 		var arr = this.getDataArray();
 		if (arr && arr.length == 0) {
 			return true;
 		}
 		return false;
 	},
-	size : function () {
+	size: function() {
 		return this.getDataArray().length;
 	},
-	get : function (index) {
+	get: function(index) {
 		return this.getDataArray()[index];
 	},
-	add : function (element) {
+	add: function(element) {
 		for (var i = 0; i <= this.size(); i++) {
 			if (!this.get(i)) {
 				this.getDataArray()[i] = element;
@@ -606,19 +609,19 @@ List.prototype = {
 			}
 		}
 	},
-	remove : function (index) {
+	remove: function(index) {
 		for (var i = index + 1; i < this.size(); i++) {
 			this.getDataArray()[i - 1] = this.getDataArray()[i];
 		}
 		//数组大小减1
 		this.getDataArray().length = this.size() - 1;
 	}, //遍历方法
-	traverse : function (visit) {
+	traverse: function(visit) {
 		for (var i = 0; i < this.size(); i++) {
 			visit(this.getDataArray()[i]);
 		}
 	}, //排序规则函数
-	sort : function (rule) {
+	sort: function(rule) {
 		for (var i = 0; i < this.size(); i++) {
 			if (isNaN(this.getDataArray()[i])) {
 				throw new Error("Exception:sort方法操作的集合必须为纯数字;");
@@ -699,8 +702,8 @@ function fullScreen() {
 // 退出全屏
 function exitFullScreen() {
 	var el = document,
-	cfs = el.cancelFullScreen || el.webkitCancelFullScreen || el.mozCancelFullScreen || el.exitFullScreen,
-	wscript;
+		cfs = el.cancelFullScreen || el.webkitCancelFullScreen || el.mozCancelFullScreen || el.exitFullScreen,
+		wscript;
 	if (typeof cfs != "undefined" && cfs) {
 		cfs.call(el);
 		return;
@@ -714,16 +717,16 @@ function exitFullScreen() {
 }
 //IE9下不支持getComputedStyle
 if (!window.getComputedStyle) {
-	window.getComputedStyle = function (el, pseudo) {
+	window.getComputedStyle = function(el, pseudo) {
 		this.el = el;
-		this.getPropertyValue = function (prop) {
+		this.getPropertyValue = function(prop) {
 			var re = /(\-([a-z]){1})/g;
 			if (prop == 'float')
 				prop = 'styleFloat';
 			if (re.test(prop)) {
-				prop = prop.replace(re, function () {
-						return arguments[2].toUpperCase();
-					});
+				prop = prop.replace(re, function() {
+					return arguments[2].toUpperCase();
+				});
 			}
 			return el.currentStyle[prop] ? el.currentStyle[prop] : null;
 		}
@@ -732,8 +735,7 @@ if (!window.getComputedStyle) {
 }
 //ES5加入some
 if (!Array.prototype.some) {
-	Array.prototype.some = function (fun /*, thisArg */
-	) {
+	Array.prototype.some = function(fun /*, thisArg */ ) {
 		'use strict';
 		if (this === void 0 || this === null)
 			throw new TypeError();
@@ -754,7 +756,7 @@ if (!Array.prototype.some) {
 }
 //ES5加入every
 if (!Array.prototype.every) {
-	Array.prototype.every = function (fun) {
+	Array.prototype.every = function(fun) {
 		'use strict';
 
 		if (this === void 0 || this === null)
@@ -776,8 +778,7 @@ if (!Array.prototype.every) {
 }
 //ES5加入filter
 if (!Array.prototype.filter) {
-	Array.prototype.filter = function (fun /*, thisArg */
-	) {
+	Array.prototype.filter = function(fun /*, thisArg */ ) {
 		"use strict";
 		if (this === void 0 || this === null)
 			throw new TypeError();
@@ -799,21 +800,21 @@ if (!Array.prototype.filter) {
 }
 //ES5加入bind
 if (!Function.prototype.bind) {
-	Function.prototype.bind = function (oThis) {
+	Function.prototype.bind = function(oThis) {
 		if (typeof this !== "function") {
 			// closest thing possible to the ECMAScript 5 internal IsCallable function
 			throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
 		}
 
 		var aArgs = Array.prototype.slice.call(arguments, 1),
-		fToBind = this,
-		fNOP = function () {},
-		fBound = function () {
-			return fToBind.apply(this instanceof fNOP && oThis
-				 ? this
-				 : oThis || window,
-				aArgs.concat(Array.prototype.slice.call(arguments)));
-		};
+			fToBind = this,
+			fNOP = function() {},
+			fBound = function() {
+				return fToBind.apply(this instanceof fNOP && oThis ?
+					this :
+					oThis || window,
+					aArgs.concat(Array.prototype.slice.call(arguments)));
+			};
 
 		fNOP.prototype = this.prototype;
 		fBound.prototype = new fNOP();
@@ -823,7 +824,7 @@ if (!Function.prototype.bind) {
 }
 //ES5加入indexOf
 if (!Array.indexOf) {
-	Array.prototype.indexOf = function (obj) {
+	Array.prototype.indexOf = function(obj) {
 		for (var i = 0; i < this.length; i++) {
 			if (this[i] == obj) {
 				return i;
@@ -836,8 +837,7 @@ if (!Array.indexOf) {
 // Production steps of ECMA-262, Edition 5, 15.4.4.18
 // Reference: http://es5.github.io/#x15.4.4.18
 if (!Array.prototype.forEach) {
-	Array.prototype.forEach = function (fun /*, thisp*/
-	) {
+	Array.prototype.forEach = function(fun /*, thisp*/ ) {
 		var len = this.length;
 		if (typeof fun != "function")
 			throw new TypeError();
@@ -852,10 +852,10 @@ if (!Array.prototype.forEach) {
 // Production steps of ECMA-262, Edition 5, 15.4.4.19
 // Reference: http://es5.github.io/#x15.4.4.19
 if (!Array.prototype.map) {
-	Array.prototype.map = function (callback, thisArg) {
+	Array.prototype.map = function(callback, thisArg) {
 		var T,
-		A,
-		k;
+			A,
+			k;
 		if (this == null) {
 			throw new TypeError(' this is null or not defined');
 		}
@@ -871,7 +871,7 @@ if (!Array.prototype.map) {
 		k = 0;
 		while (k < len) {
 			var kValue,
-			mappedValue;
+				mappedValue;
 
 			if (k in O) {
 
@@ -888,9 +888,10 @@ if (!Array.prototype.map) {
 
 
 function getParams(sUrl) {
-	var i = 0,//sUrl="stockapp.finance.qq.com/mstats?mod=list&id=bd012070&module=SS&type=pt012070",
+	var i = 0, //sUrl="stockapp.finance.qq.com/mstats?mod=list&id=bd012070&module=SS&type=pt012070",
 		len = sUrl.split("?")[1].split("&"),
-		obj = {}, temp;
+		obj = {},
+		temp;
 	for (; i < len.length; i++) {
 		temp = len[i].split("=");
 		//console.log(temp[0],temp[1]);
@@ -932,9 +933,9 @@ for( var i=1; numbersArray.push(i++) < max;);  // numbers = [1,2,3 ... 100]*/
 
 /*生成一个随机的字母数字序列*/
 function generateRandomAlphaNum(len) {
-    var rdmString = "";
-    for( ;rdmString.length < len; rdmString  += Math.random().toString(36).substr(2));
-    return  rdmString.substr(0, len);
+	var rdmString = "";
+	for (; rdmString.length < len; rdmString += Math.random().toString(36).substr(2));
+	return rdmString.substr(0, len);
 }
 
 /*打乱一个数字数组的顺序
@@ -1029,28 +1030,29 @@ var getParams = function(url) {
 
 //绑定在了body上，也可以绑定在其他可用元素行，但是不是所有元素都支持copy和past事件。
 $(document.body).bind({
-    copy: function(e) {//copy事件
-        var cpTxt = "复制的数据";
-        var clipboardData = window.clipboardData; //for IE
-        if (!clipboardData) { // for chrome
-            clipboardData = e.originalEvent.clipboardData;
-        }
-        //e.clipboardData.getData('text');//可以获取用户选中复制的数据
-        clipboardData.setData('Text', cpTxt);
-        alert(cpTxt);
-        $('#message').text('Copy Data : ' + cpTxt);
-        return false;//否则设不生效
-    },paste: function(e) {//paste事件
-        var eve = e.originalEvent
-        var cp = eve.clipboardData;
-        var data = null;
-        var clipboardData = window.clipboardData; // IE
-        if (!clipboardData) { //chrome
-            clipboardData = e.originalEvent.clipboardData
-        }
-        data = clipboardData.getData('Text');
-        $('#message').html(data);
-    }
+	copy: function(e) { //copy事件
+		var cpTxt = "复制的数据";
+		var clipboardData = window.clipboardData; //for IE
+		if (!clipboardData) { // for chrome
+			clipboardData = e.originalEvent.clipboardData;
+		}
+		//e.clipboardData.getData('text');//可以获取用户选中复制的数据
+		clipboardData.setData('Text', cpTxt);
+		alert(cpTxt);
+		$('#message').text('Copy Data : ' + cpTxt);
+		return false; //否则设不生效
+	},
+	paste: function(e) { //paste事件
+		var eve = e.originalEvent
+		var cp = eve.clipboardData;
+		var data = null;
+		var clipboardData = window.clipboardData; // IE
+		if (!clipboardData) { //chrome
+			clipboardData = e.originalEvent.clipboardData
+		}
+		data = clipboardData.getData('Text');
+		$('#message').html(data);
+	}
 });
 /**
  * 获取字符串中出现次数最多的字符
@@ -1058,28 +1060,189 @@ $(document.body).bind({
  * @return {object}     返回重复的字符与次数
  */
 function checkCountMax(str) {
-	str =str.split("").sort();
-	var i = 1,j =str[0],s=1,count=1;
-	for (;i<str.length;i++) {
-		if (str[i-1] ==str[i]) {
+	str = str.split("").sort();
+	var i = 1,
+		j = str[0],
+		s = 1,
+		count = 1;
+	for (; i < str.length; i++) {
+		if (str[i - 1] == str[i]) {
 			s++;
-			if (s>count) {
+			if (s > count) {
 				count = s;
-				j=str[i];
+				j = str[i];
 			}
 		} else {
-			s=1;
+			s = 1;
 		}
 	}
 	return {
-		str:j,
-		count:count
+		str: j,
+		count: count
 	}
 }
 
 function GetQueryString(name) {
 	// location.search.match(/day=([^&]*)(&|$)/)
-	var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
 	var r = location.search.substr(1).match(reg);
-	return r?unescape(r[2]): null;
+	return r ? unescape(r[2]) : null;
 }
+var Base64 = {
+	_table: [
+		'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+		'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
+		'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
+		'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
+	],
+
+	encode: function(bin) {
+		var codes = [];
+		var un = 0;
+		un = bin.length % 3;
+		if (un == 1)
+			bin.push(0, 0);
+		else if (un == 2)
+			bin.push(0);
+		for (var i = 2; i < bin.length; i += 3) {
+			var c = bin[i - 2] << 16;
+			c |= bin[i - 1] << 8;
+			c |= bin[i];
+			codes.push(this._table[c >> 18 & 0x3f]);
+			codes.push(this._table[c >> 12 & 0x3f]);
+			codes.push(this._table[c >> 6 & 0x3f]);
+			codes.push(this._table[c & 0x3f]);
+		}
+		if (un >= 1) {
+			codes[codes.length - 1] = "=";
+			bin.pop();
+		}
+		if (un == 1) {
+			codes[codes.length - 2] = "=";
+			bin.pop();
+		}
+		return codes.join("");
+	},
+	decode: function(base64Str) {
+		var i = 0;
+		var bin = [];
+		var x = 0,
+			code = 0,
+			eq = 0;
+		while (i < base64Str.length) {
+			var c = base64Str.charAt(i++);
+			var idx = this._table.indexOf(c);
+			if (idx == -1) {
+				switch (c) {
+					case '=':
+						idx = 0;
+						eq++;
+						break;
+					case ' ':
+					case '\n':
+					case "\r":
+					case '\t':
+						continue;
+					default:
+						throw {
+							"message": "\u0062\u0061\u0073\u0065\u0036\u0034\u002E\u0074\u0068\u0065\u002D\u0078\u002E\u0063\u006E\u0020\u0045\u0072\u0072\u006F\u0072\u003A\u65E0\u6548\u7F16\u7801\uFF1A" + c
+						};
+				}
+			}
+			if (eq > 0 && idx != 0)
+				throw {
+					"message": "\u0062\u0061\u0073\u0065\u0036\u0034\u002E\u0074\u0068\u0065\u002D\u0078\u002E\u0063\u006E\u0020\u0045\u0072\u0072\u006F\u0072\u003A\u7F16\u7801\u683C\u5F0F\u9519\u8BEF\uFF01"
+				};
+
+			code = code << 6 | idx;
+			if (++x != 4)
+				continue;
+			bin.push(code >> 16);
+			bin.push(code >> 8 & 0xff);
+			bin.push(code & 0xff)
+			code = x = 0;
+		}
+		if (code != 0)
+			throw {
+				"message": "\u0062\u0061\u0073\u0065\u0036\u0034\u002E\u0074\u0068\u0065\u002D\u0078\u002E\u0063\u006E\u0020\u0045\u0072\u0072\u006F\u0072\u003A\u7F16\u7801\u6570\u636E\u957F\u5EA6\u9519\u8BEF"
+			};
+		if (eq == 1)
+			bin.pop();
+		else if (eq == 2) {
+			bin.pop();
+			bin.pop();
+		} else if (eq > 2)
+			throw {
+				"message": "\u0062\u0061\u0073\u0065\u0036\u0034\u002E\u0074\u0068\u0065\u002D\u0078\u002E\u0063\u006E\u0020\u0045\u0072\u0072\u006F\u0072\u003A\u7F16\u7801\u683C\u5F0F\u9519\u8BEF\uFF01"
+			};
+
+		return bin;
+	}
+};
+function uaredirect(f) {
+	try {
+		if (document.getElementById("bdmark") != null) {
+			return
+		}
+		var b = false;
+		if (arguments[1]) {
+			var e = window.location.host;
+			var a = window.location.href;
+			if (isSubdomain(arguments[1], e) == 1) {
+				f = f + "/#m/" + a;
+				b = true
+			} else {
+				if (isSubdomain(arguments[1], e) == 2) {
+					f = f + "/#m/" + a;
+					b = true
+				} else {
+					f = a;
+					b = false
+				}
+			}
+		} else {
+			b = true
+		}
+		if (b) {
+			var c = window.location.hash;
+			if (!c.match("fromapp")) {
+				if ((navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i))) {
+					location.replace(f)
+				}
+			}
+		}
+	} catch (d) {}
+
+}
+function isSubdomain(c, d) {
+	this.getdomain = function (f) {
+		var e = f.indexOf("://");
+		if (e > 0) {
+			var h = f.substr(e + 3)
+		} else {
+			var h = f
+		}
+		var g = /^www\./;
+		if (g.test(h)) {
+			h = h.substr(4)
+		}
+		return h
+	};
+	if (c == d) {
+		return 1
+	} else {
+		var c = this.getdomain(c);
+		var b = this.getdomain(d);
+		if (c == b) {
+			return 1
+		} else {
+			c = c.replace(".", "\\.");
+			var a = new RegExp("\\." + c + "$");
+			if (b.match(a)) {
+				return 2
+			} else {
+				return 0
+			}
+		}
+	}
+};

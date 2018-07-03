@@ -1,6 +1,3 @@
-var img = document.getElementById("view-image");
-img.style.filter="progid:DXImageTransform.Microsoft.BasicImage(rotation="+p+");";
-
 var boxWidth, barWidth, isTouch = typeof document.body.ontouchstart != "undefined";
 function $(a) {
 	return document.getElementById(a)

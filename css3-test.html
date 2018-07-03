@@ -214,10 +214,22 @@ li:before {
     background-color: #ccc;
     clip: rect(10px,120px,130px, 20px);
 }
+.dotting {
+    display: inline-block; min-width: 2px; min-height: 2px;
+    margin-right: 8px;
+    box-shadow: 2px 0, 6px 0, 10px 0;
+    animation: dot 4s infinite step-start both;
+}
+@keyframes dot {
+    25% { box-shadow: none; }          /* 0个点 */
+    50% { box-shadow: 2px 0; }         /* 1个点 */
+    75% { box-shadow: 2px 0, 6px 0; }  /* 2个点 */
+}
 </style>
 </head>
 <body>
     <h1 class="text">Hello CSS3</h1>
+    <div class="dotting"></div>
     <ul class="test">
         <li class="counter3">
             <strong>counter(name)拓展应用：</strong>

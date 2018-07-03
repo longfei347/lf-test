@@ -4,8 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<link type="text/css" rel="stylesheet" href="html.css" />
-	<title>纯css打造立体时钟</title>
+	<title>css立体时钟</title>
 	<style type="text/css">
 	body {
 		font-family: Arial;
@@ -13,12 +12,12 @@
 		color: #4b4b4b;
 		text-align: center;
 	}
-	
+
 	* {
 		padding: 0px;
 		margin: 0px;
 	}
-	
+
 	#container {
 		position: relative;
 		margin-left: auto;
@@ -30,15 +29,15 @@
 		background: pink;
 		border-radius: 100px;
 		box-shadow: inset 0 0 2px #fff;
-		background: -moz-radial-gradient(center, circle farthest-corner, rgba(168, 168, 168, 0.9) 0%, rgba(8, 8, 8, 1) 95%);
+		background: radial-gradient(center, circle farthest-corner, rgba(168, 168, 168, 0.9) 0%, rgba(8, 8, 8, 1) 95%);
 		background: -o-radial-gradient(center, circle farthest-corner, rgba(168, 168, 168, 0.9) 0%, rgba(8, 8, 8, 1) 95%);
 		background: -webkit-gradient(radial, 100 100, 40, 100 100, 120, from(rgba(168, 168, 168, 0.9)), to(rgba(8, 8, 8, 1)));
 	}
-	
+
 	#wq {
 		line-style: none;
 	}
-	
+
 	#wq li {
 		display: inline-block;
 		font-size: 18px;
@@ -46,166 +45,69 @@
 		font-family: "Segoe UI";
 		text-shadow: #e8e8e8 2px 2px 1px;
 	}
-	
+
 	#wq li:nth-child(1) {
-		-moz-transform: translate(87px, 23px);
+		transform: translate(87px, 23px);
 	}
-	
+
 	#wq li:nth-child(2) {
-		-moz-transform: rotate(30deg) translate(104px, -22px);
+		transform: rotate(30deg) translate(104px, -22px);
 	}
-	
+
 	#wq li:nth-child(3) {
-		-moz-transform: rotate(60deg) translate(104px, -65px);
+		transform: rotate(60deg) translate(104px, -65px);
 	}
-	
+
 	#wq li:nth-child(4) {
-		-moz-transform: translate(108px, 90px);
+		transform: translate(108px, 90px);
 	}
-	
+
 	#wq li:nth-child(5) {
-		-moz-transform: translate(85px, 126px);
+		transform: translate(85px, 126px);
 	}
-	
+
 	#wq li:nth-child(6) {
-		-moz-transform: translate(46px, 150px);
+		transform: translate(46px, 150px);
 	}
-	
+
 	#wq li:nth-child(7) {
-		-moz-transform: translate(-100px, 100px) translate(97px, 59px);
+		transform: translate(-100px, 100px) translate(97px, 59px);
 	}
-	
+
 	#wq li:nth-child(8) {
-		-moz-transform: rotate(30deg) translate(31px, 154px);
+		transform: rotate(30deg) translate(31px, 154px);
 	}
-	
+
 	#wq li:nth-child(9) {
-		-moz-transform: rotate(-30deg) translate(-143px, 63px);
+		transform: rotate(-30deg) translate(-143px, 63px);
 	}
-	
+
 	#wq li:nth-child(10) {
-		-moz-transform: translate(-114px, 90px);
+		transform: translate(-114px, 90px);
 	}
-	
+
 	#wq li:nth-child(11) {
-		-moz-transform: rotate(-60deg) translate(-110px, -74px);
+		transform: rotate(-60deg) translate(-110px, -74px);
 	}
-	
+
 	#wq li:nth-child(12) {
-		-moz-transform: rotate(-30deg) translate(-120px, -32px);
+		transform: rotate(-30deg) translate(-120px, -32px);
 	}
-	
-	#wq li:nth-child(1) {
-		-webkit-transform: translate(87px, 23px);
-	}
-	
-	#wq li:nth-child(2) {
-		-webkit-transform: rotate(30deg) translate(104px, -22px);
-	}
-	
-	#wq li:nth-child(3) {
-		-webkit-transform: rotate(60deg) translate(104px, -65px);
-	}
-	
-	#wq li:nth-child(4) {
-		-webkit-transform: translate(108px, 90px);
-	}
-	
-	#wq li:nth-child(5) {
-		-webkit-transform: translate(85px, 126px);
-	}
-	
-	#wq li:nth-child(6) {
-		-webkit-transform: translate(46px, 150px);
-	}
-	
-	#wq li:nth-child(7) {
-		-webkit-transform: translate(-100px, 100px) translate(97px, 59px);
-	}
-	
-	#wq li:nth-child(8) {
-		-webkit-transform: rotate(30deg) translate(31px, 154px);
-	}
-	
-	#wq li:nth-child(9) {
-		-webkit-transform: rotate(-30deg) translate(-143px, 63px);
-	}
-	
-	#wq li:nth-child(10) {
-		-webkit-transform: translate(-114px, 90px);
-	}
-	
-	#wq li:nth-child(11) {
-		-webkit-transform: rotate(-60deg) translate(-110px, -74px);
-	}
-	
-	#wq li:nth-child(12) {
-		-webkit-transform: rotate(-30deg) translate(-120px, -32px);
-	}
-	
-	#wq li:nth-child(1) {
-		-o-transform: translate(87px, 23px);
-	}
-	
-	#wq li:nth-child(2) {
-		-o-transform: rotate(30deg) translate(104px, -22px);
-	}
-	
-	#wq li:nth-child(3) {
-		-o-transform: rotate(60deg) translate(104px, -65px);
-	}
-	
-	#wq li:nth-child(4) {
-		-o-transform: translate(108px, 90px);
-	}
-	
-	#wq li:nth-child(5) {
-		-o-transform: translate(85px, 126px);
-	}
-	
-	#wq li:nth-child(6) {
-		-o-transform: translate(46px, 150px);
-	}
-	
-	#wq li:nth-child(7) {
-		-o-transform: translate(-100px, 100px) translate(97px, 59px);
-	}
-	
-	#wq li:nth-child(8) {
-		-o-transform: rotate(30deg) translate(31px, 154px);
-	}
-	
-	#wq li:nth-child(9) {
-		-o-transform: rotate(-30deg) translate(-143px, 63px);
-	}
-	
-	#wq li:nth-child(10) {
-		-o-transform: translate(-114px, 90px);
-	}
-	
-	#wq li:nth-child(11) {
-		-o-transform: rotate(-60deg) translate(-110px, -74px);
-	}
-	
-	#wq li:nth-child(12) {
-		-o-transform: rotate(-30deg) translate(-120px, -32px);
-	}
-	
 	#c {
 		width: 160px;
 		height: 160px;
 		background: seashell;
 		border-radius: 80px;
-		margin-top: -20px;
+		margin-top: -24px;
 		margin-left: 20px;
 		box-shadow: 0 0 6px #fff;
 	}
-	
+
 	#author {
 		padding-top: 100px;
 		text-shadow: #c9c9c9 3px 3px 3px;
 	}
-	
+
 	#s {
 		position: relative;
 		z-index: 20;
@@ -216,11 +118,9 @@
 		left: 46px;
 		border-radius: 1px;
 		box-shadow: -3px 3px 3px rgba(0, 0, 0, 0.5);
-		-webkit-transform-origin: 77% 50%;
-		-moz-transform-origin: 77% 50%;
-		-o-transform-origin: 77% 50%;
+		transform-origin: 77% 50%;
 	}
-	
+
 	#m {
 		position: relative;
 		z-index: 19;
@@ -231,11 +131,9 @@
 		left: 54px;
 		border-radius: 2px;
 		box-shadow: -3px 3px 3px rgba(0, 0, 0, 0.5);
-		-webkit-transform-origin: 77% 50%;
-		-moz-transform-origin: 75% 50%;
-		-o-transform-origin: 77% 50%;
+		transform-origin: 75% 50%;
 	}
-	
+
 	#h {
 		position: relative;
 		z-index: 18;
@@ -246,11 +144,9 @@
 		left: 69px;
 		border-radius: 2px;
 		box-shadow: -3px 3px 3px rgba(0, 0, 0, 0.5);
-		-webkit-transform-origin: 78% 50%;
-		-moz-transform-origin: 75% 50%;
-		-o-transform-origin: 78% 50%;
+		transform-origin: 75% 50%;
 	}
-	
+
 	#point {
 		position: relative;
 		z-index: 21;
@@ -261,9 +157,8 @@
 		background: green;
 		border-radius: 8px;
 		box-shadow: -3px 3px 3px rgba(0, 0, 0, 0.5);
-		background: -moz-linear-gradient(top, rgba(200, 200, 200, 1), rgba(113, 113, 113, 0.9) 49%, rgba(80, 80, 80, 1) 50%, rgba(116, 116, 116, 1));
+		background: linear-gradient(top, rgba(200, 200, 200, 1), rgba(113, 113, 113, 0.9) 49%, rgba(80, 80, 80, 1) 50%, rgba(116, 116, 116, 1));
 		background: -webkit-gradient(linear, center top, center bottom, from(rgba(200, 200, 200, 1)), color-stop(49%, rgba(113, 113, 113, 0.9)), color-stop(50%, rgba(80, 80, 80, 1)), to(rgba(116, 116, 116, 1)));
-		background: -o-linear-gradient(top, rgba(200, 200, 200, 1), rgba(113, 113, 113, 0.9) 49%, rgba(80, 80, 80, 1) 50%, rgba(116, 116, 116, 1));
 	}
 	</style>
 </head>
@@ -293,33 +188,31 @@
 		<div id="s"></div>
 		<div id="point"></div>
 	</div>
-	<script type="text/javascript">
-	var hours;
-	var mins;
-	var seconds;
-	hours = (new Date().getHours() - 12) * 360 / 12 + 90 + "deg";
-	mins = new Date().getMinutes() * 360 / 60 + 90 + "deg";
-	seconds = new Date().getSeconds() * 360 / 60 + 90 + "deg";
-	var hh = document.getElementById('h');
-	var mm = document.getElementById('m');
-	var ss = document.getElementById('s');
-	var t;
-	hh.style.cssText = "transform:rotate(" + hours + ");";
-	mm.style.cssText = "transform:rotate(" + mins + ");";
-	ss.style.cssText = "transform:rotate(" + seconds + ");";
-	t = setInterval(function() {
-		seconds = new Date().getSeconds() * 360 / 60 + 90;
-		mins = new Date().getMinutes() * 360 / 60 + 90;
-		ss.style.cssText = "transform:rotate(" + seconds + "deg);";
-		if (seconds == 90) {
-			mm.style.cssText = "transform:rotate(" + mins + "deg);";
-		}
-		if (mins == 90) {
-			hours = new Date().getHours() * 360 / 12 + 90 + "deg";
-			hh.style.cssText = "transform:rotate(" + hours + ");";
-		}
-	}, 1000);
-	</script>
 </body>
+<script type="text/javascript">
+var da = new Date();
+var hours = (da.getHours() - 12) * 360 / 12 + 90 + "deg";
+var mins = da.getMinutes() * 360 / 60 + 90 + "deg";
+var seconds = da.getSeconds() * 360 / 60 + 90 + "deg";
+var hh = document.getElementById('h');
+var mm = document.getElementById('m');
+var ss = document.getElementById('s');
+var t;
+hh.style.cssText = "transform:rotate(" + hours + ");";
+mm.style.cssText = "transform:rotate(" + mins + ");";
+ss.style.cssText = "transform:rotate(" + seconds + ");";
+t = setInterval(function() {
+	da = new Date();
+	seconds = da.getSeconds() * 360 / 60 + 90;
+	mins = da.getMinutes() * 360 / 60 + 90;
+	ss.style.cssText = "transform:rotate(" + seconds + "deg);";
+	if (seconds == 90) {
+		mm.style.cssText = "transform:rotate(" + mins + "deg);";
+	}
+	if (mins == 90) {
+		hh.style.cssText = "transform:rotate(" + hours + ");";
+	}
+}, 1000);
+</script>
 
 </html>

@@ -56,7 +56,7 @@
 	<div id="mainDiv">
 		<div id="zi">关灯游戏</div>
 		<div id="zi_2">
-			等级选择: 
+			等级选择:
 			<select name="" id="selectLevel" ><!-- onchange="doLevel(this)" -->
 				<option value="5">简单</option>
 				<option value="10">一般</option>
@@ -65,10 +65,11 @@
 			</select>
 			<button id="ziBtn">开始游戏</button> (点击将黄色块全部变为浅绿色)
 		</div>
-		
+
 	</div>
 </body>
 <script>
+var randoms=[];
 ziBtn.onclick = function () {
 	// 随机点击次数
 	var n = +selectLevel.value;
@@ -77,6 +78,7 @@ ziBtn.onclick = function () {
 	})
 	for (var i = 0; i < n; i++) {
 		var Ran = parseInt(Math.random() * 100);
+		randoms.push(Ran);
 		dn1(lights[Ran]);
 		// console.log(Ran);
 	}

@@ -295,6 +295,7 @@ var EventUtil = {
 	}
 
 };
+!window.$ && (window.$={})
 $.cookie = function(name, value, options) {
 	if (typeof value != 'undefined') { // name and value given, set cookie
 		options = options || {};
@@ -1029,7 +1030,7 @@ var getParams = function(url) {
 };
 
 //绑定在了body上，也可以绑定在其他可用元素行，但是不是所有元素都支持copy和past事件。
-$(document.body).bind({
+typeof $ == 'function' && $(document.body).bind({
 	copy: function(e) { //copy事件
 		var cpTxt = "复制的数据";
 		var clipboardData = window.clipboardData; //for IE
@@ -1246,3 +1247,73 @@ function isSubdomain(c, d) {
 		}
 	}
 };
+var fnRotateScale = function (dom, angle, scale) {
+	if (dom && dom.nodeType === 1) {
+		angle = parseFloat(angle) || 0;
+		scale = parseFloat(scale) || 1;
+		if (typeof(angle) === "number") {
+			//IE
+			var rad = angle * (Math.PI / 180);
+			var m11 = Math.cos(rad) * scale,
+			m12 = -1 * Math.sin(rad) * scale,
+			m21 = Math.sin(rad) * scale,
+			m22 = m11;
+			if (!dom.style.Transform) {
+				dom.style.filter = "progid:DXImageTransform.Microsoft.Matrix(M11=" + m11 + ",M12=" + m12 + ",M21=" + m21 + ",M22=" + m22 + ",SizingMethod='auto expand')";
+			}
+			//Modern
+			dom.style.MozTransform = "rotate(" + angle + "deg) scale(" + scale + ")";
+			dom.style.WebkitTransform = "rotate(" + angle + "deg) scale(" + scale + ")";
+			dom.style.OTransform = "rotate(" + angle + "deg) scale(" + scale + ")";
+			dom.style.Transform = "rotate(" + angle + "deg) scale(" + scale + ")";
+		}
+	}
+};
+/**
+ * 矩形区域碰撞检测
+ * Created by Administrator on 14-4-7.
+ * author: marker
+ */
+function Rectangle(x, y, _width, _height) {
+	this.x = x;
+	this.y = y;
+	this.width = _width;
+	this.height = _height;
+
+	//碰撞检测(参数为此类)
+	this.intersects = function (obj) {
+		var a_x_w = Math.abs((this.x + this.width / 2) - (obj.x + obj.width / 2));
+		var b_w_w = Math.abs((this.width + obj.width) / 2);
+		var a_y_h = Math.abs((this.y + this.height / 2) - (obj.y + obj.height / 2));
+		var b_h_h = Math.abs((this.height + obj.height) / 2);
+		if (a_x_w < b_w_w && a_y_h < b_h_h)
+			return true;
+		else
+			return false;
+	}
+
+}
+/**
+ * 圆形区域碰撞检测
+ * Created by Administrator on 14-4-7.
+ * author: marker
+ *
+ */
+function RadiusRectangle(x, y, radius) {
+	this.x = x;
+	this.y = y;
+	this.radius = radius;
+
+	//碰撞检测(参数为此类)
+	this.intersects = function (rr) {
+		var maxRadius = rr.radius + this.radius;
+		//  已知两条直角边的长度 ，可按公式：c²=a²+b² 计算斜边。
+		var a = Math.abs(rr.x - this.x);
+		var b = Math.abs(rr.y - this.y);
+		var distance = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2)); // 计算圆心距离
+		if (distance < maxRadius) {
+			return true;
+		}
+		return false;
+	}
+}

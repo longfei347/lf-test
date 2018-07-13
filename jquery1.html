@@ -211,6 +211,7 @@ svg {
 </style>
 
 <body class="ss">
+  <iframe src="" frameborder="0" id="fff"></iframe>
 	<input autofocus="" class="put" id="number-password-input" type="tel" maxlength="12" tabindex="6" onkeyup="dealKeyup(this);" value="longfei">
 	<!--<input type="checkbox" class="custom-checkbox">
 	<input type="checkbox" disabled class="custom-checkbox">
@@ -332,7 +333,7 @@ svg {
 	</div> -->
 </body>
 <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js"></script> -->
-<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
 <script type="text/javascript" src="js/base.js"></script>
 <script type="text/javascript" src="js/moment.min.js"></script>
 <script>
@@ -441,20 +442,20 @@ for (let i=0;i<100;i++) {
 Object.keys(obj).sort().forEach(function(item) {
 	console.log(item, obj[item])
 })*/
-/*function reportError(sMessage, sUrl, sLine) {
+window.onerror = function (sMessage, sUrl, sLine) {
     var str = "";
     str += " 错误信息:" + sMessage + "\n";
     str += " 错误地址:" + sUrl + "\n";
     str += " 错误行数:" + sLine + "\n";
-    str += "<=========调用堆栈=========>\n";
     var func = window.onerror.caller;
     var index = 0;
+    func && (str += "<=========调用堆栈=========>\n");
     while (func != null) {
-        //str += "第" + index + "个函数：" + func + "\n";
-        //str += "第" + index + "个函数：参数表："
-        //for(var i=0;i<func.arguments.count;i++)
-        //str += func.arguments[i] + ",";
-        //}
+        str += "第" + index + "个函数：" + func + "\n";
+        str += "第" + index + "个函数：参数表："
+        for(var i=0;i<func.arguments.count;i++) {
+	        str += func.arguments[i] + ",";
+        }
         str += func;
         str += "\n===================\n";
         func = func.caller;
@@ -463,10 +464,8 @@ Object.keys(obj).sort().forEach(function(item) {
     alert(str);
     return true;
 }
+// /^[1-9]\d*\~[1-9]\d*$|^[1-9]\d*(,[1-9]\d*)*(,[1-9]\d*\~[1-9]\d*)?$/
 
-window.onerror = reportError;
-/^[1-9]\d*\~[1-9]\d*$|^[1-9]\d*(,[1-9]\d*)*(,[1-9]\d*\~[1-9]\d*)?$/
-*/
 // $.holdReady(3);
 $(function() {
 	$('#ff').on('change', function(e) {

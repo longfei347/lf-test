@@ -19,10 +19,43 @@
     background: #ccc;
     color: #f90;
   }
+  .wrapper {
+            display: grid;
+            grid-template-columns: 100px 10px 100px 10px 100px;
+            grid-template-rows: auto 10px auto;
+        }
+
+         .box {
+            background-color: #444;
+            color: #fff;
+            font-size: 150%;
+            line-height: 60px;
+            text-align: center;
+        }
+        .b,.d,.f,.g,.h,.i,.j,.l,.n{
+            background-color: #1D8FEE;
+        }
   </style>
 </head>
 
 <body>
+  <div class="wrapper">
+    <div class="box a">A</div>
+    <div class="box b"></div>
+    <div class="box c">C</div>
+    <div class="box d"></div>
+    <div class="box e">E</div>
+    <div class="box f"></div>
+    <div class="box g"></div>
+    <div class="box h"></div>
+    <div class="box i"></div>
+    <div class="box j"></div>
+    <div class="box k">K</div>
+    <div class="box l"></div>
+    <div class="box m">M</div>
+    <div class="box n"></div>
+    <div class="box o">O</div>
+</div>
   <div id="observer">MutationObserver observe dom</div>
   <p>
     <lable>请选择一个文件：</label>

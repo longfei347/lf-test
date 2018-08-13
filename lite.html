@@ -5,17 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>map</title>
     <!-- <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=SZmGyZCCDVGGmYp5hFfSDdZ3"></script> -->
-    <!-- <script src="js/jquery-1.11.0.js"></script> -->
+    <script src="js/jquery-1.11.0.js"></script>
     <style type="text/css">
 
     </style>
 </head>
 <body>
 <div id="container"></div>
-<input type="file" accept="image/*" capture="camera">
+<input type="file" accept="image/*" capture="camera" id="ff">
 <img src="images/001.gif" class="mapicon" alt="">
 <script>
-
+$('#ff').on('change', function(e) {
+  console.log(this.files[0])
+  if (this.files[0].type.indexOf('image') != -1) {
+    var fr = new FileReader();
+    fr.readAsDataURL(this.files[0]);
+    fr.onload = function() {
+      var img = document.createElement('img');
+      img.src = this.result;
+      if (img.complete) {
+        console.log(img.width, img.height)
+      } else {
+        img.onload = () => {
+          console.log(img.width, img.height)
+          $('#container').append(img);
+        }
+      }
+    }
+  }
+})
 </script>
 </body>
 </html>

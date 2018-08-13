@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Test2</title>
-	<script src="js/jquery.js"></script>
+	<script src="js/j.js"></script>
 	<!-- <script type="module" src="js/test.js"></script> -->
 	<!-- <script src="NetworkBundleActivity.js"></script> -->
 	<!-- <script src="js/base.js"></script>
@@ -139,10 +139,9 @@
 	<!-- <div id="demo">E:target伪类使用方法	</div> -->
 	<!-- <div id="chrome_detect" title="chrome">haha</div> -->
 	<!-- <long>hello,world</long> -->
-
-	<input type="text" id="long">
-	<span>event.keyCode: <output></output></span>
-	<form action="" class="none">
+	<input type="text" onkeydown="document.getElementById('output').innerHTML=event.keyCode">
+  <span id="output"></span>
+	<form action="" class="">
 		<!-- <input type="text" id="fei" pattern="\w{3,8}"> -->
 		<!-- <item name="item3" class="mark" label="指标类型:" width="50%">
 			<dropdown name="metric_type" id="metric_type" valueField="code" textField="name" datafield="formData.metric_type" showClearBtn="false">
@@ -151,6 +150,7 @@
 			</dropdown>
 		</item> -->
 		<br>
+    <div id="checkbox">1231</div>
 		<button type="submit">提交</button>
 		<input type="text" id="inputText" value="测试文本" />
 		<button class="btn">复制文本框内容</button>
@@ -300,20 +300,20 @@ const copyToClipboard = str => {
   }
 };
 
-// const compose = (...fns) => fns.reduce((f, g) => (...args) => f(g(...args)));
+/*// const compose = (...fns) => fns.reduce((f, g) => (...args) => f(g(...args)));
 const compose = function(...fns) {
 	return fns.reduce(function (f, g) {
-		// console.log(f,g)
+		console.log(f,g)
+    console.count();
 		return function(...args) {
 			return f(g(...args))
 		}
 	})
 }
-/*const add5 = x => x + 5;
+const add5 = x => x + 5;
 const multiply = (x, y) => x * y;
 const multiplyAndAdd5 = compose(add5, multiply);
-console.log(multiplyAndAdd5(5,2))
-console.log(compose(()=>console.log(1),()=>console.log(2),(a,b,c)=>console.log(a,b,c))(1,2))*/
+console.log(multiplyAndAdd5(5,2))*/
 /*Observe(home)
 // 创建一个Observe构造函数
 // 写数据劫持的主要逻辑
@@ -348,7 +348,6 @@ function observe(data) {
   if (!data || typeof data !== 'object') return;
   return new Observe(data);
 }*/
-
 
 /*const initArr = (end, start = 0) =>
   Array.apply(null, Array(end - start)).map((v, i) => i + start);*/
@@ -389,9 +388,6 @@ __extends(a,aa);*/
 
 // console.log('%clong',"color:#f90")
 
-/*const haha =11;
-const o = {a:1, b:22,haha};
-let {a: newName1, b: newName2} = o;*/
 
 /*let cc = {a: string, b?: number}
 function f({a, b}: cc): void {}
@@ -404,11 +400,7 @@ f({a:22,b:33}); // ok, default to {a: "", b: 0}
 let {a, b}: {a: string, b: number} = o;*/
 
 $(function() {
-	$("#long").on("keydown", function(e) {
-		$("output").html(e.keyCode);
-	})
-
-	// document.styleSheets[0].addRule("body .postTitle", "background-color:red;font-size:16px;")
+	// document.activeElement;document.styleSheets[0].addRule("body .postTitle", "background-color:red;font-size:16px;")
 	/*document.getElementsByClassName('btn') && document.getElementsByClassName('btn')[0].addEventListener('click', function() {
 		var inputText = document.getElementById('inputText');
 		var currentFocus = document.activeElement;
@@ -471,18 +463,6 @@ ll.apply(null,[1,2,3]);
 ll([1,2,3])
 */
 
-/*for (let i = 0; i < 10 ; i++) {
-	setTimeout(function() {console.log(i); }, 100 * i);
-}*/
-/*let o = {
-	a: "foo",
-	b: 12,
-	c: "bar"
-}
-let {a, b} = o;
-console.log(a,b);*/
-
-
 /*console.log(new Error("hello world" + o.a));
 // throw "hello world" + o.a;
 throw new Error("hello world " + o.c)*/
@@ -499,34 +479,6 @@ function Animal(obj) {
 }
 var myo = Animal.call(O, O);*/
 
-/*class long {
-	static l() {}
-	fei() {
-		console.log(123)
-	}
-}
-var lo = {
-	l() {
-		console.log(1)
-	},
-	o() {
-		console.log("o")
-	}
-}*/
-/*class ll {
-	l() {}
-}
-class ll {
-	l() {}
-	static f() {
-		console.log(1)
-	}
-}
-ll.f = () => {
-	console.log(2)
-}*/
-
-
 /*var a = 1,
     b = function a(x) {
     	console.count()
@@ -534,22 +486,19 @@ ll.f = () => {
     };
 console.log(a)*/
 
-// import haha from "./test";
-// haha();
 /*var arr = [2, 88, 6, 8, 3, 0, 34, 72];
 var sort = {};
-sort.insertionSort = function(arr) {
+sort.insertiSort = function(arr) {
 	for (var i = 0; i < arr.length - 1; i++) {
 		var insert = arr[i + 1]; //要被插入的元素
-		// console.log(insert);
 		var index = i + 1; //要被插入的元素的下标
 		for (var j = i; j >= 0; j--) {
-			//被插入的元素比前面j项元素谁小就插入到谁的前面
+			// 谁小就插入到谁的前面,从小到大
 			if (insert < arr[j]) {
 				arr[j + 1] = arr[j];
 				index = j;
 			} else {
-				break;
+				continue;
 			}
 			console.count("执行次数");
 		}
@@ -557,7 +506,7 @@ sort.insertionSort = function(arr) {
 		console.log(arr + "\n");
 	}
 }
-sort.insertionSort(arr);*/
+sort.insertiSort(arr);*/
 
 // $('.feif').offsetParent().css('background-color', 'red');
 
@@ -612,14 +561,6 @@ console.log(arr instanceof Array)// false*/
 }
 console.log(getCategory(5)); // 将返回 "Baby"*/
 
-
-/*$(document).on("keydown", function(e) {
-	if (e.ctrlKey && event.keyCode === 80) {//ctrl+p 并阻止弹出打印
-		e.preventDefault();
-		// console.count();
-		return false;
-	}
-})*/
 </script>
 
 </html>

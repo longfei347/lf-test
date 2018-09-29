@@ -7,13 +7,13 @@
 <style type="text/css">
 </style>
 <!-- lbsyun.baidu.com/apiconsole/key#
-<link src="http://api.map.baidu.com/res/11/bmap.css"  rel="stylesheet"> 
+<link src="http://api.map.baidu.com/res/11/bmap.css"  rel="stylesheet">
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>-->
 <script src="js/j.js"></script>
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=iPKUt5XVqzV774lD4gEzGVYS2fmUKdlv"></script>
 <!--<script type='text/javascript' src='http://tb.53kf.com/kf.php?arg=10065481&style=4'> </script>
  //此为v1.5版本的引用方式 key=SZmGyZCCDVGGmYp5hFfSDdZ3
-// http://api.map.baidu.com/api?v=1.5&key=SZmGyZCCDVGGmYp5hFfSDdZ3&amp;callback=initialize"; //此为v1.4版本及以前版本的引用方式 
+// http://api.map.baidu.com/api?v=1.5&key=SZmGyZCCDVGGmYp5hFfSDdZ3&amp;callback=initialize"; //此为v1.4版本及以前版本的引用方式
 var map = new BMap.Map("container"); //创建地图实例可是id或元素对象
 var point = new BMap.Point(116.404, 39.915); //创建一个坐标点
 map.centerAndZoom(point, 15);//设置中心点坐标和地图级别
@@ -25,10 +25,10 @@ ScaleControl：比例尺控件，默认位于地图左下方，显示地图的�
 MapTypeControl：地图类型控件，默认位于地图右上方。
 CopyrightControl：版权控件，默认位于地图左下方。
 GeolocationControl：定位控件，针对移动端开发，默认位于地图左下方。
-map.addControl(new BMap.NavigationControl());  
-map.addControl(new BMap.ScaleControl());  
-map.addControl(new BMap.OverviewMapControl());  
-map.addControl(new BMap.MapTypeControl());  
+map.addControl(new BMap.NavigationControl());
+map.addControl(new BMap.ScaleControl());
+map.addControl(new BMap.OverviewMapControl());
+map.addControl(new BMap.MapTypeControl());
 map.setCurrentCity("北京"); // 仅当设置城市信息时，MapTypeControl的切换功能才能可用
 
 初始化控件时，可提供一个可选参数，其中的anchor和offset属性共同控制控件在地图上的位置
@@ -38,21 +38,21 @@ BMAP_ANCHOR_TOP_RIGHT 表示控件定位于地图的右上角。
 BMAP_ANCHOR_BOTTOM_LEFT 表示控件定位于地图的左下角。
 BMAP_ANCHOR_BOTTOM_RIGHT 表示控件定位于地图的右下角。
 控件位置偏移
-var opts = {offset: new BMap.Size(150, 5)}    
+var opts = {offset: new BMap.Size(150, 5)}
 map.addControl(new BMap.ScaleControl(opts));
-//修改控件配置  
+//修改控件配置
 NavigationControl控件就提供了如下类型：
 BMAP_NAVIGATION_CONTROL_LARGE 表示显示完整的平移缩放控件。
 BMAP_NAVIGATION_CONTROL_SMALL 表示显示小型的平移缩放控件。
 BMAP_NAVIGATION_CONTROL_PAN 表示只显示控件的平移部分功能。
 BMAP_NAVIGATION_CONTROL_ZOOM 表示只显示控件的缩放部分功能。
-var opts = {type: BMAP_NAVIGATION_CONTROL_SMALL}    
-map.addControl(new BMap.NavigationControl(opts));  
+var opts = {type: BMAP_NAVIGATION_CONTROL_SMALL}
+map.addControl(new BMap.NavigationControl(opts));
 
 
 -->
 </head>
- 
+
 <body>
 <!-- <div id="container" style="width:500px; height:300px"></div> -->
 <div id="baidu_map" style="width:500px; height:300px"></div>
@@ -68,8 +68,8 @@ var fn = function fn_alias(){
 		//map.centerAndZoom(point,16);
 		map.enableScrollWheelZoom();
 		map.addControl(new BMap.NavigationControl());
-		var transit = new BMap.TransitRoute(map, {    
-			renderOptions: {map: map}    
+		var transit = new BMap.TransitRoute(map, {
+			renderOptions: {map: map}
 		});
 		var marker = new BMap.Marker(point);
 		map.addOverlay(marker);
@@ -87,7 +87,7 @@ var fn = function fn_alias(){
 			})
 			console.log("yes");
 		})
-		
+
 	})*/
 	/*function showMap() {
 		map_load();
@@ -101,11 +101,34 @@ var fn = function fn_alias(){
 	}*/
 	var lng = 0.0;
 	var lat = 0.0;
+	var map = new BMap.Map("baidu_map");
+/*var lng = 119.195555;//$("#lng").textbox('getValue');
+		var lat = 34.615151;//$("#lat").textbox('getValue');
+		var point = new BMap.Point(lng, lat);
+		map.centerAndZoom(point,16);*/
 
-	(function map_init() {
-		var map = new BMap.Map("baidu_map");
+	var geolocation = new BMap.Geolocation();
+	// 开启SDK辅助定位
+	geolocation.enableSDKLocation();
+	geolocation.getCurrentPosition(function(position) {
+		console.log("position:", position)
+		if (this.getStatus() === BMAP_STATUS_SUCCESS) {
+			console.log(position)
+			// new BMap.Marker().setPosition(position.point);
+			var marker = new BMap.Marker(position.point);  // 创建标注
+			map.addOverlay(marker);
+			map.centerAndZoom(position.point,16)
+		} else {
+			console.log('failed' + this.getStatus());
+			err && err(this.getStatus())
+		}
+	}, {
+		enableHighAccuracy: true,
+		maximumAge: 5 * 60 // 缓存5分钟
+	})
+	/*(function map_init() {
+
 		var lng = 119.195555;//$("#lng").textbox('getValue');
-
 		var lat = 34.615151;//$("#lat").textbox('getValue');
 		var point = new BMap.Point(lng, lat);
 		map.centerAndZoom(point,16);
@@ -131,23 +154,36 @@ var fn = function fn_alias(){
 			console.log(content);
 			// this.openInfoWindow(infoWindow);
 		});
-	
+
 		map.enableScrollWheelZoom(true);
 		map.enableContinuousZoom(true);
 		map.addControl(new BMap.NavigationControl());
 		map.addControl(new BMap.OverviewMapControl());
 		map.addControl(new BMap.OverviewMapControl({ isOpen: true, anchor: BMAP_ANCHOR_BOTTOM_RIGHT }));
-	})()
+	})()*/
 
-	function getNewPoint(){
-
-	}
+	var geolocationControl = new BMap.GeolocationControl();
+	  geolocationControl.addEventListener("locationSuccess", function(e){
+	    // 定位成功事件
+	    var address = '';
+	    address += e.addressComponent.province;
+	    address += e.addressComponent.city;
+	    address += e.addressComponent.district;
+	    address += e.addressComponent.street;
+	    address += e.addressComponent.streetNumber;
+	    //alert("当前定位地址为：" + address);
+	  });
+	  /*geolocationControl.addEventListener("locationError",function(e){
+	    // 定位失败事件
+	    alert(e.message);
+	  });*/
+	  map.addControl(geolocationControl);
 
 	/*$("#baidu_map").panel('onClose',function(){
 		console.log('window closed');
 	})*/
 	//var point = new BMap.Point("深圳市");  // 创建点坐标
-	//map.addControl(new BMap.ScaleControl());  
+	//map.addControl(new BMap.ScaleControl());
 	//map.addControl(new BMap.OverviewMapControl());
 	//map.setCurrentCity("北京");
 	//map.addControl(new BMap.MapTypeControl());

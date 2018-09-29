@@ -295,7 +295,7 @@ var EventUtil = {
 	}
 
 };
-!window.$ && (window.$={})
+!window.$ && (window.$ = {})
 $.cookie = function(name, value, options) {
 	if (typeof value != 'undefined') { // name and value given, set cookie
 		options = options || {};
@@ -1180,6 +1180,7 @@ var Base64 = {
 		return bin;
 	}
 };
+
 function uaredirect(f) {
 	try {
 		if (document.getElementById("bdmark") != null) {
@@ -1215,8 +1216,9 @@ function uaredirect(f) {
 	} catch (d) {}
 
 }
+
 function isSubdomain(c, d) {
-	this.getdomain = function (f) {
+	this.getdomain = function(f) {
 		var e = f.indexOf("://");
 		if (e > 0) {
 			var h = f.substr(e + 3)
@@ -1247,7 +1249,7 @@ function isSubdomain(c, d) {
 		}
 	}
 };
-var fnRotateScale = function (dom, angle, scale) {
+var fnRotateScale = function(dom, angle, scale) {
 	if (dom && dom.nodeType === 1) {
 		angle = parseFloat(angle) || 0;
 		scale = parseFloat(scale) || 1;
@@ -1255,9 +1257,9 @@ var fnRotateScale = function (dom, angle, scale) {
 			//IE
 			var rad = angle * (Math.PI / 180);
 			var m11 = Math.cos(rad) * scale,
-			m12 = -1 * Math.sin(rad) * scale,
-			m21 = Math.sin(rad) * scale,
-			m22 = m11;
+				m12 = -1 * Math.sin(rad) * scale,
+				m21 = Math.sin(rad) * scale,
+				m22 = m11;
 			if (!dom.style.Transform) {
 				dom.style.filter = "progid:DXImageTransform.Microsoft.Matrix(M11=" + m11 + ",M12=" + m12 + ",M21=" + m21 + ",M22=" + m22 + ",SizingMethod='auto expand')";
 			}
@@ -1281,7 +1283,7 @@ function Rectangle(x, y, _width, _height) {
 	this.height = _height;
 
 	//碰撞检测(参数为此类)
-	this.intersects = function (obj) {
+	this.intersects = function(obj) {
 		var a_x_w = Math.abs((this.x + this.width / 2) - (obj.x + obj.width / 2));
 		var b_w_w = Math.abs((this.width + obj.width) / 2);
 		var a_y_h = Math.abs((this.y + this.height / 2) - (obj.y + obj.height / 2));
@@ -1305,7 +1307,7 @@ function RadiusRectangle(x, y, radius) {
 	this.radius = radius;
 
 	//碰撞检测(参数为此类)
-	this.intersects = function (rr) {
+	this.intersects = function(rr) {
 		var maxRadius = rr.radius + this.radius;
 		//  已知两条直角边的长度 ，可按公式：c²=a²+b² 计算斜边。
 		var a = Math.abs(rr.x - this.x);
@@ -1317,3 +1319,21 @@ function RadiusRectangle(x, y, radius) {
 		return false;
 	}
 }
+
+function quickSort(arr) {　　
+	if (arr.length <= 1) {
+		return arr;
+	}　　
+	var pivotIndex = Math.floor(arr.length / 2);　　
+	var pivot = arr.splice(pivotIndex, 1)[0];　　
+	var left = [];　　
+	var right = [];　　
+	for (var i = 0; i < arr.length; i++) {　　　　
+		if (arr[i] < pivot) {　　　　　　
+			left.push(arr[i]);　　　　
+		} else {　　　　　　
+			right.push(arr[i]);　　　　
+		}　　
+	}　　
+	return quickSort(left).concat([pivot], quickSort(right));
+};

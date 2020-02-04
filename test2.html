@@ -2,222 +2,154 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>Test2</title>
-	<script src="js/j.js"></script>
-	<!-- <script type="module" src="js/test.js"></script> -->
-	<!-- <script src="NetworkBundleActivity.js"></script> -->
-	<!-- <script src="js/base.js"></script>
-	<script src="js/lodash.js"></script>
-	<script src="js/angular.js"></script> -->
-	<script src="js/_30s.js"></script>
-	<script src="js/base.js"></script>
-	<script src="js/axios.js"></script>
+  <meta charset="UTF-8">
+  <title>Test2</title>
+  <script src="js/j.js"></script>
+  <!-- <script type="module" src="js/test.js"></script> -->
+  <!-- <script src="NetworkBundleActivity.js"></script> -->
+  <!-- <script src="js/base.js"></script>
+  <script src="js/lodash.js"></script>
+  <script src="js/angular.js"></script> -->
+  <script src="js/_30s.js"></script>
+  <script src="js/base.js"></script>
+  <script src="js/axios.js"></script>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <style>
-	.postTitle a {
-		font-size: 14px;
-		display: inline-block;
-	}
-
-	body {
-		line-height: 2;
-		/* -webkit-font-smoothing: antialiased;
-	-webkit-text-stroke-width: 0.2px;
-	-moz-osx-font-smoothing: grayscale; */
-	}
-
-
-
-	/* ul {
-	transform: rotate(180deg)
-	}
-
-	li {
-	transform: rotate(180deg)
-	} */
-
-	.item {
-		display: inline-block;
-		width: 100px;
-	}
-
-	.btn-tt {
-		position: absolute;
-		left: 20px;
-		top: 20px;
-		height: 30px;
-		width: 50px;
-		background-color: #f90;
-		z-index: 100;
-	}
-	.none {
-		display: none;
-	}
-	/* ::-webkit-scrollbar-track-piece {
-	background-color: #fff;
-	-webkit-border-radius: 0;
-	}
-
-	::-webkit-scrollbar {
-	width: 8px;
-	height: 8px;
-	}
-	::-webkit-scrollbar-thumb {
-	height: 50px;
-	background-color: #999;
-	-webkit-border-radius: 4px;
-	outline: 2px solid #fff;
-	outline-offset: -2px;
-	border: 2px solid #fff;
-	}
-	::-webkit-scrollbar-thumb:hover {
-	height: 50px;
-	background-color: #9f9f9f;
-	-webkit-border-radius: 4px;
-	} */
-
-	form {
-		/*-webkit-appearance: button;*/
-		overflow: auto;
-	}
-	.btn {
-		height: 30px;
-		/*-webkit-appearance: button;
-		outline: 5px solid #f90;
-		resize: both;
-		outline-offset: 2px; */
-		border: none;
-		box-sizing: border-box;
-		background-color: #09f;
-	}
-	ol {
-		margin: 0;
-		padding: 0 0 0 2em;
-		list-style: none;
-		counter-reset: item;
-	}
-	long {
-		font-size: 18px;
-		color: #f90;
-	}
-	@supports (-webkit-appearance: none) {
-	  #chrome_detect::after {
-	    /* content: url('images/001.gif'); */
-	    content: attr(title);
-	    color:red;
-	  }
-	}
-	#demo:target{color:#f00;}
-	.loading{
-		border: 3px dashed #000;
-		width: 20px;
-		height: 20px;
-		border-radius: 50%;
-		border-color: #f90;
-		border-bottom-color: transparent;
-		animation: ddd 1s linear infinite;
-
-	}
-	@keyframes ddd {
-		0%	{
-			transform:rotate(0deg);
-		}
-		100% {
-			transform:rotate(360deg);
-		}
-	}
+.bar {
+  height: 30px;
+  background-color: #cd0000;
+  position: fixed; 
+  left: 0; right: 0; top: 120px;
+  /* Safari下z-index无效 */
+  z-index: 99;
+}
+.box {
+    text-align: center;
+}
+.rotate {
+    transform: perspective(300px) rotateY(40deg);
+}
 </style>
 </head>
 
 <body>
-	<!-- <div class="loading"></div> -->
-	<!-- <div id="demo">E:target伪类使用方法	</div> -->
-	<!-- <div id="chrome_detect" title="chrome">haha</div> -->
-	<!-- <long>hello,world</long> -->
-	<input type="text" onkeydown="document.getElementById('output').innerHTML=event.keyCode">
+<div class="bar"></div>
+<div class="box">
+    <img class="rotate" src="mm1.jpg">
+</div>
+  <div class="button">下一步</div>
+  <div class="turn">
+    旋转10圈
+  </div>
+  <div class="cicle"></div>
+  <div class="linear-gradient"></div>
+  <div class="water-wave">
+    <div class="water-wave1"></div>
+    <div class="water-wave2"></div>
+    <div class="water-wave3"></div>
+  </div>
+  <div class="boundary">
+    <div class="ball"></div>
+  </div>
+  <div class="loading">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <div class="face-scan"></div>
+  <div class="rainbow"></div>
+  <div class="earth-rotate">
+    <div>
+      <p></p>
+    </div>
+  </div>
+  <div class="simple-loading"></div>
+  <!-- <div id="demo">E:target伪类使用方法  </div> -->
+  <!-- <div id="chrome_detect" title="chrome">haha</div> -->
+  <!-- <long>hello,world</long> -->
+  <input type="text" onkeydown="document.getElementById('output').innerHTML=event.keyCode">
   <span id="output"></span>
   <img src="images/001.gif" alt="">
-	<form action="" class="aaa">
-		<!-- <input type="text" id="fei" pattern="\w{3,8}"> -->
-		<!-- <item name="item3" class="mark" label="指标类型:" width="50%">
-			<dropdown name="metric_type" id="metric_type" valueField="code" textField="name" datafield="formData.metric_type" showClearBtn="false">
-				<attr name="rule">{required:true}</attr>
-				<attr name="dataset">{"source": {"url" : "services/saasDictItemSearch?class_code=METRIC_TYPE"}}</attr>
-			</dropdown>
-		</item> -->
-		<br>
-    <input type="text" name="aa[]" id="">
-    <input type="text" name="aa[]" id="">
-    <input type="text" name="aa[]" id="">
-    <div id="checkbox">1231</div>
-		<button type="submit">提交</button>
-		<input type="text" id="inputText" value="测试文本" />
-		<button class="btn">复制文本框内容</button>
-		<button type="button" onclick="copyToClipboard(this.innerHTML)">复制自身</button>
-	</form>
+  <form action="" class="aaa">
+    <!-- <input type="text" id="fei" pattern="\w{3,8}"> -->
+    <!-- <item name="item3" class="mark" label="指标类型:" width="50%">
+      <dropdown name="metric_type" id="metric_type" valueField="code" textField="name" datafield="formData.metric_type" showClearBtn="false">
+        <attr name="rule">{required:true}</attr>
+        <attr name="dataset">{"source": {"url" : "services/saasDictItemSearch?class_code=METRIC_TYPE"}}</attr>
+      </dropdown>
+    </item> -->
+
+    <input type="text" id="inputText" value="测试文本" />
+    <button type="button" id="copy" class="btn">复制文本框内容</button>
+    <button type="button" onclick="copyToClipboard(this.innerHTML)">复制自身</button>
+  </form>
 </body>
-
 <script>
-
+$('.button').on('click', ()=>{
+  console.log(11)
+})
 // 遍历所有的输入框
-[].slice.call(document.querySelectorAll('input, textarea')).forEach(function (ele) {
-    ele.addEventListener('paste', function (event) {
-        // 输入框类型
-        var type = this.getAttribute('type') || this.type;
-        // 剪切板数据对象
-        var clipboardData = event.clipboardData || window.clipboardData;
-        // 粘贴内容
-        var paste = '';
-        // 剪切板对象可以获取
-        if (!clipboardData) { return; }
-        // 获取选中的文本内容
-        var userSelection, textSelected = '';
-        if (window.getSelection) {
-            // 现代浏览器
-            // 直接window.getSelection().toString()对于IE的输入框无效
-            textSelected = this.value.slice(ele.selectionStart, ele.selectionEnd);
-        } else if (document.selection) {
-            // 旧IE浏览器
-            textSelected = document.selection.createRange().text;
+([]).slice.call(document.querySelectorAll('input, textarea')).forEach(function(ele) {
+  ele.addEventListener('paste', function(event) {
+    // 输入框类型
+    var type = this.getAttribute('type') || this.type;
+    // 剪切板数据对象
+    var clipboardData = event.clipboardData || window.clipboardData;
+    // 粘贴内容
+    var paste = '';
+    // 剪切板对象可以获取
+    if (!clipboardData) { return; }
+    // 获取选中的文本内容
+    var userSelection, textSelected = '';
+    if (window.getSelection) {
+      // 现代浏览器
+      // 直接window.getSelection().toString()对于IE的输入框无效
+      textSelected = this.value.slice(ele.selectionStart, ele.selectionEnd);
+    } else if (document.selection) {
+      // 旧IE浏览器
+      textSelected = document.selection.createRange().text;
+    }
+    // 只有输入框没有数据，或全选状态才处理
+    if (this.value.trim() == '' || textSelected === this.value) {
+      // 阻止冒泡和默认粘贴行为
+      event.preventDefault();
+      event.stopPropagation();
+      // 获取粘贴数据
+      paste = clipboardData.getData('text') || '';
+      // 进行如下处理
+      // 除非是password，其他都过滤前后空格
+      if (type != 'password') {
+        paste = paste.trim();
+      }
+      // 邮箱处理，可能会使用#代替@避免被爬虫抓取
+      if (type == 'email') {
+        paste = paste.replace('#', '@');
+      } else if (type == 'tel') {
+        // 手机号处理
+        paste = paste.replace(/^\+86/, '');
+        // 如果此时剩余所有数字正好11位
+        if (paste.match(/\d/) && paste.match(/\d/g).length == 11) {
+          paste = paste.replace(/\D/g, '');
         }
-        // 只有输入框没有数据，或全选状态才处理
-        if (this.value.trim() == '' || textSelected === this.value) {
-            // 阻止冒泡和默认粘贴行为
-            event.preventDefault();
-            event.stopPropagation();
-            // 获取粘贴数据
-            paste = clipboardData.getData('text') || '';
-            // 进行如下处理
-            // 除非是password，其他都过滤前后空格
-            if (type != 'password') {
-                paste = paste.trim();
-            }
-            // 邮箱处理，可能会使用#代替@避免被爬虫抓取
-            if (type == 'email') {
-                paste = paste.replace('#', '@');
-            } else if (type == 'tel') {
-                // 手机号处理
-                paste = paste.replace(/^\+86/, '');
-                // 如果此时剩余所有数字正好11位
-                if (paste.match(/\d/) && paste.match(/\d/g).length == 11) {
-                    paste = paste.replace(/\D/g, '');
-                }
-            } // 其他类型处理大家自行补充...
+      } // 其他类型处理大家自行补充...
 
-            // 插入
-            this.value = paste;
-        }
-    });
+      // 插入
+      this.value = paste;
+    }
+  });
 });
+
 function aa(str) {
-  var i=0,len=str.length;
-  for (;i<str.length;i++) {
+  var i = 0,
+    len = str.length;
+  for (; i < str.length; i++) {
     if (str.charAt(i) == 'A') {
-      str = str.substring(0,i)+'ABB'+str.substring(i);
-      i+=2;
+      str = str.substring(0, i) + 'ABB' + str.substring(i);
+      i += 2;
     } else {
-      str = str.substring(0,i)+'A'+str.substring(i);
+      str = str.substring(0, i) + 'A' + str.substring(i);
     }
   }
   console.log(str);
@@ -263,8 +195,7 @@ const isArrayLike = val => {
 const isPlainObject = val => !!val && typeof val === 'object' && val.constructor === Object;
 const getURLParameters = url =>
   (url.match(/([^?=&]+)(=([^&]*))/g) || []).reduce(
-    (a, v) => ((a[v.slice(0, v.indexOf('='))] = v.slice(v.indexOf('=') + 1)), a),
-    {}
+    (a, v) => ((a[v.slice(0, v.indexOf('='))] = v.slice(v.indexOf('=') + 1)), a), {}
   );
 
 const hexToRGB = hex => {
@@ -306,12 +237,12 @@ const httpPost = (url, data, callback, err = console.error) => {
 
 const isBrowser = () => ![typeof window, typeof document].includes('undefined');
 
-let cookieStr='long=1;fei=2'
+let cookieStr = 'long=1;fei=2'
 const parseCookie = str =>
   str.split(';').map(v => v.split('=')).reduce((acc, v) => {
-      acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
-      return acc;
-    }, {});
+    acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
+    return acc;
+  }, {});
 // parseCookie(cookieStr)
 const prettyBytes = (num, precision = 3, addSpace = true) => {
   const UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
@@ -333,12 +264,15 @@ const toOrdinalSuffix = num => {
     ordinals = ['st', 'nd', 'rd', 'th'],
     oPattern = [1, 2, 3, 4],
     tPattern = [11, 12, 13, 14, 15, 16, 17, 18, 19];
-  return oPattern.includes(digits[0]) && !tPattern.includes(digits[1])
-    ? int + ordinals[digits[0] - 1]
-    : int + ordinals[3];
+  return oPattern.includes(digits[0]) && !tPattern.includes(digits[1]) ?
+    int + ordinals[digits[0] - 1] :
+    int + ordinals[3];
 };
 const objectFromPairs = arr => arr.reduce((a, v) => (a[v[0]] = v[1], a), {});
-objectFromPairs([['a',1],['b',2]])// -> {a: 1, b: 2}
+objectFromPairs([
+  ['a', 1],
+  ['b', 2]
+]) // -> {a: 1, b: 2}
 const speak = message => {
   const msg = new SpeechSynthesisUtterance(message);
   msg.voice = window.speechSynthesis.getVoices()[0];
@@ -364,20 +298,19 @@ const copyToClipboard = str => {
   }
 };
 
-/*// const compose = (...fns) => fns.reduce((f, g) => (...args) => f(g(...args)));
+// const compose = (...fns) => fns.reduce((f, g) => (...args) => f(g(...args)));
 const compose = function(...fns) {
-	return fns.reduce(function (f, g) {
-		console.log(f,g)
-    console.count();
-		return function(...args) {
-			return f(g(...args))
-		}
-	})
+  return fns.reduce(function(f, g) {
+    // console.log(f, g)
+    return function(...args) {
+      return f(g(...args))
+    }
+  })
 }
 const add5 = x => x + 5;
 const multiply = (x, y) => x * y;
 const multiplyAndAdd5 = compose(add5, multiply);
-console.log(multiplyAndAdd5(5,2))*/
+console.log(multiplyAndAdd5(5, 2))
 /*Observe(home)
 // 创建一个Observe构造函数
 // 写数据劫持的主要逻辑
@@ -456,7 +389,7 @@ __extends(a,aa);*/
 /*let cc = {a: string, b?: number}
 function f({a, b}: cc): void {}
 function f({a = "", b} = {b: 0}) {
-	console.log(arguments.length,a,b)
+  console.log(arguments.length,a,b)
 }
 f({a:22,b:33}); // ok, default to {a: "", b: 0}
 
@@ -464,27 +397,30 @@ f({a:22,b:33}); // ok, default to {a: "", b: 0}
 let {a, b}: {a: string, b: number} = o;*/
 
 $(function() {
-	// document.activeElement;document.styleSheets[0].addRule("body .postTitle", "background-color:red;font-size:16px;")
-	/*document.getElementsByClassName('btn') && document.getElementsByClassName('btn')[0].addEventListener('click', function() {
-		var inputText = document.getElementById('inputText');
-		var currentFocus = document.activeElement;
-		inputText.focus();
-		inputText.setSelectionRange(0, inputText.value.length);
-		document.execCommand('copy', true);
-		currentFocus.focus();
-	});*/
+  // document.activeElement;document.styleSheets[0].addRule("body .postTitle", "background-color:red;font-size:16px;")
+  document.querySelector("#copy").addEventListener('click', function() {
+    var inputText = document.getElementById('inputText');
+    var currentFocus = document.activeElement;
+    inputText.focus();
+    inputText.setSelectionRange(0, inputText.value.length);
+    document.execCommand('copy', true);
+    currentFocus.focus();
+  });
 })
 
-/*class Person {
-	@nonenumerable
-	get kidCount() {
-		return 42;
-	}
+/* 
+// 不支持
+@nonenumerable
+class Person {
+  get kidCount() {
+    return 42;
+  }
 }
 function nonenumerable(target, name, descriptor) {
-	descriptor.enumerable = false;
-	return descriptor;
+  descriptor.enumerable = false;
+  return descriptor;
 }*/
+
 /*var p1 = new Promise((resolve, reject) => {
   setTimeout(resolve, 1000, "one");
 });
@@ -498,79 +434,71 @@ var p4 = new Promise((resolve, reject) => {
   setTimeout(resolve, 4000, "four");
 });
 var p5 = new Promise((resolve, reject) => {
-  reject("reject");
+  resolve("resolve");
+  // reject("reject");
 });
 
 Promise.all([p1, p2, p3, p4, p5]).then(values => {
   console.log(values);
 }, reason => {
   console.log(reason)
-});*/
-
+});
+*/
 /*var p1 = Promise.resolve(3);
 p1.then(value=>console.log(value))
 var p2 = 1337;
 var p3 = new Promise((resolve, reject) => {
-	// console.log(resolve.toString())
-	resolve(1,22,3,54,55)
+  // console.log(resolve.toString())
+  resolve(1,22,3,54,55)
   // setTimeout(resolve, 100, "foo");
 });
 
 Promise.all([p1, p2, p3]).then(values => {
   console.log(values); // [3, 1337, 1]
 });*/
-/*function ll() {
-	// console.log([].slice.apply(arguments))
-	console.log(arguments)
-}
-ll.apply(null,[1,2,3]);
-ll([1,2,3])
-*/
 
-/*console.log(new Error("hello world" + o.a));
-// throw "hello world" + o.a;
-throw new Error("hello world " + o.c)*/
-
-/*var O = {
-	name: "long",
-	sex: "nan"
+// throw new Error("hello world 2  " ) //不往下执行
+/*// 简单实例继承
+var O = {
+  name: "long",
+  sex: "nan"
 }
 
 function Animal(obj) {
-	this.name = obj.name;
-	this.sex = obj.sex;
-	return this;
+  this.name = obj.name;
+  this.sex = obj.sex;
+  return this;
 }
 var myo = Animal.call(O, O);*/
 
 /*var a = 1,
     b = function a(x) {
-    	console.count()
+      console.count()
         x && a(--x);
     };
-console.log(a)*/
+console.log(a) // 1 */
 
-/*var arr = [2, 88, 6, 8, 3, 0, 34, 72];
+var arr = [2, 88, 6, 8, 3, 0, 34, 72];
 var sort = {};
 sort.insertiSort = function(arr) {
-	for (var i = 0; i < arr.length - 1; i++) {
-		var insert = arr[i + 1]; //要被插入的元素
-		var index = i + 1; //要被插入的元素的下标
-		for (var j = i; j >= 0; j--) {
-			// 谁小就插入到谁的前面,从小到大
-			if (insert < arr[j]) {
-				arr[j + 1] = arr[j];
-				index = j;
-			} else {
-				continue;
-			}
-			console.count("执行次数");
-		}
-		arr[index] = insert;
-		console.log(arr + "\n");
-	}
+  for (var i = 0; i < arr.length - 1; i++) {
+    var insert = arr[i + 1]; //要被插入的元素
+    var index = i + 1; //要被插入的元素的下标
+    for (var j = i; j >= 0; j--) {
+      // 谁小就插入到谁的前面,从小到大
+      if (insert < arr[j]) {
+        arr[j + 1] = arr[j];
+        index = j;
+      } else {
+        continue;
+      }
+      console.count("执行次数");
+    }
+    arr[index] = insert;
+    console.log(arr + "\n");
+  }
 }
-sort.insertiSort(arr);*/
+sort.insertiSort(arr);
 
 // $('.feif').offsetParent().css('background-color', 'red');
 
@@ -579,22 +507,22 @@ sort.insertiSort(arr);*/
     <!-- <bfd><f name="fdf"></f></bfd>  -->
 <!-- </aa>  -->
 <!--<a>
-	<b></b
+  <b></b
 </a>-->`;
 var ntag = stag.replace(/(?:<!--\s*<)([\s\S]+?)(?:>\s*-->)+/g, function(sAll,group) {
-	// console.count();
-	// console.log(i);
-	var str = group.match(/[\w-]+/)[0];
-	if (group.indexOf("<") > 0) {
-		return "<code_" +  group.slice(0, -str.length) + "code_" + str +">";
-	} else {
-		return "<code_" +  group + ">";
-	}
+  // console.count();
+  // console.log(i);
+  var str = group.match(/[\w-]+/)[0];
+  if (group.indexOf("<") > 0) {
+    return "<code_" +  group.slice(0, -str.length) + "code_" + str +">";
+  } else {
+    return "<code_" +  group + ">";
+  }
 })
 // console.log(ntag)*/
 
 /*var ntag = stag.replace(/<!--<\/?([\w-])+/g, function(v,i) {
-	return v.substr(4).replace(/([\w-]+)$/, "code_$1");
+  return v.substr(4).replace(/([\w-]+)$/, "code_$1");
 }).replace(/<\/([\w-]+)>-->/g, "</code_$1>").replace(">-->",">");*/
 
 /*var myFrame = document.createElement('iframe');
@@ -606,25 +534,24 @@ var arr = new myArray(1,2,10); // [a,b,10]
 console.log(arr instanceof Array)// false*/
 
 /*function getCategory(age) {
-	var category = "";
-	switch (true) {
-		case isNaN(age):
-			category = "not an age";
-			break;
-		case (age >= 50):
-			category = "Old";
-			break;
-		case (age <= 20):
-			category = "Baby";
-			break;
-		default:
-			category = "Young";
-			break;
-	};
-	return category;
+  var category = "";
+  switch (true) {
+    case isNaN(age):
+      category = "not an age";
+      break;
+    case (age >= 50):
+      category = "Old";
+      break;
+    case (age <= 20):
+      category = "Baby";
+      break;
+    default:
+      category = "Young";
+      break;
+  };
+  return category;
 }
 console.log(getCategory(5)); // 将返回 "Baby"*/
-
 </script>
 
 </html>

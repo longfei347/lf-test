@@ -2,178 +2,309 @@
 <html>
 
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
-	<title>Test1</title>
-	<script src="js/j.js"></script>
-	<!-- <script src="js/underscore.js"></script>
-	<script src="js/require.js"></script>
-	<script src="js/lite2.js"></script>
-	<script src="js/jquery.cookie.js"></script> -->
-	<link href="css/base.css" rel="stylesheet">
-	<style>
-	.none {
-		display: none;
-	}
+  <meta charset="utf-8">
+  <meta name="divport" content="width=device-width">
+  <title>Test1</title>
+  <script src="js/j.js"></script>
+  <!-- <script src="js/underscore.js"></script>
+  <script src="js/require.js"></script>
+  <script src="js/lite2.js"></script>
+  <script src="js/jquery.cookie.js"></script> -->
+  <link href="css/style.css" rel="stylesheet">
+  <style>
+  #demo {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    background-color: #33f;
+    overflow: auto;
+  }
+  input[type=checkbox][disabled] {
+    width: 30px;
+    height: 30px;
+  }
 
-	#demo {
-		position: relative;
-		width: 100px;
-		height: 100px;
-		background-color: #33f;
-		overflow: auto;
-	}
-	.CodeMirror-hints {
-		background-color: #f90;
-		color: #f33;
-	}
-	.CodeMirror-Tern-tooltip {
-		background-color: #ff3;
-		color: #33f;
-	}
-	.CodeMirror-Tern-hint-doc {
-		background-color: #f60;
-		color: #3f0;
-	}
+  .sanjiao {
+    position: relative;
+    display: inline-block;
+    height: 60px;
+    width: 30px;
+    background-color: #ccc;
+    border: 40px solid;
+    border-color: red green blue yellow;
+  }
 
+  .entry {
+    margin-left: 30px;
+    width: 280px;
+    background: #fff;
+    border-radius: 5px;
+  }
 
-	#istouch {
-		/*display: none;*/
-		height: 400px;
-	}
+  .entry-trangle {
+    position: absolute;
+    margin-top: 5px;
+    margin-left: -14px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #f90;
+    z-index: -1;
+  }
 
-	input[type=checkbox][disabled] {
-		width: 30px;
-		height: 30px;
-	}
+  [class^="long_"] {
+    width: 20px;
+    height: 20px;
+  }
+  .positionDiv {
+    position: absolute;
+    width: 75px;
+    height: 75px;
+    background: green;
+  }
 
-	.sanjiao {
-		position: relative;
-		display: inline-block;
-		height: 50px;
-		width: 30px;
-		background-color: #ccc;
-	}
+  input::selection {
+    background-color: #f90;
+  }
 
-	.sanjiao::after {
-		position: absolute;
-		display: block;
-		top: 0;
-		right: -25px;
-		border-top: 25px solid transparent;
-		border-bottom: 25px solid transparent;
-		border-left: 25px solid green;
-		content: "";
-	}
+  ::selection {
+    background-color: #e60;
+  }
+  /* select:hover {
+      background-color: #f90;
+    } */
 
-	.entry {
-		margin: 0 auto;
-		margin-top: 20px;
-		width: 280px;
-		background: #fff;
-		padding: 10px;
-		border-radius: 5px;
-	}
+  select:hover {
+    background-color: #eee;
+  }
+  #message:before {
+    content: "复制内容:";
+    color: #f00;
+  }
+  .arrow-left {
+    width: 26px;
+    height: 26px;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    background-color: grey;
+  }
+  .arrow-left:before, .arrow-left:after {
+    height: 1px;
+    width: 14px;
+    content: '';
+    background: #FFF;
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    transform-origin: 100% 0%;
+    transform: rotate(45deg);
+  }
+  .arrow-left:after {
+    transform: rotate(-45deg);
+  }
+  .left-out {
+    display: inline-block;
+    height: 26px;
+    width: 26px;
+    background-color: #d93;
+  }
 
-	.entry-trangle {
-		position: absolute;
-		margin-left: -19px;
-		width: 0;
-		height: 0;
-		border-top: 10px solid transparent;
-		border-bottom: 10px solid transparent;
-		border-right: 10px solid #f90;
-		z-index: -1;
-	}
-
-	[class^="long_"] {
-		width: 20px;
-		height: 20px;
-	}
-
-	#test {
-		background-color: #f90;
-	}
-
-	.long.long1.long2 {
-		background-color: #f00;
-	}
-
-	.positionDiv {
-		position: absolute;
-		width: 75px;
-		height: 75px;
-		background: green;
-	}
-
-	input::selection {
-		background-color: #f90;
-	}
-
-	::selection {
-		background-color: #e60;
-	}
-	/* select:hover {
-		background-color: #f90;
-	} */
-
-	select:hover {
-		background-color: #eee;
-	}
-	#message:before{
-		content:"复制内容:";
-		color: #f00;
-	}
-	</style>
+  .triangle-facing-left {
+    display: inline-block;
+    margin-left: 5px;
+    border-left: 2px solid #666;
+    border-bottom: 2px solid #666;
+    width: 14px;
+    height: 14px;
+    transform: rotate(45deg);
+    /* transform-origin: center bottom; */
+  }
+  .arr-left {
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    background-color: #e85;
+  }
+  .arr-left:after {
+    display: block;
+    margin-left: 5px;
+    margin-top: 5px;
+    content: '';
+    width: 14px;
+    height: 14px;
+    transform: rotate(45deg);
+    /* transform-origin: center bottom; */
+    border-left: 1px solid #333;
+    border-bottom: 1px solid #333;
+  }
+  .muti-line {
+    position: relative;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+  .muti-line:after {
+    content: '';
+    position: absolute;
+    margin-left: -19px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #f90;
+    z-index: -1;
+  }
+  .m-line {
+    position: relative;
+    width: 900px;
+    height: 50px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .m-line span {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+  }
+  .m-line span {
+    content: '';
+    position: absolute;
+    margin-left: -19px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #f90;
+  }
+  .m-line .fold {
+    border-bottom: 10px solid #f90;
+    border-top: none;
+  }
+  .ff {
+    position: relative;
+    width: 16px;
+    height: 30px;
+    background-color: #fff;
+  }
+  .ff .left {
+    position: absolute;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-top: 30px solid #FF3C69;
+    border-right: 14px solid transparent;
+  }
+  .ff .right {
+    position: absolute;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-bottom: 30px solid #3034A2;
+    border-left: 14px solid transparent;
+  }
+  </style>
 </head>
 
 <body>
-	<!-- <input type="file" accept="image/*" capture="camera">
+  <p class="m-line">
+    适用范围：
+    因使用了WebKit的CSS扩展属性，该方法适用于WebKit浏览器及移动端；
+    注：
+    -webkit-line-clamp用来限制在一个块元素显示的文本的行数。 为了实现该效果，它需要组合其他的WebKit属性。常见结合属性：
+    display: -webkit-box; 必须结合的属性 ，将对象作为弹性伸缩盒子模型显示 。
+    -webkit-box-orient 必须结合的属性 ，设置或检索伸缩盒对象的子元素的排列方式 。
+    <span></span>
+  </p>
+  <!-- <video src="aaa.mp4" controls=""></video> -->
+  <div class="df">
+    <div class="ff">
+      <div class="left"></div>
+      <div class="right"></div>
+    </div>
+    <div class="arr-left"></div>
+    <div class="left-out">
+      <div class="triangle-facing-left"></div>
+    </div>
+    <div class="arrow-left"></div>
+    <div class="entry">
+      <div class="entry-trangle"></div>
+      hello，我出生了
+    </div>
+  </div>
+  <!-- <input type="file" accept="image/*" capture="camera">
   <input type="file" accept="video/*" capture="camcorder">
   <input type="file" accept="audio/*" capture="microphone"> -->
-	<form action="">
-		<div id="fei">
-		</div>
-		<input type="text" name="" id="" value="<!@#1%^&*()_+">
-		<input type="radio" name="long" checked=9 id="test" class="long long1 long2 " disabled>long
-		<div class="entry">
-			<div class="entry-trangle"></div>
-			hello，我出生了
-		</div>
-		<div class="sanjiao">12</div>
-		<div id="demo" style="left:1px;">
-			<div id="wangsf" style="height: 100%"> </div>
-		</div>
-		<pre id="output">dfdf</pre>
-	</form>
-	<div id="message"></div>
-	<div id="logs"></div>
+  <form action="">
+    <input type="text" id="input">
+    <input type="text" name="aa" id="" value="<!@#1%^&*()_+">
+    <div class="df">
+      <div class="sanjiao"></div>
+      <div id="demo"> </div>
+    </div>
+  </form>
+  <div id="message"></div>
+  <div id="logs"></div>
 </body>
 <script>
-'use strict';
-/*! function() {
-	var a = b = c = 0; //等价于var a=(b=(c=0)) c=0 即全局变量为0,表达式返回0 赋给b,再返回0赋给a
-}()*/
-/*function multSilgarth(N) {
-  var threes = Math.floor(--N / 3);
-  var fives = Math.floor(N / 5);
-  var fifteen = Math.floor(N / 15);
+// 'use strict';
+// $.get('http://rap2api.taobao.org/app/mock/226903/test/aaa').then(res=>console.log(res))
+$('.m-line span').on('click', function(e) {
+  if (this.className === 'fold') {
+    this.classList.remove('fold')
+    $('.m-line').css('height', '50px')
+  } else {
+    this.classList.add('fold')
+    $('.m-line').css('height', 'auto')
+  }
+  /*if (this.innerHTML === ' ...展开') {
+    this.innerHTML = ' ...折叠'
+    $('.m-line').css('height', 'auto')
+  } else {
+    this.innerHTML = ' ...展开'
+    $('.m-line').css('height', '50px')
+  }*/
+})
 
-  return (3 * threes * (threes + 1) + 5 * fives * (fives + 1) - 15 * fifteen * (fifteen + 1)) / 2;
+const input = document.getElementById('input');
+const p = document.getElementById('demo');
+var obj = {};
+
+const newObj = new Proxy(obj, {
+  get: function(target, key, receiver) {
+    console.log(`getting ${key}!`);
+    return Reflect.get(target, key, receiver);
+  },
+  set: function(target, key, value, receiver) {
+    console.log(target, key, value, receiver);
+    if (key === 'text') {
+      input.value = value;
+      p.innerHTML = value;
+    }
+    return Reflect.set(target, key, value, receiver);
+  },
+});
+
+input.addEventListener('keyup', function(e) {
+  newObj.text = e.target.value;
+});
+/*function ll({ title = '123', text = 'haha' }) {
+  console.log(title, text)
 }
+ll({ title: '112233' })
 
-console.log(multSilgarth(10))*/
-/*var a = {n: 1}
+var a = { n: 1 };
 var b = a;
-a.x = a = {n: 2};
-console.log(a);
-console.log(b)*/
-/*var a = {n: 1}
-var b = a;
-a = {n: 2}
-a.x = a
-console.log(a.x);
-console.log(b.x)*/
+a.x = a = { n: 2 };
+//console.log(a.x);
+//console.log(b.x);
+! function() {
+  var aa = bb = cc = 0; //等价于var aa=(bb=(cc=0)) cc=0 即全局变量为0,表达式返回0 赋给b,再返回0赋给a
+}()*/
+
 /*Function.prototype.uncurrying = function() {
     var _this = this;
     return function() {
@@ -205,162 +336,157 @@ push(obj, "a",'b','d');//Object {0: "a", 1: "b", length: 2}
 console.log(obj);*/
 /*var promiseCount = 0;
 function testPromise() {
-	var thisPromiseCount = ++promiseCount;
+  var thisPromiseCount = ++promiseCount;
 
-	var log = document.getElementById('logs');
-	log.insertAdjacentHTML('beforeend', thisPromiseCount + ') 开始(同步代码开始)<br/>');
+  var log = document.getElementById('logs');
+  log.insertAdjacentHTML('beforeend', thisPromiseCount + ') 开始(同步代码开始)<br/>');
 
-	// 我们创建一个新的promise: 然后用'result'字符串完成这个promise (3秒后)
-	var p1 = new Promise(function(resolve, reject) {
-		// 完成函数带着完成（resolve）或拒绝（reject）promise的能力被执行
-		log.insertAdjacentHTML('beforeend', thisPromiseCount + ') Promise开始(异步代码开始)<br/>');
+  // 我们创建一个新的promise: 然后用'result'字符串完成这个promise (3秒后)
+  var p1 = new Promise(function(resolve, reject) {
+    // 完成函数带着完成（resolve）或拒绝（reject）promise的能力被执行
+    log.insertAdjacentHTML('beforeend', thisPromiseCount + ') Promise开始(异步代码开始)<br/>');
 
-		// 这只是个创建异步完成的示例
-		window.setTimeout(function() {
-			// 我们满足（fullfil）了这个promise!
-			resolve(thisPromiseCount)
-		}, Math.random() * 2000 + 1000);
-	});
+    // 这只是个创建异步完成的示例
+    window.setTimeout(function() {
+      // 我们满足（fullfil）了这个promise!
+      resolve(thisPromiseCount)
+    }, Math.random() * 2000 + 1000);
+  });
 
-	// 定义当promise被满足时应做什么
-	p1.then(function(val) {
-		// 输出一段信息和一个值
-		log.insertAdjacentHTML('beforeend', val + ') Promise被满足了(异步代码结束)<br/>');
-	});
+  // 定义当promise被满足时应做什么
+  p1.then(function(val) {
+    // 输出一段信息和一个值
+    log.insertAdjacentHTML('beforeend', val + ') Promise被满足了(异步代码结束)<br/>');
+  });
 
-	log.insertAdjacentHTML('beforeend', thisPromiseCount + ') 建立了Promise(同步代码结束)<br/><br/>');
+  log.insertAdjacentHTML('beforeend', thisPromiseCount + ') 建立了Promise(同步代码结束)<br/><br/>');
 }
 testPromise()*/
 /*function $http(url) {
-	// A small example of object
-	var core = {
-		// Method that performs the ajax request
-		ajax: function(method, url, args) {
-			// Creating a promise
-			var promise = new Promise(function(resolve, reject) {
-				// Instantiates the XMLHttpRequest
-				var client = new XMLHttpRequest();
-				var uri = url;
+  // A small example of object
+  var core = {
+    // Method that performs the ajax request
+    ajax: function(method, url, args) {
+      // Creating a promise
+      var promise = new Promise(function(resolve, reject) {
+        // Instantiates the XMLHttpRequest
+        var client = new XMLHttpRequest();
+        var uri = url;
 
-				if (args && (method === 'POST' || method === 'PUT')) {
-					uri += '?';
-					var argcount = 0;
-					for (var key in args) {
-						if (args.hasOwnProperty(key)) {
-							if (argcount++) {
-								uri += '&';
-							}
-							uri += encodeURIComponent(key) + '=' + encodeURIComponent(args[key]);
-						}
-					}
-				}
+        if (args && (method === 'POST' || method === 'PUT')) {
+          uri += '?';
+          var argcount = 0;
+          for (var key in args) {
+            if (args.hasOwnProperty(key)) {
+              if (argcount++) {
+                uri += '&';
+              }
+              uri += encodeURIComponent(key) + '=' + encodeURIComponent(args[key]);
+            }
+          }
+        }
+        client.open(method, uri);
+        client.send();
 
-				client.open(method, uri);
-				client.send();
+        client.onload = function() {
+          if (this.status >= 200 && this.status < 300) {
+            // Performs the function "resolve" when this.status is equal to 2xx
+            resolve(this.response);
+          } else {
+            // Performs the function "reject" when this.status is different than 2xx
+            reject(this.statusText);
+          }
+        };
+        client.onerror = function() {
+          reject(this.statusText);
+        };
+      });
+      // Return the promise
+      return promise;
+    }
+  };
 
-				client.onload = function() {
-					if (this.status >= 200 && this.status < 300) {
-						// Performs the function "resolve" when this.status is equal to 2xx
-						resolve(this.response);
-					} else {
-						// Performs the function "reject" when this.status is different than 2xx
-						reject(this.statusText);
-					}
-				};
-				client.onerror = function() {
-					reject(this.statusText);
-				};
-			});
-
-			// Return the promise
-			return promise;
-		}
-	};
-
-	// Adapter pattern
-	return {
-		'get': function(args) {
-			return core.ajax('GET', url, args);
-		},
-		'post': function(args) {
-			return core.ajax('POST', url, args);
-		},
-		'put': function(args) {
-			return core.ajax('PUT', url, args);
-		},
-		'delete': function(args) {
-			return core.ajax('DELETE', url, args);
-		}
-	};
+  // Adapter pattern
+  return {
+    'get': function(args) {
+      return core.ajax('GET', url, args);
+    },
+    'post': function(args) {
+      return core.ajax('POST', url, args);
+    },
+    'put': function(args) {
+      return core.ajax('PUT', url, args);
+    },
+    'delete': function(args) {
+      return core.ajax('DELETE', url, args);
+    }
+  };
 };
 // End A
 
 // B-> Here you define its functions and its payload
 var mdnAPI = 'https://developer.mozilla.org/en-US/search.json';
 var payload = {
-	'topic': 'js',
-	'q': 'Promise'
+  'topic': 'js',
+  'q': 'Promise'
 };
 
 var callback = {
-	success: function(data) {
-		console.log(1, 'success', JSON.parse(data));
-	},
-	error: function(data) {
-		throw(data);
-		console.log(2, 'error');
-	}
+  success: function(data) {
+    console.log(1, 'success', JSON.parse(data));
+  },
+  error: function(data) {
+    throw(data);
+    console.log(2, 'error');
+  }
 };
 // End B
 
 // Executes the method call
 $http(mdnAPI)
-	.get(payload)
-	.then(callback.success)
-	.catch(callback.error);
+  .get(payload)
+  .then(callback.success)
+  .catch(callback.error);
 
 // Executes the method call but an alternative way (1) to handle Promise Reject case
 $http(mdnAPI)
-	.get(payload)
-	.then(callback.success, callback.error);
+  .get(payload)
+  .then(callback.success, callback.error);
 
 // Executes the method call but an alternative way (2) to handle Promise Reject case
 $http(mdnAPI)
-	.get(payload)
-	.then(callback.success)
-	.then(undefined, callback.error);*/
+  .get(payload)
+  .then(callback.success)
+  .then(undefined, callback.error);*/
 
 /*$("body").on({
-	copy: function(e) { //copy事件
-		var cpTxt = "",
-		  clipboardData = window.clipboardData; //for IE
-		if (!clipboardData) { // for chrome
-			clipboardData = e.originalEvent.clipboardData;
-		}
-		cpTxt = clipboardData.getData('text')||"复制的数据";//可以获取用户选中复制的数据
-		clipboardData.setData('Text', cpTxt);
-		$('#message').text('Copy Data : ' + cpTxt);
-		return false; //否则设不生效
-	},
-	paste: function(e) { //paste事件
-		var eve = e.originalEvent
-		var data = null;
-		var clipboardData = window.clipboardData || e.originalEvent.clipboardData; // IE
-		data = clipboardData.getData('Text');
-		$('#message').html(data);
-	}
+  copy: function(e) { //copy事件
+    var cpTxt = "",
+      clipboardData = window.clipboardData; //for IE
+    if (!clipboardData) { // for chrome
+      clipboardData = e.originalEvent.clipboardData;
+    }
+    cpTxt = clipboardData.getData('text')||"复制的数据";//可以获取用户选中复制的数据
+    clipboardData.setData('Text', cpTxt);
+    $('#message').text('Copy Data : ' + cpTxt);
+    return false; //否则设不生效
+  },
+  paste: function(e) { //paste事件
+    var eve = e.originalEvent
+    var data = null;
+    var clipboardData = window.clipboardData || e.originalEvent.clipboardData; // IE
+    data = clipboardData.getData('Text');
+    $('#message').html(data);
+  }
 })*/
 /*var defer = $.Deferred(function(resolve) {
-	setTimeout(function(argument) {
-		console.log(12);
-	}, 500)
+  setTimeout(function(argument) {
+    console.log(12);
+  }, 500)
 }).then(function(val) {
-	console.log(11)
+  console.log(11)
 })
 */
-function unique(a, b, c) {
-	return a && b || c
-}
 /*var p1 = new Promise(function (resolve, reject) {
   setTimeout(() => reject(new Error('fail')), 3000)
 })
@@ -371,122 +497,108 @@ p2.then(result => console.log(result))
 p2.catch(error => console.log(error))*/
 /*
 var pro = new Promise(function (resolve, reject) {
-	var flag = false;
-	setTimeout(function() {
-		resolve("haha");
-	},2000)
+  var flag = false;
+  setTimeout(function() {
+    resolve("haha");
+  },2000)
 
 })*/
 
 /*var getJSON = function(url) {
-	var promise = new Promise(function(resolve, reject) {
-		var client = new XMLHttpRequest();
-		client.open("GET", url);
-		client.onreadystatechange = handler;
-		client.responseType = "json";
-		client.setRequestHeader("Accept", "application/json");
-		client.send();
+  var promise = new Promise(function(resolve, reject) {
+    var client = new XMLHttpRequest();
+    client.open("GET", url);
+    client.onreadystatechange = handler;
+    client.responseType = "json";
+    client.setRequestHeader("Accept", "application/json");
+    client.send();
 
-		function handler() {
-			if (this.readyState !== 4) {
-				return;
-			}
-			if (this.status === 200) {
-				resolve(this.response);
-			} else {
-				reject(new Error(this.statusText));
-			}
-		};
-	});
+    function handler() {
+      if (this.readyState !== 4) {
+        return;
+      }
+      if (this.status === 200) {
+        resolve(this.response);
+      } else {
+        reject(new Error(this.statusText));
+      }
+    };
+  });
 
-	return promise;
+  return promise;
 };
 
 getJSON("https://developer.mozilla.org/en-US/search.json").then(function(json) {
-	console.log('Contents: ' + json);
+  console.log('Contents: ' + json);
 }, function(error) {
-	console.error('出错了', error);
+  console.error('出错了', error);
 });*/
 
-/*//如果当前浏览器不支持requestAnimationFrame和cancelAnimationFrame，则会退到setTimeout
+//如果当前浏览器不支持requestAnimationFrame和cancelAnimationFrame，则会退到setTimeout
 if ( !requestAnimationFrame || !cancelAnimationFrame ) {
-	function requestAnimationFrame (callback, element) {
-		var currTime = new Date().getTime();
-		//为了使setTimteout的尽可能的接近每秒60帧的效果
-		var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-		var id = window.setTimeout(function() {
-			// console.log(timeToCall);
-			callback(currTime + timeToCall);
-		}, 2);
-		lastTime = currTime + timeToCall;
-		return id;
-	};
+  function requestAnimationFrame (callback, element) {
+    var currTime = new Date().getTime();
+    //为了使setTimteout的尽可能的接近每秒60帧的效果
+    var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+    var id = window.setTimeout(function() {
+      // console.log(timeToCall);
+      callback(currTime + timeToCall);
+    }, 2);
+    lastTime = currTime + timeToCall;
+    return id;
+  };
 
-	cancelAnimationFrame = function(id) {
-		window.clearTimeout(id);
-	};
+  cancelAnimationFrame = function(id) {
+    window.clearTimeout(id);
+  };
 }
-
-
 var demo = document.getElementById('demo'),start = null;
 function step(timestamp) {
   if (!start) start = timestamp;
   var progress = timestamp - start;
   demo.style.left = Math.min(progress / 10, 200) + 'px';
-  // console.log(timestamp)
-	// demo.style.left = parseInt(demo.style.left) + 1 + 'px';
-  if (progress < 500) {
+  // console.count(timestamp)
+  if (progress < 2000) {
     window.requestAnimationFrame(step);
   }
 }
-
-window.requestAnimationFrame(step);*/
+// window.requestAnimationFrame(step);
 
 
 //"use strict"
 /*// document.body.onselectstart=function() {return false;}
 document.body.oncontextmenu=function() {
-	console.log('oncontextmenu')
-	return false;
-}
-document.oncontextmenu=function (e) {
-	console.log('oncontextmenu2')
-	//e.preventDefault();
-	//return false;
-};
-document.getElementById("wangsf").onmousedown=function (e) {
-	//只对左键
-	e.preventDefault();
-	console.log(11);
+  console.log('oncontextmenu')
+  return false;
 }
 */
 /*var Un;
 (function () {
-	var ins;
-	Un = function() {
-		if (ins) {
-			return ins;
-		}
-		ins = this;
+  var ins;
+  Un = function() {
+    if (ins) {
+      return ins;
+    }
+    ins = this;
 
-		this.start_time = 0;
-		this.bang = "big";
-		console.log(this)
-	}
+    this.start_time = 0;
+    this.bang = "big";
+    console.log(this)
+  }
 }())*/
 
 /*function Universe(arg) {
-	var instance;
-	Universe = function(a) {
-		console.log(a)
-		return instance;
-	}
-	Universe.prototype = this;
-	instance = new Universe(100);
-	instance.constructor = Universe;
-	instance.start_time = 0;
-	instance.bang = "Big";
-	return instance;
+  var instance;
+  Universe = function(a) {
+    console.log(a)
+    return instance;
+  }
+  Universe.prototype = this;
+  instance = new Universe(100);
+  instance.constructor = Universe;
+  instance.start_time = 0;
+  instance.bang = "Big";
+  return instance;
 }
 Universe.prototype.nothing = true;
 var uni = new Universe();
@@ -502,52 +614,52 @@ var v5 = 2;
 var obj = Object.assign({}, v1, null, v2, undefined, v3, v4);
 // 原始类型会被包装，null 和 undefined 会被忽略。
 // 注意，只有字符串的包装对象才可能有自身可枚举属性。
-console.log(obj); // { "0": "a", "1": "b", "2": "c" }
-// console.log(Object.assign({},v2,v3)); //{}*/
+console.log(obj); // { "0": "a", "1": "b", "2": "c" }*/
+// console.log(Object.assign({},v2,v3)); //{}
 
 /*
 //死循环
 for (;1;) {
-	console.log(1)
+  console.log(1)
 }
 while(true) {
-	console.log(1);
+  console.log(1);
 }*/
 /*var i="10000000000";
 for (var j=0;j<Number.MAX_VALUE;j++) {
-	i+=i;
-	console.log(i)
+  i+=i;
+  console.log(i)
 }*/
 /*!function() {
-	var a = b = c = 0;
-	var D2016 = new Date(2016,5,1)
-	setInterval(function(){
-		var D = new Date(), val = Math.round((D2016.getTime() - D.getTime())/1000),
-			daytimes = val%(86400),//60*60*24
-			days = Math.floor(val/86400),
-			hours = Math.floor(daytimes/3600)%24,
-			minutes = Math.floor(daytimes/60)%60,
-			seconds = daytimes%60;
-			$("#time").html("还剩"+days+"天, "+hours+"时, "+minutes+"分, "+seconds+"秒")
-	}, 1000);
+  var a = b = c = 0;
+  var D2016 = new Date(2016,5,1)
+  setInterval(function(){
+    var D = new Date(), val = Math.round((D2016.getTime() - D.getTime())/1000),
+      daytimes = val%(86400),//60*60*24
+      days = Math.floor(val/86400),
+      hours = Math.floor(daytimes/3600)%24,
+      minutes = Math.floor(daytimes/60)%60,
+      seconds = daytimes%60;
+      $("#time").html("还剩"+days+"天, "+hours+"时, "+minutes+"分, "+seconds+"秒")
+  }, 1000);
 }();*/
 /*if(!Function.prototype.bind) {
-	Function.prototype.bind = function(oThis) {
-		if (typeof this !== 'function') {
-			throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
-		}
-		var fSlice = [].slice,
-			aArgs = fSlice.call(arguments, 1),
-			fToBind = this,
-			fNOP = function() {},
-			fBound = function() {
-				return fToBind.apply(this instanceof fNOP ? this : oThis || window, aArgs.concat(fSlice.call(arguments)));
-			};
+  Function.prototype.bind = function(oThis) {
+    if (typeof this !== 'function') {
+      throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
+    }
+    var fSlice = [].slice,
+      aArgs = fSlice.call(arguments, 1),
+      fToBind = this,
+      fNOP = function() {},
+      fBound = function() {
+        return fToBind.apply(this instanceof fNOP ? this : oThis || window, aArgs.concat(fSlice.call(arguments)));
+      };
 
-		fNOP.prototype = this.prototype;
-		fBound.prototype = new fNOP();
-		return fBound;
-	};
+    fNOP.prototype = this.prototype;
+    fBound.prototype = new fNOP();
+    return fBound;
+  };
 }*/
 
 /*function foo(x = 5) {
@@ -559,36 +671,36 @@ for (var j=0;j<Number.MAX_VALUE;j++) {
 foo(3);*/
 /*// 写法一
 function m1({x = 0, y = 0 } = {}) {
-	return [x, y];
+  return [x, y];
 }
 
 // 写法二
 function m2({x, y } = {x: 0, y: 0 }) {
-	return [x, y];
+  return [x, y];
 }*/
 /*var n={
-	ii(){
-		console.log('ii')
-	}
+  ii(){
+    console.log('ii')
+  }
 }
 var h={
-	i(){
-		console.log('i')
-	},
-	__proto__:n
+  i(){
+    console.log('i')
+  },
+  __proto__:n
 }
 var l={
-	f(){},
-	__proto__:h
+  f(){},
+  __proto__:h
 }*/
 /*var arg = [1, 2, 3, 4, 6, 8];
 //(function() {console.log(...arguments)}).apply(null, arg) 同下
 (function() {
-	var i = 0,
-		len = arguments.length
-	for (; i < len; i++) {
-		console.log(arguments[i])
-	}
+  var i = 0,
+    len = arguments.length
+  for (; i < len; i++) {
+    console.log(arguments[i])
+  }
 }).call(null, ...arg)*/
 </script>
 

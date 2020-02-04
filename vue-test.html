@@ -173,6 +173,7 @@ content: "";
 	</table>
 	<div class="tinymce-module fd-clr">
 		<div id="app">
+			<span v-for="n in num">{{'item' + n}}</span>
 			<p>{{ message }}</p>
 			<input type="" name="" v-model="long">
 		</div>
@@ -242,7 +243,8 @@ var app = new Vue({
 		el: '#app',
 		data: {
 			message: 'Hello Vue!',
-			long: 'long'
+			long: 'long',
+			num: 3
 		}
 	}),
 	app1 = new Vue({

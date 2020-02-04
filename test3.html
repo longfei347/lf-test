@@ -5,56 +5,79 @@
   <meta charset="utf-8">
   <title>test</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/cropper.css">
   <script src="js/jquery-3.2.1.js"></script>
   <script src="js/underscore-src.js"></script>
   <script src="js/tenda-common.js"></script>
-  <script src="js/base.js"></script>
+  <script src="js/cropper.js"></script>
+  <!-- <script src="js/base.js"></script> -->
   <style>
-  .none {
-    display: none;
-  }
-  #div1 {
+    #div1 {
     height: 80px;
     background: #ccc;
     color: #f90;
   }
-  .wrapper {
-      display: grid;
-      grid-template-columns: 100px 10px 100px 10px 100px;
-      grid-template-rows: auto 10px auto;
+  .ta-j {
+    text-align-last:justify; /* 两端对齐 */
+    background: repeating-linear-gradient(45deg, white, white 10%, black 10%, black 20%);
+    background: repeating-linear-gradient(45deg, white, white 10%, black 10%, black 20%)
   }
-
-   .box {
-      background-color: #444;
-      color: #fff;
-      font-size: 150%;
-      line-height: 60px;
-      text-align: center;
+  .rotate {
+    position: relative;
+    text-align: center;
   }
-  .b,.d,.f,.g,.h,.i,.j,.l,.n{
-      background-color: #1D8FEE;
+  .rotate .ro-bg {
+    width: 200px;
+    height: 200px;
+  }
+  .rotate .ro-img {
+    position: absolute;
+    /* transform: skew(80deg); */
+    width: 200px;
+    height: 200px;
+    animation: rotate-img 6s linear infinite;
+    left: 50%;
+    margin-left: -100px;
+  }
+  @keyframes rotate-img{
+    0%{
+      transform: rotateZ(0deg);/*从0度开始*/
+    }
+    100%{
+      transform: rotateZ(360deg);/*360度结束*/
+    }
+  }
+  #result {
+    width: 400px;
+    /* height: 300px; */
+  }
+  #result img{
+    max-width: 100%;
   }
   </style>
 </head>
 
 <body>
-  <div class="wrapper">
-    <div class="box a">A</div>
-    <div class="box b"></div>
-    <div class="box c">C</div>
-    <div class="box d"></div>
-    <div class="box e">E</div>
-    <div class="box f"></div>
-    <div class="box g"></div>
-    <div class="box h"></div>
-    <div class="box i"></div>
-    <div class="box j"></div>
-    <div class="box k">K</div>
-    <div class="box l"></div>
-    <div class="box m">M</div>
-    <div class="box n"></div>
-    <div class="box o">O</div>
-</div>
+  <!-- <div class="le"></div> -->
+  <!-- <div class="rainbow"></div> -->
+  <!-- <div class="face-scan"></div> -->
+  <!-- <div class="loading">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div> -->
+  <!-- <div class="earth-rotate">
+    <div>
+      <p></p> 
+    </div>
+  </div> -->
+  <div class="rotate">
+    <img class="ro-bg" src="images/face-scan.jpg" alt="">
+    <img class="ro-img" src="images/line2.png" alt="">
+    <!-- <img class="ro-img" src="images/line.jpg" alt=""> -->
+  </div>
   <div id="observer">MutationObserver observe dom</div>
   <p>
     <lable>请选择一个文件：</label>
@@ -63,32 +86,92 @@
       <input type="button" value="读取二进制数据" onClick="readAsBinaryString()">
       <input type="button" value="读取文本文件" onClick="readAsText()">
   </p>
-  <div name="result" id="result"></div>
+  <div name="result" id="result">
+    <p><button id="crop">裁剪</button></p>
+    <img id="cropImg" src="" alt="">
+  </div>
+  <div class="corpHtml"></div>
   <div id="div1">
     <p>请拖拽到此区域</p>
   </div>
   <ul id="ul1"></ul>
+  <cavas id="cas"></cavas>
 </body>
 <script src="js/lite2.js"></script>
 <script>
-var result = document.getElementById("result");
-var file = document.getElementById("file");
+var dpr = window.devicePixelRatio;
+var meta = document.createElement('meta');
+
+// dpr
+meta.setAttribute('content', 'initial-scale=' + 1 / dpr + ', maximum-scale=' + 1 / dpr + ', minimum-scale=' + 1 / dpr + ', user-scalable=no');
+document.getElementsByTagName('head')[0].appendChild(meta);
+
+// document.styleSheets[0].insertRule("* { outline: 1px solid red }", 0)
+
+// rem
+/*document.addEventListener('DOMContentLoaded', function (e) {
+    document.getElementsByTagName('html')[0].style.fontSize = window.innerWidth / 10 + 'px';
+}, false);*/
+
+// $.get('http://rap2api.taobao.org/app/mock/226903/test/aaa').then(res=>console.log(res))
+let bbb = $.get('http://rap2api.taobao.org/app/mock/226903/test/bbbb')
+// 双色球 随机
+function doubleBall() {
+  let arr = []
+  while (arr.length < 6) {
+    let t = Math.floor(Math.random() * 33) + 1
+    if (!arr.includes(t)) {
+      arr.push(t)
+    }
+  }
+  arr = arr.sort((a, b) => a - b)
+  arr.push(Math.floor(Math.random() * 16) + 1)
+  /*new Array(7).fill(1);
+  arr.forEach(item => {
+    Math.floor(Math.random() * 34)
+  })*/
+  return arr;
+}
 
 function readAsDataURL() {
   var file = document.getElementById("file").files[0],
     reader = new FileReader();
   reader.readAsDataURL(file);
   reader.onload = function(e) {
-    var result = document.getElementById("result");
-    result.innerHTML = '<img src="' + this.result + '" alt="" />';
+    // var result = document.getElementById("result");
+    // result.innerHTML = '<img src="' + this.result + '" alt="" />';
+    document.getElementById("cropImg").src = this.result;
+    document.getElementById("cropImg").onload = function() {
+      $("#cropImg").cropper({
+        aspectRatio: 580 / 326,
+        center: true,
+        preview: '.img-preview',
+      })
+    }
   }
 }
+
+function crop(argument) {
+  // body...
+  var canvas = $("#cropImg").cropper('getCroppedCanvas', {
+    // autoCrop: true,
+    minCropBoxWidth: 580,
+    minCropBoxHeight: 326,
+    maxWidth: 1160,
+    maxHeight: 652
+  })
+  $('.corpHtml').html(canvas)
+}
+$("#crop").on('click', function() {
+  crop()
+})
 
 function readAsBinaryString() {
   var file = document.getElementById("file").files[0],
     reader = new FileReader();
   reader.readAsBinaryString(file);
   reader.onload = function(e) {
+    // console.log(file)
     var result = document.getElementById("result");
     result.innerHTML = this.result;
   }
@@ -150,12 +233,12 @@ observer.observe(target, config);
 
 
 /*var ll = JSON.stringify({l:1,f:2,o:3,n:true}, function(key,value){
-	console.log(key,value);
-	if (typeof value === 'number') {
-		return value+1;
-	} else {
-		return value;
-	}
+  console.log(key,value);
+  if (typeof value === 'number') {
+    return value+1;
+  } else {
+    return value;
+  }
 })
 console.log(ll);*/
 /*var obj = {
@@ -170,7 +253,7 @@ console.log(JSON.stringify({ x: obj })); // '{"x":"bar"}'
 var obj2 = {
   foo: 'foo',
   toJSON: function(key) {
-  	console.log(key)
+    console.log(key)
     if (key === '') {
       return 'bar only';
     } else {
@@ -184,7 +267,7 @@ console.log(JSON.stringify({ x: obj2 }));  // '{ "x":"bar in x"}'
 console.log(JSON.stringify([obj2, obj2])); // '["bar in 0", "bar in 1"]'*/
 
 /*function CmdSave() {
-	// todo
+  // todo
   var OW = window.open("", "_blank", "");
   // var OW = window.open("001.gif", location.origin+"/images/001.gif", "");
   // OW.document.open();
@@ -193,12 +276,12 @@ console.log(JSON.stringify([obj2, obj2])); // '["bar in 0", "bar in 1"]'*/
   OW.close();
 }*/
 /*function strReverse(str) {
-	return (str.replace(/[\w-]+/g, function(s, i, ss) {
-		if (i == 0) {
-			s = s.charAt(0).toLowerCase() + s.substr(1, s.length - 2) + s.charAt(s.length - 1).toUpperCase();
-		}
-		return s.split("").reverse().join("")
-	}));
+  return (str.replace(/[\w-]+/g, function(s, i, ss) {
+    if (i == 0) {
+      s = s.charAt(0).toLowerCase() + s.substr(1, s.length - 2) + s.charAt(s.length - 1).toUpperCase();
+    }
+    return s.split("").reverse().join("")
+  }));
 }
 console.log(strReverse("Many people spell MySQL incorrectly"))*/
 /*var s = new Set();
@@ -207,12 +290,12 @@ console.log(strReverse("Many people spell MySQL incorrectly"))*/
 for (i of s) {console.log(i)}*/
 
 /*function ll() {
-	var i=0,sum=0;
-	let a=99;
-	for (;i<arguments.length;i++) {
-		sum += arguments[i];
-	}
-	console.log(sum,a+sum);
+  var i=0,sum=0;
+  let a=99;
+  for (;i<arguments.length;i++) {
+    sum += arguments[i];
+  }
+  console.log(sum,a+sum);
 }*/
 /*var m = new Map();
 
@@ -267,8 +350,8 @@ hw.next()*/
 
 
 // Error: Generator has already finished
-//	at GeneratorFunctionPrototype.next (native)
-//	at repl:1:3
+//  at GeneratorFunctionPrototype.next (native)
+//  at repl:1:3
 //  at REPLServer.defaultEval (repl.js:129:27)
 //  ...
 
@@ -285,22 +368,22 @@ push(a, "a1", "a2", "a3", "a4"); */
 
 /*var _ = {}; //只要是引用，保证不报错就行
 var curry = function(fun) {
-	var rest = [].slice.call(arguments, 0);
-	rest.shift(); //rest = [1, _, 3, _]
-	return function() {
-		var args = [].slice.call(arguments, 0); //args = [2, 4]
-		var finalArgs = rest.map(function(value, index) {
-			if (value === _) {
-				return args.shift();
-			}
-			return value;
-		}); //finalArgs = [1, 2, 3, 4]
-		return fun.apply(this, finalArgs);
-	}
+  var rest = [].slice.call(arguments, 0);
+  rest.shift(); //rest = [1, _, 3, _]
+  return function() {
+    var args = [].slice.call(arguments, 0); //args = [2, 4]
+    var finalArgs = rest.map(function(value, index) {
+      if (value === _) {
+        return args.shift();
+      }
+      return value;
+    }); //finalArgs = [1, 2, 3, 4]
+    return fun.apply(this, finalArgs);
+  }
 }
 var fun = function(a, b, c, d) {
-	debugger;
-	console.log("" + a + b + c + d);
+  debugger;
+  console.log("" + a + b + c + d);
 }
 var f1 = curry(fun, 1, _, 3, _);
 f1(2, 4); //=>1234*/
@@ -320,92 +403,91 @@ gradient.addColorStop("1.0","red");
 ctx.fillStyle=gradient;
 ctx.fillText("w3school.com.cn",10,90);*/
 /*function ttt() {
-	if (!(this instanceof ttt)) {
-		console.log(arguments.callee);
-		return new ttt();
-	}
-	this.tastes="long";
+  if (!(this instanceof ttt)) {
+    console.log(arguments.callee);
+    return new ttt();
+  }
+  this.tastes="long";
 }
 var first = new ttt();
 var second = ttt();*/
-/*!function() {
-	function n() {
-		t.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
-			t.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
-	}
+! function() {
+  function n() {
+    t.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+      t.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+  }
 
-	function e() {
-		i.clearRect(0, 0, t.width, t.height);
-		var n = [a].concat(m);
-		m.forEach(function(e) {
-				e.x += e.xa,
-					e.y += e.ya,
-					e.xa *= e.x > t.width || e.x < 0 ? -1 : 1,
-					e.ya *= e.y > t.height || e.y < 0 ? -1 : 1,
-					i.fillRect(e.x - .5, e.y - .5, 1, 1);
-				for (var o = 0; o < n.length; o++) {
-					var m = n[o];
-					if (e !== m && null !== m.x && null !== m.y) {
-						var d, u = e.x - m.x,
-							c = e.y - m.y,
-							r = u * u + c * c;
-						r < m.max && (m === a && r >= m.max / 2 && (e.x -= .03 * u,
-								e.y -= .03 * c),
-							d = (m.max - r) / m.max,
-							i.beginPath(),
-							i.lineWidth = d / 2,
-							i.strokeStyle = "rgba(0,0,0," + (d + .2) + ")",
-							i.moveTo(e.x, e.y),
-							i.lineTo(m.x, m.y),
-							i.stroke())
-					}
-				}
-				n.splice(n.indexOf(e), 1)
-			}),
-			o(e)
-	}
-	var t = document.getElementById("cas"),
-		i = t.getContext("2d");
-	n(),
-		window.onresize = n;
-	var o = function() {
-			return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(n) {
-				window.setTimeout(n, 1e3 / 60)
-			}
-		}(),
-		a = {
-			x: null,
-			y: null,
-			max: 2e4
-		};
-	window.onmousemove = function(n) {
-			n = n || window.event,
-				a.x = n.clientX,
-				a.y = n.clientY
-		},
-		window.onmouseout = function(n) {
-			a.x = null,
-				a.y = null
-		};
-	for (var m = [], d = 0; 150 > d; d++) {
-		var u = Math.random() * t.width,
-			c = Math.random() * t.height,
-			r = 2 * Math.random() - 1,
-			l = 2 * Math.random() - 1;
-		m.push({
-			x: u,
-			y: c,
-			xa: r,
-			ya: l,
-			max: 6e3
-		})
-	}
-	setTimeout(function() {
-		e()
-	}, 100)
+  function e() {
+    i.clearRect(0, 0, t.width, t.height);
+    var n = [a].concat(m);
+    m.forEach(function(e) {
+        e.x += e.xa,
+          e.y += e.ya,
+          e.xa *= e.x > t.width || e.x < 0 ? -1 : 1,
+          e.ya *= e.y > t.height || e.y < 0 ? -1 : 1,
+          i.fillRect(e.x - .5, e.y - .5, 1, 1);
+        for (var o = 0; o < n.length; o++) {
+          var m = n[o];
+          if (e !== m && null !== m.x && null !== m.y) {
+            var d, u = e.x - m.x,
+              c = e.y - m.y,
+              r = u * u + c * c;
+            r < m.max && (m === a && r >= m.max / 2 && (e.x -= .03 * u,
+                e.y -= .03 * c),
+              d = (m.max - r) / m.max,
+              i.beginPath(),
+              i.lineWidth = d / 2,
+              i.strokeStyle = "rgba(0,0,0," + (d + .2) + ")",
+              i.moveTo(e.x, e.y),
+              i.lineTo(m.x, m.y),
+              i.stroke())
+          }
+        }
+        n.splice(n.indexOf(e), 1)
+      }),
+      o(e)
+  }
+  /*var t = document.getElementById("cas"),
+    i = t.getContext("2d");
+  n(),
+    window.onresize = n;
+  var o = function() {
+      return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(n) {
+        window.setTimeout(n, 1e3 / 60)
+      }
+    }(),
+    a = {
+      x: null,
+      y: null,
+      max: 2e4
+    };
+  window.onmousemove = function(n) {
+      n = n || window.event,
+        a.x = n.clientX,
+        a.y = n.clientY
+    },
+    window.onmouseout = function(n) {
+      a.x = null,
+        a.y = null
+    };
+  for (var m = [], d = 0; 150 > d; d++) {
+    var u = Math.random() * t.width,
+      c = Math.random() * t.height,
+      r = 2 * Math.random() - 1,
+      l = 2 * Math.random() - 1;
+    m.push({
+      x: u,
+      y: c,
+      xa: r,
+      ya: l,
+      max: 6e3
+    })
+  }
+  setTimeout(function() {
+    e()
+  }, 100)*/
 }();
-https://graph.qq.com/oauth/show?which=Login&display=pc&scope=get_user_info,get_info,add_t,add_pic_t,get_other_info,get_fanslist,get_idollist,add_idol,add_share&state=e8bbd97633b58e30532787099ee7c597&redirect_uri=http://www.zhihu.com/oauth/callback/qqconn&response_type=code&client_id=100490701
-*/
+// https://graph.qq.com/oauth/show?which=Login&display=pc&scope=get_user_info,get_info,add_t,add_pic_t,get_other_info,get_fanslist,get_idollist,add_idol,add_share&state=e8bbd97633b58e30532787099ee7c597&redirect_uri=http://www.zhihu.com/oauth/callback/qqconn&response_type=code&client_id=100490701
 </script>
 
 </html>

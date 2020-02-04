@@ -2,19 +2,28 @@
 <html lang="en">
 <head>
   <title>v-charts</title>
+  <style>
+    .v-charts-component-loading{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;justify-content:center;align-items:center;background-color:hsla(0,0%,100%,.9)}.v-charts-mask-status{-webkit-filter:blur(1px);filter:blur(1px)}.v-charts-component-loading .circular{width:42px;height:42px;-webkit-animation:a 2s linear infinite;animation:a 2s linear infinite}.v-charts-component-loading .path{-webkit-animation:b 1.5s ease-in-out infinite;animation:b 1.5s ease-in-out infinite;stroke-dasharray:90,150;stroke-dashoffset:0;stroke-width:2;stroke:#20a0ff;stroke-linecap:round}@-webkit-keyframes a{to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@keyframes a{to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@-webkit-keyframes b{0%{stroke-dasharray:1,200;stroke-dashoffset:0}50%{stroke-dasharray:90,150;stroke-dashoffset:-40px}to{stroke-dasharray:90,150;stroke-dashoffset:-120px}}@keyframes b{0%{stroke-dasharray:1,200;stroke-dashoffset:0}50%{stroke-dasharray:90,150;stroke-dashoffset:-40px}to{stroke-dasharray:90,150;stroke-dashoffset:-120px}}
+    .v-charts-data-empty{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;justify-content:center;align-items:center;background-color:hsla(0,0%,100%,.9);color:#888;font-size:14px}
+
+  </style>
 </head>
 <body>
   <div id="app">
     <ve-line :data="chartData"></ve-line>
+    <ve-scatter :data="chartData2" :settings="chartSettings"></ve-scatter>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/v-charts/lib/index.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/v-charts/lib/style.min.css">
   <script>
     new Vue({
       el: '#app',
       data: function () {
+        this.chartSettings = {
+          dimension: '日期',
+          metrics: ['年龄', '下单用户']
+        }
         return {
           chartData: {
             columns: ['日期', '销售额'],
@@ -26,6 +35,35 @@
               { '日期': '1月5日', '销售额': 3123 },
               { '日期': '1月6日', '销售额': 7123 }
             ]
+          },
+          chartData2: {
+            columns: ['日期', '访问用户', '下单用户', '年龄'],
+            rows: {
+              '上海': [
+                { '日期': '1/1', '访问用户': 123, '年龄': 3, '下单用户': 1244 },
+                { '日期': '1/2', '访问用户': 1223, '年龄': 6, '下单用户': 2344 },
+                { '日期': '1/3', '访问用户': 7123, '年龄': 9, '下单用户': 3245 },
+                { '日期': '1/4', '访问用户': 4123, '年龄': 12, '下单用户': 4355 },
+                { '日期': '1/5', '访问用户': 3123, '年龄': 15, '下单用户': 4564 },
+                { '日期': '1/6', '访问用户': 2323, '年龄': 20, '下单用户': 6537 }
+              ],
+              '北京': [
+                { '日期': '1/1', '访问用户': 123, '年龄': 3, '下单用户': 1244 },
+                { '日期': '1/2', '访问用户': 1273, '年龄': 6, '下单用户': 2344 },
+                { '日期': '1/3', '访问用户': 3123, '年龄': 15, '下单用户': 4564 },
+                { '日期': '1/4', '访问用户': 2123, '年龄': 9, '下单用户': 3245 },
+                { '日期': '1/5', '访问用户': 4103, '年龄': 12, '下单用户': 4355 },
+                { '日期': '1/6', '访问用户': 7123, '年龄': 10, '下单用户': 3567 }
+              ],
+              '广州': [
+                { '日期': '1/1', '访问用户': 123, '年龄': 3, '下单用户': 1244 },
+                { '日期': '1/2', '访问用户': 1223, '年龄': 6, '下单用户': 2344 },
+                { '日期': '1/3', '访问用户': 2123, '年龄': 30, '下单用户': 3245 },
+                { '日期': '1/5', '访问用户': 4123, '年龄': 12, '下单用户': 4355 },
+                { '日期': '1/4', '访问用户': 5123, '年龄': 18, '下单用户': 4564 },
+                { '日期': '1/6', '访问用户': 3843, '年龄': 30, '下单用户': 4850 }
+              ]
+            }
           }
         }
       }

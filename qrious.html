@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<style>
+
+</style>
+<script src="js/qrious.min.js"></script>
+<body>
+  <textarea name="" id="input" cols="50" rows="10" selected>https://github.com/neocotic/qrious</textarea>
+  <button onclick="gen()">生成二维码</button>
+  <div>
+    <canvas id="qr"></canvas>
+  </div>
+  <hr>
+  <button onclick="gen2()">生成二维码2</button>
+  <div id="qrcode"></div>
+</body>
+<script src="js/easy.qrcode.min.js"></script>
+<script>
+// https://github.com/neocotic/qrious
+function gen() {
+  var qr = new QRious({
+    element: document.getElementById('qr'),
+    value: document.getElementById('input').value,
+    size: 250
+  });
+}
+function gen2() {
+  // 
+  var options = {
+    // text: "https://github.com/ushelp/EasyQRCodeJS"
+    text: document.getElementById('input').value
+  };
+  // Create QRCode Object
+  new QRCode(document.getElementById("qrcode"), options);
+}
+</script>
+</html>

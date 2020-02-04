@@ -102,7 +102,7 @@ var fn = function fn_alias(){
 	var lng = 0.0;
 	var lat = 0.0;
 	var map = new BMap.Map("baidu_map");
-/*var lng = 119.195555;//$("#lng").textbox('getValue');
+	/*var lng = 119.195555;//$("#lng").textbox('getValue');
 		var lat = 34.615151;//$("#lat").textbox('getValue');
 		var point = new BMap.Point(lng, lat);
 		map.centerAndZoom(point,16);*/
@@ -115,9 +115,24 @@ var fn = function fn_alias(){
 		if (this.getStatus() === BMAP_STATUS_SUCCESS) {
 			console.log(position)
 			// new BMap.Marker().setPosition(position.point);
-			var marker = new BMap.Marker(position.point);  // 创建标注
-			map.addOverlay(marker);
-			map.centerAndZoom(position.point,16)
+			// var marker = new BMap.Marker(position.point);  // 创建标注
+			// map.addOverlay(marker);
+			// map.centerAndZoom(position.point,16)
+			console.log('source:', position.point)
+			let convertor = new BMap.Convertor(); 
+      let pointArr = []; 
+      pointArr.push(position.point); 
+      convertor.translate(pointArr, 1, 5, data => { 
+        if(data.status === 0) { 
+        	console.log('target:', data.points[0])
+          let marker = new BMap.Marker(data.points[0]); 
+          map.addOverlay(marker); 
+          let label = new BMap.Label("您的位置!",{offset:new BMap.Size(20,-10)}); 
+          marker.setLabel(label); //添加百度label
+          map.centerAndZoom(data.points[0],16)
+          // map.setCenter(data.points[0]);
+        } 
+      }) 
 		} else {
 			console.log('failed' + this.getStatus());
 			err && err(this.getStatus())
@@ -126,6 +141,19 @@ var fn = function fn_alias(){
 		enableHighAccuracy: true,
 		maximumAge: 5 * 60 // 缓存5分钟
 	})
+	navigator.geolocation.getCurrentPosition(function(position) {
+		var x = position.coords.longitude; //经度 
+		var y = position.coords.latitude;//纬度 
+		console.log('lon:',x,"lat:",y)
+		// transTypesParam = getTransType(position.coords.accuracy);//该方法很重要，用来判断手机定位格式，方法在下方
+		/*if($("#testInfo") != null && $("#testInfo").length >0) {
+			$("#testInfo").html("accuracy : " + position.coords.accuracy +  "x : " + x + "  y : " + y);
+		}*/
+		// var ggPoint = new BMap.Point(x,y);
+		// showMap(ggPoint, true);//显示地图坐标
+	}, function(err) {
+		console.log(err)
+	});
 	/*(function map_init() {
 
 		var lng = 119.195555;//$("#lng").textbox('getValue');

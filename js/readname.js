@@ -1,5 +1,4 @@
-let path = require('path'),
-  fs = require('fs');
+let fs = require('fs');
 
 let files = [],len=__dirname.length;
 function ScanDir(path) {

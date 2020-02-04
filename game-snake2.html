@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script>
+(function(){
+    //创建canvas标签
+    var c = document.createElement('canvas');
+    c.width = 400;
+    c.height = 400;
+    c.style.background = '#535353';
+   var b = c.getContext('2d');
+   var s = [41,40],//这里41也是有讲究的，代表默认向右方向
+       d = 1,//定义蛇活动方向，默认向右,蛇运动方向为s[1] - s[0]
+       f = 42,//默认食物的位置
+       x;
+   //这个函数既是绘制蛇方块，也是绘制食物与蛇活动轨迹的定义
+   function w(s,c){
+       b.fillStyle = c;
+       b.fillRect(s % 20 * 20,~~(s / 20 * 20),18,18);
+   }
+   //按方向键控制蛇运动方向,这里根据食物的位置来控制方向，防止用户随便更改方向，然后游戏崩溃
+   document.onkeydown = function(e){
+       //方向由蛇头来确定，初始化蛇只有2个小方块组成，因此蛇的方向就是s[1] - s[0]
+       d = s[1] - s[0] === (x = [-1,-20,1,20][e.keyCode - 37 ] || d) ? d : x;
+   }
+   !(function(){
+       s.unshift(x = s[0] + d);
+       //判断蛇如果撞墙或者撞到了自身，则游戏结束
+       if(s.indexOf(x,1) > 0 || x < 0 || x > 399 || d == 1 && x % 20 == 0 || d == -1 && x % 20 == 19)return alert('游戏结束');
+       //然后开始画蛇节点的颜色
+        w(x,'#e641d3');
+        //判断蛇是不是吃到食物,如果吃到则重新随机生成一个节点也就是新食物的坐标,Math.random()方法表示取随机数,因为方向有可能是负的,所以用到了~~符号表示取绝对值到正数.~就是先取反再减一的意思.
+        if(x == f){
+            while (s.indexOf(f = ~~(Math.random() * 399)) > 0);
+            //重新画食物颜色
+            w(f,'#35e3dc');
+        }else{
+            //蛇吃到食物,蛇身会变长,所以不会改变蛇的运动轨迹
+            w(s.pop(),'#535353');
+        }
+        //这是一种递归的写法
+        setTimeout(arguments.callee,300);
+   })();//这也是一种自调用函数写法
+   document.body.appendChild(c);
+})();
+</script>
+</html>

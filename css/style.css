@@ -1,0 +1,407 @@
+.postTitle a {
+  font-size: 14px;
+  display: inline-block;
+}
+body {
+  line-height: 2;
+  /* -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale; */
+  /* width: 1420px; */
+  /* margin: 0 auto; */
+}
+/* ul {
+  transform: rotate(180deg)
+  }
+
+  li {
+  transform: rotate(180deg)
+  } */
+
+.item {
+  display: inline-block;
+  width: 100px;
+}
+
+.btn-tt {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  height: 30px;
+  width: 50px;
+  background-color: #f90;
+  z-index: 100;
+}
+.none {
+  display: none;
+}
+.df {
+  display: flex;
+}
+/* ::-webkit-scrollbar-track-piece {
+  background-color: #fff;
+  -webkit-border-radius: 0;
+  }
+
+  ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+  height: 50px;
+  background-color: #999;
+  -webkit-border-radius: 4px;
+  outline: 2px solid #fff;
+  outline-offset: -2px;
+  border: 2px solid #fff;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+  height: 50px;
+  background-color: #9f9f9f;
+  -webkit-border-radius: 4px;
+  } */
+.button {
+  border: 2px solid #4C7EE9;
+  border-radius: 23px;
+  width: 255px;
+  height: 46px;
+  line-height: 46px;
+  text-align: center;
+  font-size: 18px;
+  color: #4C7EE9;
+  cursor: pointer;
+  z-index: 3;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+form {
+  /*-webkit-appearance: button;*/
+  overflow: auto;
+}
+.btn {
+  height: 30px;
+  /*-webkit-appearance: button;
+    outline: 5px solid #f90;
+    resize: both;
+    outline-offset: 2px; */
+  border: none;
+  box-sizing: border-box;
+  background-color: #09f;
+}
+ol {
+  margin: 0;
+  padding: 0 0 0 2em;
+  list-style: none;
+  counter-reset: item;
+}
+long {
+  font-size: 18px;
+  color: #f90;
+}
+@supports (-webkit-appearance: none) {
+  #chrome_detect::after {
+    /* content: url('images/001.gif'); */
+    content: attr(title);
+    color: red;
+  }
+}
+#demo:target {
+  color: #f00;
+}
+.simple-loading {
+  display: inline-block;
+  border: 3px dashed #000;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border-color: #f90;
+  border-bottom-color: transparent;
+  animation: ddd 1s linear infinite;
+}
+/*混沌旋转*/
+.loading {
+  background: pink;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.loading:after {
+  content: 'loading...';
+  display: block;
+  text-align: center;
+  font-size: 30px;
+  line-height: 200px;
+  color: white;
+  filter: drop-shadow(2px 4px 6px black);
+}
+.loading div {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  background: green;
+  animation: moveLoading 2s infinite linear;
+  border-radius: 50%;
+  filter: blur(36px);
+}
+.loading div:nth-child(1) {
+  animation-delay: 0s;
+  background: red;
+}
+.loading div:nth-child(2) {
+  animation-delay: -0.5s;
+  background: green;
+}
+.loading div:nth-child(3) {
+  animation-delay: -1s;
+  background: yellow;
+}
+.loading div:nth-child(4) {
+  animation-delay: -1.5s;
+  background: blue;
+}
+@keyframes moveLoading {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(100%, 0);
+  }
+  50% {
+    transform: translate(100%, 100%);
+  }
+  75% {
+    transform: translate(0, 100%);
+  }
+}
+.earth-rotate{
+  width: 150px;
+  height: 100px;
+  border: 1px solid aqua;
+  border-radius: 50%;
+  position: relative;
+  margin: 20px;
+}
+.earth-rotate div{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  animation: moveCicle 3s linear infinite;
+}
+@keyframes moveCicle{
+  0%,100%{
+    transform: translate(25px, 0);
+  }
+
+  25%, 75%{
+    transform: translate(0, 0);
+  }
+  50%{
+    transform: translate(-25px, 0);
+  }
+}
+.earth-rotate div p{
+  margin: 0;
+  width: 20px;
+  height: 20px;
+  margin: -50%;
+  border-radius: 50%;
+  background: aqua;
+  animation: moveRotate 3s linear infinite;
+}
+@keyframes moveRotate{
+  0%{
+    transform:rotate(0deg) translate(50px, 0) ;
+  }
+  100%{
+    transform:rotate(360deg) translate(50px, 0) ;
+  }
+}
+/*alternate 动画*/
+.le {
+  width: 32px;
+  height: 32px;
+  background: url(images/lele.png) 0 0/ 100% 100% no-repeat;
+  animation: le-move 3s linear infinite alternate ;
+}
+@keyframes le-move {
+  to {
+    transform: translate(300% ,100%) rotate(1turn) scale(2);
+
+  }
+}
+/*人脸扫描*/
+.face-scan {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  background: 
+    linear-gradient(#03a9f4,#03a9f4),
+    linear-gradient(90deg, #ffffff33 1px, transparent 0, transparent 19px),
+    linear-gradient(#ffffff33 1px, transparent 0, transparent 19px),
+    linear-gradient(transparent, #2196f3);
+  background-size: 100% 1.5%,10% 100%,100% 10%,100% 100%;
+  background-repeat: no-repeat, repeat, repeat, repeat;
+  background-position: 0 0, 0 0, 0 0, 0 0;
+  clip-path: polygon(0 0, 100% 0%, 100% 1.5%, 0% 1.5%);
+  animation: faceScan 2s linear infinite;
+  /* opacity: 0.5; */
+}
+.face-scan:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: url(../images/face-scan.jpg) 0 0/cover;
+  z-index: -1;
+  opacity: 0.4;
+}
+@keyframes faceScan {
+  to {
+    background-position: 0 100%, 0 0,0 0,0 0;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)
+  }
+}
+/*彩虹*/
+.rainbow {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow:
+    0 0 0 5px inset red,
+    0 0 0 10px inset orange,
+    0 0 0 15px inset yellow,
+    0 0 0 20px inset lime,
+    0 0 0 25px inset aqua,
+    0 0 0 30px inset blue,
+    0 0 0 35px inset magenta;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 50%, 0% 50%);
+}
+@keyframes ddd {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.turn {
+  border: 1px solid #cef;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+.turn:hover {
+  transition: all 10s;
+  transform: rotate(10turn);
+}
+.cicle {
+  width: 100px;
+  height: 100px;
+  background: conic-gradient(red, green, blue);
+  border-radius: 50%;
+  background: conic-gradient(red 0 30%, green 30% 50%, blue 50% 100%);
+}
+.linear-gradient {
+  height: 10px;
+  border: 1px solid;
+  width: 400px;
+  border-radius: 5px;
+  position: relative;
+}
+.linear-gradient:after {
+  content: '';
+  background-image: linear-gradient(#f90, #f90);
+  background-repeat: no-repeat;
+  background-size: 0;
+  animation: progress-line 5s linear;
+  /* animation-play-state: paused; */
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  animation-fill-mode: forwards;
+  height: 100%;
+}
+@keyframes grow {
+  to {
+    background-size: 100%;
+  }
+}
+@keyframes progress-line {
+  to {
+    background-size: 100%;
+  }
+}
+@keyframes water-wave {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.water-wave {
+  margin-left: 50px;
+  margin-top: 50px;
+  position: relative;
+  border: 1px solid #ccc;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.water-wave>div {
+  width: 200%;
+  height: 200%;
+  border-radius: 33%;
+  position: absolute;
+  top: 50%;
+  left: -35%;
+  animation: water-wave linear infinite;
+  opacity: 0.3;
+}
+.water-wave .water-wave1 {
+  background-color: #09f;
+  animation-duration: 5s;
+}
+.water-wave .water-wave2 {
+  background-color: #06d;
+  animation-duration: 8s;
+}
+.water-wave .water-wave3 {
+  background-color: #08e;
+  animation-duration: 11s;
+}
+.boundary {
+  width: 300px;
+  height: 300px;
+  border: 2px solid green;
+  position: relative;
+}
+.boundary .ball {
+  position: absolute;
+  width: 10vw;
+  height: 10vw;
+  background: red;
+  border-radius: 50%;
+  animation: x 2s linear infinite alternate, y 2.2s linear infinite alternate;
+}
+@keyframes x {
+  0% {
+    left: 0%;
+  }
+  100% {
+    left: calc(100% - 10vw);
+  }
+}
+
+@keyframes y {
+  0% {
+    top: 0%;
+  }
+  100% {
+    top: calc(100% - 10vw);
+  }
+}

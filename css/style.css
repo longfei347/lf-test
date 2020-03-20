@@ -236,7 +236,7 @@ long {
   width: 200px;
   height: 200px;
   position: relative;
-  background: 
+  background:
     linear-gradient(#03a9f4,#03a9f4),
     linear-gradient(90deg, #ffffff33 1px, transparent 0, transparent 19px),
     linear-gradient(#ffffff33 1px, transparent 0, transparent 19px),
@@ -404,4 +404,19 @@ long {
   100% {
     top: calc(100% - 10vw);
   }
+}
+.loading:after {
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+    animation: ellipsis 2s infinite;
+    content: "\2026"; /* ascii code for the ellipsis character */
+}
+@keyframes ellipsis {
+    from {
+        width: 2px;
+    }
+    to {
+        width: 15px;
+    }
 }

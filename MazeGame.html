@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+</head>
+
+<body>
+    <canvas id="myCavas" width="700" height="300" style="background-color:rgb(250, 250, 250)"></canvas>
+    <br />
+    <input type="text" id="storeName" placeholder="请输入你要存储的墙的名字" />
+    <button id="store" value="存储" onclick="storage()">存储</button>
+    <br />
+    <input type="text" id="fetchname" placeholder="请输入你要获取的墙名字" />
+    <button id="fetch" value="存储" onclick="fetchWall()">获取</button>
+</body>
+<script type="text/javascript">
+var width = 700,
+    height = 300; //画布宽高，用于清除画布
+var everything = []; //存储要画的对象
+var walls = []; //存储墙
+var isDown = false; //鼠标是否已点击画布
+var ctx;
+var token; //移动对象；
+var unit = 3; //移动距离单位
+//迷宫移动对象类
+function Token(x, y, r, style, n) {
+    this.x = x;
+    this.y = y; //坐标
+    this.r = r; //外接圆半径
+    this.style = style; //样式
+    this.n = n; //边数
+    this.angle = 2 * Math.PI / n; //角度
+    this.draw = drawToken; //画多变形方法
+    this.move = moveToken;
+}
+
+function drawToken() {
+    ctx.fillStyle = this.style;
+    ctx.lineWidth = 3;
+
+    ctx.beginPath();
+    ctx.moveTo(this.x + this.r * Math.cos(-0.5 * this.angle), this.y + this.r * Math.sin(-0.5 * this.angle));
+
+    for (var i = 1; i <= this.n; i++) {
+        ctx.lineTo(this.x + this.r * Math.cos((i - 0.5) * this.angle), this.y + this.r * Math.sin((i - 0.5) * this.angle));
+    }
+    ctx.fill();
+}
+
+function moveToken(dx, dy) {
+    this.x += dx;
+    this.y += dy;
+    if (CanCrash()) {
+        this.x -= dx;
+        this.y -= dy;
+    } else {
+        drawAll();
+    }
+
+}
+
+function CanCrash() {
+
+    for (var i = 0; i < walls.length; i++) {
+        var x1 = walls[i].sx;
+        var y1 = walls[i]
+        var distance = GetDistance(walls[i].sx, walls[i].sy, walls[i].ex, walls[i].ey, token.x, token.y);
+        if (distance < token.r * token.r) {
+            return true;
+        }
+    }
+}
+//求距离的平方
+function GetDistance(x1, y1, x2, y2, x, y) {
+    var plus_minus = (x2 - x1) * (x - x1) + (y2 - y1) * (y - y1);
+    if (plus_minus <= 0) return (x - x1) * (x - x1) + (y - y1) * (y - y1);
+
+    var d2 = (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);
+    if (plus_minus >= d2) return (x - x2) * (x - x2) + (y - y2) * (y - y2);
+
+    var r = plus_minus / d2;
+    var px = x1 + (x2 - x1) * r;
+    var py = y1 + (y2 - y1) * r;
+    return (x - px) * (x - px) + (py - y) * (py - y);
+}
+
+function startDraw(ev) {
+    var point = mousePoint(ev);
+    var wall = new Wall(point.x, point.y, point.x + 1, point.y + 1, "black", 5);
+    everything.push(wall);
+    drawAll();
+    isDown = true;
+}
+
+function StrectWall(ev) {
+    if (isDown) {
+        var point = mousePoint(ev);
+        var wall = everything.pop();
+        wall.ex = point.x;
+        wall.ey = point.y;
+        everything.push(wall);
+        drawAll();
+    }
+}
+
+function EndDraw(ev) {
+    if (isDown) {
+        var point = mousePoint(ev);
+        var wall = everything.pop();
+        wall.ex = point.x;
+        wall.ey = point.y;
+        everything.push(wall);
+        walls.push(wall);
+        drawAll();
+        isDown = false;
+    }
+}
+
+function Wall(sx, sy, ex, ey, style, width) {
+    this.sx = sx;
+    this.sy = sy;
+    this.ex = ex;
+    this.ey = ey;
+    this.style = style;
+    this.width = width;
+    this.draw = drawWall;
+}
+
+function drawWall() {
+    ctx.fillStyle = this.style;
+    ctx.beginPath();
+    ctx.lineWidth = this.width;
+    ctx.moveTo(this.sx, this.sy);
+    ctx.lineTo(this.ex, this.ey);
+    ctx.stroke();
+}
+
+
+//获取鼠标位置
+function mousePoint(ev) {
+    var mx, my;
+    if (ev.layerX || ev.layerX == 0) {
+        mx = ev.layerX;
+        my = ev.layerY;
+    } else if (ev.offsetX || ev.offsetX == 0) {
+        mx = ev.offsetX;
+        my = ev.offsetY;
+    }
+    return { x: mx, y: my };
+}
+
+function drawAll() {
+    ctx.clearRect(0, 0, width, height);
+    for (var i = 0; i < everything.length; i++) {
+        everything[i].draw();
+    }
+}
+
+function Init() {
+    var cavas = document.getElementById("myCavas");
+    ctx = cavas.getContext("2d");
+    setGame();
+    cavas.addEventListener("mousedown", startDraw);
+    cavas.addEventListener("mousemove", StrectWall);
+    cavas.addEventListener("mouseup", EndDraw);
+    cavas.addEventListener("mouseout", EndDraw);
+    drawAll();
+}
+
+function setGame() {
+    token = new Token(20, 20, 16, "red", 5);
+    everything.push(token);
+    window.addEventListener("keydown", AddKeyBoardEvent);
+}
+
+function AddKeyBoardEvent() {
+    var keyCode;
+    if (!event) {
+        keyCode = window.event.keyCode;
+        window.event.preventDefault();
+    } else {
+        keyCode = event.keyCode;
+        event.preventDefault();
+    }
+    switch (keyCode) {
+        case 37:
+            token.move(-unit, 0);
+            break; //左移
+        case 38:
+            token.move(0, -unit);
+            break; //上移
+        case 39:
+            token.move(unit, 0);
+            break; //右移
+        case 40:
+            token.move(0, unit);
+            break; //下移
+        default:
+            window.removeEventListener("keydown", AddKeyBoardEvent);
+            break;
+    }
+
+}
+
+function storage() {
+    var storeName = document.getElementById("storeName").value;
+    if (walls && walls.length > 0 && storeName) {
+        if (!localStorage) {
+            alert("当前浏览器不支持存储");
+            return;
+        }
+        var myWall = JSON.stringify(walls);
+        localStorage.setItem(storeName, myWall)
+    } else if (!storeName) {
+        alert("请为你的迷宫命名");
+    } else {
+        alert("请用鼠标画你的迷宫");
+    }
+}
+
+function fetchWall() {
+    var fetchname = document.getElementById("fetchname").value;
+    if (!fetchname) {
+        alert("请输入你的迷宫命名");
+    } else {
+        if (!localStorage) {
+            alert("当前浏览器不支持存储");
+            return;
+        }
+        var myWalls = localStorage[fetchname];
+        walls = JSON.parse(myWalls);
+        everything = [];
+        setGame();
+        for (var i = 0; i < walls.length; i++) {
+            walls[i].draw = drawWall;
+            everything.push(walls[i]);
+        }
+        drawAll();
+    }
+
+}
+window.onload = Init;
+</script>
+
+</html>

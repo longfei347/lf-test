@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="divport" content="width=device-width">
   <title>Test1</title>
-  <script src="js/j.js"></script>
+  <script src="js/jquery-3.2.1.js"></script>
   <!-- <script src="js/underscore.js"></script>
   <script src="js/require.js"></script>
   <script src="js/lite2.js"></script>
@@ -239,6 +239,8 @@
   <input type="file" accept="video/*" capture="camcorder">
   <input type="file" accept="audio/*" capture="microphone"> -->
   <form action="">
+    <p>form</p>
+    <button class="btn">button</button>
     <input type="text" id="input">
     <input type="text" name="aa" id="" value="<!@#1%^&*()_+">
     <div class="df">
@@ -250,6 +252,19 @@
   <div id="logs"></div>
 </body>
 <script>
+/*let xml= new XMLHttpRequest()
+xml.open('get', 'http://rap2api.taobao.org/app/mock/226903/test/aaa')
+xml.send()
+xml.onreadystatechange=()=>{
+  if (xml.readyState == 4 && xml.status == 200) {
+    console.log(xml.responseText)
+  }
+}*/
+$('.btn').toggle(()=>{
+  console.log(this)
+}, ()=>{
+  console.log('this2:',this)
+})
 // 'use strict';
 // $.get('http://rap2api.taobao.org/app/mock/226903/test/aaa').then(res=>console.log(res))
 $('.m-line span').on('click', function(e) {

@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>移动端图片滑动</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<script type="text/javascript" src="https://unpkg.com/jquery"></script>
+	<!-- <link rel="stylesheet" type="text/css" href="http://clovisdasilvaneto.github.io/all-animation/css/all-animation.css"> -->
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+	}
+
+	html,
+	body {
+		overflow: hidden;
+	}
+
+	body {
+		position: relative;
+		background: #fff;
+	}
+
+	ul,
+	li {
+		list-style: none;
+	}
+
+	img {
+		max-width: 100%;
+		max-height: 100%;
+		display: block;
+	}
+
+	#wrap {
+		padding: 0px;
+		overflow: hidden;
+	}
+
+	#boxSection {
+		position: relative;
+		overflow: hidden;
+	}
+
+	#boxSection > div {
+		font-size: 50px;
+		text-align: center;
+		position: absolute;
+		-webkit-transform: translate3d(100%, 0, 0);
+		transform: translate3d(100%, 0, 0)
+	}
+
+	#boxSection > div.section1 {
+		background-color: red;
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0)
+	}
+
+	#boxSection > div.section2 {
+		background-color: #336699;
+		color: #fff;
+	}
+
+	#boxSection > div.section3 {
+		background-color: #000;
+		color: #fff;
+	}
+
+	#boxSection > div.section4 {
+		background-color: green
+	}
+
+	#boxSection > div.section5 {
+		background-color: #ff6600
+	}
+
+	#boxSection .img {
+		text-align: center;
+		display: table-cell;
+		vertical-align: middle;
+	}
+
+	#boxSection .img img {
+		display: inline-block;
+	}
+
+	#boxSection .title {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		padding: 10px 5px;
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+		font-size: 16px;
+		color: #fff;
+		background-color: rgba(0, 0, 0, .7);
+	}
+	</style>
+</head>
+
+<body>
+	<div id="wrap">
+		<div id="boxSection">
+		</div>
+	</div>
+	<script type="text/javascript">
+	var Img = {
+		'data': [{
+			'src': './images/avatar.jpg',
+			'title': '这就是我啦11'
+		}, {
+			'src': 'images/u85.jpg',
+			'title': '这就是我啦22'
+		}]
+	}
+
+	var imgSlider = function(obj, imgArr) {
+		this.init(obj, imgArr)
+	}
+
+	imgSlider.prototype = {
+		init: function(myObj, imgAry) {
+			if (!document.getElementById(myObj)) {
+				return;
+			}
+			this.a = myObj,
+			this.wrap = document.getElementById(myObj),
+			this.imgArr = imgAry.data,
+			this.len = this.imgArr.length,
+			this.myIndex = 0,
+			this.zIndexs = 1,
+			this.winW = this.clientW(),
+			this.winH = this.clientH(),
+			self = this;
+
+			for (var i = 0; i < this.len; i++) {
+				div = document.createElement('div');
+				div.className = 'section section' + parseInt(i + 1);
+				div.style.cssText = 'width:' + this.winW + 'px; height:' + this.winH + 'px; ';
+				this.wrap.appendChild(div)
+			};
+
+			this.div = this.getClass(myObj, 'section');
+			this.render();
+
+			window.onresize = function() {
+				self.render()
+				self.loadImg(self.myIndex)
+			}
+
+			this.loadImg(this.myIndex)
+			this.slider(this.wrap)
+
+		},
+		render: function() {
+			this.winW = this.clientW(),
+				this.winH = this.clientH()
+			this.wrap.style.cssText = 'width:' + this.winW + 'px; height:' + this.winH + 'px';
+			for (var i = 0; i < this.len; i++) {
+				this.div[i].style.cssText = 'width:' + this.winW + 'px; height:' + this.winH + 'px; ';
+			};
+		},
+		slider: function(myWrap) {
+
+			myWrap.addEventListener('touchstart', startHander, false);
+			myWrap.addEventListener('touchmove', moveHander, false);
+			myWrap.addEventListener('touchend', endHander, false);
+
+			var startTime, posX, offX, self = this;
+
+			function startHander(e) {
+				startTime = new Date() * 1;
+				posX = e.targetTouches[0].pageX;
+			}
+
+			function moveHander(e) {
+				e.preventDefault();
+				offX = e.touches[0].pageX - posX;
+
+				var prev = self.myIndex - 1,
+					next = prev + 3;
+				for (var i = 0; i < next; i++) {
+					if (self.div[i]) {
+						self.div[i].style.webkitTransition = 'all 0'
+						self.div[i].style.webkitTransform = 'translate3d(' + ((i - self.myIndex) * self.winW + offX) + 'px,0,0)';
+					};
+				};
+			}
+
+			function endHander() {
+				var endTime = new Date() * 1,
+					cW = self.winW / 6;
+				if (endTime - startTime > 300) {
+					if (offX > cW) {
+						self.goPage(self.myIndex - 1)
+					} else if (offX < -cW) {
+						self.goPage(self.myIndex + 1)
+					} else {
+						self.goPage(self.myIndex)
+					}
+				} else {
+					if (offX > 80) {
+						self.goPage(self.myIndex - 1)
+					} else if (offX < -80) {
+						self.goPage(self.myIndex + 1)
+					} else {
+						self.goPage(self.myIndex)
+					}
+				}
+			}
+
+		},
+		goPage: function(num) {
+			var n = parseInt(num),
+				_index = this.myIndex;
+			if (n > this.div.length - 1) {
+				_index = this.div.length - 1
+			} else if (n <= 0) {
+				_index = 0
+			} else {
+				_index = n
+			}
+
+			this.myIndex = _index;
+			this.loadImg(this.myIndex)
+
+			if (this.div[this.myIndex - 1]) {
+				this.div[this.myIndex - 1].style.webkitTransition = 'all 0.3s';
+				this.div[this.myIndex - 1].style.webkitTransform = 'translate3d(' + (-this.winW) + 'px,0,0)';
+			}
+			if (this.div[this.myIndex]) {
+				this.div[this.myIndex].style.webkitTransition = 'all 0.3s';
+				this.div[this.myIndex].style.webkitTransform = 'translate3d(0,0,0)';
+			}
+			if (this.div[this.myIndex + 1]) {
+				this.div[this.myIndex + 1].style.webkitTransition = 'all 0.3s';
+				this.div[this.myIndex + 1].style.webkitTransform = 'translate3d(' + this.winW + 'px,0,0)';
+			}
+		},
+		loadImg: function(n) {
+			var imgObj = new Image();
+			var self = this;
+			imgObj.onload = function() {
+				imgObj.onload = null;
+				var imgW = this.width,
+					imgH = this.height,
+					imgT = imgW / imgH,
+					objW = parseInt(self.getStyle(self.div[n], 'width')),
+					objH = parseInt(self.getStyle(self.div[n], 'height')),
+					winT = objW / objH,
+					winHeight = parseInt(imgH / imgW * objW),
+					winWidth = parseInt(imgW / imgH * objH);
+
+				var html = '';
+				if (imgT > winT) {
+					console.log('横')
+					html = [
+						'<div class="img" style="width:' + self.winW + 'px; height:' + parseInt(self.winH) + 'px;">',
+						'<img src=' + this.src + ' style="width:' + self.winW + 'px">',
+						'</div>',
+						'<span class="title">' + self.imgArr[n].title + '</span>'
+					].join('');
+
+					self.div[n].innerHTML = html;
+				} else {
+					console.log('竖')
+					html = [
+						'<div class="img" style="width:' + self.winW + 'px; height:' + parseInt(self.winH) + 'px;">',
+						'<img src=' + this.src + ' style="height:' + self.winH + 'px">',
+						'</div>',
+						'<span class="title">' + self.imgArr[n].title + '</span>'
+					].join('');
+					self.div[n].innerHTML = html;
+				}
+			}
+			imgObj.src = this.imgArr[n].src;
+		},
+		getClass: function(obj, iClass) {
+			var a = document.getElementById(obj),
+				b = a.getElementsByTagName('*'),
+				c = [];
+			for (var i = 0; i < b.length; i++) {
+				var d = b[i].className.split(' ');
+				for (var j = 0; j < d.length; j++) {
+					if (d[j] == iClass) {
+						c.push(b[i]);
+					}
+				};
+			};
+			return c;
+		},
+		getStyle: function(obj, attr) {
+			return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj, null)[attr];
+		},
+		clientW: function() {
+			return document.documentElement.clientWidth || document.body.clientWidth;
+		},
+		clientH: function() {
+			return document.documentElement.clientHeight || document.body.clientHeight;
+		}
+	}
+
+	new imgSlider('boxSection', Img)
+	</script>
+</body>
+
+</html>

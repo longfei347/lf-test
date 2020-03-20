@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="js/lite2.js"></script>
+  <script src="js/vue.js"></script>
+  <!-- <script src="js/base.js"></script> -->
+</head>
+<style>
+
+button {
+  padding: 5px 15px;
+  margin-right: 10px;
+}
+</style>
+<body>
+    <div id="test">
+      <button > 题目{{num}} </button>
+      <button @click="select('a')">A</button>
+      <button @click="select('c')">C</button>
+      <button @click="select('b')">B</button>
+      <button @click="back">后退</button>
+
+    </div>
+</body>
+<script>
+/*let arr=[],n='123123'
+for(let i=0;i<n.length;i++){
+    if(n.substr(i+1).indexOf(n.charAt(i))==-1){
+        arr.push(n.charAt(i))
+    }
+}
+
+console.log(arr)*/
+var vm = new Vue({
+  el: "#test",
+  data:{
+    num:1,
+    last: 0,
+    arr: {
+      a: [],
+      b: [],
+      c: []
+    }
+  },
+  methods: {
+    select(s)  {
+      if (this.num>187) {
+        return 0
+      }
+      this.last = this.arr[s]
+      this.arr[s].push(this.num)
+      this.num++
+    },
+    back() {
+      --this.num
+      this.last.pop()
+    }
+  }
+})
+function fun(str){
+    let flag=0;
+    let len=str.length;
+    if (len<8){
+        return 'NG'
+    }
+    for (let i=0;i<len-3;i++) {
+        let sub=str.substring(i,i+3)
+        if(str.substr(i+3).indexOf(sub)>-1){
+          return 'NG'
+        }
+    }
+    if (/[a-z]/.test(str)) {
+        flag++
+    }
+    if (/[A-Z]/.test(str)) {
+        flag++
+    }
+    if (/\d/.test(str)) {
+        flag++
+    }
+    if (/[^a-zA-Z0-9]/.test(str)) {
+        flag++
+    }
+    if (flag<3) {
+        return 'NG'
+    }
+    return 'OK'
+}
+// fun('S^fc8G5-78hlgV3Xfc8')
+</script>
+</html>

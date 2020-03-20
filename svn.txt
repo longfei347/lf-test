@@ -1,59 +1,5 @@
 龙飞▄︻┻═┳一 10:37:36
 远程连接:mstsc -v 192.168.0.171
-(function () {
-    var cmdColors = {
-        // 'bold': ['\x1B[1m', '\x1B[22m'], valid
-        // 'italic': ['\x1B[3m', '\x1B[23m'],
-        // 'underline': ['\x1B[4m', '\x1B[24m'],
-        // 'strikethrough': ['\x1B[9m', '\x1B[29m'],
-        'white': ['\x1B[37m', '\x1B[39m'],
-        'grey': ['\x1B[90m', '\x1B[39m'],
-        'black': ['\x1B[30m', '\x1B[39m'],
-        'blue': ['\x1B[34m', '\x1B[39m'],
-        'cyan': ['\x1B[36m', '\x1B[39m'],
-        'green': ['\x1B[32m', '\x1B[39m'],
-        'magenta': ['\x1B[35m', '\x1B[39m'],
-        'red': ['\x1B[31m', '\x1B[39m'],
-        'yellow': ['\x1B[33m', '\x1B[39m'],
-        'inverse': ['\x1B[7m', '\x1B[27m'],
-        'whiteBG': ['\x1B[47m', '\x1B[49m'],
-        'greyBG': ['\x1B[49;5;8m', '\x1B[49m'],
-        'blackBG': ['\x1B[40m', '\x1B[49m'],
-        'blueBG': ['\x1B[44m', '\x1B[49m'],
-        'cyanBG': ['\x1B[46m', '\x1B[49m'],
-        'greenBG': ['\x1B[42m', '\x1B[49m'],
-        'magentaBG': ['\x1B[45m', '\x1B[49m'],
-        'redBG': ['\x1B[41m', '\x1B[49m'],
-        'yellowBG': ['\x1B[43m', '\x1B[49m']
-    }, browserColors = ['red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'purple', 'white', 'grey', 'black'];
-    if (typeof window !== "undefined") {
-        // in browser
-        browserColors.forEach(function (item) { return console.log[item] = function () {
-            var str = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                str[_i] = arguments[_i];
-            }
-            console.log("%c" + str.join(" "), "color:" + item);
-        }; });
-        browserColors.forEach(function (item) { return console.log[item]("longfei"); });
-    }
-    else {
-        var _loop_1 = function (i) {
-            console.log[i] = function () {
-                var str = [];
-                for (var _i = 0; _i < arguments.length; _i++) {
-                    str[_i] = arguments[_i];
-                }
-                console.log(cmdColors[i][0] + str.join(" ") + cmdColors[i][1]);
-            };
-        };
-        // in cmd
-        for (var i in cmdColors) {
-            _loop_1(i);
-        }
-        Object.keys(cmdColors).forEach(function (item) { return console.log[item]("longfei", "haha","hei",1,3,5); });
-    }
-})();
 
 Function instanceof Object //true
 Object instanceof Function //true
@@ -150,7 +96,7 @@ Object.getOwnPropertyNames(String.prototype)
         return props;
     }
     var propertys = getAllPropertyNames(window);
-    console.log(propertys.length);          //276
+    console.log(propertys.length);          //970
     console.log(propertys.join("\n"));      //toString等
 })()
 
@@ -429,9 +375,9 @@ PageY=clientY+scrollTop-clientTop;(只讨论Y轴,X轴同理,下同)
 
 console.log("top: ",t ,"; left: ",l);
 
-" String ".replace(/^\s+|\s+$/g,"")//去掉首尾空格
+" String ".replace(/^\s+|\s+$/g,"")//去掉首尾空格 同trim()
 
-img元素可以不定义src属性,设置width与height等属性
+img元素可以不定义src属性,设置width与height等属性,别定义src="" 会发请求影响性能
 
 JSON.parse("lf") //当参数不可转化为对象时将报错
 
@@ -466,13 +412,15 @@ multipart/form-data 不对字符编码。在使用包含文件上传控件的表
 text/plain 空格转换为 "+" 加号，但不对特殊字符编码。
 
 JavaScript跨域总结与解决办法
-1.document.domain
-2.服务器代理
-3.script标签
-4.location.hash
-5.window.name	走起
-6.flash 方法
-7.HTML5   postMessage	这儿
+1.document.domain, 需要二级域名相同的情况下
+2.服务器代理, 有node层,可在node层做代理转发, 如果是nginx设置proxy_pass, apache也可相应设置;
+3.script标签, jsonp方式
+4.location.hash  + iframe
+5.window.name + iframe	
+6.flash 方法 
+7.HTML5   postMessage有两种方式, 一种文档传输方式,二种是信道通信 MessageChannel
+8.webSocket
+9.CORS需要浏览器和后端同时支持,服务端设置 Access-Control-Allow-Origin
 
 function handleFiles(files) {
 	if (files.length) {
@@ -604,8 +552,6 @@ bool = document.execCommand(aCommandName, aShowDefaultUI, aValueArgument)
 参数
 aCommandName一个 DOMString ，命令的名称。可用命令列表请参阅 命令 。aShowDefaultUI一个 Boolean 是否展示用户界面，一般为 false。Mozilla 没有实现。aValueArgument一些命令需要一些额外的参数值（如insertimage需要提供这个image的url）。默认为null。
 
-An example of ?how to use it on CodePen.
-
 快速实现复制到剪贴板：
 <p>点击复制后在右边textarea CTRL+V看一下</p>
 <input type="text" id="inputText" value="测试文本"/>
@@ -621,14 +567,9 @@ An example of ?how to use it on CodePen.
         document.execCommand('copy', true);
         currentFocus.focus();
     });
-</script>123456789101112131415
+</script>
 
-Basic support (Yes) (Yes)[1] ? ? (Yes)
-insertBrOnReturn 未实现 (Yes) 未实现 未实现 未实现
-copy/cut 42 41 (41) 9 29 未实现
-
-
-[1] 在 Firefox 41 之前，剪贴板功能需要在 user.js 配置文件中启用。参阅 Mozilla 配置概述。命令若未被支持或启用，execCommand 会抛出异常，而不是返回 false。自 Firefox 41 开始，只要是在能够创建窗口的事件回调函数里（半可信脚本里），剪贴板功能都是默认开启的。
+在 Firefox 41 之前，剪贴板功能需要在 user.js 配置文件中启用。参阅 Mozilla 配置概述。命令若未被支持或启用，execCommand 会抛出异常，而不是返回 false。自 Firefox 41 开始，只要是在能够创建窗口的事件回调函数里（半可信脚本里），剪贴板功能都是默认开启的。
 
 document.execCommand 常用命令:JustifyLeft JustifyCenter Copy paste Bold Underline
 http://www.cnblogs.com/xjyggd/archive/2009/02/12/1388788.html
@@ -721,53 +662,26 @@ Setter: 123
 或者　
 --disable-web-security
 如，右击谷歌浏览器快捷图标-属性--快捷方式-目标 可使chrome支持本地文件访问
-html,css,js实践
-http://www.w3cfuns.com/blog-5425789-5398798.html
-http://www.w3cfuns.com/blog-5424323-5399791.html //css
-http://www.w3cfuns.com/blog-5441802-5400269.html //前端资源
-http://www.w3cfuns.com/blog-5445197-5399640.html //js异步方式
-http://www.w3cfuns.com/blog-5449712-5400263.html //前端工具组件
-http://error.w3cfuns.com/home.php?mod=space&uid=5437204&do=blog&id=5399403 //html5移动
-雅虎最佳实践:
+
+雅虎最佳实践: old
 https://developer.yahoo.com/performance/rules.html
-http://www.w3cfuns.com/blog-5434011-5397390.html
 
 获取最新jquery
 http://code.jquery.com/jquery-latest.js
 http://code.jquery.com/jquery-1.4.2.js
 http://code.jquery.com/jquery-1.4.2.min.js
-安装mongodb
-http://ryanflyer.iteye.com/blog/1166109
-http://www.tuicool.com/articles/IBZNruJ
-mongod --logpath "D:\Program Files\MongoDB 2.6 Standard\logs\mongodb.log" --dbpath "D:\Program Files\MongoDB 2.6 Standard\data\db" --serviceName MongoDB --install
-mongodb常用命令:
-http://www.jbxue.com/db/18346.html
-mongodb全面总结:
-http://blog.csdn.net/yiqijinbu/article/details/9053467
-mongoose学习参考文档:
-http://ourjs.com/detail/53ad24edb984bb4659000013
+
 
 http://mongoosejs.com/docs/api.html
 https://cnodejs.org/topic/504b4924e2b84515770103dd
-express组件api
-http://expressjs.jser.us/3x_zh-cn/api.html
+
 nodejs+express+mongoose实例
 http://www.tuicool.com/articles/neeAnq
 http://blog.fens.me/nodejs-mongoose-json/
 同 http://shiyun1013.blog.163.com/blog/static/107740362013415104332419/
 
-http://www.imooc.com/learn/156
-jquery UI
-nodejs 数据交互
-http://www.imooc.com/learn/75 nodejs
-nodejs+mongoDB+express+moment.js+jade
-
-sublime markdown preview使用
-http://www.xuebuyuan.com/2175658.html
 2048游戏
 http://gabrielecirulli.github.io/2048/
-扫雷游戏
-http://www.w3cfuns.com/article-5600790-1-1.html
 
 理解CSS3 transform中的Matrix(矩阵)
 http://blog.csdn.net/henren555/article/details/9699449
@@ -791,8 +705,6 @@ IE8 a的空链接无法点击解决方法如下三种:
 Object.bind == Function.prototype.bind //true
 竖向滚动条置顶 window.scrollTo(0,0);
 竖向滚动条置底 window.scrollTo(0,document.body.scrollHeight)
-
-http://huodong.fanli.com/lottery/verify.html?ref=mail 转盘抽奖
 
 $('#depDate').datepicker({
 	dateFormat: 'yy-mm-dd',
@@ -911,66 +823,11 @@ p.class1.class2.class3
 
 chrome使用技巧: 在开发中工具中，可以按「H」键快速隐藏元素。
 Chrome DevTools 的 Network 面板现在支持使用「-」反向搜索了。例如输入「-.js」会筛选出所有非 JS 的请求。
-Firefox 37 修复了 Table 类型元素中不支持 position: relative 这个长达 14年的 Bug [泪]，奔走相告
 使用chrome://about 可以看到所以chrome都关命令
 
 [].forEach.call($$("*"),function(a){a.style.outline="1px solid #"+(~~(Math.random()*(1<<24))).toString(16)})
 
 [].forEach.call(document.querySelectorAll("*"),function(a){a.style.outline="1px solid #"+(~~(Math.random()*(1<<24))).toString(16)})
-
-深入浅出Nodejs读书笔记
-http://tw93.github.io/2015-03-01/shen-ru-qian-chu-nodejs-reading-mind-map.html
-
-
-前端要给力之：红绿灯大战中的火星生命-Promise
-http://blog.csdn.net/aimingoo/article/details/45014325
-
-
-react-native 之布局篇
-https://github.com/tmallfe/tmallfe.github.io/issues/19
-天猫的@sysu_学家实践并整理了的文章，详细丰富的介绍了React Native布局的知识。
-
-The full-stack employee
-https://medium.com/@chrismessina/the-full-stack-employee-ed0db089f0a1
-
-About CTO
-为什么说不懂业务的CTO没有未来？ http://mp.weixin.qq.com/s?__biz=MzA3ODQ1NjYyOQ==&mid=207094084&idx=1&sn=e646daecdaaef74f56fb706677804443&scene=2
-
-
-我眼中真正优秀的CTO http://mp.weixin.qq.com/s?__biz=MzA4NzA2NjcyMg==&mid=205021935&idx=1&sn=f40c64c9ddfed65d50b872cfb4581216
-
-
-创业公司找不到CTO怎么办？ http://mp.weixin.qq.com/s?__biz=MzA4NzA2NjcyMg==&mid=205125427&idx=1&sn=80c83ce06c8e20eb0fe510df9e2cd78a
-
-
-CTO的终结 http://mp.weixin.qq.com/s?__biz=MjM5Njk3NTk0MQ==&mid=207148742&idx=8&sn=58855c1e654341fa3569d250c7283a5f
-
-Build To Win
-http://zhuanlan.zhihu.com/goujianzhifa/20003750
-梦断代码读后感 http://zhuanlan.zhihu.com/goujianzhifa/19970642
-
-迄今为止对互联网+理解最深入的文章
-http://mp.weixin.qq.com/s?__biz=MjM5MjM3NTU4MA==&mid=204102215&idx=1&sn=b8df1ca10e23557cf5d285cf67d5b2c6
-
-
-
-如何避免软件工程中最昂贵错误的发生
-http://www.csdn.net/article/2015-03-30/2824346
-
-
-
-Android’s 10 Millisecond Problem: The Android Audio Path Latency Explainer
-http://superpowered.com/androidaudiopathlatency/
-Android’s 10 Millisecond Problem, a little understood yet extremely difficult technical challenge with enormous ramifications, prevents these sorts of revenue producing apps from performing in an acceptable manner and even being published (!) on Android at this point in time.
-
-Android性能优化
-渲染 http://hukai.me/android-performance-render/
-运算 http://hukai.me/android-performance-compute/
-内存 http://hukai.me/android-performance-memory/
-耗电量 http://hukai.me/android-performance-battery/
-
-http://m.blog.csdn.net/blog/v_JULY_v/7382693
-http://www.zhihu.com/question/20790576
 
 sublime 折叠函数()
 sublime有这样的功能的，你看菜单 edit - code folding
@@ -1260,3 +1117,207 @@ screenX:鼠标位置相对于用户屏幕水平偏移量
 pageX,pageY包含滚动条的距离,不随滚动条的移动而移动
 clientX,clintY会随滚动条的移动而移动
 pageX>=clientX
+
+
+Vue 的父子通信
+可通过: v-model, 父传子: props, $children, $attrs,$listens, 子传父: $on/$emit, $parent, .sync, 修改父props, 
+EventBus, vuex; provide/inject, ref
+
+安装electron 出现安装失败,因为镜像地址获取不到,
+可直接修改 \node_modules\@electron\get\dist\cjs\artifact-utils.js 最后返回地址的函数 getArtifactRemoteURL返回值为taobao镜像地址: https://npm.taobao.org/mirrors/electron/8.0.1/electron-v8.0.1-win32-x64.zip
+注意: electron的安装版本,并找到taobao对应镜像的地址,右键复制过来
+也可直接下载压缩包解压到 \node_modules\electron\dist 的目录; 注意是否有\node_modules\electron\dist\electron.exe 执行文件
+
+yarn config set registry https://registry.npm.taobao.org -g;
+
+yarn config set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass -g
+
+1. vue 快速初始化项目
+npm i -g @vue/cli 
+vue create my-vue 3.0以上版本
+npm i -g vue-cli
+vue init webpack my-project  vue-cli 3.0以前版本
+vue init webpack-simple my-project
+
+2.express
+npm install express-generator -g
+使用express-generator生成express项目
+express express demo
+
+
+3. koa
+npm install -g koa-generator
+koa-generator生成koa2项目
+koa2 koademo
+
+4. egg
+npm i egg-init -g
+使用egg-init生成egg项目
+egg-init eggdemo
+
+5. create-react-app
+cnpm install -g create-react-app
+使用create-react-app生成react项目
+create-react-app reactdemo
+
+6. ng
+npm i -g @angular/cli
+ng create angular-demo
+
+7. parcel
+npm init -y
+npm i vue-hot-reload-api vue-router babel-preset-env less parcel-bundler parcel-plugin-vue
+或者
+git clone https://github.com/w3c-king/parcel-vue.git
+
+8. nuxt.js
+npx create-nuxt-app my-nuxt
+或者
+yarn create nuxt-app my-nuxt
+
+git clone https://github.com/zeit/next-learn-demo.git
+cd next-learn-demo
+
+9. umi
+yarn create umi 
+(ant-design-pro - Create project with an layout-only ant-design-pro boilerplate, use together with umi block.
+app - Create project with a simple boilerplate, support typescript.
+block - Create a umi block.
+library - Create a library with umi.
+plugin - Create a umi plugin.)
+
+npx degit sveltejs/template my-svelte-project
+# or download and extract 
+cd my-svelte-project
+
+npm install -g degit
+degit user/repo
+
+# these commands are equivalent
+degit github:user/repo
+degit git@github.com:user/repo
+degit https://github.com/user/repo
+
+next.js
+mkdir hello-next
+cd hello-next
+npm init -y
+npm install --save react react-dom next
+mkdir pages
+
+
+koa+mysql
+https://github.com/JacobMa1996/koa_mysql_demo 
+https://github.com/tough1985/hello-koa2
+
+前端技术:
+prefetch, preload 对应库quicklink
+service worker 的库workbox, 用于向web应用程序添加离线支持的JavaScript库
+webpack中 集成 workbox，来自动的生成service worker
+yarn add workbox-webpack-plugin
+Houdini 是 W3C 新成立的一个任务小组，它的终极目标是实现 css 属性的完全兼容
+
+Omi (读音 /?om?/，类似于 欧米) 是下一代前端框架，基于 Web Components 设计，支持 PC Web、移动 H5 和小程序开发(One framework. Mobile & desktop & mini program)。
+
+浏览器 Eventloop 和 Node 中的有什么区别
+微任务包括 process.nextTick ，promise ，Object.observe ，MutationObserver
+宏任务包括 script ， setTimeout ，setInterval ，setImmediate ，I/O ，UI rendering
+Event loop 顺序是这样的
+
+执行同步代码，这属于宏任务
+执行栈为空，查询是否有微任务需要执行
+执行所有微任务
+必要的话渲染 UI
+然后开始下一轮 Event loop，执行宏任务中的异步代码
+
+
+Node 的 Event loop 分为6个阶段，它们会按照顺序反复运行
+timer
+timers 阶段会执行 setTimeout 和 setInterval
+**I/O **
+I/O 阶段会执行除了 close 事件，定时器和 setImmediate 的回调
+idle, prepare
+idle, prepare 阶段内部实现
+poll
+poll 阶段系统会做两件事情
+执行到点的定时器
+执行 poll 队列中的事件
+
+
+怎么判断页面是否加载完成？
+Load 事件触发代表页面中的 DOM，CSS，JS，图片已经全部加载完毕。
+
+DOMContentLoaded 事件触发代表初始的 HTML 被完全加载和解析，不需要等待 CSS，JS，图片加载。
+
+vue添加动态路由
+// 动态加载路由关键2行
+router.options.routes[0].children.push(...generateRoutesFromMenu(menuModule.state.items))
+router.addRoutes(router.options.routes)
+
+vue组件的样式选择器能够作用得“更深”,使用>>>操作符; 而对于less或者sass等预编译，是不支持>>>操作符的，可以使用/deep/来替换>>>操作符，例如：.parent /deep/ .child { /* ... */ }
+
+const Foo = {
+  template: `...`,
+  beforeRouteEnter (to, from, next) {
+    // 在渲染该组件的对应路由被 confirm 前调用
+    // 不！能！获取组件实例 `this`
+    // 因为当守卫执行前，组件实例还没被创建
+  },
+  beforeRouteUpdate (to, from, next) {
+    // 在当前路由改变，但是该组件被复用时调用
+    // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
+    // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
+    // 可以访问组件实例 `this`
+  },
+  beforeRouteLeave (to, from, next) {
+    // 导航离开该组件的对应路由时调用
+    // 可以访问组件实例 `this`
+  }
+}
+
+离开守卫通常用来禁止用户在还未保存修改前突然离开。该导航可以通过 next(false) 来取消。
+
+beforeRouteLeave (to, from, next) {
+  const answer = window.confirm('Do you really want to leave? you have unsaved changes!')
+  if (answer) {
+    next()
+  } else {
+    next(false)
+  }
+}
+
+完整的导航解析流程:
+导航被触发。
+在失活的组件里调用离开守卫。
+调用全局的 beforeEach 守卫。
+在重用的组件里调用 beforeRouteUpdate 守卫 (2.2+)。
+在路由配置里调用 beforeEnter。
+解析异步路由组件。
+在被激活的组件里调用 beforeRouteEnter。
+调用全局的 beforeResolve 守卫 (2.5+)。
+导航被确认。
+调用全局的 afterEach 钩子。
+触发 DOM 更新。
+用创建好的实例调用 beforeRouteEnter 守卫中传给 next 的回调函数
+
+在微服务架构中，BFF(Backend for Frontend)也称聚合层或者适配层
+serverless 原理解释:
+目前行业可能更多处在容器 Docker+Kubernetes, 利用IaaS、PaaS和SaaS 来快速搭建部署应用
+
+基础架构即服务（Infrastructure as a Service，IaaS）
+平台即服务（Platform as a Service，PaaS）
+软件即服务（Software as a Service，SaaS）
+函数即服务（Function as a Service，FaaS）
+简单来讲，FaaS（Function as a Service） 就是一些运行函数的平台，比如阿里云的函数计算、AWS 的 Lambda 等。
+BaaS（Backend as a Service）则是一些后端云服务，比如云数据库、对象存储、消息队列等。利用 BaaS，可以极大简化我们的应用开发难度。
+从技术角度来说，Serverless 就是 FaaS 和 BaaS 的结合。
+
+Serverless 则可以理解为运行在 FaaS 中，使用了 BaaS 的函数。
+Serverless 的主要特点有：
+1、事件驱动----函数在 FaaS 平台中，需要通过一系列的事件来驱动函数执行。
+2、无状态----因为每次函数执行，可能使用的都是不同的容器，无法进行内存或数据共享。如果要共享数据，则只能通过第三方服务，比如 ```Redis`` 等。
+
+Redis（全称：Remote Dictionary Server 远程字典服务）是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value[数据库]，并提供多种语言的API。从2010年3月15日起，Redis的开发工作由VMware主持。从2013年5月开始，Redis的开发由Pivotal赞助。
+3、无运维----使用serverless我们不需要关心服务器，也不需要关心运维，这也是serverles思想的核心；
+4、低成本----使用 Serverless 成本很低，因为我们只需要为每次函数的运行付费。函数不运行，则不花钱，也不会浪费服务器资源过度
+

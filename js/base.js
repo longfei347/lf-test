@@ -1384,70 +1384,73 @@ function fetchImg(url,imgDom) {
   });
 }
 
-$.fn.touchwipe = function(settings) {
-  var config = {
-    min_move_x: 20,
-    min_move_y: 20,
-    wipeLeft: function() {},
-    wipeRight: function() {},
-    wipeUp: function() {},
-    wipeDown: function() {},
-    preventDefaultEvents: true
-  };
-  if (settings) {
-    $.extend(config, settings);
-  }
-  this.each(function() {
-    var startX;
-    var startY;
-    var isMoving = false;
-
-    function cancelTouch() {
-      this.removeEventListener('touchmove', onTouchMove);
-      startX = null;
-      isMoving = false
+if ($.fn) {
+  $.fn.touchwipe = function(settings) {
+    var config = {
+      min_move_x: 20,
+      min_move_y: 20,
+      wipeLeft: function() {},
+      wipeRight: function() {},
+      wipeUp: function() {},
+      wipeDown: function() {},
+      preventDefaultEvents: true
+    };
+    if (settings) {
+      $.extend(config, settings);
     }
+    this.each(function() {
+      var startX;
+      var startY;
+      var isMoving = false;
 
-    function onTouchMove(e) {
-      if (config.preventDefaultEvents) {
-        e.preventDefault()
+      function cancelTouch() {
+        this.removeEventListener('touchmove', onTouchMove);
+        startX = null;
+        isMoving = false
       }
-      if (isMoving) {
-        var x = e.touches[0].pageX;
-        var y = e.touches[0].pageY;
-        var dx = startX - x;
-        var dy = startY - y;
-        if (Math.abs(dx) >= config.min_move_x) {
-          cancelTouch();
-          if (dx > 0) {
-            config.wipeLeft(e)
-          } else {
-            config.wipeRight(e)
-          }
-        } else if (Math.abs(dy) >= config.min_move_y) {
-          cancelTouch();
-          if (dy > 0) {
-            config.wipeDown(e)
-          } else {
-            config.wipeUp(e)
+
+      function onTouchMove(e) {
+        if (config.preventDefaultEvents) {
+          e.preventDefault()
+        }
+        if (isMoving) {
+          var x = e.touches[0].pageX;
+          var y = e.touches[0].pageY;
+          var dx = startX - x;
+          var dy = startY - y;
+          if (Math.abs(dx) >= config.min_move_x) {
+            cancelTouch();
+            if (dx > 0) {
+              config.wipeLeft(e)
+            } else {
+              config.wipeRight(e)
+            }
+          } else if (Math.abs(dy) >= config.min_move_y) {
+            cancelTouch();
+            if (dy > 0) {
+              config.wipeDown(e)
+            } else {
+              config.wipeUp(e)
+            }
           }
         }
       }
-    }
 
-    function onTouchStart(e) {
-      if (e.touches.length == 1) {
-        startX = e.touches[0].pageX;
-        startY = e.touches[0].pageY;
-        isMoving = true;
-        this.addEventListener('touchmove', onTouchMove, false)
+      function onTouchStart(e) {
+        if (e.touches.length == 1) {
+          startX = e.touches[0].pageX;
+          startY = e.touches[0].pageY;
+          isMoving = true;
+          this.addEventListener('touchmove', onTouchMove, false)
+        }
       }
-    }
-    if ('ontouchstart' in document.documentElement) {
-      this.addEventListener('touchstart', onTouchStart, false)
-    }
-  });
-  return this
+      if ('ontouchstart' in document.documentElement) {
+        this.addEventListener('touchstart', onTouchStart, false)
+      }
+    });
+    return this
+  }
+
 }
 
 function imgCompressUpload(fileDom, opts) {
@@ -1553,6 +1556,26 @@ function throttle(func, wait) {
         }
     }
 }
+// 结合节流防抖,双剑合璧——加强版节流
+function throttle2(fn, delay) {
+  let last = 0, timer = null;
+  return function (...args) {
+    let context = this;
+    let now = new Date();
+    if(now - last < delay){
+      clearTimeout(timer);
+      timer = setTimeout(function() {
+        last = now;
+        fn.apply(context, args);
+      }, delay);
+    } else {
+      // 这个时候表示时间到了，必须给响应
+      last = now;
+      fn.apply(context, args);
+    }
+  }
+}
+
 var BrowserInfo = {
   isAndroid: Boolean(navigator.userAgent.match(/android/ig)),
   isIphone: Boolean(navigator.userAgent.match(/iphone|ipod/ig)),
@@ -1891,7 +1914,7 @@ MyPromise.prototype.then = function (onResolved, onRejected) {
   // 如果类型不是函数需要忽略，同时也实现了透传
   // Promise.resolve(4).then().then((value) => console.log(value))
   onResolved = typeof onResolved === 'function' ? onResolved : v => v;
-  onRejected = typeof onRejected === 'function' ? onRejected : r => throw r;
+  onRejected = typeof onRejected === 'function' ? onRejected : r => r;
 
   if (self.currentState === RESOLVED) {
     return (promise2 = new MyPromise(function (resolve, reject) {

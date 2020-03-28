@@ -973,6 +973,25 @@ Also, you can check the current toplevel installed library versions with
 npm list --depth=0
 
 dir *.spec.ts /b/s >2.txt 将.spec.ts 的文件导出到2.txt
+dir node_modules /b 显示指定目录文件名
+dir /b > 1.txt /b只显示文件名
+recent 打开最近浏览文件
+title 修改dos title
+prompt 修改默认提示
+color 修改字体颜色,取值从0到F
+msg /server:对方电脑IP * 对方电脑屏幕要弹出的文本  //给对方电脑发消息
+net user xxx 123456 /add 添加用户
+net user xxx /del（删除xxx用户）
+net user xxx /active:no（禁用xxx用户）
+net user xxx 查看xxx用户的详细情况
+net share 查看所有已共享资源
+net share 要删除的共享文件夹 /delete 删除共享文件夹
+nslookup 对方网站域名 查对应名称,ip
+netsh wlan show
+netsh wlan show profile {SSID} key=clear 可查看wifi {ssid}的密码
+| clip 是导出到剪贴板
+| xxx.txt 是导出到xxx.txt
+&& 连接多个命令顺序执行
 
 a2 8个主要构造块
 模块 (module)
@@ -1131,6 +1150,23 @@ EventBus, vuex; provide/inject, ref
 yarn config set registry https://registry.npm.taobao.org -g;
 
 yarn config set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass -g
+nrm管理源
+nrm ls 查看所有源
+nrm use <yarn> 使用一个源
+nrm add <name> http://https://registry.npm.taobao.org/
+nrm del <name> 删除一个源
+nrm test 测试原有源的速度
+
+vue在history模式时设置nginx
+nginx
+location / {
+  try_files $uri $uri/ /index.html;
+}
+
+forEach循环不可中断, 可用try抛异常不推荐
+用every和some替代forEach函数。every在碰到return false的时候，中止循环。some在碰到return true的时候，中止循环
+length >>> 0, 字面意思是指"右移 0 位"，但实际上是把前面的空位用0填充，这里的作用是保证len为数字且为整数
+
 
 1. vue 快速初始化项目
 npm i -g @vue/cli 

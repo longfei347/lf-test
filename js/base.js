@@ -713,6 +713,20 @@ function exitFullScreen() {
     }
   }
 }
+
+/**
+ * [setTime 以指定时间格式eg.2011-1-2, 增加days后的时间格式]
+ * @param {[type]} datestr [指定时间]
+ * @param {[type]} days    [增加天数]
+ */
+function setTime(datestr, days=0) {
+  var getDate = new Date(datestr);//"2011,1,02" "2011-1-02" "2011/1/02" "2011 1 02"
+  getDate.setDate(getDate.getDate() + days);
+  var year = getDate.getFullYear(),
+    month = getDate.getMonth()
+    day = getDate.getDate();
+  return year + "-" + (month > 9 ? '' : "0") + (month + 1) + "-" + (day > 9 ? '' : "0") +day;
+}
 //IE9下不支持getComputedStyle
 if (!window.getComputedStyle) {
   window.getComputedStyle = function(el, pseudo) {
@@ -1803,12 +1817,12 @@ function checkPass(str) {
 }
 
 
-let class2type = {}
-'Array Date RegExp Object Error'.split(' ').forEach(e => class2type[ '[object ' + e + ']' ] = e.toLowerCase())
 
 function type(obj) {
-    if (obj == null) return String(obj)
-    return typeof obj === 'object' ? class2type[ Object.prototype.toString.call(obj) ] || 'object' : typeof obj
+  let class2type = {}
+  'Array Date RegExp Object Error'.split(' ').forEach(e => class2type[ '[object ' + e + ']' ] = e.toLowerCase())
+  if (obj == null) return String(obj)
+  return typeof obj === 'object' ? class2type[ Object.prototype.toString.call(obj) ] || 'object' : typeof obj
 }
 // 实现一个bind
 Function.prototype.myBind = function (context) {
@@ -2068,4 +2082,170 @@ function containsRepeatingLetter(str) {
     }
   }
   return false;
+}
+/*Array.prototype.reduce  = function(callbackfn, initialValue) {
+  // 异常处理，和 map 一样
+  // 处理数组类型异常
+  if (this === null || this === undefined) {
+    throw new TypeError("Cannot read property 'reduce' of null or undefined");
+  }
+  // 处理回调类型异常
+  if (Object.prototype.toString.call(callbackfn) != "[object Function]") {
+    throw new TypeError(callbackfn + ' is not a function')
+  }
+  let O = Object(this);
+  let len = O.length >>> 0;
+  let k = 0;
+  let accumulator = initialValue;
+  if (accumulator === undefined) {
+    for(; k < len ; k++) {
+      // 查找原型链, in 表示在原型链查找
+      // 如果用 hasOwnProperty 是有问题的，它只能找私有属性
+      if (k in O) {
+        accumulator = O[k];
+        k++;
+        break;
+      }
+    }
+  }
+  // 表示数组全为空
+  if(k === len && accumulator === undefined)
+    throw new Error('Each element of the array is empty');
+  for(;k < len; k++) {
+    if (k in O) {
+      // 注意，核心！
+      accumulator = callbackfn.call(undefined, accumulator, O[k], k, O);
+    }
+  }
+  return accumulator;
+}*/
+/*function Promise(excutor) {
+  var self = this
+  self.onResolvedCallback = []
+  function resolve(value) {
+    setTimeout(() => {
+      self.data = value
+      self.onResolvedCallback.forEach(callback => callback(value))
+    })
+  }
+  excutor(resolve.bind(self))
+}
+Promise.prototype.then = function(onResolved) {
+  var self = this
+  return new Promise(resolve => {
+    self.onResolvedCallback.push(function() {
+      var result = onResolved(self.data)
+      if (result instanceof Promise) {
+        result.then(resolve)
+      } else {
+        resolve(result)
+      }
+    })
+  })
+}
+
+
+function Promise(exec) {
+  this.onResolvedCbs = [];
+  exec(value => {
+    setTimeout(() => {
+      this.data = value;
+      this.onResolvedCbs.forEach(item => item(value));
+    });
+  });
+}
+
+Promise.prototype.then = function(onResolved) {
+  return new Promise(resolve => {
+    this.onResolvedCbs.push(() => {
+      const result = onResolved(this.data);
+      result instanceof Promise ? result.then(resolve) : resolve(result);
+    });
+  });
+};
+*/
+// 数组扁平化
+// 方法1, arr..flat(Infinity)
+// 方法2, JSON.stringify(arr).replace(/(\[|\])/g, '').split(',')
+// 方法3  JSON.parse('[' + JSON.stringify(arr).replace(/(\[|\])/g, '') + ']');
+// 方法4 递归, 可自定义普通递归或用reduce
+/* function flatten(arr) {
+    return arr.reduce((pre, cur) => {
+        return pre.concat(Array.isArray(cur) ? flatten(cur) : cur);
+    }, []);
+}*/
+// 方法5 扩展符
+// while (ary.some(Array.isArray)) { ary = [].concat(...ary); }
+
+// 重写generator函数,实现async await
+function asyncToGenerator(generatorFunc) {
+  // 返回的是一个新的函数
+  return function() {
+
+    // 先调用generator函数 生成迭代器
+    // 对应 var gen = testG()
+    const gen = generatorFunc.apply(this, arguments)
+
+    // 返回一个promise 因为外部是用.then的方式 或者await的方式去使用这个函数的返回值的
+    // var test = asyncToGenerator(testG)
+    // test().then(res => console.log(res))
+    return new Promise((resolve, reject) => {
+
+      // 内部定义一个step函数 用来一步一步的跨过yield的阻碍
+      // key有next和throw两种取值，分别对应了gen的next和throw方法
+      // arg参数则是用来把promise resolve出来的值交给下一个yield
+      function step(key, arg) {
+        let generatorResult
+
+        // 这个方法需要包裹在try catch中
+        // 如果报错了 就把promise给reject掉 外部通过.catch可以获取到错误
+        try {
+          generatorResult = gen[key](arg)
+        } catch (error) {
+          return reject(error)
+        }
+
+        // gen.next() 得到的结果是一个 { value, done } 的结构
+        const { value, done } = generatorResult
+
+        if (done) {
+          // 如果已经完成了 就直接resolve这个promise
+          // 这个done是在最后一次调用next后才会为true
+          // 以本文的例子来说 此时的结果是 { done: true, value: 'success' }
+          // 这个value也就是generator函数最后的返回值
+          return resolve(value)
+        } else {
+          // 除了最后结束的时候外，每次调用gen.next()
+          // 其实是返回 { value: Promise, done: false } 的结构，
+          // 这里要注意的是Promise.resolve可以接受一个promise为参数
+          // 并且这个promise参数被resolve的时候，这个then才会被调用
+          return Promise.resolve(
+            // 这个value对应的是yield后面的promise
+            value
+          ).then(
+            // value这个promise被resove的时候，就会执行next
+            // 并且只要done不是true的时候 就会递归的往下解开promise
+            // 对应gen.next().value.then(value => {
+            //    gen.next(value).value.then(value2 => {
+            //       gen.next()
+            //
+            //      // 此时done为true了 整个promise被resolve了
+            //      // 最外部的test().then(res => console.log(res))的then就开始执行了
+            //    })
+            // })
+            function onResolve(val) {
+              step("next", val)
+            },
+            // 如果promise被reject了 就再次进入step函数
+            // 不同的是，这次的try catch中调用的是gen.throw(err)
+            // 那么自然就被catch到 然后把promise给reject掉啦
+            function onReject(err) {
+              step("throw", err)
+            },
+          )
+        }
+      }
+      step("next")
+    })
+  }
 }

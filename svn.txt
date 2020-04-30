@@ -1357,3 +1357,11 @@ Redis（全称：Remote Dictionary Server 远程字典服务）是一个开源�
 3、无运维----使用serverless我们不需要关心服务器，也不需要关心运维，这也是serverles思想的核心；
 4、低成本----使用 Serverless 成本很低，因为我们只需要为每次函数的运行付费。函数不运行，则不花钱，也不会浪费服务器资源过度
 
+将元素提升为合成层有以下优点：
+
+合成层的位图，会交由 GPU 合成，比 CPU 处理要快
+当需要 repaint 时，只需要 repaint 本身，不会影响到其他的层
+对于 transform 和 opacity 效果，不会触发 layout 和 paint
+
+提升合成层的最好方式是使用 CSS 的 will-change 属性
+

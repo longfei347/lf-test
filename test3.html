@@ -3,12 +3,12 @@
 
 <head>
   <meta charset="utf-8">
-  <title>test</title>
+  <title>test3</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/cropper.css">
-  <script src="js/jquery-3.2.1.js"></script>
-  <script src="js/underscore-src.js"></script>
+  <script src="js/jquery-3.5.1.js"></script>
+  <script src="js/underscore.js"></script>
   <script src="js/tenda-common.js"></script>
   <script src="js/cropper.js"></script>
   <!-- <script src="js/base.js"></script> -->
@@ -55,10 +55,29 @@
   #result img{
     max-width: 100%;
   }
+  html[theme='dark-mode'] {
+      filter: invert(1) hue-rotate(180deg);
+  }
+  html[theme='dark-mode'] img{
+      filter: invert(1) hue-rotate(180deg);
+  }
+  html {
+      transition: color 300ms, background-color 300ms;
+  }
+
+  .cross-fade-image {
+    width: 300px;
+    height: 300px;
+    background: no-repeat center/ contain;
+    background-image: cross-fade(url(images/face-scan.jpg), url(images/line.jpg), 50%);
+    background-image: -webkit-cross-fade(url(images/face-scan.jpg), url(images/line.jpg), 50%);
+  }
   </style>
 </head>
 
 <body>
+  <button id="theme">切换主题</button>
+  <div class="cross-fade-image"></div>
   <!-- <div class="le"></div> -->
   <!-- <div class="rainbow"></div> -->
   <!-- <div class="face-scan"></div> -->
@@ -70,12 +89,13 @@
   </div> -->
   <!-- <div class="earth-rotate">
     <div>
-      <p></p> 
+      <p></p>
     </div>
   </div> -->
+
   <div class="rotate">
     <img class="ro-bg" src="images/face-scan.jpg" alt="">
-    <img class="ro-img" src="images/line2.png" alt="">
+    <img class="ro-img" src="images/line.jpg" alt="">
     <!-- <img class="ro-img" src="images/line.jpg" alt=""> -->
   </div>
   <div id="observer">MutationObserver observe dom</div>
@@ -95,9 +115,14 @@
     <p>请拖拽到此区域</p>
   </div>
   <ul id="ul1"></ul>
-  <cavas id="cas"></cavas>
+  <input type="text" id="debounce">
+  <input type="file" id="file">
+  <a href="blob:https://developer.mozilla.org/58702010-433d-4097-990f-e483d84cd02a" download="file.json">下载文件链接</a>
+  <canvas id="cas"></canvas>
+  <canvas id="myCanvas"></canvas>
 </body>
 <script src="js/lite2.js"></script>
+<script src="js/base.js"></script>
 <script>
 var dpr = window.devicePixelRatio;
 var meta = document.createElement('meta');
@@ -113,8 +138,106 @@ document.getElementsByTagName('head')[0].appendChild(meta);
     document.getElementsByTagName('html')[0].style.fontSize = window.innerWidth / 10 + 'px';
 }, false);*/
 
+$('#theme').on('click', function(e) {
+  $('html').attr('theme') ? $('html').removeAttr('theme') : $('html').attr('theme', 'dark-mode')
+})
+// showDirectoryPicker 打开文件夹选择
+// showOpenFilePicker 打开文件选择
+//
+// FileSystemHandle
+// FileSystemFileHandle
+// FileSystemDirectoryHandle
+// FileSystemWritableFileStream
+// window.showOpenFilePicker()
+// window.showSaveFilePicker()
+// window.showDirectoryPicker()
+// DataTransferItem.getAsFileSystemHandle()
+/*document.querySelector('#file').addEventListener('change', (e) => {
+  new Promise((resolve, reject) => {
+    let file = e.target.files[0]
+    let params = new Promise((resolve, reject) => {
+      let reader = new FileReader()
+      let parme = {
+        width: '',
+        height: ''
+      }
+      reader.readAsDataURL(file)
+      reader.onload = function(theFile) {
+        let image = new Image()
+        image.src = theFile.target.result
+        image.onload = function() {
+          parme.width = this.width
+          parme.height = this.height
+          resolve(parme)
+        }
+      }
+    })
+    params.then((re) => {
+      let error = 'error'
+      if (re.width > 100 && re.height > 100) {
+        console.log('re:', re)
+      } else {
+        // this.$Message.error(this.$i18Transform('Upload file size incorrect', '上传文件尺寸不正确'))
+        console.log('图片尺寸小于 100X100')
+        return false
+      }
+
+    })
+  })
+})
+*/
+/*let xml= new XMLHttpRequest()
+xml.open('get', 'http://rap2api.taobao.org/app/mock/226903/test/aaa')
+// xml.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+// xml.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+// let req=new FormData()
+// req.append('a', 1)
+// req.append('name', 'longfei')
+// xml.send(req)
+xml.send("a=1&name=long")
+// xml.send({a:1,name:'long'})
+xml.onreadystatechange=()=>{
+  if (xml.readyState == 4 && xml.status == 200) {
+    console.log(xml.responseText)
+  }
+}*/
+/*
+async function getValue() {
+    let prom =  new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if(Math.random() > 0.5) {
+                resolve('gt 0.5')
+            }else {
+                reject('let 0.5')
+            }
+        }, 1000)
+    })
+    let a=await prom
+    console.log(a)
+    return a;
+}
+
+let value = getValue(); // 为何这个返回的是一个promise？？
+console.log(value);*/
+
+/*function f1({a=0, b=0}={}) {
+  console.log(a,b)
+}
+f1()
+
+console.time('aa')
+// setTimeout(()=>console.timeEnd('ab'), 1000)
+window.onload=function(){
+  console.timeEnd('aa')
+}*/
+/*addEventListener('resize', debounce((e)=>{
+  console.log('e:',e)
+}, 500))
+document.querySelector('#debounce').addEventListener('input', debounce((e)=>{
+  console.log(e.target.value)
+}, 500))*/
 // $.get('http://rap2api.taobao.org/app/mock/226903/test/aaa').then(res=>console.log(res))
-let bbb = $.get('http://rap2api.taobao.org/app/mock/226903/test/bbbb')
+// let bbb = $.get('http://rap2api.taobao.org/app/mock/226903/test/aaa').then(res=>console.log(res))
 // 双色球 随机
 function doubleBall() {
   let arr = []
@@ -124,7 +247,7 @@ function doubleBall() {
       arr.push(t)
     }
   }
-  arr = arr.sort((a, b) => a - b)
+  arr.sort((a, b) => a - b)
   arr.push(Math.floor(Math.random() * 16) + 1)
   /*new Array(7).fill(1);
   arr.forEach(item => {
@@ -284,19 +407,8 @@ console.log(JSON.stringify([obj2, obj2])); // '["bar in 0", "bar in 1"]'*/
   }));
 }
 console.log(strReverse("Many people spell MySQL incorrectly"))*/
-/*var s = new Set();
 
-[2,3,5,4,5,2,2].map(x => s.add(x))
-for (i of s) {console.log(i)}*/
 
-/*function ll() {
-  var i=0,sum=0;
-  let a=99;
-  for (;i<arguments.length;i++) {
-    sum += arguments[i];
-  }
-  console.log(sum,a+sum);
-}*/
 /*var m = new Map();
 
 m.set("edition", 6)        // 键是字符串
@@ -411,7 +523,7 @@ ctx.fillText("w3school.com.cn",10,90);*/
 }
 var first = new ttt();
 var second = ttt();*/
-! function() {
+/*! function() {
   function n() {
     t.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
       t.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
@@ -422,10 +534,10 @@ var second = ttt();*/
     var n = [a].concat(m);
     m.forEach(function(e) {
         e.x += e.xa,
-          e.y += e.ya,
-          e.xa *= e.x > t.width || e.x < 0 ? -1 : 1,
-          e.ya *= e.y > t.height || e.y < 0 ? -1 : 1,
-          i.fillRect(e.x - .5, e.y - .5, 1, 1);
+        e.y += e.ya,
+        e.xa *= e.x > t.width || e.x < 0 ? -1 : 1,
+        e.ya *= e.y > t.height || e.y < 0 ? -1 : 1,
+        i.fillRect(e.x - .5, e.y - .5, 1, 1);
         for (var o = 0; o < n.length; o++) {
           var m = n[o];
           if (e !== m && null !== m.x && null !== m.y) {
@@ -447,7 +559,7 @@ var second = ttt();*/
       }),
       o(e)
   }
-  /*var t = document.getElementById("cas"),
+  var t = document.getElementById("cas"),
     i = t.getContext("2d");
   n(),
     window.onresize = n;
@@ -462,14 +574,14 @@ var second = ttt();*/
       max: 2e4
     };
   window.onmousemove = function(n) {
-      n = n || window.event,
-        a.x = n.clientX,
-        a.y = n.clientY
-    },
-    window.onmouseout = function(n) {
-      a.x = null,
-        a.y = null
-    };
+    n = n || window.event,
+    a.x = n.clientX,
+    a.y = n.clientY
+  };
+  window.onmouseout = function(n) {
+    a.x = null,
+    a.y = null
+  };
   for (var m = [], d = 0; 150 > d; d++) {
     var u = Math.random() * t.width,
       c = Math.random() * t.height,
@@ -485,9 +597,11 @@ var second = ttt();*/
   }
   setTimeout(function() {
     e()
-  }, 100)*/
-}();
+  }, 100)
+}();*/
 // https://graph.qq.com/oauth/show?which=Login&display=pc&scope=get_user_info,get_info,add_t,add_pic_t,get_other_info,get_fanslist,get_idollist,add_idol,add_share&state=e8bbd97633b58e30532787099ee7c597&redirect_uri=http://www.zhihu.com/oauth/callback/qqconn&response_type=code&client_id=100490701
+//
+
 </script>
 
 </html>

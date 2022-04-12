@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>test4</title>
+  <!-- 引入样式 -->
+  <!-- 引入组件库 -->
+  <!-- <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script> -->
+  <!-- <script src="js/vue.js"></script> -->
+  <!-- <script src="https://unpkg.com/vue/dist/vue.js"></script> -->
+</head>
+<style>
+  .tt {
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .filter {
+    width: 20px;
+    height: 20px;
+    fill: #f90;
+  }
+  .filter:hover {
+    fill: #9f0;
+  }
+  .abc:before {
+    content: '\263A'
+  }
+  .df {
+    display: flex;
+  }
+  .none {
+    display: none;
+  }
+  .rainbow {
+    height: 200px;
+  }
+  .rainbow__band {
+    --size: calc((50 - (var(--index, 0) * 4)) * 1vmin);
+    height: 50vmin;
+    width: 50vmin;
+    border-radius: 50%;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    border-width: 2vmin;
+    border-style: solid;
+    border-color: hsl(var(--hue, 10), 80%, 50%);
+    transform: translate(-50%, -50%);
+    height: var(--size);
+    width: var(--size);
+    -webkit-animation: rainbow 2s calc(var(--index, 0) * -0.2s) infinite linear;
+    animation: rainbow 2s calc(var(--index, 0) * -0.2s) infinite linear;
+  }
+  .rainbow__band:nth-of-type(2) {
+    --hue 35
+  }
+  .rainbow__band:nth-of-type(3) {
+    --hue 55
+  }
+  .rainbow__band:nth-of-type(4) {
+    --hue 110
+  }
+  .rainbow__band:nth-of-type(5) {
+    --hue 200
+  }
+  .rainbow__band:nth-of-type(6) {
+    --hue 230
+  }
+  .rainbow__band:nth-of-type(7) {
+    --hue 280
+  }
+  @keyframes rainbow {
+    0%, 100% {
+      --hue: 10;
+    }
+    14% {
+      --hue: 35;
+    }
+    28% {
+      --hue: 55;
+    }
+    42% {
+      --hue: 110;
+    }
+    56% {
+      --hue: 200;
+    }
+    70% {
+      --hue: 230;
+    }
+    84% {
+      --hue: 280;
+    }
+  }
+  /*@property --milliseconds {
+    initial-value: 0;
+    inherits: false;
+    syntax: '<integer>';
+  }
+  .counter {
+    counter-reset: ms var(--milliseconds);
+    animation: count 1s steps(100) infinite;
+  }
+  .counter: after {
+    content:  counter(ms);
+  }
+  @keyframes count{
+    to {
+      --milliseconds: 100;
+    }
+  }*/
+
+  @property --a {
+    initial-value: 0deg;
+    inherits: false;
+    syntax: '<angle>';
+  }
+  @property --h {
+    initial-value: 0;
+    inherits: false;
+    syntax: '<number>';
+  }
+  .loader {
+    padding: 2rem 4rem;
+    font-family: monospace;
+    font-weight: bold;
+    color: #f9f;
+    border-style: solid;
+    border-width: 1vmin;
+    font-size: 2rem;
+    --charge: hsl(var(--h, 0), 80%, 50%);
+    -o-border-image: conic-gradient(var(--charge) var(--a), transparent calc(var(--a) + 0.5deg)) 30;
+    border-image: conic-gradient(var(--charge) var(--a), transparent calc(var(--a) + 0.5deg)) 30;
+    -webkit-animation: load 2s infinite ease-in-out;
+    animation: load 2s infinite ease-in-out;
+  }
+  @keyframes load {
+    0%, 10% {
+      --a: 0deg;
+      --h: 0;
+    }
+    100% {
+      --a: 360deg;
+      --h: 100;
+    }
+  }
+
+
+  @property --x {
+    initial-value: -22.5;
+    inherits: false;
+    syntax: '<number>';
+  }
+  @property --y {
+    initial-value: 0;
+    inherits: false;
+    syntax: '<number>';
+  }
+  @property --r {
+    initial-value: 0deg;
+    inherits: false;
+    syntax: '<angle>';
+  }
+  @keyframes journey {
+    0% {
+      --x: -22.5;
+      --y: 0;
+      --r:  0deg;
+    }
+    10% {
+      --r: 0deg;
+    }
+    12.5% {
+      --x: -22.5;
+      --y: -22.5;
+    }
+    15% {
+      --r: 90deg;
+    }
+    25% {
+      --x: 0;
+      --y: -22.5;
+    }
+    35% {
+      --r: 90deg;
+    }
+    37.5% {
+      --x: -22.5;
+      --y: 22.5;
+    }
+    40% {
+      --r: 180deg;
+    }
+    50% {
+      --x: 22.5;
+      --y: 0;
+    }
+    62.5% {
+      --x: 22.5;
+      --y: 22.5;
+    }
+    65% {
+      --r: 270deg;
+    }
+    75% {
+      --x: 0;
+      --y: 22.5;
+    }
+    85% {
+      --r: 270deg;
+    }
+    87.5% {
+      --x: -22.5;
+      --y: 22.5;
+    }
+    90% {
+      --r: 360deg;
+    }
+    100% {
+      --x: -22.5;
+      --y: 0;
+      --r:  360deg;
+    }
+  }
+  .rect {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border: 1px dashed #f33;
+  }
+  .rect .cicle {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: 5px;
+    height: 10px;
+    background-color: #33f;
+    animation: journey 5s infinite alternate;
+
+  }
+  .alter-div {
+      width: 60px;
+      height: 60px;
+      background: #000;
+      animation: move infinite 1s alternate linear;
+  }
+  @keyframes move {
+      100% {
+          transform: translate(100px, 100px);
+      }
+  }
+  .g-container {
+      position: relative;
+      left: 200px;
+      top: 100px;
+      width: 10vw;
+      height: 70vmin;
+      transform-origin: center 0;
+      animation: rotate 1.5s infinite alternate;
+  }
+  .g-ball {
+      position: absolute;
+      width: 10vmin;
+      height: 10vmin;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff, #000);
+      bottom: 0;
+      left: 0;
+  }
+  @keyframes rotate {
+      100% {
+          transform: rotate(90deg);
+      }
+  }
+  .pre {
+    white-space: pre-wrap;
+  }
+  .text-vertical {
+      writing-mode: vertical-lr;
+      text-orientation: upright;
+      -webkit-text-orientation: upright;
+      height: 70px;
+   }
+  a[href$=".com"]{
+      color: green;
+  }
+  .aaa div:first-child {
+    color:  red;
+  }
+
+</style>
+
+<body>
+  <!-- <div class="rainbow">
+    <div class="rainbow__band" style="--index: 0;"></div>
+    <div class="rainbow__band" style="--index: 1;"></div>
+    <div class="rainbow__band" style="--index: 2;"></div>
+    <div class="rainbow__band" style="--index: 3;"></div>
+    <div class="rainbow__band" style="--index: 4;"></div>
+    <div class="rainbow__band" style="--index: 5;"></div>
+    <div class="rainbow__band" style="--index: 6;"></div>
+  </div> -->
+  <a href="https://www.huawei.com">aaa</a>
+  <!-- <div class="counter"></div> -->
+  <input type="text" name="" maxlength="" id="">
+  <div class="rect">
+    <div class="cicle"></div>
+  </div>
+  <div class="df">
+    <svg class="filter" viewBox="0 0 80 90" focusable=false>
+      <path d="m 0,0 30,45 0,30 10,15 0,-45 30,-45 Z"></path>
+    </svg>
+    <h2>&#10; &quot;</h2>
+    <!-- <div class="alter-div"></div>
+    <div class="g-container">
+      <div class="g-ball"></div>
+    </div> -->
+    <div class="pre">
+      CSS Motion Path 规范主要包含以下几个属性：
+
+      offset-path：接收一个 SVG 路径（与 SVG 的path、CSS 中的 clip-path 类似），指定运动的几何路径
+      offset-distance：控制当前元素基于 offset-path 运动的距离
+      offset-position：指定 offset-path 的初始位置
+      offset-anchor：定义沿 offset-path 定位的元素的锚点。这个也算好理解，运动的元素可能不是一个点，那么就需要指定元素中的哪个点附着在路径上进行运动
+      offset-rotate：定义沿 offset-path 定位时元素的方向，说人话就是运动过程中元素的角度朝向
+    </div>
+    <div>
+      <span>&#x25ff</span>
+      <span>&#x2286</span>
+      <span>&#x263A;</span>
+      <span class="abc"></span>
+      <span>☎ </span>
+    </div>
+  </div>
+  <div class="aaa">
+    <div class="bbb">bbb</div>
+    <div class="ccc">ccc</div>
+  </div>
+  <div class="loader">loading</div>
+
+  <p class="text-vertical">999篇日记，12356万字</p>
+  <!-- <div class="counter"></div> -->
+  <div id="app">
+    <!-- <el-popover popper-class="el-table-filter" placement="bottom-start" transition="none" width="250" :visible-arrow="false">
+      <span slot="reference" style="cursor: pointer; " @click="">
+        {{itm.label}}
+      </span>
+      <div>
+        <el-checkbox-group v-model="checkList">
+          <div class="checkbox-item pv-5 ph-10 " v-for="(item, index) in filtersModuleType" :key="index">
+            <el-checkbox :value="item.value" :label="item.text"> </el-checkbox>
+          </div>
+        </el-checkbox-group>
+        <div class="flex justify-space-between p-10">
+          <el-link :disabled="!checkList.length" :underline="false" @click="" :type="checkList.length?'primary':'info'">筛选</el-link>
+          <el-link :underline="false" @click="" type="primary">重置</el-link>
+        </div>
+      </div>
+    </el-popover>
+    <el-checkbox-group v-model="checkboxGroup1" size="small">
+      <el-checkbox label="备选项1" border></el-checkbox>
+      <el-checkbox label="备选项2"></el-checkbox>
+    </el-checkbox-group>
+    <el-table :data="tableData" stripe @selection-change="handleSelectionChange" style="width: 100%">
+      <el-table-column type="selection" prop="selection" label="日期" width="50"></el-table-column>
+      <el-table-column prop="date" label="日期" sortable width="180" :filters="[{text: '2016-05-01', value: '2016-05-01'}, {text: '2016-05-02', value: '2016-05-02'}, {text: '2016-05-03', value: '2016-05-03'}, {text: '2016-05-04', value: '2016-05-04'}]" :filter-method="filterHandler">
+        <template slot="header">
+          <span>11</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="name" label="姓名" width="180">
+      </el-table-column>
+      <el-table-column @cell-click="cellClick" @click="a1" prop="address" width="250" :resizable="true" align="right" :render-header='renderH' label="地址">
+        <template slot-scope="scope">
+          <p @click="a1(scope)">{{scope.row.address}}<p>
+        </template>
+      </el-table-column>
+    </el-table> -->
+    <!--
+    <el-row>
+      <el-button>默认按钮</el-button>
+      <el-button type="primary">主要按钮</el-button>
+      <el-button type="success">成功按钮</el-button>
+      <el-button type="info">信息按钮</el-button>
+      <el-button type="warning">警告按钮</el-button>
+      <el-button type="danger">危险按钮</el-button>
+    </el-row> -->
+    <div id="demo">
+        <span>aaa</span>
+        <span>bbb</span>
+        <span>ccc</span>
+    </div>
+    <button @click="aa">aa</button>
+  </div>
+</body>
+<!-- <script src="js/j.js"></script>
+<script src="js/lodash.js"></script>
+<script src="js/axios.js"></script> -->
+<!-- <script src="js/base.js"></script> -->
+<script>
+/*setTimeout(function(){
+  'use strict'
+  this.name = "hello";
+});*/
+/*class Person1 {
+    constructor() {
+        this.name = "XiaoMing";
+    }
+}
+
+Person1 = class AnotherPerson {
+    constructor() {
+        this.name = "XiaoHong";
+    }
+};
+
+const member = new Person1();
+console.log(member.name);*/
+
+// Promise.resolve(1).then(2).then(3).then(console.log); // 1
+// let fn=(...arg)=>console.log(arg)
+// Promise.resolve(1).then(fn);
+/*window.x = 0;
+let x = 1
+class Test{
+    x = 2
+    constructor(){
+        this.x = 3
+    }
+    run() {
+        console.log(this.x);
+    }
+}
+
+Test.prototype.run = () => {
+    console.log(this.x);
+}
+let t = new Test();
+t.run();
+*/
+
+/*console.log('1');
+const promise = new Promise((resolve, reject) => {
+    resolve("success1");
+    reject("error");
+    resolve("success2");
+});
+
+promise
+    .then((res) => {
+        console.log("then:", res);
+    })
+    .catch((err) => {
+        console.log("catch:", err);
+    });
+
+setTimeout(() => {
+  console.log('2');
+  Promise.resolve().then(() => {
+    console.log('3');
+  })
+  new Promise((resolve) => {
+    console.log('4');
+    resolve();
+  }).then(() => {
+    console.log('5')
+  })
+})
+
+Promise.reject().then(() => {
+  console.log('13');
+}, () => {
+  console.log('12');
+})
+
+new Promise((resolve) => {
+  console.log('7');
+  resolve();
+}).then(() => {
+  console.log('8')
+})
+
+setTimeout(() => {
+  console.log('9');
+  Promise.resolve().then(() => {
+    console.log('10');
+  })
+  new Promise((resolve) => {
+    console.log('11');
+    resolve();
+  }).then(() => {
+    console.log('12')
+  })
+})
+*/
+/*function replacer(key, value) {
+    if (typeof value === "string") {
+        return undefined;
+    }
+    return value;
+}
+
+var foo = { foundation: "Mozilla", model: "box", week: 45, month: 7 };
+console.log(JSON.stringify(foo, replacer)); //{"week":45,"month":7}
+*/
+
+/*for (var i = 0; i < 4; i++) {
+    (function(i) {
+        setTimeout(function() {
+            console.log(i);
+        })
+    }(i))
+}*/
+
+/*let obj2 = { foo: 123 };
+let conf = Object.getOwnPropertyDescriptor(obj2, 'foo')
+console.log('conf:', conf)*/
+
+Promise.resolve().then(() => {
+    console.log(0);
+    return Promise.resolve(4);
+}).then((res) => {
+    console.log(res)
+})
+
+ Promise.resolve().then(() => {
+    console.log(1);
+}).then(() => {
+    console.log(2);
+}).then(() => {
+    console.log(3);
+}).then(() => {
+    console.log(5);
+}).then(() =>{
+    console.log(6);
+})
+// 0 1 2 3 4 5 6 why?
+
+
+/*window.ws = new WebSocket('ws://localhost:27197')
+ws.onerror = function(err) {
+  console.log('e',err) //// eSpaceCtrl['showGroupDialog'](id);
+}*/
+/*function a() {
+  console.log('b')
+}
+{
+  let b=1;
+  function a() {
+    console.log('a')
+  }
+}
+a()*/
+/*$('.bbb').on('click', (e)=>{
+  console.log(e)
+})
+$('.aaa').on('click', '.bbb', (ee)=> {
+  console.log(ee)
+})*/
+/*var app = new Vue({
+  el: "#app",
+  data() {
+    return {
+      checkList: [],
+      filtersModuleType: [{
+          "text": "RFC-NetCare",
+          "value": "RFCRefactor"
+        },
+        {
+          "text": "EOD-Task",
+          "value": "EOD-Task"
+        },
+        {
+          "text": "巡检-NetCare",
+          "value": "HCRefactor"
+        }
+      ],
+      itm: {
+        label: '哈哈',
+        text: 'check'
+      },
+      lists: [],
+      checkboxGroup1: [],
+      tableData: [{
+        date: '2016-05-02',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1518 弄'
+      }, {
+        date: '2016-05-04',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1517 弄'
+      }],
+      subjectList: [],
+      ans: ''
+    }
+  },
+  methods: {
+    filterHandler(value, row, column) {
+      const property = column['property'];
+      return row[property] === value;
+    },
+    handleSelectionChange(val) {
+      this.lists = val
+    },
+    renderH(h, { column, $index }) {
+      console.log(h, column, $index)
+      return h({
+        template: `<span @click="longlong">123</span>`,
+        methods: {
+          longlong() {
+            console.log('111', column)
+          }
+        }
+      })
+    },
+    cellClick() {
+      console.log('arguments', arguments)
+    },
+    a1() {
+      console.log('arguments', arguments)
+    },
+    aa() {
+
+    }
+  }
+});*/
+
+/*let para = (new URLSearchParams({
+  a: 1,
+  b: ['aa', 'bb', 'fadf']
+})).toString()
+let aada = {
+  ...undefined,
+  ...{}
+}*/
+
+</script>
+
+</html>

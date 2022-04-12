@@ -41,17 +41,14 @@ ul li h4{
 使用方法：
 
 这些字符属于unicode字符集，所以，你的文档需要声明为UTF-8；
-下面符号列表的后面有两列编号，它们并不太一样，
-<span class="red">第一列是用于html的，你需要在前面加上&#符号；</span>
-<span class="red">第二列可以用于CSS文件中，但是需要用反斜杠\转义；</span>
-<span class="red">第二列也可以用于javascript，和CSS用法一样，不过要用\u来转义。</span>
-
+下面符号列表的后面有两列编号，前面是十进制,后面是十六进制，
+<span class="red">用于html时，第一列需要在前面加上(&#)(;),第二列需加上(&#x)(;)分号可有可无</span>
+<span class="red">第二列用于CSS文件时,需要用反斜杠\转义☺</span>
+<span class="red">第二列用于javascript,要用\u来转义</span>
 需要主意的是：
 
-有的字符在不同的浏览器下表现不太一样；比如小雪人 ☃ 在firefox和Chrome下不太一样，钻石 ◆ 在IE下要比Chrome下要大一点儿；
-有的字符在某个浏览器下不会显示；当然原因并不是字符代码的问题，而是浏览器的bug，比如，–在Chrome下。。。
-但是，98%的字符都能在所有浏览器下正常显示的，不过如果你真的要使用，最好仔细在各个浏览器下验证一番。
-经测试这些字符在Android/iOS等智能终端的识别度比较差，所以，使用的时候要特别注意移动浏览器～～
+有的字符在不同的浏览器下表现不太一样,这不是字符代码的问题,而是浏览器的差异,比如小雪人 ☃ 在firefox和Chrome下不太一样,
+98%的字符都能在所有浏览器下正常显示,有的字符在Android/iOS等智能终端的识别度比较差,使用的时候要特别注意移动浏览器～～
 </pre>
 <ul>
 <li><h4>各种箭头</h4>
@@ -381,17 +378,7 @@ $ 36 0024
 	<!-- </pre> -->
 </body>
 <script>
-const success = [{
-	name: 'green',
-	tt: 'white'
-}, {
-	name: 'block',
-	tt: 'center'
-}];
-let aa = success.map(item => {
-	item.text = item.tt, delete item.tt;
-	return item
-})
+
 </script>
 
 </html>

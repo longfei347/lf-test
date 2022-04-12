@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test7</title>
+</head>
+<style>
+  .nc-modal-backdrop {
+    position: fixed;
+    background-color: rgba(0,0,0,.45);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.nc-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    /*display: none;*/
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    outline: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.BFC-box{
+    margin:200px;
+    height: 200px;
+    width: 200px;
+    border:2px solid red;
+    transform: scale(1);
+  }
+  .container{
+    width: 100px;
+    height: 100px;
+    background: #888;
+    position: fixed;
+    top: 100px;
+    left: 100px;
+  }
+  @scope(.color) {
+    input{
+      color: red;
+      background-color: #f00;
+    }
+  }
+</style>
+<body>
+  <div id="app">
+    <h2>所有链接</h2>
+    <!-- <h1 style="text-align: center; font-size: 15pc;">福</h1> -->
+    <h5>{{long}}&#10;123</h5>
+    <h5>{{name}} </h5>
+    <audio src="http://vip2.endiva.com.cn/mxlin/files/literature/02488.2027_000000--0000-01.mp3"></audio>
+    <!-- <p v-on:click="getConfig">123123</p>
+    <a href="im:13043403780">130-4340-3780</a><br>
+    <a href="im:13418634847">13418634847</a><br>
+    <a href="im:13996090943">13996090943</a> -->
+    <!-- <iframe src="https://gdedev.icta138.huawei.com:38443/p/netcare/index.html#/home" frameborder="0"></iframe> -->
+  </div>
+  <div class="BFC-box">
+    :smile:
+      <div class="container"></div>
+    </div>
+  </div>
+  <div class="color">
+    <input type="text">
+    <input type="radio">
+    <input type="checkbox">
+  </div>
+</body>
+<!-- <script src="js/base.js"></script> -->
+<script src="js/vue.global.js"></script>
+<script src="js/demo.js"></script>
+<script src="js/long_test.js"></script>
+<script src="js/jquery.js"></script>
+<script>
+// import {onMounted} from 'vue'
+// onBeforeMount
+// mounted beforeUpdate updated beforeUnmount unmounted errorCaptured renderTracked renderTriggered
+let {onMounted, onBeforeUpdate, onUpdated, onBeforeUnmount, onUnmounted, onErrorCaptured, onRenderTracked, onRenderTriggered } = Vue;
+let vm = Vue.createApp({
+  mounted(){
+    document.querySelector('#app');
+    console.log('mounted')
+  },
+  beforeCreate(){
+    // console.log('beforeCreate')
+  },
+  created(){
+    console.log('created')
+  },
+  methods: {
+    getConfig(e) {
+      console.log('e:', e)
+    }
+  },
+  setup() {
+    onMounted(()=>{
+      console.log('onMounted');
+    })
+    return  {
+      name:'lf',
+
+    }
+  },
+  data(){
+    return {
+      long: '就是说提交代码或者修改代码',
+    }
+  }
+}).mount('#app')
+function getRandomValues (n) {
+  const arr = new Uint16Array(n)
+  window.crypto.getRandomValues(arr)
+  return arr
+}
+
+
+function getRandomValue () {
+  return getRandomValues(1)[0]
+}
+function extendDeepCopy(obj,newobj){
+    var newobj=newobj||{};
+    for(var i in obj){
+        if(typeof obj[i]=='object'){
+            newobj[i]=(obj[i].constructor==="Array")?[]:{};
+            extendDeepCopy(obj[i],newobj[i]);
+        }else{
+            newobj[i]=obj[i];
+        }
+    }
+    return newobj;
+}
+// let a=extendDeepCopy(function(){console.log(1)})
+// let a=extendDeepCopy(new Date('2022-02-06'))
+/*try {
+  fun()
+} catch(e) {
+  console.log(e, e.toString())
+}*/
+let RunScriptUtil = {}
+RunScriptUtil.tqlEscape = function(str) {
+  return str;
+}
+var productLineTql = productLineCode ? " and product_line_code = '" + RunScriptUtil.tqlEscape(productLineCode) + "'" : "";
+//判断权限审批模型ncuc_review_auth_control中是否有相同的数据
+var tql = "select uuid from ncuc_review_auth_control where account_id = '" + RunScriptUtil.tqlEscape(accountId) + "' and review_type = '" + RunScriptUtil.tqlEscape(reviewType)
+    + "' and dept_code = '" + RunScriptUtil.tqlEscape(deptCode) + "' and office_code = '" + RunScriptUtil.tqlEscape(officeCode)
+    + "' and country_code = '" + RunScriptUtil.tqlEscape(countryCode) + "'" + productLineTql;
+var authControlResults = invokeTql(tql).body.result.results;
+
+
+var productLineTql = productLineCode ? " and product_line_code = '" + RunScriptUtil.tqlEscape(productLineCode) + "'" : "";
+productLineCode.split(',').map(itm => "product_line_code contains '" + RunScriptUtil.tqlEscape(itm) + "'").join(' and ')
+</script>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>test6</title>
+</head>
+<style>
+  html {
+    /*font-size: calc(100vw / 7.5);*/
+}
+body {
+    padding-right: calc(100vw - 100%);
+}
+/*瀑布流*/
+.masonry {
+    display: grid; gap: 20px;
+    grid: masonry / repeat(auto-fill, minmax(250px, 1fr));
+}
+</style>
+
+<body>
+  <div id="app">
+    <span>123测试</span>
+    <a href="mailto:wangliang178@huawei.com&subject=subject&cc=longfei15@huawei.com&body=1213">aaa</a>
+    <svg width="400" height="160" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 10 80 C 80 10, 130 10, 190 80 S 300 150, 360 80" stroke="black" fill="transparent" />
+      <button uem_id="个人中心-个人信息/基本信息-编辑" uem_label="个人中心-个人信息/基本信息-编辑">编辑</button>
+    </svg>
+    <input type="file" accept=".xls,.xlsx" name="" id="">
+    <div class="content">
+      <div id="image">
+        <!-- 图片为网络地址才可在本地通过直接打开html调试 -->
+        <img src="https://i.loli.net/2019/05/06/5ccffa469ec52.jpg" width="400" />
+      </div>
+    </div>
+    <!-- <iframe src="https://gdesit.icta138.huawei.com:38443/p/uc/index.html#/" frameborder="0"></iframe> -->
+    <div class="masonry"></div>
+  </div>
+</body>
+<!-- <script src="https://hwa-beta.his.huawei.com/dist/uem_f.js?123"></script> -->
+<script src="js/jquery-3.5.1.js"></script>
+<script src="js/temp.js"></script>
+<script src="js/vue.global.js"></script>
+<!-- <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.26/vue.cjs.js"></script> -->
+<script>
+
+// throw 111
+/*async function sleep(t) {
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, t || 1000,)
+  })
+}
+(async function(){
+  console.log(Date.now())
+  console.time('start')
+  await sleep(2000);
+  console.timeEnd('start');
+  console.log(Date.now())
+})()*/
+
+
+// 不能以！开头，然后必须包含 数字，大写字母，小写字母和特殊字符，长度 8-64
+// if (!/\d/.test(str) || !/[a-z]/.test(str) || !/[A-Z]/.test(str) || !/[\\\.,/?\-~!@#$%^&*()+{}[\]]/.test(str) || str.charAt(0) === '!' || str.length < 8 || str.length > 64)
+/*addDom()
+function addDom(){
+  let d = document.createDocumentFragment();
+
+  for(var i = 0;i<30;i++){
+      let li = document.createElement('li')
+      li.addEventListener('click', function(e) {
+          let _this = e.target;
+          _this.style.color = 'red';
+      })
+    li.innerHTML = `</div>
+      <h4> 测试图片 </h4>
+      <img style="height:50px;width:50px" src="https://w3.huawei.com/w3lab/rest/yellowpage/face/30003589/120"/>
+      </div>`
+    d.appendChild(li)
+  }
+  document.getElementById('app').appendChild(d)
+}
+function fn(params = {}) {
+  let { uem_id, uem_label, user_role, sub_page } = params
+  console.log('a', uem_id, uem_label, user_role, sub_page)
+}
+var employee = {};
+Object.defineProperty(employee, 'id', {
+  writable: true, // false
+  configurable: true, // false
+  value: '9527',
+});
+
+console.log(employee.id);
+employee.id = '9528';
+
+Object.defineProperty(employee, 'id', {
+  writable: false,
+  configurable: false,
+});
+employee.id = '9529';
+console.log(employee.id);*/
+// (()=>console.log(arguments))() // arguments is not defined
+/*var employee = {};
+Object.defineProperty(employee, 'id', {
+  configurable: true,
+  value: '9527',
+});
+
+employee.id = '9528';
+console.log(employee.id);
+
+Object.defineProperty(employee, 'id', {
+  configurable: false,
+});
+employee.id = '9529';
+console.log(employee.id);*/
+/*let num =1;
+switch (num) {z
+  case 1:
+    // statements_1
+    // break;
+  case 2:
+    const num=2;
+    // statements_1
+    break;
+  default:
+    // statements_def
+    break;
+}*/
+/*var num=1;
+{
+  let num=1;
+}
+let num=2;
+{
+  let num=2
+}
+const num=3;
+{
+  const num=3;
+}
+console.log('num:',num)*/
+// https://netcare-de.gts.huawei.com/mobile/operation/#/OperationSubpage?lang=zh_CN&org_type=3&dateStr=2021&product_line=ALL&region_code=024931&office_code=500000&network_number=ALL&noTitle=1&index=4
+
+// let t=setInterval(() => console.log(11), 1000)
+// console.log(t)
+// clearInterval(t)
+// clearTimeout(t)
+$.post('/ee',{
+  headers:{"content-type":'application/json'},
+  data:{name:12}
+})
+</script>
+
+</html>

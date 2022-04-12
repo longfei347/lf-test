@@ -2,15 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Web的Flex弹性盒模型</title>
+<title>一文搞懂Flex弹性盒</title>
 <style>
 	body{
 		font-family: '微软雅黑';
 		/*font-family: cursive, '微软雅黑';*/
-		padding: 0;
-		margin: 20px 0 40px;
-
-		font-size: 12px;
+		padding: 20px;
+		margin: 0;
+		font-size: 14px;
 		background-color: #F9F9F9;
 	}
 	h1{
@@ -57,6 +56,9 @@
 		color: #fff;
 		display: flex;
 		text-align: center;
+		/* place-content: center; */
+		/* justify-content: center; */
+		align-items: center;
 	}
 	.demo .item{
 		line-height: 40px;
@@ -131,39 +133,53 @@
 		width: 80px;
 		margin: 2px 10px;
 	}
-
+	.pre-wrap {
+		white-space: pre-wrap;
+		font-size: 13px;
+	}
 </style>
 </head>
 <body>
+	<!-- https://mp.weixin.qq.com/s/F8xUZZSal07HCc1yH3CDhg -->
 	<h1>Web的Flex弹性盒模型</h1>
 	<section class="content">
-		<pre>
-		flex教程
-		http://qianduanblog.com/post/css-learning-16-css3-flex-responsive-design.html
+	<div class="pre-wrap">
+	flex, grid属性
+	<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/align-content">参数链接</a>: https://developer.mozilla.org/zh-CN/docs/Web/CSS/align-content
 
-		横向：justify-content  左中右 flex-start flex-end center
-		flex-direction（流动布局的主轴方向）
+	justify-items 设置单元格内容水平位置（左中右）,属性为所有盒中的项目定义了默认的 justify-self
+	align-items 设置单元格内容的垂直位置（上中下）,属性将所有直接子节点上的align-self值设置为一个组。
+	place-items: <align-items> <justify-items>; 是合并简写形式（省略第二个值就代表两个属性设置相同）
 
-		flex-direction  行，row列column 
-		column-reverse：类似于row-reverse，与column排列方向相反。在“ttb”（top-to-bottom）排版方式下从下向上排列；在“btt”（bottom-to-top）排版方式下从上向下排列。
-		row-reverse：行反方向，与row排列方向相反。在“ltr”（left-to-right）排版方式下从右向左排列；在“rtl”（right-to-left）排版方式下从左向右排列。
+	justify-content 属性是整个内容区域在容器里面的水平位置（左中右）,属性定义了浏览器之间，如何分配顺着弹性容器主轴(或者网格行轴) 的元素之间及其周围的空间。
+	align-content 属性是整个内容区域的垂直位置（上中下）,属性设置了浏览器如何沿着弹性盒子布局的纵轴和网格布局的主轴在内容项之间和周围分配空间。该属性对单行弹性盒子模型无效。（即：带有 flex-wrap: nowrap）。
+	place-content: <align-content> <justify-content>; 是合并简写形式（省略第二个值就代表两个属性设置相同）。
 
-		align-content（多个主轴沿侧轴方向的内容堆栈对齐方式）
-		flex-start：多个主轴沿侧轴起始方向对齐。
-		flex-end：多个主轴沿侧轴终点方向对齐。
-		center：多个主轴沿侧轴中点方向对齐。
-		space-between：第一个主轴沿主轴起始方向对齐，末尾主轴沿主轴终点方向对齐，其他主轴均匀分布对齐。
-		space-around：与space-between类似，只是侧轴起始位置和侧轴终点位置保留一半空白。
-		stretch（默认）：伸缩多个主轴，保持侧轴方向统一距离。
-		align-items（侧轴方向内容对齐方式）
-		与justify-content类似，只是这里的参考方向为侧轴。
-		stretch（默认）：在侧轴方向拉伸每个项目，使每个项目保持相同的起始位置和终点位置。
-		flex-srart：与侧轴起始方向对齐。
-		flex-end：向侧轴终点方向对齐。
-		center：向侧轴中点方向对齐。
-		baseline：在侧轴上保持基线对齐，以第一个项目的基线为准。
-		</pre>
-		<h3>[ flex ] flex：none | <' flex-grow '> <' flex-shrink >'? || <' flex-basis '> <br>
+	place-self 是一个简写(align-self 和 justify-self)
+	align-self: 属性设置项目在其包含块中在交叉轴方向上的对齐方式。
+
+	flex-direction  行，row列column
+	column-reverse：类似于row-reverse，与column排列方向相反。在“ttb”（top-to-bottom）排版方式下从下向上排列；在“btt”（bottom-to-top）排版方式下从上向下排列。
+	row-reverse：行反方向，与row排列方向相反。在“ltr”（left-to-right）排版方式下从右向左排列；在“rtl”（right-to-left）排版方式下从左向右排列。
+
+	Formal syntax：(语法与取值)
+	normal | stretch | baseline-position | overflow-position? [ self-position | left | right ] | legacy | legacy && [ left | right | center ]
+	where
+	baseline-position = [ first | last ]? baseline
+	overflow-position = unsafe | safe
+	self-position = center | start | end | self-start | self-end | flex-start | flex-end
+
+	Positional alignment(基本位置对齐): center/start/end/flex-start/flex-end/left/right
+	Baseline alignment(基线对齐): baseline/first baseline/last baseline
+	Distributed alignment(分布式对齐): space-between(首个元素放置于起点，末尾元素放置于终点),
+		space-around(每个元素周围分配相同的空间),space-evenly(每个元素之间的间隔相等),stretch(元素会被拉伸以适应容器的大小)
+	Overflow alignment(溢出对齐):safe center/unsafe center
+	Global values(合全局属性):inherit/initial/unset
+
+	Legacy alignment:legacy right/legacy left/legacy center
+	Basic keywords(关键词)：auto/normal/stretch
+	</div>
+	<h3>[ flex ] flex：none | <' flex-grow '> <' flex-shrink >'? || <' flex-basis '> <br>
 		复合属性。设置或检索弹性盒模型对象的子元素如何分配空间。 </h3>
 		<div class="boxes">
 			<div class="box">
@@ -245,8 +261,8 @@
 
 		<h3>[ flex-wrap ] flex-wrap：nowrap | wrap | wrap-reverse <br>
 		该属性控制flex容器是单行或者多行，同时横轴的方向决定了新行堆叠的方向。 </h3>
-		<p>nowrap： flex容器为单行。该情况下flex子项可能会溢出容器 
-			wrap： flex容器为多行。该情况下flex子项溢出的部分会被放置到新行，子项内部会发生断行 
+		<p>nowrap： flex容器为单行。该情况下flex子项可能会溢出容器
+			wrap： flex容器为多行。该情况下flex子项溢出的部分会被放置到新行，子项内部会发生断行
 			wrap-reverse： 反转 wrap 排列。</p>
 
 		<div class="boxes" style="width:1310px">
@@ -285,7 +301,7 @@
 					<div class="item" style="width: 200px">width: 200px;</div>
 					<div class="item" style="width: 300px">width: 300px;</div>
 				</div>
-			</div>	
+			</div>
 		</div>
 
 		<h3>[ flex-flow ]: flex-direction flex-wrap; /* 自个体会吧 */</h3>
@@ -361,9 +377,9 @@
 		定义flex子项单独在侧轴（纵轴）方向上的对齐方式。 </h3>
 		<p>auto： 如果'align-self'的值为'auto'，则其计算值为元素的父元素的'align-items'值，如果其没有父元素，则计算值为'stretch'。 <br>
 		flex-start： 弹性盒子元素的侧轴（纵轴）起始位置的边界紧靠住该行的侧轴起始边界。 <br>
-		flex-end： 弹性盒子元素的侧轴（纵轴）起始位置的边界紧靠住该行的侧轴结束边界。<br> 
+		flex-end： 弹性盒子元素的侧轴（纵轴）起始位置的边界紧靠住该行的侧轴结束边界。<br>
 		center： 弹性盒子元素在该行的侧轴（纵轴）上居中放置。（如果该行的尺寸小于弹性盒子元素的尺寸，则会向两个方向溢出相同的长度）。 <br>
-		baseline： 如弹性盒子元素的行内轴与侧轴为同一条，则该值与'flex-start'等效。其它情况下，该值将参与基线对齐。<br> 
+		baseline： 如弹性盒子元素的行内轴与侧轴为同一条，则该值与'flex-start'等效。其它情况下，该值将参与基线对齐。<br>
 		stretch： 如果指定侧轴大小的属性值为'auto'，则其值会使项目的边距盒的尺寸尽可能接近所在行的尺寸，但同时会遵照'min/max-width/height'属性的限制。 </p>
 		<div class="boxes">
 			<div class="box" style="width:1000px;">
@@ -387,7 +403,7 @@
 
 		<h3>[ align-items ] align-items：flex-start | flex-end | center | baseline | stretch <br>
 		定义flex子项在flex容器的当前行的侧轴（纵轴）方向上的对齐方式。 </h3>
-		<p>flex-start： 弹性盒子元素的侧轴（纵轴）起始位置的边界紧靠住该行的侧轴起始边界。<br> 
+		<p>flex-start： 弹性盒子元素的侧轴（纵轴）起始位置的边界紧靠住该行的侧轴起始边界。<br>
 		flex-end： 弹性盒子元素的侧轴（纵轴）起始位置的边界紧靠住该行的侧轴结束边界。 <br>
 		center： 弹性盒子元素在该行的侧轴（纵轴）上居中放置。（如果该行的尺寸小于弹性盒子元素的尺寸，则会向两个方向溢出相同的长度）。 <br>
 		baseline： 如弹性盒子元素的行内轴与侧轴为同一条，则该值与'flex-start'等效。其它情况下，该值将参与基线对齐。 <br>
@@ -457,9 +473,9 @@
 		flex-start： 各行向弹性盒容器的起始位置堆叠。弹性盒容器中第一行的侧轴起始边界紧靠住该弹性盒容器的侧轴起始边界，之后的每一行都紧靠住前面一行。 <br>
 		flex-end： 各行向弹性盒容器的结束位置堆叠。弹性盒容器中最后一行的侧轴起结束界紧靠住该弹性盒容器的侧轴结束边界，之后的每一行都紧靠住前面一行。 <br>
 		center： 各行向弹性盒容器的中间位置堆叠。各行两两紧靠住同时在弹性盒容器中居中对齐，保持弹性盒容器的侧轴起始内容边界和第一行之间的距离与该容器的侧轴结束内容边界与第最后一行之间的距离相等。（如果剩下的空间是负数，则各行会向两个方向溢出的相等距离。） <br>
-		space-between： 各行在弹性盒容器中平均分布。如果剩余的空间是负数或弹性盒容器中只有一行，该值等效于'flex-start'。在其它情况下，第一行的侧轴起始边界紧靠住弹性盒容器的侧轴起始内容边界，最后一行的侧轴结束边界紧靠住弹性盒容器的侧轴结束内容边界，剩余的行则按一定方式在弹性盒窗口中排列，以保持两两之间的空间相等。<br> 
+		space-between： 各行在弹性盒容器中平均分布。如果剩余的空间是负数或弹性盒容器中只有一行，该值等效于'flex-start'。在其它情况下，第一行的侧轴起始边界紧靠住弹性盒容器的侧轴起始内容边界，最后一行的侧轴结束边界紧靠住弹性盒容器的侧轴结束内容边界，剩余的行则按一定方式在弹性盒窗口中排列，以保持两两之间的空间相等。<br>
 		space-around： 各行在弹性盒容器中平均分布，两端保留子元素与子元素之间间距大小的一半。如果剩余的空间是负数或弹性盒容器中只有一行，该值等效于'center'。在其它情况下，各行会按一定方式在弹性盒容器中排列，以保持两两之间的空间相等，同时第一行前面及最后一行后面的空间是其他空间的一半。 <br>
-		stretch： 各行将会伸展以占用剩余的空间。如果剩余的空间是负数，该值等效于'flex-start'。在其它情况下，剩余空间被所有行平分，以扩大它们的侧轴尺寸。 
+		stretch： 各行将会伸展以占用剩余的空间。如果剩余的空间是负数，该值等效于'flex-start'。在其它情况下，剩余空间被所有行平分，以扩大它们的侧轴尺寸。
 		</p>
 		<div class="boxes">
 			<div class="box">
@@ -553,7 +569,7 @@
 					<div class="item" >f</div>
 
 				</div>
-			</div>		
+			</div>
 
 			<div class="box">
 				<div class="boxstyle">
@@ -569,9 +585,9 @@
 					<div class="item" >f</div>
 
 				</div>
-			</div>	
-	
-		</div>	
+			</div>
+
+		</div>
 
 		<h3>[ order ] 设置或检索弹性盒模型对象的子元素出現的順序。</h3>
 		<div class="boxes">

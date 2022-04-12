@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://unpkg.com/vue-router@4"></script>
+
+</head>
+<body>
+    <div id="app">
+      <h1>Hello App!</h1>
+      <p>
+        <!--使用 router-link 组件进行导航 -->
+        <!--通过传递 `to` 来指定链接 -->
+        <!--`<router-link>` 将呈现一个带有正确 `href` 属性的 `<a>` 标签-->
+        <router-link to="/">Go to Home</router-link>
+        <router-link to="/about">Go to About</router-link>
+      </p>
+      <!-- 路由出口 -->
+      <!-- 路由匹配到的组件将渲染在这里 -->
+      <router-view></router-view>
+
+      <!-- 字符串 -->
+        <router-link to="home">Home</router-link>
+        <!-- 渲染结果 -->
+        <a href="home">Home</a>
+
+        <!-- 使用 v-bind 的 JS 表达式 -->
+        <router-link v-bind:to="'home'">Home</router-link>
+
+        <!-- 不写 v-bind 也可以，就像绑定别的属性一样 -->
+        <router-link :to="'home'">Home</router-link>
+
+        <!-- 同上 -->
+        <router-link :to="{ path: 'home' }">Home</router-link>
+
+        <!-- 命名的路由 -->
+        <router-link :to="{ name: 'user', params: { userId: 123 }}">User</router-link>
+
+        <!-- 带查询参数，下面的结果为 /register?plan=private -->
+        <router-link :to="{ path: 'register', query: { plan: 'private' }}">Register</router-link>
+        <!-- 设置 replace 属性的话，当点击时，会调用 router.replace() 而不是 router.push()，导航后不会留下 history 记录。 -->
+        <router-link :to="{ path: '/abc'}" replace></router-link>
+
+        <!-- 设置 append 属性后，则在当前 (相对) 路径前添加其路径。例如，我们从 /a 导航到一个相对路径 b，如果没有配置 append，则路径为 /b，如果配了，则为 /a/b -->
+        <router-link :to="{ path: 'relative/path'}" append></router-link>
+    </div>
+
+</body>
+<script>
+// 1. 定义路由组件.
+// 也可以从其他文件导入
+const Home = { template: '<div>Home</div>' }
+const About = { template: '<div>About</div>' }
+
+// 2. 定义一些路由
+// 每个路由都需要映射到一个组件。
+// 我们后面再讨论嵌套路由。
+const routes = [
+  { path: '/', component: Home },
+  { path: '/about', component: About },
+]
+
+// 3. 创建路由实例并传递 `routes` 配置
+// 你可以在这里输入更多的配置，但我们在这里
+// 暂时保持简单
+const router = VueRouter.createRouter({
+  // 4. 内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
+  history: VueRouter.createWebHashHistory(),
+  routes, // `routes: routes` 的缩写
+})
+
+// 5. 创建并挂载根实例
+const app = Vue.createApp({})
+//确保 _use_ 路由实例使
+//整个应用支持路由。
+app.use(router)
+
+app.mount('#app')
+
+// 现在，应用已经启动了！
+</script>
+</html>

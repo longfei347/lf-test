@@ -20,13 +20,14 @@
 <body>
 	<h2>猜数字</h2>
 	<p>将0-9中的4个数字填入输入框中, 4个数字不会重复, 且数字与位置都正确才能过关, 你只有8次机会,加油哦!</p>
-	<p>注意:<i class="red">结果提示, A表示数字与位置都正确, B表示数字正确,位置有误</i></p>
+	<p>注意:<i class="red">结果提示, A表示数字与位置都正确, B表示数字正确,位置有误</i> &nbsp;(熟练者不到1分钟可猜出)</p>
 	<form name="numbercheck">
 		<input type="text" name="number1" id="num1" size="2" maxlength="1" onkeyup="toNext(this,event)">
 		<input type="text" name="number2" id="num2" size="2" maxlength="1" onkeyup="toNext(this,event)">
 		<input type="text" name="number3" id="num3" size="2" maxlength="1" onkeyup="toNext(this,event)">
 		<input type="text" name="number4" id="num4" size="2" maxlength="1" onkeyup="toNext(this,event)">
 		<button id="ttt" name="ok" type="button" onClick="check()">确定</button>
+		<button id="reset" name="ok" type="button" onClick="location.reload()">重新开始</button>
 		<div id="result"></div>
 	</form>
 </body>
@@ -73,7 +74,10 @@ function check() {
 		}
 	}
 	if (As == 4) {
-		alert("恭喜你答对了,你真聪明!");
+		var nodeP = document.createElement("p");
+		nodeP.innerHTML = `第${++total}组: <span>${num1.value}</span>, <span>${num2.value}</span>, <span>${num3.value}</span>, <span>${num4.value}</span>; ${As}A, ${Bs-As}B <b style="color:green">&nbsp;成功</b>`;
+		document.getElementById("result").appendChild(nodeP);
+		setTimeout(()=>alert("恭喜你答对了,你真聪明!"), 0);
 		return true;
 	} else {
 		total++;

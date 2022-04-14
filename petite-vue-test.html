@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<!-- <script type="text/javascript" src="js/petite-vue.iife.js"></script> -->
+<!-- <script type="text/javascript" src="js/petite-vue.iife.js" defer init></script> -->
+<body>
+<div v-scope="{ count: 0 }">
+  {{ count }}
+  <button @click="count++">inc</button>
+  <div v-scope="Counter({ initialCount: 1 })" @mounted="mounted">
+    <div
+      v-if="show"
+      @mounted="console.log('mounted on: ', $el)"
+      @unmounted="console.log('unmounted: ', $el)"
+    >112233</div>
+    <p>{{ count }}</p>
+    <button @click="inc">increment</button>
+  </div>
+
+  <div v-scope="Counter({ initialCount: 2 })">
+    <p>{{ count }}</p>
+    <button @click="inc">increment</button>
+  </div>
+  <div>{{store.count2}}
+   <button @click="store.inc">increment</button>
+  </div>
+</div>
+</body>
+<!-- <script type="module">
+  import { createApp } from 'https://unpkg.com/petite-vue?module'
+  createApp().mount()
+  createApp({
+    // exposed to all expressions
+    count: 0,
+    // getters
+    get plusOne() {
+      return this.count + 1
+    },
+    // methods
+    increment() {
+      this.count++
+    }
+  }).mount()
+</script> -->
+<!-- <script>
+PetiteVue.createApp().mount()
+</script> -->
+<template id="counter-template">
+  My count is {{ count }}
+  <button @click="inc">++</button>
+</template>
+<script type="module">
+import {createApp,reactive } from './js/petite-vue.es.js?module'
+function Counter(props) {
+    return {
+      $template: '#counter-template',
+      data: {},
+      show: true,
+      count: props.initialCount,
+      inc() {
+        this.count++
+      },
+      mounted() {
+        console.log(`I'm mounted!`)
+      }
+    }
+  }
+const store = reactive({
+    count2: 0,
+    inc() {
+      this.count2++
+    }
+  })
+
+  // manipulate it here
+  store.inc()
+  createApp({
+    Counter,
+    store
+  }).mount()</script>
+</html>

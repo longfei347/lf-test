@@ -7,71 +7,85 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/cropper.css">
-  <script src="js/jquery-3.5.1.js"></script>
+  <script src="js/jquery.js"></script>
   <script src="js/underscore.js"></script>
   <script src="js/tenda-common.js"></script>
   <script src="js/cropper.js"></script>
   <!-- <script src="js/base.js"></script> -->
   <style>
     #div1 {
-    height: 80px;
-    background: #ccc;
-    color: #f90;
-  }
-  .ta-j {
-    text-align-last:justify; /* 两端对齐 */
-    background: repeating-linear-gradient(45deg, white, white 10%, black 10%, black 20%);
-    background: repeating-linear-gradient(45deg, white, white 10%, black 10%, black 20%)
-  }
-  .rotate {
-    position: relative;
-    text-align: center;
-  }
-  .rotate .ro-bg {
-    width: 200px;
-    height: 200px;
-  }
-  .rotate .ro-img {
-    position: absolute;
-    /* transform: skew(80deg); */
-    width: 200px;
-    height: 200px;
-    animation: rotate-img 6s linear infinite;
-    left: 50%;
-    margin-left: -100px;
-  }
-  @keyframes rotate-img{
-    0%{
-      transform: rotateZ(0deg);/*从0度开始*/
+      height: 80px;
+      background: #ccc;
+      color: #f90;
     }
-    100%{
-      transform: rotateZ(360deg);/*360度结束*/
-    }
-  }
-  #result {
-    width: 400px;
-    /* height: 300px; */
-  }
-  #result img{
-    max-width: 100%;
-  }
-  html[theme='dark-mode'] {
-      filter: invert(1) hue-rotate(180deg);
-  }
-  html[theme='dark-mode'] img{
-      filter: invert(1) hue-rotate(180deg);
-  }
-  html {
-      transition: color 300ms, background-color 300ms;
-  }
 
-  .cross-fade-image {
-    width: 300px;
-    height: 300px;
-    background: no-repeat center/ contain;
-    background-image: cross-fade(url(images/face-scan.jpg), url(images/line.jpg), 50%);
-    background-image: -webkit-cross-fade(url(images/face-scan.jpg), url(images/line.jpg), 50%);
-  }
+    .ta-j {
+      text-align-last: justify;
+      /* 两端对齐 */
+      background: repeating-linear-gradient(45deg, white, white 10%, black 10%, black 20%);
+      background: repeating-linear-gradient(45deg, white, white 10%, black 10%, black 20%)
+    }
+
+    .rotate {
+      position: relative;
+      text-align: center;
+    }
+
+    .rotate .ro-bg {
+      width: 200px;
+      height: 200px;
+    }
+
+    .rotate .ro-img {
+      position: absolute;
+      /* transform: skew(80deg); */
+      width: 200px;
+      height: 200px;
+      animation: rotate-img 6s linear infinite;
+      left: 50%;
+      margin-left: -100px;
+    }
+
+    @keyframes rotate-img {
+      0% {
+        transform: rotateZ(0deg);
+        /*从0度开始*/
+      }
+
+      100% {
+        transform: rotateZ(360deg);
+        /*360度结束*/
+      }
+    }
+
+    #result {
+      width: 400px;
+      /* height: 300px; */
+    }
+
+    #result img {
+      max-width: 100%;
+    }
+
+    html[theme='dark-mode'] {
+      filter: invert(1) hue-rotate(180deg);
+    }
+
+    html[theme='dark-mode'] img {
+      filter: invert(1) hue-rotate(180deg);
+    }
+
+    html {
+      transition: color 300ms, background-color 300ms;
+    }
+
+    .cross-fade-image {
+      width: 300px;
+      height: 300px;
+      background: no-repeat center/ contain;
+      background-image: cross-fade(url(images/face-scan.jpg), url(images/line.jpg), 50%);
+      background-image: -webkit-cross-fade(url(images/face-scan.jpg), url(images/line.jpg), 50%);
+    }
   </style>
 </head>
 
@@ -124,341 +138,341 @@
 <script src="js/lite2.js"></script>
 <script src="js/base.js"></script>
 <script>
-var dpr = window.devicePixelRatio;
-var meta = document.createElement('meta');
+  var dpr = window.devicePixelRatio;
+  var meta = document.createElement('meta');
 
-// dpr
-meta.setAttribute('content', 'initial-scale=' + 1 / dpr + ', maximum-scale=' + 1 / dpr + ', minimum-scale=' + 1 / dpr + ', user-scalable=no');
-document.getElementsByTagName('head')[0].appendChild(meta);
+  // dpr
+  meta.setAttribute('content', 'initial-scale=' + 1 / dpr + ', maximum-scale=' + 1 / dpr + ', minimum-scale=' + 1 / dpr + ', user-scalable=no');
+  document.getElementsByTagName('head')[0].appendChild(meta);
 
-// document.styleSheets[0].insertRule("* { outline: 1px solid red }", 0)
+  // document.styleSheets[0].insertRule("* { outline: 1px solid red }", 0)
 
-// rem
-/*document.addEventListener('DOMContentLoaded', function (e) {
-    document.getElementsByTagName('html')[0].style.fontSize = window.innerWidth / 10 + 'px';
-}, false);*/
+  // rem
+  /*document.addEventListener('DOMContentLoaded', function (e) {
+      document.getElementsByTagName('html')[0].style.fontSize = window.innerWidth / 10 + 'px';
+  }, false);*/
 
-$('#theme').on('click', function(e) {
-  $('html').attr('theme') ? $('html').removeAttr('theme') : $('html').attr('theme', 'dark-mode')
-})
-// showDirectoryPicker 打开文件夹选择
-// showOpenFilePicker 打开文件选择
-//
-// FileSystemHandle
-// FileSystemFileHandle
-// FileSystemDirectoryHandle
-// FileSystemWritableFileStream
-// window.showOpenFilePicker()
-// window.showSaveFilePicker()
-// window.showDirectoryPicker()
-// DataTransferItem.getAsFileSystemHandle()
-/*document.querySelector('#file').addEventListener('change', (e) => {
-  new Promise((resolve, reject) => {
-    let file = e.target.files[0]
-    let params = new Promise((resolve, reject) => {
-      let reader = new FileReader()
-      let parme = {
-        width: '',
-        height: ''
-      }
-      reader.readAsDataURL(file)
-      reader.onload = function(theFile) {
-        let image = new Image()
-        image.src = theFile.target.result
-        image.onload = function() {
-          parme.width = this.width
-          parme.height = this.height
-          resolve(parme)
+  $('#theme').on('click', function (e) {
+    $('html').attr('theme') ? $('html').removeAttr('theme') : $('html').attr('theme', 'dark-mode')
+  })
+  // showDirectoryPicker 打开文件夹选择
+  // showOpenFilePicker 打开文件选择
+  //
+  // FileSystemHandle
+  // FileSystemFileHandle
+  // FileSystemDirectoryHandle
+  // FileSystemWritableFileStream
+  // window.showOpenFilePicker()
+  // window.showSaveFilePicker()
+  // window.showDirectoryPicker()
+  // DataTransferItem.getAsFileSystemHandle()
+  /*document.querySelector('#file').addEventListener('change', (e) => {
+    new Promise((resolve, reject) => {
+      let file = e.target.files[0]
+      let params = new Promise((resolve, reject) => {
+        let reader = new FileReader()
+        let parme = {
+          width: '',
+          height: ''
         }
-      }
-    })
-    params.then((re) => {
-      let error = 'error'
-      if (re.width > 100 && re.height > 100) {
-        console.log('re:', re)
-      } else {
-        // this.$Message.error(this.$i18Transform('Upload file size incorrect', '上传文件尺寸不正确'))
-        console.log('图片尺寸小于 100X100')
-        return false
-      }
-
-    })
-  })
-})
-*/
-/*let xml= new XMLHttpRequest()
-xml.open('get', 'http://rap2api.taobao.org/app/mock/226903/test/aaa')
-// xml.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-// xml.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-// let req=new FormData()
-// req.append('a', 1)
-// req.append('name', 'longfei')
-// xml.send(req)
-xml.send("a=1&name=long")
-// xml.send({a:1,name:'long'})
-xml.onreadystatechange=()=>{
-  if (xml.readyState == 4 && xml.status == 200) {
-    console.log(xml.responseText)
-  }
-}*/
-/*
-async function getValue() {
-    let prom =  new Promise((resolve, reject) => {
-        setTimeout(() => {
-            if(Math.random() > 0.5) {
-                resolve('gt 0.5')
-            }else {
-                reject('let 0.5')
-            }
-        }, 1000)
-    })
-    let a=await prom
-    console.log(a)
-    return a;
-}
-
-let value = getValue(); // 为何这个返回的是一个promise？？
-console.log(value);*/
-
-/*function f1({a=0, b=0}={}) {
-  console.log(a,b)
-}
-f1()
-
-console.time('aa')
-// setTimeout(()=>console.timeEnd('ab'), 1000)
-window.onload=function(){
-  console.timeEnd('aa')
-}*/
-/*addEventListener('resize', debounce((e)=>{
-  console.log('e:',e)
-}, 500))
-document.querySelector('#debounce').addEventListener('input', debounce((e)=>{
-  console.log(e.target.value)
-}, 500))*/
-// $.get('http://rap2api.taobao.org/app/mock/226903/test/aaa').then(res=>console.log(res))
-// let bbb = $.get('http://rap2api.taobao.org/app/mock/226903/test/aaa').then(res=>console.log(res))
-// 双色球 随机
-function doubleBall() {
-  let arr = []
-  while (arr.length < 6) {
-    let t = Math.floor(Math.random() * 33) + 1
-    if (!arr.includes(t)) {
-      arr.push(t)
-    }
-  }
-  arr.sort((a, b) => a - b)
-  arr.push(Math.floor(Math.random() * 16) + 1)
-  /*new Array(7).fill(1);
-  arr.forEach(item => {
-    Math.floor(Math.random() * 34)
-  })*/
-  return arr;
-}
-
-function readAsDataURL() {
-  var file = document.getElementById("file").files[0],
-    reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onload = function(e) {
-    // var result = document.getElementById("result");
-    // result.innerHTML = '<img src="' + this.result + '" alt="" />';
-    document.getElementById("cropImg").src = this.result;
-    document.getElementById("cropImg").onload = function() {
-      $("#cropImg").cropper({
-        aspectRatio: 580 / 326,
-        center: true,
-        preview: '.img-preview',
+        reader.readAsDataURL(file)
+        reader.onload = function(theFile) {
+          let image = new Image()
+          image.src = theFile.target.result
+          image.onload = function() {
+            parme.width = this.width
+            parme.height = this.height
+            resolve(parme)
+          }
+        }
       })
-    }
-  }
-}
-
-function crop(argument) {
-  // body...
-  var canvas = $("#cropImg").cropper('getCroppedCanvas', {
-    // autoCrop: true,
-    minCropBoxWidth: 580,
-    minCropBoxHeight: 326,
-    maxWidth: 1160,
-    maxHeight: 652
+      params.then((re) => {
+        let error = 'error'
+        if (re.width > 100 && re.height > 100) {
+          console.log('re:', re)
+        } else {
+          // this.$Message.error(this.$i18Transform('Upload file size incorrect', '上传文件尺寸不正确'))
+          console.log('图片尺寸小于 100X100')
+          return false
+        }
+  
+      })
+    })
   })
-  $('.corpHtml').html(canvas)
-}
-$("#crop").on('click', function() {
-  crop()
-})
-
-function readAsBinaryString() {
-  var file = document.getElementById("file").files[0],
-    reader = new FileReader();
-  reader.readAsBinaryString(file);
-  reader.onload = function(e) {
-    // console.log(file)
-    var result = document.getElementById("result");
-    result.innerHTML = this.result;
+  */
+  /*let xml= new XMLHttpRequest()
+  xml.open('get', 'http://rap2api.taobao.org/app/mock/226903/test/aaa')
+  // xml.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+  // xml.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+  // let req=new FormData()
+  // req.append('a', 1)
+  // req.append('name', 'longfei')
+  // xml.send(req)
+  xml.send("a=1&name=long")
+  // xml.send({a:1,name:'long'})
+  xml.onreadystatechange=()=>{
+    if (xml.readyState == 4 && xml.status == 200) {
+      console.log(xml.responseText)
+    }
+  }*/
+  /*
+  async function getValue() {
+      let prom =  new Promise((resolve, reject) => {
+          setTimeout(() => {
+              if(Math.random() > 0.5) {
+                  resolve('gt 0.5')
+              }else {
+                  reject('let 0.5')
+              }
+          }, 1000)
+      })
+      let a=await prom
+      console.log(a)
+      return a;
   }
-}
+  
+  let value = getValue(); // 为何这个返回的是一个promise？？
+  console.log(value);*/
 
-function readAsText() {
-  var file = document.getElementById("file").files[0],
-    reader = new FileReader();
-  reader.readAsText(file);
-  reader.onload = function(e) {
-    var result = document.getElementById("result");
-    result.innerHTML = this.result;
+  /*function f1({a=0, b=0}={}) {
+    console.log(a,b)
   }
-}
-var oUl = document.getElementById('ul1');
-var oDiv = document.getElementById('div1');
-oDiv.ondragenter = function() {
-  this.innerHTML = '可以释放';
-};
-oDiv.ondragover = function(ev) {
-  ev.preventDefault();
-};
-oDiv.ondragleave = function() {
-  this.innerHTML = '请拖拽到此区域';
-};
-oDiv.ondrop = function(ev) {
-  ev.preventDefault();
-  var fs = ev.dataTransfer.files;
-  for (var i = 0; i < fs.length; i++) {
-    var fr = new FileReader();
-    if (fs[i].type.indexOf('image') != -1) {
-      fr.readAsDataURL(fs[i]);
-      fr.onload = function() {
-        var oLi = document.createElement('li');
-        var oImg = document.createElement('img');
-        oImg.src = this.result;
-        oLi.appendChild(oImg);
-        oUl.appendChild(oLi);
-      };
-    } else {
-      alert('亲,请拖拽图片格式');
+  f1()
+  
+  console.time('aa')
+  // setTimeout(()=>console.timeEnd('ab'), 1000)
+  window.onload=function(){
+    console.timeEnd('aa')
+  }*/
+  /*addEventListener('resize', debounce((e)=>{
+    console.log('e:',e)
+  }, 500))
+  document.querySelector('#debounce').addEventListener('input', debounce((e)=>{
+    console.log(e.target.value)
+  }, 500))*/
+  // $.get('http://rap2api.taobao.org/app/mock/226903/test/aaa').then(res=>console.log(res))
+  // let bbb = $.get('http://rap2api.taobao.org/app/mock/226903/test/aaa').then(res=>console.log(res))
+  // 双色球 随机
+  function doubleBall() {
+    let arr = []
+    while (arr.length < 6) {
+      let t = Math.floor(Math.random() * 33) + 1
+      if (!arr.includes(t)) {
+        arr.push(t)
+      }
+    }
+    arr.sort((a, b) => a - b)
+    arr.push(Math.floor(Math.random() * 16) + 1)
+    /*new Array(7).fill(1);
+    arr.forEach(item => {
+      Math.floor(Math.random() * 34)
+    })*/
+    return arr;
+  }
+
+  function readAsDataURL() {
+    var file = document.getElementById("file").files[0],
+      reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function (e) {
+      // var result = document.getElementById("result");
+      // result.innerHTML = '<img src="' + this.result + '" alt="" />';
+      document.getElementById("cropImg").src = this.result;
+      document.getElementById("cropImg").onload = function () {
+        $("#cropImg").cropper({
+          aspectRatio: 580 / 326,
+          center: true,
+          preview: '.img-preview',
+        })
+      }
     }
   }
-};
+
+  function crop(argument) {
+    // body...
+    var canvas = $("#cropImg").cropper('getCroppedCanvas', {
+      // autoCrop: true,
+      minCropBoxWidth: 580,
+      minCropBoxHeight: 326,
+      maxWidth: 1160,
+      maxHeight: 652
+    })
+    $('.corpHtml').html(canvas)
+  }
+  $("#crop").on('click', function () {
+    crop()
+  })
+
+  function readAsBinaryString() {
+    var file = document.getElementById("file").files[0],
+      reader = new FileReader();
+    reader.readAsBinaryString(file);
+    reader.onload = function (e) {
+      // console.log(file)
+      var result = document.getElementById("result");
+      result.innerHTML = this.result;
+    }
+  }
+
+  function readAsText() {
+    var file = document.getElementById("file").files[0],
+      reader = new FileReader();
+    reader.readAsText(file);
+    reader.onload = function (e) {
+      var result = document.getElementById("result");
+      result.innerHTML = this.result;
+    }
+  }
+  var oUl = document.getElementById('ul1');
+  var oDiv = document.getElementById('div1');
+  oDiv.ondragenter = function () {
+    this.innerHTML = '可以释放';
+  };
+  oDiv.ondragover = function (ev) {
+    ev.preventDefault();
+  };
+  oDiv.ondragleave = function () {
+    this.innerHTML = '请拖拽到此区域';
+  };
+  oDiv.ondrop = function (ev) {
+    ev.preventDefault();
+    var fs = ev.dataTransfer.files;
+    for (var i = 0; i < fs.length; i++) {
+      var fr = new FileReader();
+      if (fs[i].type.indexOf('image') != -1) {
+        fr.readAsDataURL(fs[i]);
+        fr.onload = function () {
+          var oLi = document.createElement('li');
+          var oImg = document.createElement('img');
+          oImg.src = this.result;
+          oLi.appendChild(oImg);
+          oUl.appendChild(oLi);
+        };
+      } else {
+        alert('亲,请拖拽图片格式');
+      }
+    }
+  };
 /*var target = document.getElementById('observer');
-// create an observer instance
-var observer = new MutationObserver(function(mutations) {
-  mutations.forEach(function(mutation) {
-    console.log(mutation.type);
+  // create an observer instance
+  var observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      console.log(mutation.type);
+    });
   });
-});
-// configuration of the observer:
-var config = { attributes: true, childList: true, characterData: true };
-// pass in the target node, as well as the observer options
-observer.observe(target, config);
+  // configuration of the observer:
+  var config = { attributes: true, childList: true, characterData: true };
+  // pass in the target node, as well as the observer options
+  observer.observe(target, config);
+  
+  // later, you can stop observing
+  // observer.disconnect();*/
 
-// later, you can stop observing
-// observer.disconnect();*/
 
-
-/*var ll = JSON.stringify({l:1,f:2,o:3,n:true}, function(key,value){
-  console.log(key,value);
-  if (typeof value === 'number') {
-    return value+1;
-  } else {
-    return value;
-  }
-})
-console.log(ll);*/
-/*var obj = {
-  foo: 'foo',
-  toJSON: function() {
-    return 'bar';
-  }
-};
-console.log(JSON.stringify(obj));        // '"bar"'
-console.log(JSON.stringify({ x: obj })); // '{"x":"bar"}'
-
-var obj2 = {
-  foo: 'foo',
-  toJSON: function(key) {
-    console.log(key)
-    if (key === '') {
-      return 'bar only';
+  /*var ll = JSON.stringify({l:1,f:2,o:3,n:true}, function(key,value){
+    console.log(key,value);
+    if (typeof value === 'number') {
+      return value+1;
     } else {
-      return 'bar in ' + key;
+      return value;
     }
+  })
+  console.log(ll);*/
+  /*var obj = {
+    foo: 'foo',
+    toJSON: function() {
+      return 'bar';
+    }
+  };
+  console.log(JSON.stringify(obj));        // '"bar"'
+  console.log(JSON.stringify({ x: obj })); // '{"x":"bar"}'
+  
+  var obj2 = {
+    foo: 'foo',
+    toJSON: function(key) {
+      console.log(key)
+      if (key === '') {
+        return 'bar only';
+      } else {
+        return 'bar in ' + key;
+      }
+    }
+  };
+  
+  console.log(JSON.stringify(obj2));         // '"bar only"'
+  console.log(JSON.stringify({ x: obj2 }));  // '{ "x":"bar in x"}'
+  console.log(JSON.stringify([obj2, obj2])); // '["bar in 0", "bar in 1"]'*/
+
+  /*function CmdSave() {
+    // todo
+    var OW = window.open("", "_blank", "");
+    // var OW = window.open("001.gif", location.origin+"/images/001.gif", "");
+    // OW.document.open();
+    var name = location.origin+"/images/001.gif";
+    OW.document.execCommand("saveAs", false, '001.gif');//执行保存，IE6,IE7,IE8有效
+    OW.close();
+  }*/
+  /*function strReverse(str) {
+    return (str.replace(/[\w-]+/g, function(s, i, ss) {
+      if (i == 0) {
+        s = s.charAt(0).toLowerCase() + s.substr(1, s.length - 2) + s.charAt(s.length - 1).toUpperCase();
+      }
+      return s.split("").reverse().join("")
+    }));
   }
-};
-
-console.log(JSON.stringify(obj2));         // '"bar only"'
-console.log(JSON.stringify({ x: obj2 }));  // '{ "x":"bar in x"}'
-console.log(JSON.stringify([obj2, obj2])); // '["bar in 0", "bar in 1"]'*/
-
-/*function CmdSave() {
-  // todo
-  var OW = window.open("", "_blank", "");
-  // var OW = window.open("001.gif", location.origin+"/images/001.gif", "");
-  // OW.document.open();
-  var name = location.origin+"/images/001.gif";
-  OW.document.execCommand("saveAs", false, '001.gif');//执行保存，IE6,IE7,IE8有效
-  OW.close();
-}*/
-/*function strReverse(str) {
-  return (str.replace(/[\w-]+/g, function(s, i, ss) {
-    if (i == 0) {
-      s = s.charAt(0).toLowerCase() + s.substr(1, s.length - 2) + s.charAt(s.length - 1).toUpperCase();
-    }
-    return s.split("").reverse().join("")
-  }));
-}
-console.log(strReverse("Many people spell MySQL incorrectly"))*/
+  console.log(strReverse("Many people spell MySQL incorrectly"))*/
 
 
-/*var m = new Map();
+  /*var m = new Map();
+  
+  m.set("edition", 6)        // 键是字符串
+  m.set(262, "standard")     // 键是数值
+  m.set(undefined, "nah")    // 键是undefined
+  
+  var hello = function() {console.log("hello");}
+  m.set(hello, "Hello ES6!") // 键是函数
+  
+  m.has("edition")     // true
+  m.has("years")       // false
+  m.has(262)           // true
+  m.has(undefined)     // true
+  m.has(hello)         // true
+  
+  m.delete(undefined)
+  m.has(undefined)       // false
+  
+  m.get(hello)  // Hello ES6!
+  m.get("edition")  // 6*/
 
-m.set("edition", 6)        // 键是字符串
-m.set(262, "standard")     // 键是数值
-m.set(undefined, "nah")    // 键是undefined
+  /*function add(...values) {
+     let sum = 0;
+  
+     for (var val of values) {
+        sum += val;
+     }
+  
+     return sum;
+  }
+  
+  add(2, 5, 3) // 10*/
 
-var hello = function() {console.log("hello");}
-m.set(hello, "Hello ES6!") // 键是函数
-
-m.has("edition")     // true
-m.has("years")       // false
-m.has(262)           // true
-m.has(undefined)     // true
-m.has(hello)         // true
-
-m.delete(undefined)
-m.has(undefined)       // false
-
-m.get(hello)  // Hello ES6!
-m.get("edition")  // 6*/
-
-/*function add(...values) {
-   let sum = 0;
-
-   for (var val of values) {
-      sum += val;
-   }
-
-   return sum;
-}
-
-add(2, 5, 3) // 10*/
-
-/*function* helloWorldGenerator() {
-    yield 'hello';
-    yield 'world';
-}
-var hw = helloWorldGenerator();
-// 执行遍历器的next方法，则会依次遍历每个成员。
-
-hw.next()
-// { value: 'hello', done: false }
-
-hw.next()
-// { value: 'world', done: false }
-
-hw.next()
-// { value: undefined, done: true }
-
-hw.next()*/
+  /*function* helloWorldGenerator() {
+      yield 'hello';
+      yield 'world';
+  }
+  var hw = helloWorldGenerator();
+  // 执行遍历器的next方法，则会依次遍历每个成员。
+  
+  hw.next()
+  // { value: 'hello', done: false }
+  
+  hw.next()
+  // { value: 'world', done: false }
+  
+  hw.next()
+  // { value: undefined, done: true }
+  
+  hw.next()*/
 
 
 // Error: Generator has already finished
@@ -468,137 +482,137 @@ hw.next()*/
 //  ...
 
 
-/*function push(array, ...items) {
-  items.forEach(function(item) {
-    array.push(item);
-    console.log(item);
-  });
-}
-
-var a = [];
-push(a, "a1", "a2", "a3", "a4"); */
-
-/*var _ = {}; //只要是引用，保证不报错就行
-var curry = function(fun) {
-  var rest = [].slice.call(arguments, 0);
-  rest.shift(); //rest = [1, _, 3, _]
-  return function() {
-    var args = [].slice.call(arguments, 0); //args = [2, 4]
-    var finalArgs = rest.map(function(value, index) {
-      if (value === _) {
-        return args.shift();
-      }
-      return value;
-    }); //finalArgs = [1, 2, 3, 4]
-    return fun.apply(this, finalArgs);
+  /*function push(array, ...items) {
+    items.forEach(function(item) {
+      array.push(item);
+      console.log(item);
+    });
   }
-}
-var fun = function(a, b, c, d) {
-  debugger;
-  console.log("" + a + b + c + d);
-}
-var f1 = curry(fun, 1, _, 3, _);
-f1(2, 4); //=>1234*/
-/*var c=document.getElementById("myCanvas");
-var ctx=c.getContext("2d");
+  
+  var a = [];
+  push(a, "a1", "a2", "a3", "a4"); */
 
-ctx.font="20px Georgia";
-ctx.fillText("Hello World!",10,150);
-
-ctx.font="30px Verdana";
-// 创建渐变
-var gradient=ctx.createLinearGradient(0,0,c.width,0);
-gradient.addColorStop("0","magenta");
-gradient.addColorStop("0.5","blue");
-gradient.addColorStop("1.0","red");
-// 用渐变填色
-ctx.fillStyle=gradient;
-ctx.fillText("w3school.com.cn",10,90);*/
-/*function ttt() {
-  if (!(this instanceof ttt)) {
-    console.log(arguments.callee);
-    return new ttt();
-  }
-  this.tastes="long";
-}
-var first = new ttt();
-var second = ttt();*/
-/*! function() {
-  function n() {
-    t.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
-      t.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
-  }
-
-  function e() {
-    i.clearRect(0, 0, t.width, t.height);
-    var n = [a].concat(m);
-    m.forEach(function(e) {
-        e.x += e.xa,
-        e.y += e.ya,
-        e.xa *= e.x > t.width || e.x < 0 ? -1 : 1,
-        e.ya *= e.y > t.height || e.y < 0 ? -1 : 1,
-        i.fillRect(e.x - .5, e.y - .5, 1, 1);
-        for (var o = 0; o < n.length; o++) {
-          var m = n[o];
-          if (e !== m && null !== m.x && null !== m.y) {
-            var d, u = e.x - m.x,
-              c = e.y - m.y,
-              r = u * u + c * c;
-            r < m.max && (m === a && r >= m.max / 2 && (e.x -= .03 * u,
-                e.y -= .03 * c),
-              d = (m.max - r) / m.max,
-              i.beginPath(),
-              i.lineWidth = d / 2,
-              i.strokeStyle = "rgba(0,0,0," + (d + .2) + ")",
-              i.moveTo(e.x, e.y),
-              i.lineTo(m.x, m.y),
-              i.stroke())
-          }
+  /*var _ = {}; //只要是引用，保证不报错就行
+  var curry = function(fun) {
+    var rest = [].slice.call(arguments, 0);
+    rest.shift(); //rest = [1, _, 3, _]
+    return function() {
+      var args = [].slice.call(arguments, 0); //args = [2, 4]
+      var finalArgs = rest.map(function(value, index) {
+        if (value === _) {
+          return args.shift();
         }
-        n.splice(n.indexOf(e), 1)
-      }),
-      o(e)
+        return value;
+      }); //finalArgs = [1, 2, 3, 4]
+      return fun.apply(this, finalArgs);
+    }
   }
-  var t = document.getElementById("cas"),
-    i = t.getContext("2d");
-  n(),
-    window.onresize = n;
-  var o = function() {
-      return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(n) {
-        window.setTimeout(n, 1e3 / 60)
-      }
-    }(),
-    a = {
-      x: null,
-      y: null,
-      max: 2e4
+  var fun = function(a, b, c, d) {
+    debugger;
+    console.log("" + a + b + c + d);
+  }
+  var f1 = curry(fun, 1, _, 3, _);
+  f1(2, 4); //=>1234*/
+  /*var c=document.getElementById("myCanvas");
+  var ctx=c.getContext("2d");
+  
+  ctx.font="20px Georgia";
+  ctx.fillText("Hello World!",10,150);
+  
+  ctx.font="30px Verdana";
+  // 创建渐变
+  var gradient=ctx.createLinearGradient(0,0,c.width,0);
+  gradient.addColorStop("0","magenta");
+  gradient.addColorStop("0.5","blue");
+  gradient.addColorStop("1.0","red");
+  // 用渐变填色
+  ctx.fillStyle=gradient;
+  ctx.fillText("w3school.com.cn",10,90);*/
+  /*function ttt() {
+    if (!(this instanceof ttt)) {
+      console.log(arguments.callee);
+      return new ttt();
+    }
+    this.tastes="long";
+  }
+  var first = new ttt();
+  var second = ttt();*/
+  /*! function() {
+    function n() {
+      t.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+        t.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+    }
+  
+    function e() {
+      i.clearRect(0, 0, t.width, t.height);
+      var n = [a].concat(m);
+      m.forEach(function(e) {
+          e.x += e.xa,
+          e.y += e.ya,
+          e.xa *= e.x > t.width || e.x < 0 ? -1 : 1,
+          e.ya *= e.y > t.height || e.y < 0 ? -1 : 1,
+          i.fillRect(e.x - .5, e.y - .5, 1, 1);
+          for (var o = 0; o < n.length; o++) {
+            var m = n[o];
+            if (e !== m && null !== m.x && null !== m.y) {
+              var d, u = e.x - m.x,
+                c = e.y - m.y,
+                r = u * u + c * c;
+              r < m.max && (m === a && r >= m.max / 2 && (e.x -= .03 * u,
+                  e.y -= .03 * c),
+                d = (m.max - r) / m.max,
+                i.beginPath(),
+                i.lineWidth = d / 2,
+                i.strokeStyle = "rgba(0,0,0," + (d + .2) + ")",
+                i.moveTo(e.x, e.y),
+                i.lineTo(m.x, m.y),
+                i.stroke())
+            }
+          }
+          n.splice(n.indexOf(e), 1)
+        }),
+        o(e)
+    }
+    var t = document.getElementById("cas"),
+      i = t.getContext("2d");
+    n(),
+      window.onresize = n;
+    var o = function() {
+        return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(n) {
+          window.setTimeout(n, 1e3 / 60)
+        }
+      }(),
+      a = {
+        x: null,
+        y: null,
+        max: 2e4
+      };
+    window.onmousemove = function(n) {
+      n = n || window.event,
+      a.x = n.clientX,
+      a.y = n.clientY
     };
-  window.onmousemove = function(n) {
-    n = n || window.event,
-    a.x = n.clientX,
-    a.y = n.clientY
-  };
-  window.onmouseout = function(n) {
-    a.x = null,
-    a.y = null
-  };
-  for (var m = [], d = 0; 150 > d; d++) {
-    var u = Math.random() * t.width,
-      c = Math.random() * t.height,
-      r = 2 * Math.random() - 1,
-      l = 2 * Math.random() - 1;
-    m.push({
-      x: u,
-      y: c,
-      xa: r,
-      ya: l,
-      max: 6e3
-    })
-  }
-  setTimeout(function() {
-    e()
-  }, 100)
-}();*/
+    window.onmouseout = function(n) {
+      a.x = null,
+      a.y = null
+    };
+    for (var m = [], d = 0; 150 > d; d++) {
+      var u = Math.random() * t.width,
+        c = Math.random() * t.height,
+        r = 2 * Math.random() - 1,
+        l = 2 * Math.random() - 1;
+      m.push({
+        x: u,
+        y: c,
+        xa: r,
+        ya: l,
+        max: 6e3
+      })
+    }
+    setTimeout(function() {
+      e()
+    }, 100)
+  }();*/
 // https://graph.qq.com/oauth/show?which=Login&display=pc&scope=get_user_info,get_info,add_t,add_pic_t,get_other_info,get_fanslist,get_idollist,add_idol,add_share&state=e8bbd97633b58e30532787099ee7c597&redirect_uri=http://www.zhihu.com/oauth/callback/qqconn&response_type=code&client_id=100490701
 //
 

@@ -6,153 +6,133 @@
   <title>jquery1</title>
 </head>
 <style>
-.focused {
-  background: #F00;
-}
+  .focused {
+    background: #F00;
+  }
+  select {
+    background: transparent;
+    width: 268px;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    height: 34px;
+    -webkit-appearance: none;
+  }
+  /*多行文本实现省略号*/
+  .overfl {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+  p.overd {
+    position: relative;
+    line-height: 20px;
+    max-height: 40px;
+    overflow: hidden;
+    width: 300px;
+  }
+  p.overd::after {
+    content: "...";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding-left: 40px;
+    background: linear-gradient(to right, transparent, #fff 55%);
+  }
 
-input[type=text] {
-  /*[type="text"] 加不加引号都行*/
-}
+  .none {
+    display: none;
+  }
 
-select {
-  background: transparent;
-  width: 268px;
-  padding: 5px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  height: 34px;
-  -webkit-appearance: none;
-}
-/*多行文本实现省略号*/
-.overfl {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
-}
+  input:not(:focus)+.popTips {
+    transform: scale(0);
+    transition: transform .25s cubic-bezier(.25, .1, .25, .1);
+  }
 
-p.overd {
-  position: relative;
-  line-height: 20px;
-  max-height: 40px;
-  overflow: hidden;
-  width: 300px;
-}
+  input:focus+.popTips {
+    transform: scale(1);
+    transition: transform .4s cubic-bezier(.29, .15, .5, 1.46);
+  }
 
-p.overd::after {
-  content: "...";
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  padding-left: 40px;
-  background: linear-gradient(to right, transparent, #fff 55%);
-}
+  .float-left {
+    float: left;
+    width: 100px;
+    height: 100px;
+    background-color: lightpink;
+  }
 
-.none {
-  display: none;
-}
+  .clear-box {
+    background-color: lightgreen;
+    font-size: 16px;
+  }
 
-input:not(:focus)+.popTips {
-  transform: scale(0);
-  transition: transform .25s cubic-bezier(.25, .1, .25, .1);
-}
+  .clear-box:after {
+    content: '';
+    display: block;
+    clear: right;
+  }
 
-input:focus+.popTips {
-  transform: scale(1);
-  transition: transform .4s cubic-bezier(.29, .15, .5, 1.46);
-}
+  .float-right {
+    width: 100px;
+    height: 75px;
+    float: right;
+    background-color: red;
+    border: 1px solid black;
+  }
+  /*单行显示省略号*/
+  .ell {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  /*多行显示省略号*/
+  .multi-lline {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+  svg {
+    width: 100%;
+    height: 500px;
+    background-color: #eee;
+  }
 
-.float-left {
-  float: left;
-  width: 100px;
-  height: 100px;
-  background-color: lightpink;
-}
+  .custom-checkbox {
+    /*-webkit-appearance: none;*/
+    width: 100px;
+    height: 100px;
+    background-image: paint(checkbox);
+    outline: 0;
+    --status: unchecked;
+    --border-color: #dcdfe6;
+    --bg-color: #fff;
+    --line-color: #fff;
+  }
 
-.clear-box {
-  background-color: lightgreen;
-  font-size: 16px;
-}
+  .custom-checkbox:checked {
+    --status: checked;
+    --bg-color: #409eff;
+    --line-color: #fff;
+    --border-color: #fff;
+  }
 
-.clear-box:after {
-  content: '';
-  display: block;
-  clear: right; //both left
-}
+  .custom-checkbox:indeterminate {
+    --status: indeterminate;
+    --bg-color: #409eff;
+    --line-color: #fff;
+  }
 
-.float-right {
-  width: 100px;
-  height: 75px;
-  float: right;
-  background-color: red;
-  border: 1px solid black;
-}
-
-
-
-
-
-/*单行显示省略号*/
-
-.ell {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-
-
-
-
-/*多行显示省略号*/
-
-.multi-lline {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-}
-
-svg {
-  width: 100%;
-  height: 500px;
-  background-color: #eee;
-}
-
-.custom-checkbox {
-  /*-webkit-appearance: none;*/
-  width: 100px;
-  height: 100px;
-  background-image: paint(checkbox);
-  outline: 0;
-  --status: unchecked;
-  --border-color: #dcdfe6;
-  --bg-color: #fff;
-  --line-color: #fff;
-}
-
-.custom-checkbox:checked {
-  --status: checked;
-  --bg-color: #409eff;
-  --line-color: #fff;
-  --border-color: #fff;
-}
-
-.custom-checkbox:indeterminate {
-  --status: indeterminate;
-  --bg-color: #409eff;
-  --line-color: #fff;
-}
-
-.custom-checkbox:disabled {
-  --disabled: disabled;
-  --bg-color: #edf2fc;
-  --line-color: #c0c4cc;
-  --border-color: #dcdfe6;
-}
+  .custom-checkbox:disabled {
+    --disabled: disabled;
+    --bg-color: #edf2fc;
+    --line-color: #c0c4cc;
+    --border-color: #dcdfe6;
+  }
 </style>
 
 <body class="ss">
@@ -165,7 +145,8 @@ svg {
       <div>这是正常布局文档流元素。</div>
   </div> -->
   <form id="form" name="form" method="get">
-    <input autofocus="" class="put" id="number-password-input" type="tel" tabindex="6" onkeyup="dealKeyup(event,this);" value="longfei">
+    <input autofocus="" class="put" id="number-password-input" type="tel" tabindex="6" onkeyup="dealKeyup(event,this);"
+      value="longfei">
     <input type="text" name="" onkeydown="">
     <!-- <div class="popTips">longfei</div>
     <del>二十</del>
@@ -224,312 +205,312 @@ svg {
   </div>
 </body>
 <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js"></script> -->
-<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/base.js"></script>
 <script type="text/javascript" src="js/moment.min.js"></script>
 <script>
-/*$(document).on('keydown',function (e) {
-  console.log(e.keyCode)
-})*/
-/*var arr=[[1,2,3],[2,3,4],[3,5,7],[4,6,9]]
-var newArray = arr[0].map(function(col, i) {
-    return arr.map(function(row) {
-      return row[i];
-    })
-});
-console.log(newArray)*/
+  /*$(document).on('keydown',function (e) {
+    console.log(e.keyCode)
+  })*/
+  /*var arr=[[1,2,3],[2,3,4],[3,5,7],[4,6,9]]
+  var newArray = arr[0].map(function(col, i) {
+      return arr.map(function(row) {
+        return row[i];
+      })
+  });
+  console.log(newArray)*/
 
-// 光标定位
-function dealKeyup(e,that) {
-  var input_val = that.value;
-  var input_arr = input_val.split(" ");
-  input_arr.pop();
-  if (e.keyCode == 37 || e.keyCode == 38 ||e.keyCode == 8 ||e.keyCode == 39 ||e.keyCode == 40) {
-    return true;
-  } /*else if (input_val.length>4&&input_arr.filter(item=>item.length!==4).length>0) {
+  // 光标定位
+  function dealKeyup(e, that) {
+    var input_val = that.value;
+    var input_arr = input_val.split(" ");
+    input_arr.pop();
+    if (e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 8 || e.keyCode == 39 || e.keyCode == 40) {
+      return true;
+    } /*else if (input_val.length>4&&input_arr.filter(item=>item.length!==4).length>0) {
     input_val.replace(/\s/g,'')
   }*/
-  that.value = input_val.replace(/\s/g,'').replace(/(\w{4})(?!\s)/g,'$1 ')
-  // that.setSelectionRange(that.value.length, that.value.length)
-}
-// 设置光标位置
-function setCaretPosition(ctrl, pos) {
-  if (ctrl.setSelectionRange) {
-    // ctrl.focus();
-    ctrl.setSelectionRange(pos, pos);
-  } else if (ctrl.createTextRange) {
-    var range = ctrl.createTextRange();
-    range.collapse(true);
-    range.moveEnd('character', pos);
-    range.moveStart('character', pos);
-    range.select();
+    that.value = input_val.replace(/\s/g, '').replace(/(\w{4})(?!\s)/g, '$1 ')
+    // that.setSelectionRange(that.value.length, that.value.length)
   }
-}
-// $("#number-password-input")[0].setSelectionRange(1,1)
-// 获取光标位置
-function getCursortPosition(ctrl) {
-  var CaretPos = 0;
-  if (document.selection) { // IE Support
-    ctrl.focus();
-    var Sel = document.selection.createRange();
-    Sel.moveStart('character', -ctrl.value.length);
-    CaretPos = Sel.text.length;
-  } else if (ctrl.selectionStart || ctrl.selectionStart == '0') {
-    // Firefox support
-    CaretPos = ctrl.selectionStart;
-  }
-  return CaretPos;
-}
-
-// CSS.paintWorklet.addModule('checkbox.js')
-// const average = arr => arr.reduce((acc, val) => acc + val, 0)
-
-/*let total = 60,arr=[],fee=0;
-function aa(s) {
-  while(total--) {
-    let real=Math.floor(s/100)*100, temp;
-    fee += real*0.014;
-    console.log('本: %f, 利息: %f',s,fee);
-    // temp = (s+fee)
-    // arr.push(temp);
-    return aa(s+fee+1000);
-  }
-}
-aa(3000);*/
-/*@testable
-class MyTestableClass {
-  // ...
-}
-
-function testable(target) {
-  target.isTestable = true;
-}
-
-MyTestableClass.isTestable // true*/
-/*if ( true) {
-    function baz() { console.log('I passed') }
-} else {
-    function baz() { console.log('I didn\'t pass') }
-}
-baz();*/
-/*let obj = {};
-for (let i=0;i<100;i++) {
-  obj[Math.random().toString(36).slice(-6)]=i;
-}
-Object.keys(obj).sort().forEach(function(item) {
-  console.log(item, obj[item])
-})*/
-window.onerror = function(sMessage, sUrl, sLine) {
-  var str = "";
-  str += " 错误信息:" + sMessage + "\n";
-  str += " 错误地址:" + sUrl + "\n";
-  str += " 错误行数:" + sLine + "\n";
-  var func = window.onerror.caller;
-  var index = 0;
-  func && (str += "<=========调用堆栈=========>\n");
-  while (func != null) {
-    str += "第" + index + "个函数：" + func + "\n";
-    str += "第" + index + "个函数：参数表："
-    for (var i = 0; i < func.arguments.count; i++) {
-      str += func.arguments[i] + ",";
+  // 设置光标位置
+  function setCaretPosition(ctrl, pos) {
+    if (ctrl.setSelectionRange) {
+      // ctrl.focus();
+      ctrl.setSelectionRange(pos, pos);
+    } else if (ctrl.createTextRange) {
+      var range = ctrl.createTextRange();
+      range.collapse(true);
+      range.moveEnd('character', pos);
+      range.moveStart('character', pos);
+      range.select();
     }
-    str += func;
-    str += "\n===================\n";
-    func = func.caller;
-    index++;
   }
-  alert(str);
-  return true;
-}
+  // $("#number-password-input")[0].setSelectionRange(1,1)
+  // 获取光标位置
+  function getCursortPosition(ctrl) {
+    var CaretPos = 0;
+    if (document.selection) { // IE Support
+      ctrl.focus();
+      var Sel = document.selection.createRange();
+      Sel.moveStart('character', -ctrl.value.length);
+      CaretPos = Sel.text.length;
+    } else if (ctrl.selectionStart || ctrl.selectionStart == '0') {
+      // Firefox support
+      CaretPos = ctrl.selectionStart;
+    }
+    return CaretPos;
+  }
 
-// $.holdReady(3);
-$(function() {
-  $('#ff').on('change', function(e) {
-    console.log(this.files[0])
-    if (this.files[0].type.indexOf('image') != -1) {
-      var fr = new FileReader();
-      fr.readAsDataURL(this.files[0]);
-      fr.onload = function() {
-        var img = document.createElement('img');
-        img.src = this.result;
-        if (img.complete) {
-          console.log(img.width, img.height)
-        } else {
-          img.onload = () => {
+  // CSS.paintWorklet.addModule('checkbox.js')
+  // const average = arr => arr.reduce((acc, val) => acc + val, 0)
+
+  /*let total = 60,arr=[],fee=0;
+  function aa(s) {
+    while(total--) {
+      let real=Math.floor(s/100)*100, temp;
+      fee += real*0.014;
+      console.log('本: %f, 利息: %f',s,fee);
+      // temp = (s+fee)
+      // arr.push(temp);
+      return aa(s+fee+1000);
+    }
+  }
+  aa(3000);*/
+  /*@testable
+  class MyTestableClass {
+    // ...
+  }
+  
+  function testable(target) {
+    target.isTestable = true;
+  }
+  
+  MyTestableClass.isTestable // true*/
+  /*if ( true) {
+      function baz() { console.log('I passed') }
+  } else {
+      function baz() { console.log('I didn\'t pass') }
+  }
+  baz();*/
+  /*let obj = {};
+  for (let i=0;i<100;i++) {
+    obj[Math.random().toString(36).slice(-6)]=i;
+  }
+  Object.keys(obj).sort().forEach(function(item) {
+    console.log(item, obj[item])
+  })*/
+  window.onerror = function (sMessage, sUrl, sLine) {
+    var str = "";
+    str += " 错误信息:" + sMessage + "\n";
+    str += " 错误地址:" + sUrl + "\n";
+    str += " 错误行数:" + sLine + "\n";
+    var func = window.onerror.caller;
+    var index = 0;
+    func && (str += "<=========调用堆栈=========>\n");
+    while (func != null) {
+      str += "第" + index + "个函数：" + func + "\n";
+      str += "第" + index + "个函数：参数表："
+      for (var i = 0; i < func.arguments.count; i++) {
+        str += func.arguments[i] + ",";
+      }
+      str += func;
+      str += "\n===================\n";
+      func = func.caller;
+      index++;
+    }
+    alert(str);
+    return true;
+  }
+
+  // $.holdReady(3);
+  $(function () {
+    $('#ff').on('change', function (e) {
+      console.log(this.files[0])
+      if (this.files[0].type.indexOf('image') != -1) {
+        var fr = new FileReader();
+        fr.readAsDataURL(this.files[0]);
+        fr.onload = function () {
+          var img = document.createElement('img');
+          img.src = this.result;
+          if (img.complete) {
             console.log(img.width, img.height)
+          } else {
+            img.onload = () => {
+              console.log(img.width, img.height)
+            }
           }
         }
       }
-    }
-  })
-  $("button:last").on("click", function() {
-    //模拟异步C
-    function C() {
-      var dtd = $.Deferred(); //创建
-      setTimeout(function() {
-        $(".deferred-result").append('<p>step C');
-        dtd.resolve(3)
-      }, 500)
-      return dtd;
-    }
-    //模拟异步D
-    function D(value) {
-      var dtd = $.Deferred(); //创建
-      setTimeout(function() {
-        $(".deferred-result").append('<p>step D');
+    })
+    $("button:last").on("click", function () {
+      //模拟异步C
+      function C() {
+        var dtd = $.Deferred(); //创建
+        setTimeout(function () {
+          $(".deferred-result").append('<p>step C');
+          dtd.resolve(3)
+        }, 500)
+        return dtd;
+      }
+      //模拟异步D
+      function D(value) {
+        var dtd = $.Deferred(); //创建
+        setTimeout(function () {
+          $(".deferred-result").append('<p>step D');
 
-        dtd.resolve(value + 4)
-      }, 500)
-      return dtd;
-    }
-    //模拟异步E
-    function E(value) {
-      var dtd = $.Deferred(); //创建
-      setTimeout(function() {
-        $(".deferred-result").append('<p>step E');
-        dtd.resolve(value + 5)
-      }, 1000)
-      return dtd;
-    }
+          dtd.resolve(value + 4)
+        }, 500)
+        return dtd;
+      }
+      //模拟异步E
+      function E(value) {
+        var dtd = $.Deferred(); //创建
+        setTimeout(function () {
+          $(".deferred-result").append('<p>step E');
+          dtd.resolve(value + 5)
+        }, 1000)
+        return dtd;
+      }
 
-    function fn1() {
-      $('.deferred-result').append(" 1 ");
-    }
+      function fn1() {
+        $('.deferred-result').append(" 1 ");
+      }
 
-    function fn2() {
-      $('.deferred-result').append(" 2 ");
-    }
+      function fn2() {
+        $('.deferred-result').append(" 2 ");
+      }
 
-    function fn3(n) {
-      $('.deferred-result').append(n + " 3 " + n);
-    }
-    var dfd = $.Deferred();
-    dfd /* .done() can take any number of functions or arrays of functions */
-      .done([fn1, fn2], fn3, [fn2, fn1])
-      .done(function(n) {
-        $('.deferred-result').append(n + " we're done.");
-      });
-    dfd.resolve("and");
+      function fn3(n) {
+        $('.deferred-result').append(n + " 3 " + n);
+      }
+      var dfd = $.Deferred();
+      dfd /* .done() can take any number of functions or arrays of functions */
+        .done([fn1, fn2], fn3, [fn2, fn1])
+        .done(function (n) {
+          $('.deferred-result').append(n + " we're done.");
+        });
+      dfd.resolve("and");
 
-    C().then(function(data) {
+      C().then(function (data) {
         return D(data)
       })
-      .then(function(data) {
-        return E(data)
-      })
-      .then(function(data) {
-        $(".deferred-result").append("Deferred异步处理:" + data)
-      })
-  })
-  $("button:first").on("click", function() {
-    /*//模拟异步A
-    function A(callback) {
-      setTimeout(function() {
-        callback(1)
-      }, 500)
-    }
-    //模拟异步A
-    function B(callback, value) {
-      setTimeout(function() {
-        callback(value + 2)
-      }, 1000)
-    }
-    //A执行完毕后，在执行B
-    A(function(data1) {
-      B(function(data2) {
-        $(".deferred-result").html("嵌套异步:" + data2)
-      }, data1)
-    })*/
-    //模拟异步A
-    let promise = new Promise(function(resolve, reject) {
-      $(".deferred-result").append('Promise<br>');
-      resolve();
-    });
-
-    promise.then(function() {
-      $(".deferred-result").append('resolved.<br>');
-    });
-
-    $(".deferred-result").append('Hi!<br>');
-  })
-
-  //console.log($("p").wrapAll($(".doublediv")));
-  //console.log($("p").wrapInner("<b></b>"));
-
-  /*var str = 'long';
-  var n = 5;
-  console.log("str=%s,n=%d,n=%s,n=%c,str=%x,str=%a,str=%p", str, n, n, "n", str, n, str); //只识别%d,%s
-  var tt = document.getElementsByClassName("ss")[0]; //document.querySelector("body");
-  var i = 5;
-  var str = "wo men shi zhong guo ren",
-    s = '';
-  //console.log(str.replace(/\w+/g));
-  //第一种方法
-  console.log(str.replace(/\w+/g, function(str) {
-    return str.match(/\w+/g) + i++;
-  }));
-  //第二种方法
-  var arr = str.split(' ');
-  for (var j = 0; j < arr.length; j++)
-    s += (arr[j] + i++ + " ");
-  console.log(s);
-  //第三种方法
-  s = str.replace(/(?=\s)/g, function() { return i++ })
-  console.log(s + i);*/
-
-  /*console.log(document.documentElement.clientWidth,window.innerWidth);//后者比前者多一个垂直滚动条宽度
-  console.log(String.prototype.toString==Object.prototype.toString);//不等
-  console.log(String.prototype.__proto__.toString==Object.prototype.toString);//相等*/
-  //jquery数组方法实例
-  /*var arr = ["long", 12, "fei", 5, "fei"];
-  arr = $.map(arr, function(value, index) {
-    if (value == 12)
-      return;
-    else return value;
-  })
-  var i = $.inArray("fei", arr); //返回第一个索引
-  var arr1 = $.unique(arr); //修改了原数组
-  $.merge(arr,["ll","lll"])//修改了原数组，返回第一个数组
-  console.log(arr, i);*/
-  //eval("document.form.fei"+1).value=12;
-  $("#content").delegate("*", "focus blur", function(event) {
-    var elem = $(this);
-    setTimeout(function() {
-      elem.toggleClass("focused", elem.is(":focus"));
-    }, 0);
-  });
-  $("#sort_ip").click(function(a, b) {
-    var row = $(this).parents("table").find("tr:gt(0)"),
-      len = row.length,
-      arr = row.map(function() {
-        return +$(this).children("td:first").html().match(/\d+$/)[0];
-      }),
-      arrSort = [],
-      i, j, tmp;
-    for (i in arr) {
-      arrSort[i] = arr[i];
-    }
-    if (arr[0] > arr[1]) {
-      arrSort.sort(function(a, b) {
-        if (a - b >= 0) {
-          return 1;
-        } else return -1;
+        .then(function (data) {
+          return E(data)
+        })
+        .then(function (data) {
+          $(".deferred-result").append("Deferred异步处理:" + data)
+        })
+    })
+    $("button:first").on("click", function () {
+      /*//模拟异步A
+      function A(callback) {
+        setTimeout(function() {
+          callback(1)
+        }, 500)
+      }
+      //模拟异步A
+      function B(callback, value) {
+        setTimeout(function() {
+          callback(value + 2)
+        }, 1000)
+      }
+      //A执行完毕后，在执行B
+      A(function(data1) {
+        B(function(data2) {
+          $(".deferred-result").html("嵌套异步:" + data2)
+        }, data1)
+      })*/
+      //模拟异步A
+      let promise = new Promise(function (resolve, reject) {
+        $(".deferred-result").append('Promise<br>');
+        resolve();
       });
-    } else {
-      arrSort.sort(function(a, b) {
-        if (a - b >= 0) {
-          return -1;
-        } else return 1;
-      });
-    }
-    $(this).closest("table").children("tr:gt(0)").remove();
-    for (i = 0; i < len; i++) {
-      tmp = arr.index(arrSort[i]);
-      $(this).closest("table").append(row[tmp]);
-    }
-  })
 
-})
+      promise.then(function () {
+        $(".deferred-result").append('resolved.<br>');
+      });
+
+      $(".deferred-result").append('Hi!<br>');
+    })
+
+    //console.log($("p").wrapAll($(".doublediv")));
+    //console.log($("p").wrapInner("<b></b>"));
+
+    /*var str = 'long';
+    var n = 5;
+    console.log("str=%s,n=%d,n=%s,n=%c,str=%x,str=%a,str=%p", str, n, n, "n", str, n, str); //只识别%d,%s
+    var tt = document.getElementsByClassName("ss")[0]; //document.querySelector("body");
+    var i = 5;
+    var str = "wo men shi zhong guo ren",
+      s = '';
+    //console.log(str.replace(/\w+/g));
+    //第一种方法
+    console.log(str.replace(/\w+/g, function(str) {
+      return str.match(/\w+/g) + i++;
+    }));
+    //第二种方法
+    var arr = str.split(' ');
+    for (var j = 0; j < arr.length; j++)
+      s += (arr[j] + i++ + " ");
+    console.log(s);
+    //第三种方法
+    s = str.replace(/(?=\s)/g, function() { return i++ })
+    console.log(s + i);*/
+
+    /*console.log(document.documentElement.clientWidth,window.innerWidth);//后者比前者多一个垂直滚动条宽度
+    console.log(String.prototype.toString==Object.prototype.toString);//不等
+    console.log(String.prototype.__proto__.toString==Object.prototype.toString);//相等*/
+    //jquery数组方法实例
+    /*var arr = ["long", 12, "fei", 5, "fei"];
+    arr = $.map(arr, function(value, index) {
+      if (value == 12)
+        return;
+      else return value;
+    })
+    var i = $.inArray("fei", arr); //返回第一个索引
+    var arr1 = $.unique(arr); //修改了原数组
+    $.merge(arr,["ll","lll"])//修改了原数组，返回第一个数组
+    console.log(arr, i);*/
+    //eval("document.form.fei"+1).value=12;
+    $("#content").delegate("*", "focus blur", function (event) {
+      var elem = $(this);
+      setTimeout(function () {
+        elem.toggleClass("focused", elem.is(":focus"));
+      }, 0);
+    });
+    $("#sort_ip").click(function (a, b) {
+      var row = $(this).parents("table").find("tr:gt(0)"),
+        len = row.length,
+        arr = row.map(function () {
+          return +$(this).children("td:first").html().match(/\d+$/)[0];
+        }),
+        arrSort = [],
+        i, j, tmp;
+      for (i in arr) {
+        arrSort[i] = arr[i];
+      }
+      if (arr[0] > arr[1]) {
+        arrSort.sort(function (a, b) {
+          if (a - b >= 0) {
+            return 1;
+          } else return -1;
+        });
+      } else {
+        arrSort.sort(function (a, b) {
+          if (a - b >= 0) {
+            return -1;
+          } else return 1;
+        });
+      }
+      $(this).closest("table").children("tr:gt(0)").remove();
+      for (i = 0; i < len; i++) {
+        tmp = arr.index(arrSort[i]);
+        $(this).closest("table").append(row[tmp]);
+      }
+    })
+
+  })
 // const r = /^(\d|[1-9]\d{1,})$/; // 必须有小括号,注意优先级
 //console.log('01'.charCodeAt());//默认为索引0
 // console.log(parseInt('012a'),Number('012a'), +'012a'); //12,NaN,NaN

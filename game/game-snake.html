@@ -1,0 +1,177 @@
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title> 贪吃蛇 </title>
+	<style>
+		#mapbox {
+			font-family: 宋体;
+			font-size: 17px;
+			line-height: 100%;
+			height: 360px;
+			width: 430px;
+		}
+	</style>
+</head>
+
+<body>
+	<center>
+		<h2>贪吃蛇</h2>
+		<hr>
+		<div id="mapbox"></div>
+		<input type="button" value="开始" onclick="play()"> 得分：<span id="fan"></span>
+		<hr> 程序作者:dragonfly
+	</center>
+</body>
+<script>
+	////////////////////////// 
+	//        贪吃蛇        //  
+	//       OO+TextBox     //  
+	//  程序作者:dragonfly  //  
+	//////////////////////////  
+
+	var map;
+	var gott;
+
+	function play() {
+		clearInterval(gott);
+		map = new mapClass(25, 20);
+		document.onkeydown = keydown;
+		gott = setInterval("map.snake.go()", 150);
+	}
+
+	function keydown(e) {
+		e = e || event;
+		switch (e.keyCode) {
+			case 38:
+				map.snake.refx(0);
+				break;
+			case 39:
+				map.snake.refx(1);
+				break;
+			case 40:
+				map.snake.refx(2);
+				break;
+			case 37:
+				map.snake.refx(3);
+				break;
+			case 17:
+				map.snake.stoporrun();
+				break;
+		}
+	}
+	function mapClass(x, y) {
+		this.x = x;
+		this.y = y;
+		this.sq = "■";
+		this.sk = "　";
+		this.marr = [];
+		for (var iy = 0; iy < this.y; iy++) {
+			this.marr[iy] = [];
+			for (var ix = 0; ix < this.x; ix++) {
+				this.marr[iy][ix] = (ix == 0 || iy == 0 || ix == this.x - 1 || iy == this.y - 1) ? this.sq : this.sk;
+			}
+		}
+		this.snake = new snakeClass(this);
+		this.bean = new beanClass(this);
+		this.bean.newbean();
+		this.bean.addn();
+	}
+
+	mapClass.prototype.write = function () {
+		var str = "";
+		for (var ii = 0; ii < this.y; ii++) {
+			str += this.marr[ii].join("") + "<br />";
+		}
+		document.getElementById("mapbox").innerHTML = str;
+	}
+
+	mapClass.prototype.rexy = function (x, y, s) {
+		var str = s || this.sk;
+		this.marr[y][x] = str;
+	}
+
+	mapClass.prototype.jcxy = function (x, y, s) {
+		var str = s || this.sk;
+		return this.marr[y][x] == str;
+	}
+
+	////////////////////////////////////////////  
+
+	function snakeClass(po) {
+		this.parent = po;
+		this.mt = "●";
+		this.boarr = [];
+		this.bolength = 4;
+		this.fang = 1;
+		this.fangtt = 1;
+		this.stop = false;
+		this.boarr[0] = this.addbody(3, 5);
+		this.parent.rexy(this.boarr[0].x, this.boarr[0].y, this.mt);
+	}
+
+	snakeClass.prototype.go = function () {
+		if (this.stop) return;
+		this.fang = this.fangtt;
+		var x = this.boarr[0].x + [0, 1, 0, -1][this.fang];
+		var y = this.boarr[0].y + [-1, 0, 1, 0][this.fang];
+		var chi = this.parent.jcxy(x, y, this.parent.bean.mt);
+		if (!this.parent.jcxy(x, y) && !chi) {
+			clearInterval(gott);
+			alert("Game Over!");
+			return;
+		}
+		if (chi) {
+			this.bolength++;
+			this.parent.bean.addn();
+			this.parent.bean.newbean();
+		}
+		this.parent.rexy(x, y, this.mt);
+		this.boarr = [].concat(this.addbody(x, y), this.boarr);
+		if (this.boarr.length > this.bolength) {
+			var tb = this.boarr.pop();
+			this.parent.rexy(tb.x, tb.y);
+		}
+		this.parent.write();
+	}
+
+	snakeClass.prototype.addbody = function (x, y) {
+		return {
+			x: x,
+			y: y
+		};
+	}
+
+	snakeClass.prototype.refx = function (n) {
+		if (Math.abs(this.fang - n) != 2)
+			this.fangtt = n;
+	}
+
+	snakeClass.prototype.stoporrun = function () {
+		this.stop = !this.stop;
+	}
+
+	////////////////////////////////////////////  
+
+	function beanClass(po) {
+		this.parent = po;
+		this.mt = "◎";
+		this.sne = -100;
+	}
+
+	beanClass.prototype.addn = function () {
+		this.sne += 100;
+		document.getElementById("fan").innerHTML = this.sne;
+	}
+
+	beanClass.prototype.newbean = function () {
+		var x = Math.floor(Math.random() * (this.parent.x - 2)) + 1;
+		var y = Math.floor(Math.random() * (this.parent.y - 2)) + 1;
+		if (this.parent.jcxy(x, y))
+			this.parent.rexy(x, y, this.mt);
+		else
+			this.newbean();
+	}
+</script>
+
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>打飞机</title>
+</head>
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+		list-style: none
+	}
+
+	#sky {
+		overflow: hidden;
+		position: relative;
+		width: 330px;
+		height: 540px;
+		background: #c3c8c9;
+		margin: 30px auto;
+	}
+
+	#plane {
+		position: absolute;
+		width: 66px;
+		height: 80px;
+		background: #0C6;
+		top: 450px;
+		left: 140px;
+		background: url(../images/hero_fly_1.png)
+	}
+
+	#startGame {
+		width: 250px;
+		height: 40px;
+		line-height: 40px;
+		box-shadow: 1px 1px 2px;
+		border-radius: 15px;
+		position: absolute;
+		top: 250px;
+		left: 40px;
+		text-align: center;
+		font-family: '微软雅黑';
+		font-weight: bold;
+		cursor: pointer;
+		background: #CCC
+	}
+
+	#startGame:hover {
+		background: #fff
+	}
+
+	#score {
+		height: 40px;
+		width: 100%;
+		text-indent: 20px;
+		line-height: 40px;
+	}
+
+	.foe {
+		height: 24px;
+		width: 34px;
+		position: absolute;
+		top: 0;
+		z-index: 1;
+		background: url(../images/enemy1_fly_1.png);
+	}
+
+	.foe1 {
+		width: 46px;
+		height: 60px;
+		background: url(../images/enemy3_fly_1.png);
+		position: absolute;
+		top: 0;
+		z-index: 2;
+	}
+
+	.attack {
+		height: 10px;
+		width: 6px;
+		background: #900;
+		position: absolute;
+	}
+</style>
+<script>
+	window.onload = function () {
+		var game = new Planegame();
+		game.start()
+	}
+
+	function Planegame() {
+		this.oStart = document.getElementById('startGame');
+		this.oSky = document.getElementById('sky');
+		this.oPlane = document.getElementById('plane');
+		this.oScore = document.getElementById('score').getElementsByTagName('strong')[0];
+		this.iTotal = 0; //得分总计
+		this.iNow = 0; //判断 临时 存储 this.iTotal 
+		this.speed = 1; //敌方飞空下降速度
+
+
+		//元素大小
+		this.planeW = 66;
+		this.planeH = 80;
+		this.foeW = 34;
+		this.foeH = 24;
+		this.foe1W = 46;
+		this.foe1H = 60;
+		this.foe2W = 110;
+		this.foe2H = 164;
+	}
+	Planegame.prototype = {
+		start: function () {
+			var _this = this;
+			this.oStart.onclick = function () {
+				this.style.display = 'none';
+				_this.foe();
+				_this.mouseMove();
+
+			}
+
+			this.fImg = new Image;
+			this.f1Img = new Image;
+			//图片加载	   
+
+		}, //初始化
+		foe: function () {
+			var _this = this;
+			setInterval(function () {
+
+				var oFoe = document.createElement('p');
+				oFoe.className = 'foe';
+				oFoe.index = 0;
+				_this.oSky.appendChild(oFoe);
+				oFoe.style.left = Math.round(Math.random() * 300) + 'px';
+				_this.slid(oFoe)
+
+
+			}, 200)
+			//创建小飞机
+			setInterval(function () {
+				cre();
+				cre();
+
+			}, 10000)
+
+			function cre() {
+				var oFoe1 = document.createElement('p');
+				oFoe1.className = 'foe1';
+				oFoe1.index = 1;
+				_this.oSky.appendChild(oFoe1);
+				oFoe1.style.left = Math.round(Math.random() * 300) + 'px';
+				_this.slid(oFoe1)
+
+
+			}; //创建大飞机
+			_this.attack();
+		}, //创建敌机
+		slid: function (Ele) {
+			var _this = this;
+			var L = Ele.offsetLeft;
+
+			var oTimer = setInterval(function () {
+				var T = Ele.offsetTop;
+				var planeT = _this.oPlane.offsetTop;
+				var planeL = _this.oPlane.offsetLeft;
+
+				if (T >= 540 - _this.foeH) {
+					clearInterval(oTimer);
+					_this.oSky.removeChild(Ele);
+				}; //到达底部消失
+				if (L + _this.foeW > planeL && L < planeL + _this.planeW && T + _this.foeH > planeT && planeT + _this.planeH > T) {
+
+					_this.oSky.removeChild(Ele);
+
+					clearInterval(oTimer);
+					alert('GAME OVER')
+					window.location.reload();
+
+				}
+
+				if (_this.iTotal - _this.iNow >= 50000) {
+					_this.speed++;
+					_this.iNow = _this.iTotal
+				}
+				if (Ele.index == 0) {
+					Ele.style.top = T + _this.speed + "px";
+				} else {
+					Ele.style.top = T + _this.speed + 1 + "px";
+				}
+
+			}, 10) //敌机运动
+		},
+		attack: function () {
+			var _this = this;
+			setInterval(function () {
+
+				var oAttack = document.createElement('div');
+				oAttack.className = 'attack';
+				_this.oSky.appendChild(oAttack);
+				oAttack.style.left = _this.oPlane.offsetLeft + _this.planeW / 2 - 3 + 'px';
+				oAttack.style.top = _this.oPlane.offsetTop - 12 + 'px';
+				_this.gotoAttack(oAttack)
+
+			}, 50)
+		}, //创建子弹
+		gotoAttack: function (Ele) {
+			var _this = this;
+			var oTime = setInterval(function () {
+				var T = Ele.offsetTop;
+				var L = Ele.offsetLeft;
+
+				var allP = _this.oSky.getElementsByTagName('p');
+				for (var i = 0; i < allP.length; i++) {
+					var foeT = allP[i].offsetTop;
+					var foeL = allP[i].offsetLeft;
+
+					if (L + 8 > foeL && L < foeL + _this.foeW && foeT + _this.foeH >= T && T + 12 > foeT) {
+						if (allP[i].index == 0) {
+							allP[i].style.background = 'url(' + _this.fImg.src + ')';
+
+							var iTem = allP[i]
+							setTimeout(function () {
+								try {
+									_this.oSky.removeChild(iTem);
+								} catch (e) { }
+							}, 100)
+							_this.oScore.innerHTML = _this.iTotal += 1000;
+						} else {
+							allP[i].index++;
+							if (allP[i].index == 3) {
+								allP[i].style.background = 'url(' + _this.f1Img.src + ')';
+								var iTem = allP[i]
+								setTimeout(function () {
+									try {
+										_this.oSky.removeChild(iTem);
+									} catch (e) { }
+								}, 30)
+								_this.oScore.innerHTML = _this.iTotal += 3000;
+							} //打飞机被击中10下消失
+						} //两种飞机 
+
+
+						try {
+							_this.oSky.removeChild(Ele);
+						} catch (e) { }
+
+						clearInterval(oTime);
+					} //如果子弹击中			
+				}
+
+				if (T <= 0) {
+					_this.oSky.removeChild(Ele);
+					clearInterval(oTime);
+				};
+
+				Ele.style.top = T - _this.foeH + 'px';
+
+
+			}, 30)
+		}, //子弹运动
+		mouseMove: function () {
+			var _this = this;
+			var skyL = this.oSky.offsetLeft;
+			var skyT = this.oSky.offsetTop;
+			document.onmousemove = function (e) {
+				var e = e || event;
+				var X = e.clientX - skyL - 25;
+				var Y = e.clientY - skyT - 25;
+				if (X < 0) {
+					X = 0
+				} else if (X > 330 - _this.planeW) {
+					X = 330 - _this.planeW
+				};
+				if (Y < 0) {
+					Y = 0
+				} else if (Y > 540 - _this.planeH) {
+					Y = 540 - _this.planeH
+				};
+				_this.oPlane.style.left = X + 'px';
+				_this.oPlane.style.top = Y + 'px';
+			} //战机跟随鼠标移动
+
+		}
+
+	}
+</script>
+
+<body>
+	<div id="sky">
+		<div id='score'>
+			分数： <strong>0</strong>
+		</div>
+		<div id="plane">
+		</div>
+		<div id="startGame">
+			开始游戏
+		</div>
+	</div>
+</body>
+
+</html>

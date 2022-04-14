@@ -1,0 +1,229 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Star Clearing!</title>
+	<style>
+		body,
+		ul {
+			margin: 0;
+			padding: 0;
+		}
+
+		img {
+			border: 0;
+		}
+
+		#gameBox {
+			position: relative;
+			width: 447px;
+			height: 616px;
+			margin: 20px auto;
+			/* 	background-color: #ddd; */
+			padding: 8px;
+			text-align: center;
+		}
+
+		#gameBox span {
+			position: absolute;
+			font-size: 24px;
+		}
+
+		#board {
+			top: 6px;
+			right: 6px;
+			background-color: #a00;
+			color: yellow;
+			padding: 4px;
+			font-weight: bold;
+			border-radius: 6px;
+		}
+
+		#score {
+			display: none;
+			/* background-color: #00a; */
+			color: green;
+		}
+
+		#loading {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin: -33px 0 0 -33px;
+		}
+
+		#gameBox ul {
+			position: relative;
+			float: left;
+			display: table-cell;
+			height: 100%;
+			width: 42px;
+			margin-left: 3px;
+			list-style: none;
+			overflow: hidden;
+		}
+
+		#gameBox ul:first-child {
+			margin-left: 0;
+		}
+
+		#gameBox ul li {
+			position: absolute;
+			left: 0;
+		}
+
+		#gameBox ul li img {
+			display: block;
+			border-radius: 6px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="gameBox">
+		<img id="loading" src="images/ajax-loader.gif">
+	</div>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script>
+	$(function () {
+		var arr = [];
+		var Game = {
+			opts: {
+				row: 14,
+				col: 10,
+				totalScore: 0,
+				score: 0
+			},
+			init: function () {
+				var html = '';
+				for (var i = 0; i < Game.opts.col; i++) {
+					html += '<ul>';
+					for (var j = 0; j < Game.opts.row; j++) {
+						html += '<li style="bottom:' + (44 * j + 2) + 'px;" data-index="' + j + '"><img src="images/star_' + parseInt(Math.random() * 5) + '.png"></li>';
+					}
+					html += '</ul>';
+				}
+				html += '<span id="board">0</span><span id="score"></span>';
+				$('#gameBox').html(html);
+				this.bindEvent();
+			},
+			curImgSrc: '',
+			bindEvent: function () {
+				$('#gameBox').delegate('img', 'click', function () {
+					$('#gameBox img').removeClass('cur');
+
+					var $this = $(this),
+						$li = $this.parent();
+					var pos = {
+						bottom: $li.css('bottom'),
+						left: $li.parent().index() * 45 + 'px'
+					};
+					Game.curImgSrc = $this.attr('src')
+					Game.findCrossImgs($this); // 添加特别标志
+
+					// 选中多个时，执行消除，否则无变化
+					// 执行消除有两步：1、同颜色星星消除动画；2、填补空位
+					var len = $('#gameBox img.cur').length;
+					if (len > 2) {
+						var count = 0;
+
+						$('#gameBox ul').each(function () {
+							var $ul = $(this),
+								childCount = $ul.find('img:not(.cur)').length;
+							if (childCount < Game.opts.row) {
+								var html = '';
+								for (var i = Game.opts.row; i < Game.opts.row + (Game.opts.row - childCount); i++) {
+									html += '<li style="bottom:' + (44 * i + 2) + 'px;" data-index="' + i + '"><img src="images/star_' + parseInt(Math.random() * 5) + '.png"></li>';
+								}
+								$(html).appendTo($ul);
+							}
+						});
+
+						$('#gameBox img.cur').animate({
+							width: '0',
+							height: '0',
+							marginLeft: '21px',
+							marginBottom: '21px'
+						}, 500, function () {
+							$(this).parent().remove();
+							count++;
+							if (count == len) {
+								$('#gameBox ul').each(function () {
+									if (parseInt($(this).find("li:last").css("bottom")) > 574) {
+										$(this).find('li').each(function () {
+											var _this = $(this),
+												index = _this.data('index');
+											if (index != _this.index()) {
+												_this.data('index', _this.index());
+												_this.animate({
+													bottom: _this.index() * 44 + 2 + 'px'
+												}, 300);
+											}
+										});
+									} else {
+										return true;
+									}
+
+								})
+								Game.opts.totalScore += len;
+								$('#board').html(Game.opts.totalScore);
+								// 计算分数
+								$('#score').html(len).show().css({
+									bottom: pos.bottom,
+									left: pos.left,
+									opacity: 1
+								}).stop().animate({
+									bottom: '600px',
+									left: '450px',
+									opacity: 0
+								}, 2000, function () {
+									$(this).hide();
+								});
+								//判断是否为死局
+							}
+						});
+						Game.curImgSrc = '';
+					}
+				});
+			},
+			findCrossImgs: function ($img) {
+				$img.addClass('cur');
+
+				// 向四面展开对比
+				var $li = $img.parent(),
+					row = $li.index(),
+					$ul = $li.parent();
+
+				// 上
+				var $up = $li.next();
+				Game.isSame($up);
+				// 下
+				var $down = $li.prev();
+				Game.isSame($down);
+				// 左
+				var $leftCol = $ul.prev();
+				if ($leftCol.length > 0) {
+					Game.isSame($leftCol.find('li:eq(' + row + ')'));
+				}
+				// 右
+				var $rightCol = $ul.next();
+				if ($rightCol.length > 0) {
+					Game.isSame($rightCol.find('li:eq(' + row + ')'));
+				}
+			},
+			isSame: function ($li) {
+				if ($li.length > 0) {
+					var $img = $li.find('img');
+					if ($img.attr('src') == Game.curImgSrc && !$img.hasClass('cur')) {
+						Game.findCrossImgs($img);
+					}
+				}
+			}
+		};
+		Game.init();
+	});
+</script>
+
+</html>

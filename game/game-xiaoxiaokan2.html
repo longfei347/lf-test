@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>消消看</title>
+	<script src="../js/jquery.min.js"></script>
+</head>
+<style>
+	.box {
+		margin: auto;
+		border: 1px solid #000;
+		width: 800px;
+		height: 550px;
+	}
+
+	.counter {
+		text-align: center;
+	}
+
+	.tbl {
+		margin: auto;
+		border: 1px solid #333;
+		border-collapse: collapse;
+		transform: rotate(-90deg);
+	}
+
+	.tbl td {
+		border: 1px solid #666;
+		width: 40px;
+		height: 40px;
+		box-sizing: border-box;
+		cursor: pointer;
+	}
+
+	.tbl .red {
+		background-color: red;
+	}
+
+	.tbl .orange {
+		background-color: orange;
+	}
+
+	.tbl .yellow {
+		background-color: yellow;
+	}
+
+	.tbl .green {
+		background-color: green;
+	}
+
+	.tbl .blue {
+		background-color: blue;
+	}
+
+	.restrat {
+		text-align: center;
+	}
+</style>
+
+<body>
+	<div class="box">
+		<p class="note">消消看</p>
+		<div class="counter">
+			my-score: <span id="score">0</span>
+		</div>
+		<table class="tbl" id="chessboard">
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+		<p class="restrat">
+			<button type="button" onclick="init()">重新开始</button>
+		</p>
+	</div>
+</body>
+<script>
+	var color = ["red", "orange", "yellow", "green", "blue"], curColor;//0是红,1是橙,2是黄,3是绿,4是蓝
+	function init(argument) {
+		$("td").each(function (i, v) {
+			v.className = color[~~(Math.random() * 4)];//只选四种
+		})
+	}
+	init();
+	var modTds = [], count = 0,
+		chessboard = document.getElementById('chessboard'), curTd;
+	function putModify(row, col) {
+		var curDirection;
+		chessboard.rows[row].cells[col].classList.add('cur');
+		/*if (chessboard.rows[row].cells[col].classList.contains('cur')) {
+			return 0;
+		}*/
+		console.log(row, col)
+		count++;
+		if (row > 0 && chessboard.rows[row - 1].cells[col].className === curColor &&
+			!chessboard.rows[row - 1].cells[col].classList.contains('cur')) {//上
+			putModify(row - 1, col);
+			modTds.push(chessboard.rows[row - 1].cells[col]);
+		}
+		if (row < 9 && chessboard.rows[row + 1].cells[col].className === curColor &&
+			!chessboard.rows[row + 1].cells[col].classList.contains('cur')) {// 下
+			putModify(row + 1, col);
+			modTds.push(chessboard.rows[row + 1].cells[col]);
+		}
+		if (col > 0 && chessboard.rows[row].cells[col - 1].className === curColor &&
+			!chessboard.rows[row].cells[col - 1].classList.contains('cur')) {// 右
+			putModify(row, col - 1);
+			modTds.push(chessboard.rows[row].cells[col - 1]);
+		}
+		if (col < 9 && chessboard.rows[row].cells[col + 1].className === curColor &&
+			!chessboard.rows[row].cells[col + 1].classList.contains('cur')) {// 左
+			putModify(row, col + 1);
+			modTds.push(chessboard.rows[row].cells[col + 1]);
+		}
+	}
+	$("#chessboard").on("click", "td", function () {
+		var col = this.cellIndex,
+			row = this.parentNode.rowIndex,
+			ind = row * 10 + col, i = 0, j = 0;
+		curColor = this.className;
+		if (this.className === "") {
+			return 0;
+		}
+		modTds = [];
+		modTds.push(this);
+		// this.classList.add('cur');
+		putModify(row, col);
+		if (modTds.length === 1) {
+			return 0;
+		}
+		$("#score").html(+$("#score").html() + modTds.length * modTds.length);
+		modTds.forEach(function (v, i) {
+			v.removeAttribute("class");
+		})
+		var tdArr = [];
+		for (i = 0; i < 10; i++) {
+			$("tr").eq(i).append([].slice.call(chessboard.rows[i].cells).sort(function (a, b) {
+				if (a.className === '' && b.className !== '') {
+					return 1;
+				} else {
+					return 0;
+				}
+			}))
+			/*if (chessboard.rows[i].cells[0].className === '') {
+				chessboard.deleteRow(i);
+				chessboard.insertRow(9);
+			}*/
+		}
+
+		/*var j=0,tdArr=[],trs = [].slice.call(chessboard.rows);
+		for (i=0;i<10;i++) {
+			trs.f(function(v,i) {
+				for (var j=0;j<10;j++) {
+					tdArr.push(v.cells[j])
+				}
+			})
+			chessboard.rows
+		}*/
+		// check 相邻棋子
+		// putchess(row, col, player);
+	})
+</script>
+
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>俄罗斯方块游戏</title>
+	<style>
+		.GirdStyle {
+			border-left: solid #ffffff 1px;
+			border-top: solid #ffffff 1px;
+			border-right: solid #969696 1px;
+			border-bottom: solid #969696 1px;
+			font-size: 10pt;
+		}
+
+		table {
+			/* border-collapse:collapse;
+			border: 1px solid #000; */
+		}
+
+		#GameBody td,
+		#GameForecast td {
+			border: 1px solid #000;
+			width: 16px;
+			height: 16px;
+		}
+
+		.score {
+			border: 1px solid #000;
+			width: 130px;
+		}
+	</style>
+	<script src="../js/Russia_Tetris.js"></script>
+</head>
+
+<body onload="InitGame()" onkeydown="keyDown()">
+	<table>
+		<tr>
+			<td>
+				<div id="GameBody">
+					<!-- 游戏区域 -->
+				</div>
+			</td>
+			<td class="score">
+				<table>
+					<tr>
+						<td>
+							<div id="GameForecast">
+								<!--下一方格显示区-->
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td><br>
+							<p>
+								<button id="start" onclick="StartGame()">开始游戏</button>
+							</p>
+							<p>
+								<button id="pause" onclick="PauseGame()">暂停游戏</button>
+							</p>
+							<p>
+								<button id="over" onclick="OverGame()"> 结束游戏</button>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td><br>
+							<p>当前积分: <span id="gScore">0</span></p>
+							<p>当前级别: <span id="gLevel">0</span></p>
+							<p>已消行数: <span id="gLine">0</span></p>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
+
+</html>

@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="en" class="">
+
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<script src="../js/jquery.min.js"></script>
+	<style>
+		table#rowcol {
+			border-collapse: collapse;
+			width: 270px;
+			margin: 20px auto;
+			background-color: #eee;
+		}
+
+		#rowcol td {
+			width: 30px;
+			height: 24px;
+			border: 1px solid #ccc;
+			text-align: center;
+		}
+
+		#rowcol tr:nth-child(3) td {
+			border-bottom: #000 solid 2px;
+		}
+
+		#rowcol tr:nth-child(6) td {
+			border-bottom: #000 solid 2px;
+		}
+
+		/*	.bor-l0 {
+		border-left-color:#000;
+	}*/
+
+		#rowcol tr td:nth-child(3) {
+			border-right: #000 solid 2px;
+		}
+
+		#rowcol tr td:nth-child(6) {
+			border-right: #000 solid 2px;
+		}
+
+		#rowcol input {
+			border: none;
+			width: 30px;
+			height: 24px;
+			font-size: 18px;
+			line-height: 24px;
+			text-align: center;
+		}
+
+		#rowcol .to-fill {
+			background-color: #0ff;
+		}
+
+		p.change {
+			width: 500px;
+			margin: 10px auto;
+		}
+
+		.change input {
+			width: 80px;
+		}
+
+		#check {
+			border: none;
+			padding: 10px 20px;
+			background-color: #f60;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		.tc {
+			text-align: center;
+		}
+
+		#start {
+			background-color: #f90;
+		}
+	</style>
+</head>
+
+<body>
+	<h1 style="width:500px;margin:auto">数独游戏,九宫格,会玩的可以测试一下反应速度,不会玩的百度去吧!</h1>
+	<!-- <p style="line-height:28px;"><span style="color:#f60">1408****9149</span>
+		<a href='javascript:void();' class='sendmobile'>发送到手机</a>
+		<input type="text" onkeyup="value=value.replace(/^0|[^0-9]/g,'')">
+	</p>
+	<input type="text" onkeyup="console.log(event.keyCode)"> contenteditable-->
+	<table id="rowcol">
+		<tbody>
+			<tr>
+				<td>
+					<input type="text" maxlength="1" value="1">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="2">
+				</td>
+				<td class="bor-l0">
+					<input type="text" maxlength="1" value="3">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="4">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="5">
+				</td>
+				<td class="bor-l0">
+					<input type="text" maxlength="1" value="6">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="7">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="8">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="9">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="text" maxlength="1" value="4">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="5">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="6">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="7">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="8">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="9">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="1">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="2">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="3">
+				</td>
+			</tr>
+			<tr class="bor-b0">
+				<td>
+					<input type="text" maxlength="1" value="7">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="8">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="9">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="1">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="2">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="3">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="4">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="5">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="6">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="text" maxlength="1" value="2">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="3">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="4">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="5">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="6">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="7">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="8">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="9">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="1">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="text" maxlength="1" value="5">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="6">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="7">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="8">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="9">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="1">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="2">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="3">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="4">
+				</td>
+			</tr>
+			<tr class="bor-b0">
+				<td>
+					<input type="text" maxlength="1" value="8">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="9">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="1">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="2">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="3">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="4">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="5">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="6">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="7">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="text" maxlength="1" value="3">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="4">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="5">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="6">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="7">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="8">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="9">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="1">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="2">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="text" maxlength="1" value="6">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="7">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="8">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="9">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="1">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="2">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="3">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="4">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="5">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="text" maxlength="1" value="9">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="1">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="2">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="3">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="4">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="5">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="6">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="7">
+				</td>
+				<td>
+					<input type="text" maxlength="1" value="8">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<!-- <p class="change">
+		行:
+		<input type="text" name="row1" id="row1">行:
+		<input type="text" name="row2" id="row2">
+		<button id="changeRow">交换</button>(只能交换1-3,4-6,7-9内的行)</p>
+	<p class="change">
+		列:
+		<input type="text" name="col1" id="col1">列:
+		<input type="text" name="col2" id="col2">
+		<button id="changeCol">交换</button>(只能交换1-3,4-6,7-9内的列)</p> -->
+	<p class="change">
+		行:
+		<input type="text" name="row1" id="row1" value="1">
+		<button id="rowUp">上移</button>
+		<button id="rowDown">下移</button> (可用上下方向键移动)
+	</p>
+	<p class="change">
+		列:
+		<input type="text" name="col1" id="col1" value="1">
+		<button id="colLeft">左移</button>
+		<button id="colRight">右移</button> (可用左右方向键移动)
+	</p>
+	<p class="change">
+		等级选择:
+		<select name="" id="selLevel" class="selLevel">
+			<option value="0">请选择</option>
+			<option value="1">容易</option>
+			<option value="2">一般</option>
+			<option value="3" selected>中等</option>
+			<option value="4">较难</option>
+			<option value="5">很难</option>
+		</select>
+		<button id="start">重新开始</button> <br>
+
+		<button class="fillRect1">特殊矩形1</button>
+		<button class="fillRect2">特殊矩形2</button>
+		<button class="fill2">特殊形状2</button>
+		<button class="fill3">特殊形状3</button>
+		<button class="fill4">特殊形状4</button>
+		<button class="fill5">特殊形状5</button>
+		<button class="fill6">特殊形状6</button>
+		<button class="fillX1">X形1</button>
+		<button class="fillX2">X形2</button>
+
+	</p>
+	<p class="tc change">
+		<button id="check">检查结果</button>
+	</p>
+</body>
+<script>
+	var tds = [1, 2, 3, 4, 5, 6, 7, 8, 9,
+		4, 5, 6, 7, 8, 9, 1, 2, 3,
+		7, 8, 9, 1, 2, 3, 4, 5, 6,
+		2, 3, 4, 5, 6, 7, 8, 9, 1,
+		5, 6, 7, 8, 9, 1, 2, 3, 4,
+		8, 9, 1, 2, 3, 4, 5, 6, 7,
+		3, 4, 5, 6, 7, 8, 9, 1, 2,
+		6, 7, 8, 9, 1, 2, 3, 4, 5,
+		9, 1, 2, 3, 4, 5, 6, 7, 8],
+		numArr = [], shuffleNum = 20;
+	for (var i = 0; i < 81; i++) {
+		numArr[i] = i;
+	}
+	$(function () {
+		function shuffleRandom(n) {
+			var i = 0,
+				ran, rc, move, rcval;
+			$("#rowcol input").each(function (i) {
+				this.value = tds[i];
+			});
+			for (; i < n; i++) {
+				ran = Math.random().toFixed(3),
+					rc = ran > 0.5 ? 1 : 0,
+					move = ran * 1000 % 2 == 1 ? 1 : 0,
+					rcval = Math.floor(Math.random() * 9) + 1;
+				shuffleRowCol(rc, rcval, move);
+			}
+			$("#rowcol input").each(function (i) {
+				tds[i] = +this.value;
+			});
+		};
+		// tds = [];
+		shuffleRandom(shuffleNum);
+		function init(level) {
+			var shuffleUseSort = function (aArr) {
+				return aArr.sort(function (a, b) {
+					return (0.5 - Math.random());
+				});
+			}
+			shuffleUseSort(numArr);
+			// var tds = [];
+			$("#rowcol input").each(function (i) {
+				$(this).removeClass("to-fill").val(tds[i]);
+			});
+			if (!level) {
+				$("#selLevel").val() !== "0" ? (level = +$("#selLevel").val())
+					: (level = 3, $("#selLevel").val("3"));
+			}
+			for (i = 0; i < level * 10 + 10; i++) {
+				$("#rowcol input:eq(" + numArr[i] + ")").val("").attr("class", "to-fill");
+			}
+
+		}
+		init();
+		var fillRect = function (arr) {
+			var emptyRect = function (arrs) {
+				var i = 0,
+					emptys = [0, 1, 2, 9, 10, 11, 18, 19, 20],
+					nRect = [0, 3, 6, 27, 30, 33, 54, 57, 60], adds,
+					totals = [];
+				if ($.isArray(arrs)) {
+					for (; i < arrs.length; i++) {
+						/*totals = totals.concat($.map(emptys, function(val) {
+							return nRect[arrs[i] - 1] + val;
+						}));*/
+						adds = nRect[arrs[i] - 1];
+						totals = totals.concat(emptys.map(function (v) {
+							return v + adds;
+						}))
+					}
+				}
+				return totals;
+			};
+			$("#rowcol input").each(function (i) {
+				$(this).removeClass("to-fill").val(tds[i]);
+			})
+			$.each(emptyRect(arr), function (i, val) {
+				$("#rowcol input:eq(" + val + ")").val("").attr("class", "to-fill");
+			})
+		},
+			fillX = function (fill) {
+				var i, fillArr = [];
+				for (i = 0; i < 9; i++) {
+					if (i == 0) {
+						fillArr.push(9 * i + i + 1);
+						fillArr.push(9 * i + 7 - i);
+					} else if (i == 8) {
+						fillArr.push(9 * i + 9 - i);
+						fillArr.push(9 * i + i - 1);
+					} else {
+						fillArr.push(9 * i + i - 1);
+						fillArr.push(9 * i + i + 1);
+						fillArr.push(9 * i + 7 - i);
+						fillArr.push(9 * i + 9 - i);
+					}
+				}
+				if (fill) {
+					$("#rowcol input").each(function (i) {
+						$(this).removeClass("to-fill").val(tds[i]);
+					})
+
+					$.each(fillArr, function (i, val) {
+						$("#rowcol input:eq(" + val + ")").val("").attr("class", "to-fill");
+					})
+				} else {
+					$("#rowcol input").addClass("to-fill").val("");
+					$.each(fillArr.sort(function (a, b) {
+						return a - b
+					}), function (i, val) {
+						$("#rowcol input:eq(" + val + ")").val(tds[val]).removeClass("to-fill");
+					})
+				}
+			},
+			fillMod = function (mod) {
+				mod = mod || 3
+				$("#rowcol input").each(function (i) {
+					if (i % mod == 0) {
+						$("#rowcol input:eq(" + i + ")").val("").attr("class", "to-fill");
+					} else {
+						$(this).removeClass("to-fill").val(tds[i]);
+					}
+
+				})
+			};
+		$(".fillRect1").on("click", function () {
+			fillRect([1, 3, 7, 9]);
+		})
+		$(".fillRect2").on("click", function () {
+			fillRect([2, 4, 6, 8]);
+		})
+		$(".fill2").on("click", function () {
+			fillMod(2);
+		})
+		$(".fill3").on("click", function () {
+			fillMod(3);
+		})
+		$(".fill4").on("click", function () {
+			fillMod(4)
+		})
+		$(".fill5").on("click", function () {
+			fillMod(5)
+		})
+		$(".fill6").on("click", function () {
+			fillMod(6)
+		})
+		$(".fillX1").on("click", function () {
+			fillX(1);
+		})
+		$(".fillX2").on("click", function () {
+			fillX(0);
+		})
+		$("#rowcol").on("keyup", function (e) {
+			var index = $(e.target).index("#rowcol input"),
+				tar = e.target;
+			if (e.keyCode == 8 || e.keyCode == 9) {
+			} else if (e.keyCode == 38) {
+				if (index > 8) {
+					$("#rowcol input").eq(index - 9).focus();
+				} else {
+					$("#rowcol input").eq(index + 72).focus();
+				}
+			} else if (e.keyCode == 40) {
+				if (index > 71) {
+					$("#rowcol input").eq(index - 72).focus();
+				} else {
+					$("#rowcol input").eq(index + 9).focus();
+				}
+			} else if (e.key > 0 && e.key <= 9) {// e.keyCode > 48 && e.keyCode < 58
+				tar.value = e.key;//e.keyCode - 48;
+			} else if (e.keyCode == 37) {
+				if (index % 9 > 0) {
+					$("#rowcol input").eq(index - 1).focus();
+				} else {
+					$("#rowcol input").eq(index + 8).focus();
+				}
+			} else if (e.keyCode == 39) {
+				if ((index + 1) % 9 == 0) {
+					$("#rowcol input").eq(index - 8).focus();
+				} else {
+					$("#rowcol input").eq(index + 1).focus();
+				}
+			} else {
+				tar.value = 1;
+			}
+		})
+		$(".change input").on("keyup", function (e) {
+			var rowval, colval;
+			this.value = this.value.replace(/[^1-9]/, "").replace(/\d(\d)/, "$1");
+			rowval = $("#row1").val() ? +$("#row1").val() : 1,
+				colval = $("#col1").val() ? +$("#col1").val() : 1;
+			if (this.id == "row1") {
+				if (e.keyCode == 38) {
+					shuffleRowCol(0, rowval, 0)
+				} else if (e.keyCode == 40) {
+					shuffleRowCol(0, rowval, 1)
+				}
+			} else {
+				if (e.keyCode == 37) {
+					shuffleRowCol(1, colval, 0)
+				} else if (e.keyCode == 39) {
+					shuffleRowCol(1, colval, 1)
+				}
+			}
+		})
+		$(".change button").on("click", function () {
+			var rowval1 = +$("#row1").val(),
+				colval1 = +$("#col1").val()
+			// chR = rowval1%3
+			// chRow = Math.ceil(rowval1/3)
+			// chC = colval1%3
+			// chCol = Math.ceil(colval1/3)
+			if (this.id == "rowUp") {
+				shuffleRowCol(0, rowval1, 0)
+			} else if (this.id == "rowDown") {
+				shuffleRowCol(0, rowval1, 1)
+			} else if (this.id == "colLeft") {
+				shuffleRowCol(1, colval1, 0)
+			} else if (this.id == "colRight") {
+				shuffleRowCol(1, colval1, 1)
+			} else if (this.id == "start") {
+				shuffleRandom(shuffleNum);
+				init();
+			}
+		})
+		$(".selLevel").change(function () {
+			var val = +this.value;
+			if (!val) {
+				$("#rowcol input").val("").removeClass('to-fill');
+			} else {
+				init(val);
+			}
+		});
+		$("#check").click(checkFill);
+	});
+	/**
+	 * [shuffleRowCol description]
+	 * @param  {[num]}0 move row,1 move col
+	 * @param  {[num]}1-9 move row or col
+	 * @param  {[num]}0,1 0 move top or left, 1 move bottom or right
+	 * @return {[num]}
+	 */
+	function shuffleRowCol(rc, rcval, move) {
+		var chR = rcval % 3,
+			chRow = Math.ceil(rcval / 3) - 1,
+			tbl = $("#rowcol")[0],
+			tbody = $("#rowcol tbody")[0];
+		if (rc) {
+			if (move) {
+				if (chR == 0) {
+					$("#rowcol tr").each(function () {
+						this.insertBefore(this.cells[rcval - 1], this.cells[chRow * 3]);
+					})
+				} else {
+					$("#rowcol tr").each(function () {
+						this.insertBefore(this.cells[rcval], this.cells[rcval - 1]);
+					})
+					//tbl.rows[rcval-1].insertBefore(tbl.rows[rcval-1].cells[rcval], tbl.rows[rcval-1].cells[rcval]);
+				}
+			} else {
+				if (chR == 1) {
+					$("#rowcol tr").each(function () {
+						$(this.cells[rcval - 1]).insertAfter(this.cells[chRow * 3 + 2])
+						//this.insertBefore(this.cells[rcval-1], this.cells[chRow*3 + 2]);
+					})
+				} else {
+					$("#rowcol tr").each(function () {
+						this.insertBefore(this.cells[rcval - 1], this.cells[rcval - 2]);
+					})
+				}
+			}
+		} else {
+			if (move) {
+				if (chR == 0) {
+					tbody.insertBefore(tbl.rows[rcval - 1], tbl.rows[chRow * 3]);
+				} else {
+					tbody.insertBefore(tbl.rows[rcval], tbl.rows[rcval - 1]);
+				}
+			} else {
+				if (chR == 1) {
+					$(tbl.rows[rcval - 1]).insertAfter($(tbl.rows[chRow * 3 + 2]))
+					//tbody.insertBefore(tbl.rows[rcval-1], tbl.rows[chRow*3 + 2]);
+				} else {
+					tbody.insertBefore(tbl.rows[rcval - 1], tbl.rows[rcval - 2]);
+				}
+			}
+		}
+	}
+
+	function checkFill() {
+		var fills = [],
+			i = 0,
+			j = 1,
+			rowSum = 0;
+		$("#rowcol input").each(function () {
+			fills.push(+this.value);
+		});
+		//if(arraySum(fills) !=405) 
+		for (; i < 9; i++) {
+			rowSum = 0
+			$.each([0, 1, 2, 3, 4, 5, 6, 7, 8], function (val) {
+				rowSum += fills[val * 9 + i]
+			})
+			if (arraySum(fills.slice(i * 9, i * 9 + 9)) == 45 && rowSum == 45) {
+				continue;
+			} else {
+				alert("您的输入结果不正确,请重新输入!");
+				if (!confirm("继续填写吗?")) {
+					$(".selLevel").trigger("change");
+				}
+				return false;
+			}
+		}
+		alert("恭喜您输入正确! 你真聪明!")
+		return true;
+	}
+
+	function arraySum(arr) {
+		var i = 0,
+			len = arr.length,
+			sum = 0;
+		arr.sort();
+		for (i; i < len; i++) {
+			if (arr[i] != i + 1) {
+				return false;
+			}
+			sum += arr[i];
+		}
+		return sum;
+	}
+</script>
+
+</html>

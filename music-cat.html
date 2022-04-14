@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>music</title>
+</head>
+<style>
+#list {
+  margin-top: 55px;
+}
+
+#list ul {
+  display: flex;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  padding: 0;
+  list-style: none;
+  counter-reset: item;
+}
+
+#list li {
+  display: inline-block;
+  width: 250px;
+  cursor: pointer;
+}
+
+#list li:before {
+  content: counter(item)'. ';
+  counter-increment: item;
+}
+
+#list li:hover,
+#list li.active {
+  color: #f90;
+}
+
+#list p {
+  margin: 0;
+  line-height: 2;
+  background-color: #09f;
+}
+
+.btn {
+  border: none;
+  margin-left: 15px;
+  height: 28px;
+  line-height: 28px;
+  background-color: #f90;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.nav {
+  position: fixed;
+  top: 0;
+  height: 55px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eee;
+}
+
+.sele,
+.del,
+.none {
+  display: none;
+}
+
+#list .none {
+  display: none;
+}
+
+.edit .sele,
+.edit .del {
+  padding-left: 12px;
+  display: inline;
+}
+</style>
+
+<body>
+  <div id="app" class="nav">
+    <audio src="" autoplay="" controls="" volume="0.1" id="audio"></audio>
+    <button class="btn" id="prev" title="ctrl+left">上一首</button>
+    <button class="btn" id="next" title="ctrl+right">下一首</button>
+    <button class="btn" id="playType">顺序播放</button>
+    <button class="btn" id="edit">编辑</button>
+      <button class="btn" id="save">保存</button>
+  </div>
+  <div id="list">
+    <div style="margin-left: 15px;">
+      <span>播放列表:</span>
+      <select name="" id="sel" @change="doSel">
+        <option v-for="(itm,index) in listArr" :value="index">{{itm}}</option>
+        <!-- <option value="2">最新的</option> -->
+      </select>
+      <span>共{{lists.length}}</span>
+    </div>
+    <div @click="doPlay">
+      <p @click="showMy">我喜欢的 - 共{{musicListTotal}}</p>
+      <ul id="list2" v-show="showMyList"></ul>
+      <p>{{listArr[index]}}</p>
+      <ul id="list1">
+        <li v-for="item in lists" :data-src="item">{{item.match(/[^\/]+$/)[0].slice(0,-4)}}<span class="sele">&#10004;</span></li>
+      </ul>
+    </div>
+  </div>
+</body>
+<script src="list2.js"></script>
+<script src="vue.min.js"></script>
+<script>
+let audio = document.getElementById('audio')
+let playType = document.getElementById('playType')
+var musicList = JSON.parse(localStorage.getItem('musicList') || '[]'), list1, list2, curList = 1;
+var vm = new Vue({
+  el: '#list',
+  data() {
+    return {
+      index: 0,
+      showMyList: true,
+      listArr: Object.keys(list),
+      musicListTotal: 0,
+      lists: []
+    }
+  },
+  mounted() {
+    this.lists = list[this.listArr[0]];
+    this.musicListTotal = musicList.length;
+    initList('list2')
+  },
+  methods: {
+    doSel() {
+      let sindex = document.querySelector("#sel").value
+      this.lists = list[this.listArr[sindex]]
+    },
+    showMy() {
+      this.showMyList = !this.showMyList
+    },
+    doPlay() {
+
+    }
+  }
+})
+
+let playFlag = 0; //0,顺序播放,1,单曲循环,2,随机播放
+audio.volume = 0.2
+playType.addEventListener('click', function() {
+  if (playFlag === 0) {
+    playFlag = 1;
+    audio.loop = true;
+    playType.innerHTML = '单曲循环'
+  } else if (playFlag === 1) {
+    playFlag = 2;
+    audio.loop = false;
+    playType.innerHTML = '随机播放'
+  } else if (playFlag === 2) {
+    playFlag = 0;
+    audio.loop = false;
+    playType.innerHTML = '顺序播放'
+  }
+})
+function initList(id) {
+  list1 = document.getElementById('list1')
+  list2 = document.getElementById('list2')
+  if (id === 'list') {
+    list1.innerHTML = list.map(item => `<li data-src="${item}">${item.match(/[^\/]+$/)[0].slice(0,-4)}<span class="sele">&#10004;</span><span class="del">&#10006;</span>`).join('')
+    list = null;
+  } else {
+    list2.innerHTML = musicList.map(item => `<li data-src="${item}">${item.match(/[^\/]+$/)[0].slice(0,-4)}<span class="sele">&#10004;</span><span class="del">&#10006;</span>`).join('')
+  }
+}
+document.getElementById('list').addEventListener('click', function(e) {
+  if (e.target.nodeName === 'LI') {
+    curDom = e.target;
+    curList = curDom.parentNode.id;
+    audio.src = curDom.dataset.src;
+    document.querySelector('#list .active') && document.querySelector('#list .active').classList.remove('active')
+    curDom.classList.add('active')
+    audio.title = curDom.dataset.src.match(/[^/]+$/g)[0]
+    audio.play();
+  } else if (e.target.classList.contains('sele')) {
+    let li = e.target.parentNode.dataset.src
+    if (!musicList.includes(li)) {
+      musicList.push(li)
+    }
+  } else if (e.target.classList.contains('del')) {
+    let li = e.target.parentNode.dataset.src
+    let ind = musicList.indexOf(li)
+    musicList.splice(ind, 1)
+    e.target.parentNode.remove()
+  }
+})
+let curDom = list2.childNodes[0];
+let prevDom = curDom;
+audio.src = curDom.dataset.src;
+let getRandom = () => {
+  let ul = curList === 'list1' ? list1 : list2;
+  prevDom = curDom;
+  curDom = ul.children[Math.ceil(Math.random() * ul.children.length) - 1];
+}
+audio.addEventListener('ended', function(e) {
+  if (playFlag === 2) {
+    getRandom()
+    curDom.click();
+    return;
+  }
+  curDom.nextSibling && curDom.nextSibling.click();
+})
+document.getElementById('prev').addEventListener('click', function(e) {
+  curDom.previousSibling && curDom.previousSibling.click();
+})
+document.getElementById('next').addEventListener('click', function(e) {
+  if (playFlag === 2) {
+    getRandom()
+    curDom.click();
+    return;
+  }
+  curDom.nextSibling && curDom.nextSibling.click()
+})
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === ' ' && e.target !== audio) {
+    e.preventDefault();
+    audio.paused ? audio.play() : audio.pause();
+  } else if (e.keyCode === 37 && e.ctrlKey) {
+    curDom.previousSibling && curDom.previousSibling.click();
+  } else if (e.keyCode === 39 && e.ctrlKey) {
+    curDom.nextSibling && curDom.nextSibling.click()
+  }
+})
+
+
+document.getElementById('edit').addEventListener('click', function(e) {
+  document.querySelector('#list').classList.toggle('edit')
+})
+document.getElementById('save').addEventListener('click', function(e) {
+  let sel = document.querySelector('#sel').value
+  localStorage.setItem('musicList', JSON.stringify(musicList))
+  document.querySelector('#list').classList.toggle('edit')
+  initList('list2')
+})
+/*document.querySelector('#sel').addEventListener('change', function(e) {
+  if (this.value == '0') {
+    list1.classList.remove('none')
+    list2.classList.add('none')
+  } else if (this.value == '1') {
+    list1.classList.add('none')
+    list2.classList.remove('none')
+  }
+})*/
+</script>
+
+</html>

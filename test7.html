@@ -49,9 +49,16 @@
       background-color: #f00;
     }
   }
+  .aa {
+    height: 50px;
+  }
+  .aa:hover {
+    height: 100px;
+  }
 </style>
 <body>
   <div id="app">
+    <div class="aa">aa</div>
     <h2>所有链接</h2>
     <!-- <h1 style="text-align: center; font-size: 15pc;">福</h1> -->
     <h5>{{long}}&#10;123</h5>
@@ -137,6 +144,7 @@ function extendDeepCopy(obj,newobj){
     }
     return newobj;
 }
+
 // let a=extendDeepCopy(function(){console.log(1)})
 // let a=extendDeepCopy(new Date('2022-02-06'))
 /*try {
@@ -148,7 +156,6 @@ let RunScriptUtil = {}
 RunScriptUtil.tqlEscape = function(str) {
   return str;
 }
-var productLineTql = productLineCode ? " and product_line_code = '" + RunScriptUtil.tqlEscape(productLineCode) + "'" : "";
 //判断权限审批模型ncuc_review_auth_control中是否有相同的数据
 var tql = "select uuid from ncuc_review_auth_control where account_id = '" + RunScriptUtil.tqlEscape(accountId) + "' and review_type = '" + RunScriptUtil.tqlEscape(reviewType)
     + "' and dept_code = '" + RunScriptUtil.tqlEscape(deptCode) + "' and office_code = '" + RunScriptUtil.tqlEscape(officeCode)
@@ -156,7 +163,5 @@ var tql = "select uuid from ncuc_review_auth_control where account_id = '" + Run
 var authControlResults = invokeTql(tql).body.result.results;
 
 
-var productLineTql = productLineCode ? " and product_line_code = '" + RunScriptUtil.tqlEscape(productLineCode) + "'" : "";
-productLineCode.split(',').map(itm => "product_line_code contains '" + RunScriptUtil.tqlEscape(itm) + "'").join(' and ')
 </script>
 </html>

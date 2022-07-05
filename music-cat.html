@@ -193,7 +193,7 @@ document.getElementById('list').addEventListener('click', function(e) {
 })
 let curDom = list2.childNodes[0];
 let prevDom = curDom;
-audio.src = curDom.dataset.src;
+audio.src = curDom?.dataset?.src || '';
 let getRandom = () => {
   let ul = curList === 'list1' ? list1 : list2;
   prevDom = curDom;
@@ -240,6 +240,17 @@ document.getElementById('save').addEventListener('click', function(e) {
   document.querySelector('#list').classList.toggle('edit')
   initList('list2')
 })
+window._addmusicList = (s) => {
+  if (!s.includes('/')) {
+    s = `music/${s}`;
+  }
+  if (!s.endsWith('.mp3')) {
+    s = `${s}.mp3`;
+  }
+  localStorage.musicList = localStorage.musicList.slice(0, -1) + `,"${s}"]`;
+  document.querySelector('#list2').insertAdjacentHTML('beforeend', `<li data-src="${s}">${s.match(/[^\/]+$/)[0].slice(0,-4)}<span class="sele">&#10004;</span><span class="del">&#10006;</span>`)
+  // initList('list2')
+}
 /*document.querySelector('#sel').addEventListener('change', function(e) {
   if (this.value == '0') {
     list1.classList.remove('none')

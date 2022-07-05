@@ -18,11 +18,12 @@
     }
     .to-rotate {
       transform: rotate(90deg);
-    }
-    .to-rotate .screen {
-      transform: rotate(-90deg);
+      transform-origin: center;
       width: 100vh;
       height: 100vw;
+    }
+    .to-rotate .screen {
+      /* transform: rotate(90deg); */
     }
     .rotate {
       position: absolute;
@@ -39,8 +40,8 @@
       <div class="screen">
         <span></span>
       </div>
+      <div class="rotate">旋转</div>
     </div>
-    <div class="rotate">旋转</div>
   </body>
   <!-- <script src="js/demo.js"></script>
   <script src="js/vue.js"></script>

@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>test7</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>test7</title>
 </head>
 <style>
+  :root {
+    color-scheme: light dark;
+    accent-color: magenta;
+  }
+
   .nc-modal-backdrop {
     position: fixed;
-    background-color: rgba(0,0,0,.45);
+    background-color: rgba(0, 0, 0, .45);
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-}
-.nc-modal {
+  }
+
+  .nc-modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -27,15 +34,15 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-}
-.BFC-box{
-    margin:200px;
+  }
+  .BFC-box {
+    /* margin:200px; */
     height: 200px;
     width: 200px;
-    border:2px solid red;
+    border: 2px solid red;
     transform: scale(1);
   }
-  .container{
+  .container {
     width: 100px;
     height: 100px;
     background: #888;
@@ -43,26 +50,189 @@
     top: 100px;
     left: 100px;
   }
-  @scope(.color) {
-    input{
+  .color {
+    /* --zhangxinxu-color: deepskyblue; */
+    /* accent-color: var(--zhangxinxu-color); */
+  }
+  .color input {
+    appearance: auto;
+  }
+  @scope (.color) {
+    input {
       color: red;
       background-color: #f00;
     }
   }
-  .aa {
-    height: 50px;
+
+  button {
+    padding: 5px 15px;
+    margin-right: 10px;
   }
-  .aa:hover {
+
+  .loading {
+    width: 100px;
     height: 100px;
+    border-radius: 50%;
+    background: conic-gradient(deepskyblue, 30%, white);
+    --mask: radial-gradient(closest-side, transparent 75%, black 76%);
+    -webkit-mask-image: var(--mask);
+    mask-image: var(--mask);
+    animation: spin 1s linear infinite reverse;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .pie {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    /*background: conic-gradient(yellowgreen 0% 25%, gold 0 75%, deepskyblue 0);*/
+    background: conic-gradient(from 45deg at 50% 50%, white, deepskyblue);
+    /* background: conic-gradient(from 45deg, white, black, white); */
+  }
+
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    /* background: #000; */
+    overflow: hidden;
+  }
+
+  .g-number {
+    position: absolute;
+    width: 300px;
+    top: 27%;
+    text-align: center;
+    font-size: 32px;
+    z-index: 10;
+    color: #fff;
+  }
+
+  .g-container {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    margin: 0 15px;
+  }
+
+  .g-contrast {
+    filter: contrast(10) hue-rotate(0);
+    width: 300px;
+    height: 400px;
+    background-color: #000;
+    overflow: hidden;
+    animation: hueRotate 10s infinite linear;
+  }
+
+  .g-circle {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    box-sizing: border-box;
+    filter: blur(8px);
+  }
+
+  .g-circle::after {
+    content: "";
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0);
+    width: 200px;
+    height: 200px;
+    background-color: #00ff6f;
+    border-radius: 42% 38% 62% 49% / 45%;
+    animation: rotate 10s infinite linear;
+  }
+
+  .g-circle::before {
+    content: "";
+    position: absolute;
+    width: 176px;
+    height: 176px;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background-color: #000;
+    z-index: 10;
+  }
+
+  .g-bubbles {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 100px;
+    height: 40px;
+    transform: translate(-50%, 0);
+    border-radius: 100px 100px 0 0;
+    background-color: #00ff6f;
+    filter: blur(5px);
+  }
+
+  li {
+    position: absolute;
+    border-radius: 50%;
+    background: #00ff6f;
+  }
+
+  /* @for $i from 0 through 15 {
+    li:nth-child(#{$i}) {
+      $width: 15 + random(15) + px;
+      left: 15 + random(70) + px;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: $width;
+      height: $width;
+      animation: moveToTop #{random(6) + 3}s ease-in-out -#{random(5000)/1000}s infinite;
+    }
+  } */
+
+  @keyframes rotate {
+    50% {
+      border-radius: 45% / 42% 38% 58% 49%;
+    }
+
+    100% {
+      transform: translate(-50%, -50%) rotate(720deg);
+    }
+  }
+
+  @keyframes moveToTop {
+    90% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: .1;
+      transform: translate(-50%, -180px);
+    }
+  }
+
+  @keyframes hueRotate {
+    100% {
+      filter: contrast(15) hue-rotate(360deg);
+    }
   }
 </style>
+
 <body>
   <div id="app">
-    <div class="aa">aa</div>
-    <h2>所有链接</h2>
+    <div class="pie"></div>
+    <div class="loading"></div>
     <!-- <h1 style="text-align: center; font-size: 15pc;">福</h1> -->
-    <h5>{{long}}&#10;123</h5>
-    <h5>{{name}} </h5>
+    <h5 id="long">{{long}}&#10;123</h5>
+    <h5 class="name">{{name}} </h5>
     <audio src="http://vip2.endiva.com.cn/mxlin/files/literature/02488.2027_000000--0000-01.mp3"></audio>
     <!-- <p v-on:click="getConfig">123123</p>
     <a href="im:13043403780">130-4340-3780</a><br>
@@ -70,98 +240,276 @@
     <a href="im:13996090943">13996090943</a> -->
     <!-- <iframe src="https://gdedev.icta138.huawei.com:38443/p/netcare/index.html#/home" frameborder="0"></iframe> -->
   </div>
-  <div class="BFC-box">
-    :smile:
-      <div class="container"></div>
+  <div class="g-container">
+    <div class="g-number">98.7%</div>
+    <div class="g-contrast">
+      <div class="g-circle"></div>
+      <ul class="g-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
     </div>
   </div>
-  <div class="color">
-    <input type="text">
-    <input type="radio">
-    <input type="checkbox">
+  <div class="BFC-box">
+    :smile:
+    <div class="container"></div>
   </div>
+  </div>
+  <div class="color">
+    <input type="radio" checked>
+    <input type="checkbox" checked>
+    <input type="range">
+    <progress value="0.5"></progress>
+    <input type="color" name="" id="color">
+  </div>
+  <dialog id="dialog">
+    hello world!
+    <button onclick="document.getElementById('dialog').open=false">&#10006</button>
+  </dialog>
+  <button id="someBotton" style="height: 32px;"> show dialog</button>
+  <script>
+    someBotton.onclick = () => {
+      const dialog = document.getElementById('dialog');
+      // dialog.showModal(); //dialog.open=true|false
+      dialog.open=true;
+    };
+  </script>
 </body>
-<!-- <script src="js/base.js"></script> -->
 <script src="js/vue.global.js"></script>
 <script src="js/demo.js"></script>
-<script src="js/long_test.js"></script>
 <script src="js/jquery.js"></script>
 <script>
-// import {onMounted} from 'vue'
-// onBeforeMount
-// mounted beforeUpdate updated beforeUnmount unmounted errorCaptured renderTracked renderTriggered
-let {onMounted, onBeforeUpdate, onUpdated, onBeforeUnmount, onUnmounted, onErrorCaptured, onRenderTracked, onRenderTriggered } = Vue;
-let vm = Vue.createApp({
-  mounted(){
-    document.querySelector('#app');
-    console.log('mounted')
-  },
-  beforeCreate(){
-    // console.log('beforeCreate')
-  },
-  created(){
-    console.log('created')
-  },
-  methods: {
-    getConfig(e) {
-      console.log('e:', e)
+  // import {onMounted} from 'vue'
+  // onBeforeMount
+  // mounted beforeUpdate updated beforeUnmount unmounted errorCaptured renderTracked renderTriggered
+  // document.getElementById('dialog').showModal();
+  let {
+    onMounted,
+    onBeforeUpdate,
+    onUpdated,
+    onBeforeUnmount,
+    onUnmounted,
+    onErrorCaptured,
+    onRenderTracked,
+    onRenderTriggered
+  } = Vue;
+  let vm = Vue.createApp({
+    mounted() {
+      document.querySelector('#app');
+      console.log('mounted')
+    },
+    beforeCreate() {
+      // console.log('beforeCreate')
+    },
+    created() {
+      console.log('created')
+    },
+    methods: {
+      getConfig(e) {
+        console.log('e:', e)
+      }
+    },
+    setup() {
+      onMounted(() => {
+        console.log('onMounted');
+      })
+      return {
+        name: 'lf',
+      }
+    },
+    data() {
+      return {
+        long: '修改代码',
+      }
     }
-  },
-  setup() {
-    onMounted(()=>{
-      console.log('onMounted');
-    })
-    return  {
-      name:'lf',
+  }).mount('#app')
 
-    }
-  },
-  data(){
-    return {
-      long: '就是说提交代码或者修改代码',
-    }
+  function getRandomValues(n) {
+    const arr = new Uint16Array(n)
+    window.crypto.getRandomValues(arr)
+    return arr
   }
-}).mount('#app')
-function getRandomValues (n) {
-  const arr = new Uint16Array(n)
-  window.crypto.getRandomValues(arr)
-  return arr
-}
 
+  function getRandomValue() {
+    return getRandomValues(1)[0]
+  }
 
-function getRandomValue () {
-  return getRandomValues(1)[0]
-}
-function extendDeepCopy(obj,newobj){
-    var newobj=newobj||{};
-    for(var i in obj){
-        if(typeof obj[i]=='object'){
-            newobj[i]=(obj[i].constructor==="Array")?[]:{};
-            extendDeepCopy(obj[i],newobj[i]);
-        }else{
-            newobj[i]=obj[i];
-        }
+  function extendDeepCopy(obj, newobj) {
+    var newobj = newobj || {};
+    for (var i in obj) {
+      if (typeof obj[i] == 'object') {
+        newobj[i] = (obj[i].constructor === "Array") ? [] : {};
+        extendDeepCopy(obj[i], newobj[i]);
+      } else {
+        newobj[i] = obj[i];
+      }
     }
     return newobj;
-}
+  }
+  document.getElementById('color').addEventListener('change', function(e) {
+    this.parentElement.style.accentColor = this.value;
+  })
+  /*$('#long').on('click', function() {
+    console.log('aaa')
+  }).on('contextmenu', function() {
+    console.log('bbb')
+  })*/
+  let aa = {
+    a: 1,
+    b: {
+      c: 2
+    }
+  }
+  // let bb=structuredClone(aa) // 深拷贝
+  let bb = Object.assign(aa) //浅拷贝
+  bb.b.c = 3;
+  // let a=extendDeepCopy(function(){console.log(1)})
+  // let a=extendDeepCopy(new Date('2022-02-06'))
+  /*try {
+    fun()
+  } catch(e) {
+    console.log(e, e.toString())
+  }*/
+  /*function fun(n) {
+    // 'use strict'
+    if (n>1){
+      function a(argument) {
+        console.log(111)
+      }
+    } else {
+      function b(argument) {
+        console.log(222)
+      }
+    }
+    console.log(a)
+  }*/
+  /*class Test{
+    x=1
+    constructor(){
+      this.x=2;
+      // this.run=function(){
+      //   console.log(this.x)
+      // }
+    }
+    run(){
+      console.log(this.x)
+    }
+  }
+  Test.prototype.run=function(){
+    console.log(3)
+  }
+  let t=new Test()*/
+  /*
+  let x=1;
+  if(1){
+    let x=2
+  }
+  try {
+    let x=3
+  }catch(err){
+    console.log(err)
+  }*/
+  const StartScore = rate => "★★★★★☆☆☆☆☆".slice(5 - rate, 10 - rate);
+  const start = StartScore(3);
+  // 堆排序
+  const heapSort = array => {
+    console.time('堆排序耗时');
+    // 初始化大顶堆，从第一个非叶子结点开始
+    for (let i = Math.floor(array.length / 2 - 1); i >= 0; i--) {
+      heapify(array, i, array.length);
+    }
+    // 排序，每一次 for 循环找出一个当前最大值，数组长度减一
+    for (let i = Math.floor(array.length - 1); i > 0; i--) {
+      // 根节点与最后一个节点交换
+      [array[0], array[i]] = [array[i], array[0]]
+      // swap(array, 0, i);
+      // 从根节点开始调整，并且最后一个结点已经为当前最大值，不需要再参与比较，所以第三个参数为 i，即比较到最后一个结点前一个即可
+      heapify(array, 0, i);
+    }
+    console.timeEnd('堆排序耗时');
+    return array;
+  };
+  // 将 i 结点以下的堆整理为大顶堆，注意这一步实现的基础实际上是：
+  // 假设结点 i 以下的子堆已经是一个大顶堆，heapify 函数实现的
+  // 功能是实际上是：找到 结点 i 在包括结点 i 的堆中的正确位置。
+  // 后面将写一个 for 循环，从第一个非叶子结点开始，对每一个非叶子结点
+  // 都执行 heapify 操作，所以就满足了结点 i 以下的子堆已经是一大顶堆
+  const heapify = (array, i, length) => {
+    let temp = array[i]; // 当前父节点
+    // j < length 的目的是对结点 i 以下的结点全部做顺序调整
+    for (let j = 2 * i + 1; j < length; j = 2 * j + 1) {
+      temp = array[i]; // 将 array[i] 取出，整个过程相当于找到 array[i] 应处于的位置
+      if (j + 1 < length && array[j] < array[j + 1]) {
+        j++; // 找到两个孩子中较大的一个，再与父节点比较
+      }
+      if (temp < array[j]) {
+        [array[j], array[i]] = [array[i], array[j]]; // 如果父节点小于子节点:交换；否则跳出
+        i = j; // 交换后，temp 的下标变为 j
+      } else {
+        break;
+      }
+    }
+  };
+  const array = [4, 6, 8, 5, 9, 1, 2, 5, 3, 2];
+  console.log('原始array:', array);
+  const newArr = heapSort(array);
+  console.log('newArr:', newArr);
+  console.time('default')
+  array.sort()
+  console.timeEnd('default')
+  // 原始 array:  [4, 6, 8, 5, 9, 1, 2, 5, 3, 2]
+  // 堆排序耗时: 0.15087890625ms
+  // newArr:     [1, 2, 2, 3, 4, 5, 5, 6, 8, 9]
+  /*console.log('1');
+  // 需nodejs环境执行
+  setTimeout(function() {
+      console.log('2');
+      process.nextTick(function() {
+          console.log('3');
+      })
+      new Promise(function(resolve) {
+          console.log('4');
+          resolve();
+      }).then(function() {
+          console.log('5')
+      })
+  })
+  process.nextTick(function() {
+      console.log('6');
+  })
+  new Promise(function(resolve) {
+      console.log('7');
+      resolve();
+  }).then(function() {
+      console.log('8')
+  })
 
-// let a=extendDeepCopy(function(){console.log(1)})
-// let a=extendDeepCopy(new Date('2022-02-06'))
-/*try {
-  fun()
-} catch(e) {
-  console.log(e, e.toString())
-}*/
-let RunScriptUtil = {}
-RunScriptUtil.tqlEscape = function(str) {
-  return str;
-}
-//判断权限审批模型ncuc_review_auth_control中是否有相同的数据
-var tql = "select uuid from ncuc_review_auth_control where account_id = '" + RunScriptUtil.tqlEscape(accountId) + "' and review_type = '" + RunScriptUtil.tqlEscape(reviewType)
-    + "' and dept_code = '" + RunScriptUtil.tqlEscape(deptCode) + "' and office_code = '" + RunScriptUtil.tqlEscape(officeCode)
-    + "' and country_code = '" + RunScriptUtil.tqlEscape(countryCode) + "'" + productLineTql;
-var authControlResults = invokeTql(tql).body.result.results;
-
-
+  setTimeout(function() {
+      console.log('9');
+      process.nextTick(function() {
+          console.log('10');
+      })
+      new Promise(function(resolve) {
+          console.log('11');
+          resolve();
+      }).then(function() {
+          console.log('12')
+      })
+  })
+  */
 </script>
+
 </html>

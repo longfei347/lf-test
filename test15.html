@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    html {
+      height: 100%;
+    }
+    body {
+      /* display: flex; */
+      justify-content: center;
+      align-items: center;
+      background-color: #eee;
+      height: 100%;
+    }
+    main div {
+      display: flex;
+      font-size: 26px;
+      width: 300px;
+    }
+    main div strong {
+      display: block;
+      width: 45px;
+      height: 45px;
+      text-align: center;
+      border-radius: 50%;
+      transition: 1s;
+    }
+    main div strong:nth-of-type(1) {
+      background-color: #f90;
+    }
+    main div strong:nth-of-type(2) {
+      background-color: #09f;
+    }
+    main div:hover strong:nth-of-type(1) {
+      transform: rotate(360deg);
+    }
+    main div:hover strong:nth-of-type(2) {
+      transform: rotate(-360deg);
+    }
+    nav {
+      border: 2px solid #0f9;
+      overflow: hidden;
+      position: relative;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      width: 140px;
+    }
+    nav > a {
+      display: flex;
+      width: 100%;
+      padding: 0 10px;
+      line-height: 2;
+    }
+    nav .btn:after {
+      content: '';
+      width: 0;
+      height: 100%;
+      position: absolute;
+      background-color: #f33;
+      z-index: -1;
+      transform: skew(45deg);
+      transition: 0.3s;
+    }
+    nav .btn:hover:after {
+      left: -50%;
+      width: 200%;
+    }
+    .bb {
+      margin-left: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgb(51, 201, 238);
+      width: 110px;
+      height: 40px;
+      position: relative;
+      transform: skewX(25deg) rotate(-15deg);
+    }
+    .bb:before,
+    .bb:after {
+      content: '';
+      width: 10px;
+      height: 100%;
+      background-color: #000;
+      position: absolute;
+    }
+    .bb::before {
+      left: -10px;
+      transform: skewY(-45deg) translate(0, 4px);
+    }
+    .bb:after {
+      bottom: -10px;
+      transform: skewX(-45deg) translate(-6px, 0);
+      width: 100%;
+      height: 10px;
+    }
+    .card {
+      position: relative;
+      margin: auto;
+      width: 200px;
+      height: 120px;
+      background-color: rgb(224, 48, 195);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2em;
+      color: aqua;
+      transform-style: preserve-3d;
+      transform: perspective(900px) rotateX(45deg);
+    }
+    .card:hover::before {
+      transform: rotateY(-180deg);
+    }
+    .card:hover::after {
+      transform: rotateY(180deg);
+    }
+    .card::after,
+    .card::before {
+      content: '';
+      background-color: rgb(199, 155, 13);
+      width: 50%;
+      height: 100%;
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 1s;
+    }
+    .card::before {
+      content: '新年';
+      left: 0;
+      top: 0;
+      justify-content: flex-end;
+      transform-origin: left;
+    }
+    .card::after {
+      content: '快乐';
+      right: 0;
+      top: 0;
+      justify-content: flex-start;
+      transform-origin: right;
+    }
+    .clock {
+      margin: auto;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: linear-gradient(to right, #f90, #f33);
+      position: relative;
+    }
+    .clock:after {
+      content: '';
+      position: absolute;
+      width: 90%;
+      height: 90%;
+      left: 50%;
+      top: 50%;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: #369;
+    }
+    .clock .line {
+      position: absolute;
+      width: 80%;
+      height: 80%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      /* background-color: #000; */
+      border-radius: 50%;
+      z-index: 2;
+    }
+    .clock .line:before {
+      content: '';
+      left: 50%;
+      top: 50%;
+      width: 90%;
+      height: 90%;
+      position: absolute;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      background-color: #369;
+    }
+    .clock .line:after {
+      content: '';
+      left: 50%;
+      top: 50%;
+      width: 10px;
+      height: 10px;
+      position: absolute;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      background-color: #fff;
+    }
+
+    .line div {
+      width: 8px;
+      background-color: #fff;
+      height: 100%;
+      position: absolute;
+      left: 50%;
+    }
+    .line > div:nth-of-type(1) {
+      transform: translateX(-50%) rotate(0deg);
+    }
+    .line > div:nth-of-type(2) {
+      transform: translateX(-50%) rotate(30deg);
+    }
+    .line > div:nth-of-type(3) {
+      transform: translateX(-50%) rotate(60deg);
+    }
+    .line > div:nth-of-type(4) {
+      transform: translateX(-50%) rotate(90deg);
+    }
+    .line > div:nth-of-type(5) {
+      transform: translateX(-50%) rotate(120deg);
+    }
+    .line > div:nth-of-type(6) {
+      transform: translateX(-50%) rotate(150deg);
+    }
+    .line .hour {
+      width: 8px;
+      background-color: #fff;
+      height: 15%;
+      position: absolute;
+      transform: translateX(-50%) rotate(60deg);
+      transform-origin: bottom;
+      left: 50%;
+      bottom: 50%;
+      z-index: 5;
+    }
+    .line .minute {
+      width: 5px;
+      background-color: #fff;
+      height: 25%;
+      position: absolute;
+      transform: translateX(-50%) rotate(90deg);
+      transform-origin: bottom;
+      left: 50%;
+      bottom: 50%;
+      z-index: 6;
+    }
+    .line .second {
+      width: 3px;
+      background-color: #fff;
+      height: 35%;
+      position: absolute;
+      transform: translateX(-50%) rotate(120deg);
+      transform-origin: bottom;
+      left: 50%;
+      bottom: 50%;
+      z-index: 7;
+    }
+    .nav {
+      margin: 60px auto;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background-color: #f90;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .nav:hover .cicle {
+      opacity: 1;
+    }
+    .cicle {
+      transition: 0.5s;
+      margin: 0;
+      box-sizing: border-box;
+      padding: 0;
+      width: 300px;
+      height: 300px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      position: absolute;
+    }
+    .cicle li {
+      width: 80px;
+      height: 80px;
+      background-color: #f90;
+      position: absolute;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: 1s;
+      transform-origin: 150px 150px;
+    }
+    .cicle:hover li:nth-child(1) {
+      transform: rotate(40deg);
+    }
+    .cicle:hover li:nth-child(2) {
+      transform: rotate(80deg);
+    }
+    .cicle:hover li:nth-child(3) {
+      transform: rotate(120deg);
+    }
+    .cicle:hover li:nth-child(4) {
+      transform: rotate(160deg);
+    }
+    .cicle:hover li:nth-child(5) {
+      transform: rotate(200deg);
+    }
+    .cicle:hover li:nth-child(6) {
+      transform: rotate(240deg);
+    }
+    .cicle:hover li:nth-child(7) {
+      transform: rotate(280deg);
+    }
+    .cicle:hover li:nth-child(8) {
+      transform: rotate(320deg);
+    }
+    .cicle:hover li:nth-child(9) {
+      transform: rotate(360deg);
+    }
+    .cube {
+      display: flex;
+      width: 300px;
+      height: 300px;
+      transform-style: preserve-3d;
+      transform: perspective(900px);
+      justify-content: center;
+      align-items: center;
+      transform-origin: center center 100px;
+      transition: 1.2s;
+    }
+    .cube div {
+      width: 200px;
+      height: 200px;
+      position: absolute;
+      background-color: green;
+      font-size: 3em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-origin: center center 100px;
+      opacity: 0.8;
+    }
+    .cube:hover {
+      transform: perspective(900px) rotateY(270deg);
+    }
+    .cube div:nth-child(1) {
+      transform: rotateY(90deg);
+      background: #110;
+    }
+    .cube div:nth-child(2) {
+      transform: rotateY(180deg);
+      background: #330;
+    }
+    .cube div:nth-child(3) {
+      transform: rotateY(270deg);
+      background: #660;
+    }
+    .cube div:nth-child(4) {
+      transform: rotateY(360deg);
+      background: #990;
+    }
+    .cube div:nth-child(5) {
+      transform: rotateX(90deg);
+      transform-origin: top;
+      background: #bb0;
+    }
+    .cube div:nth-child(6) {
+      transform: rotateX(-90deg);
+      transform-origin: bottom;
+      background: #ee0;
+    }
+    .cuboid {
+      display: flex;
+      width: 300px;
+      height: 300px;
+      transform-style: preserve-3d;
+      transform: perspective(900px);
+      justify-content: center;
+      align-items: center;
+      transform-origin: 200px 100px -100px;
+      transition: 1.2s;
+    }
+    .cuboid div {
+      width: 400px;
+      height: 200px;
+      position: absolute;
+      background-color: green;
+      font-size: 3em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* transform-origin: center center 100px; */
+      opacity: 0.8;
+    }
+    .cuboid:hover {
+      transform: perspective(900px) rotateY(360deg);
+    }
+    .cuboid div:nth-child(1) {
+      transform: rotateY(90deg);
+      background: #110;
+      width: 200px;
+      transform-origin: left;
+    }
+    .cuboid div:nth-child(2) {
+      transform: translateX(100px);
+      background: #330;
+    }
+    .cuboid div:nth-child(3) {
+      transform: translateX(400px) rotateY(90deg);
+      background: #660;
+      transform-origin: left;
+      width: 200px;
+    }
+    .cuboid div:nth-child(4) {
+      transform: translateX(100px) translateZ(-200px);
+      background: #990;
+    }
+    .cuboid div:nth-child(5) {
+      transform: rotateX(-90deg) translateX(100px);
+      transform-origin: top;
+      background: #bb0;
+    }
+    .cuboid div:nth-child(6) {
+      transform: rotateX(90deg) translateX(100px);
+      transform-origin: bottom;
+      background: #ee0;
+    }
+    .card2 {
+      border: 1px solid #000;
+      width: 120px;
+      height: 120px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      font-size: 4em;
+      perspective: 900px;
+      transition: 1s;
+      transform-style: preserve-3d;
+    }
+    /* .card2:hover {
+      transform: rotateY(-180deg);
+    } */
+    .card2 .item {
+      position: absolute;
+      backface-visibility: hidden;
+      width: 100px;
+      height: 100px;
+      transition: 1s;
+      text-align: center;
+      line-height: 100px;
+    }
+    .card2:hover .item:nth-child(1) {
+      transform: rotateY(-180deg);
+    }
+    .card2:hover .item:nth-child(2) {
+      transform: rotateY(0deg);
+    }
+    .card2 .item:nth-child(1) {
+      background-color: #f33;
+    }
+    .card2 .item:nth-child(2) {
+      background-color: #f90;
+      transform: rotateY(180deg);
+    }
+    .change {
+      width: 100px;
+      height: 100px;
+      background-color: #f3a;
+      transition: 2s;
+      border: 20px solid #000;
+      transition-property: border-radius, background, width, height;
+      transition-delay: 0ms, 2s, 4s, 4s;
+      transition-duration: 2s;
+    }
+    .change:hover {
+      border: 40px dotted yellow;
+      background-color: #f33;
+      border-radius: 50%;
+      width: 200px;
+      height: 200px;
+    }
+    .step {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* font-size: 3em; */
+      width: 400px;
+      height: 100px;
+      position: relative;
+      margin: 0;
+      padding: 0;
+    }
+    .step li {
+      list-style: none;
+      border: 1px solid #000;
+      flex: 1;
+      height: 100%;
+    }
+    .step:hover:before {
+      transform: translateX(400px);
+    }
+    .step:hover:after {
+      transform: translateX(400px);
+    }
+    .step li:before {
+      content: 'huawei';
+      color: white;
+      opacity: 0.5;
+    }
+    ul.step:before {
+      content: 'start';
+      width: 100px;
+      height: 30px;
+      background-color: rgb(22, 199, 169);
+      position: absolute;
+      left: 0;
+      top: 0;
+      transition-duration: 2s;
+      transition-timing-function: steps(4, start);
+    }
+    ul.step:after {
+      content: 'end';
+      width: 100px;
+      height: 30px;
+      background-color: rgb(32, 35, 177);
+      left: 0;
+      bottom: 0;
+      position: absolute;
+      transition-duration: 2s;
+      transition-timing-function: steps(4, end);
+    }
+    .clock2 {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-color: #369;
+      position: relative;
+    }
+    .clock2:after {
+      content: '';
+      width: 2px;
+      height: 50%;
+      background-color: #000;
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      transform-origin: bottom;
+      transition-duration: 60s;
+      transition-timing-function: steps(60, end);
+    }
+    .clock2:hover:after {
+      transform: translateX(-50%) rotate(360deg);
+    }
+    .cc {
+      position: relative;
+      width: 50px;
+      height: 50px;
+      box-sizing: border-box;
+    }
+    .cc:before,
+    .cc:after {
+      box-sizing: border-box;
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+    }
+    .cc:before {
+      border: 3px solid blue;
+      clip-path: polygon(0px 50%, 100% 50%, 100% 100%, 0px 100%);
+    }
+    .cc:after {
+      border: 3px dotted blue;
+      clip-path: inset(0 0 50% 0);
+      /* clip-path: polygon(0px 0px, 100% 0px, 100% 50%, 0px 50%); */
+    }
+    .heart {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+    .heart i {
+      font-style: normal;
+      position: absolute;
+      font-size: 2em;
+      transition: 1s;
+      color: grey;
+    }
+    .attention i {
+      transform: scale(3);
+      color: #f44;
+      opacity: 0;
+    }
+    .attention i:nth-child(2) {
+      transform: scale(1);
+      opacity: 1;
+    }
+    .aa {
+      width: 400px;
+      height: 400px;
+      border: 1px solid #000;
+    }
+    .aa div {
+      width: 100px;
+      height: 100px;
+      background-color: yellow;
+      animation-name: translate, background, radius;
+      animation-duration: 4s, 2s, 4s;
+      animation-iteration-count: 2, 1, 2;
+    }
+    @keyframes translate {
+      25% {
+        transform: translateX(300px);
+      }
+      50% {
+        transform: translate(300px, 300px);
+      }
+      75% {
+        transform: translateY(300px);
+      }
+    }
+    @keyframes background {
+      25% {
+        background-color: green;
+      }
+      50% {
+        background-color: #e72;
+      }
+      75% {
+        background-color: #95b;
+      }
+    }
+    @keyframes radius {
+      50% {
+        border-radius: 0%;
+      }
+      25%,
+      75% {
+        border-radius: 50%;
+      }
+    }
+    .heart3 {
+      margin: auto;
+      width: 50px;
+      height: 50px;
+      background-color: #f55;
+      transform: rotate(45deg);
+      transform-origin: left bottom;
+    }
+
+    .heart3:before,
+    .heart3:after {
+      content: '';
+      width: 50px;
+      height: 50px;
+      background-color: #f55;
+      /* background-color: green; */
+      border-radius: 50%;
+      position: absolute;
+      transform: translateX(-25px);
+    }
+    .heart3:after {
+      transform: translateY(-25px);
+    }
+    .ball {
+      width: 320px;
+      height: 50px;
+      margin: 200px auto 20px;
+      display: flex;
+      justify-content: center;
+    }
+    .ball div {
+      width: 50px;
+      height: 50px;
+      background: radial-gradient(at center, #e72, #e43);
+      border-radius: 50%;
+      animation-name: ball;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate-reverse;
+    }
+    .ball section {
+      width: 100px;
+      height: 10px;
+      background-color: rgba(0, 0, 0, 0.8);
+      position: absolute;
+      transform: translateY(35px);
+      z-index: -1;
+      border-radius: 50%;
+      filter: blur(5px);
+      animation-name: shadow;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate-reverse;
+    }
+    @keyframes ball {
+      to {
+        transform: translateY(-100px);
+      }
+    }
+    @keyframes shadow {
+      to {
+        width: 100px;
+        height: 5px;
+        filter: blur(35px);
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+    }
+    .liner {
+      display: grid;
+      grid-template: 1fr / repeat(6, 1fr);
+      gap: 10px;
+      height: 150px;
+      width: 300px;
+      margin: auto;
+      overflow: hidden;
+    }
+    .liner div {
+      background-color: #f66;
+      animation: move 3s infinite;
+    }
+    .liner div:nth-child(1) {
+      animation-timing-function: ease;
+    }
+    .liner div:nth-child(2) {
+      animation-timing-function: ease-in;
+    }
+    .liner div:nth-child(3) {
+      animation-timing-function: ease-out;
+    }
+    .liner div:nth-child(4) {
+      animation-timing-function: ease-in-out;
+    }
+    .liner div:nth-child(5) {
+      animation-timing-function: linear;
+    }
+    .liner div:nth-child(6) {
+      animation-timing-function: cubic-bezier(0.26, 0.53, 1, 0.3);
+    }
+    @keyframes move {
+      to {
+        transform: translateY(150px);
+      }
+    }
+    .ball2 {
+      width: 50px;
+      height: 50px;
+      background: radial-gradient(at center, #e72, #e43);
+      border-radius: 50%;
+      animation-name: ball2;
+      animation-duration: 3s;
+      animation-iteration-count: 1;
+      animation-direction: alternate-reverse;
+      animation-fill-mode: backwards;
+    }
+    @keyframes ball2 {
+      0% {
+        transform: translateY(0vh);
+        animation-timing-function: ease-in;
+      }
+      30% {
+        transform: translateY(10vh);
+        animation-timing-function: ease-in;
+      }
+      60% {
+        transform: translateY(40vh);
+        animation-timing-function: ease-in;
+      }
+      80% {
+        transform: translateY(60vh);
+        animation-timing-function: ease-in;
+      }
+      95% {
+        transform: translateY(75vh);
+        animation-timing-function: ease-in;
+      }
+      15%,
+      45%,
+      75%,
+      85%,
+      100% {
+        transform: translateY(90vh);
+        animation-timing-function: ease-out;
+      }
+    }
+    .slide {
+      width: 200px;
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+    .slide section {
+      width: 800px;
+      height: 200px;
+      display: grid;
+      grid-template: 1fr / repeat(4, 1fr);
+      animation: slide 4s steps(4, end) infinite;
+    }
+    .slide section:hover,
+    .slide section:hover + ul:after {
+      animation-play-state: paused;
+    }
+    .slide section img {
+      width: 100%;
+    }
+    @keyframes slide {
+      to {
+        transform: translateX(-800px);
+      }
+    }
+    .slide ul {
+      position: absolute;
+      left: 50%;
+      bottom: 20px;
+      width: 80px;
+      transform: translateX(-50%);
+      display: grid;
+      grid-template: 1fr / repeat(4, 1fr);
+      list-style: none;
+      justify-items: center;
+    }
+    .slide ul:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #f33;
+      z-index: -1;
+      animation: num 4s steps(4, end) infinite;
+    }
+    @keyframes num {
+      to {
+        transform: translateX(80px);
+      }
+    }
+    li {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: grid;
+      background-color: #0003;
+      justify-items: center;
+      align-items: center;
+      color: #fff;
+    }
+  </style>
+  <body>
+    <div class="cc"></div>
+    <div>
+      <img src="images/css-xyz.png" alt="" />
+    </div>
+    <div class="cube">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+      <div>5</div>
+      <div>6</div>
+    </div>
+    <div class="cuboid">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+      <div>5</div>
+      <div>6</div>
+    </div>
+    <main>
+      <div><strong>h</strong>ua<strong>w</strong>ei</div>
+    </main>
+    <nav><a href="" class="btn">huawei</a></nav>
+    <button class="bb">huawei</button>
+    <div class="card">huawei</div>
+    <div class="clock">
+      <div class="line">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div class="hour"></div>
+        <div class="minute"></div>
+        <div class="second"></div>
+      </div>
+    </div>
+    <div class="nav">
+      <span>中国人</span>
+      <ul class="cicle">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+      </ul>
+    </div>
+    <div class="card2">
+      <div class="item">1</div>
+      <div class="item">2</div>
+    </div>
+    <div class="change">change</div>
+    <ul class="step">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+    <div class="clock2"></div>
+    <div class="heart" onClick="attention()">
+      <i>❤</i>
+      <i>❤</i>
+    </div>
+    <div class="aa">
+      <div></div>
+    </div>
+    <div class="heart3"></div>
+    <div class="ball">
+      <div></div>
+      <section></section>
+    </div>
+    <div class="liner">
+      <div>ease</div>
+      <div>ease-in</div>
+      <div>ease-out</div>
+      <div>ease-in-out</div>
+      <div>linear</div>
+      <div>linear</div>
+    </div>
+    <div class="ball2"></div>
+    <div class="slide">
+      <section>
+        <div><img src="images/1.jpg" alt="" /></div>
+        <div><img src="images/2.jpg" alt="" /></div>
+        <div><img src="images/3.jpg" alt="" /></div>
+        <div><img src="images/4.jpg" alt="" /></div>
+      </section>
+      <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+      </ul>
+    </div>
+  </body>
+  <script>
+    function attention() {
+      document.querySelector('.heart').classList.toggle('attention');
+    }
+  </script>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    *,
+    *::before {
+      box-content: content-box;
+    }
+
+    h1 {
+      font-size: 64px;
+      text-transform: uppercase;
+      margin: 0;
+      position: relative;
+      display: inline-block;
+      margin-bottom: 0.5em;
+      isolation: isolate;
+    }
+
+    h1 span {
+      position: relative;
+      z-index: 6;
+      padding: 0 0.25em;
+    }
+
+    h1::before {
+      content: '';
+      width: 100%;
+      height: 20px;
+      background-color: goldenrod;
+      opacity: 0.6;
+      z-index: 1;
+      position: absolute;
+      top: 60%;
+      left: 0;
+      transform: skew(-45deg, 0);
+      transform-origin: 50% 50%;
+    }
+
+    body {
+      padding: 3rem 2rem;
+      width: 768px;
+      margin: 0 auto;
+      line-height: 1.5;
+      color: #111111;
+    }
+
+    u {
+      color: darkgoldenrod;
+      font-weight: 600;
+    }
+  </style>
+  <body>
+    <div class="long" onclick="haha()">
+      <input type="text" name="" disabled id="" />
+    </div>
+    <div id="app">
+      <table id="table" style="">
+        <tr>
+          <th>姓名</th>
+          <th>电话</th>
+          <th style="width: 200px">邮箱</th>
+        </tr>
+        <tr v-for="(item,index) in jsonData">
+          <td>{{item.name}}</td>
+          <td>{{item.phone}}</td>
+          <td>{{item.email}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <p style="font-size: 20px; color: red">使用table标签方式将json导出xls文件</p>
+    <button onclick="tableToExcel()">导出xls文件</button><button onclick="download()">下载csv文件</button>
+  </body>
+  <script src="js/vue.global.js"></script>
+  <script>
+    document.querySelector('.long').addEventListener('click', e => {
+      console.log('e: ', e);
+    });
+    function haha() {
+      console.log(111);
+    }
+    const head = ['姓名', '电话', '邮箱']; // 列标题
+    const jsonData = [
+      {
+        name: '路人甲',
+        phone: '123456',
+        email: '123@123456.com'
+      },
+      {
+        name: '炮灰乙',
+        phone: '123456',
+        email: '123@123456.com'
+      },
+      {
+        name: '土匪丙',
+        phone: '123456',
+        email: '123@123456.com'
+      },
+      {
+        name: '流氓丁',
+        phone: '123456',
+        email: '123@123456.com'
+      }
+    ];
+    const tableToExcel = () => {
+      // 要导出的json数据
+      let str = '<tr><td>姓名</td><td>电话</td><td>邮箱</td></tr>'; // 循环遍历，每行加入tr标签，每个单元格加td标签
+      for (let i = 0; i < jsonData.length; i++) {
+        str += '<tr>';
+        for (const key in jsonData[i]) {
+          // 增加	为了不让表格显示科学计数法或者其他格式
+          str += `<td>${jsonData[i][key] + '	'}</td>`;
+        }
+        str += '</tr>';
+      } // Worksheet名
+      const worksheet = 'Sheet1';
+      const uri = 'data:application/vnd.ms-excel;base64,'; // 下载的表格模板数据
+      // 第一种有乱码
+      // const template = `<html xmlns:o="urn:schemas-microsoft-com:office:office"
+      // xmlns:x="urn:schemas-microsoft-com:office:excel"
+      // xmlns="http://www.w3.org/TR/REC-html40">
+      // <head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>
+      // <x:Name>${worksheet}</x:Name>
+      // <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet>
+      // </x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->
+      // </head><body><table>${str}</table></body></html>`;
+      // 第二种,可行
+      const template = `<html><head><meta charset="UTF-8"></head><body><table>${str}</table></body></html>`;
+      const base64 = s => window.btoa(unescape(encodeURIComponent(s)));
+      window.location.href = uri + base64(template);
+    }; // 输出base64编码
+    // 下载csv文件
+    const exportCsv = (head, data) => {
+      const csvArray = [];
+      // 表头 ['id','用户名', '网络','报价', '时间']
+      csvArray.push(`${head.join()}\n`);
+      data.map(itm => {
+        csvArray.push(`${Object.values(itm).join()}\n`);
+      });
+      // 第一种,可以
+      const url = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(csvArray.join(''));
+      const link = document.createElement('a');
+      link.href = url;
+      // 对下载的文件命名
+      link.download = 'json数据表.csv';
+      link.click();
+      link.remove();
+      // 第二种,可以
+      /* const blob = new Blob([String.fromCharCode(0xfeff), ...csvArray], {
+        type: 'text/plain;charset=utf-8'
+      });
+      const objectURL = URL.createObjectURL(blob);
+      // 创建一个 a 标签Tag
+      const aTag = document.createElement('a');
+      // 设置文件的下载地址
+      aTag.href = objectURL;
+      // 设置保存后的文件名称
+      aTag.download = `json数据表.csv`;
+      // 给 a 标签添加点击事件
+      aTag.click();
+      // 释放一个之前已经存在的、通过调用 URL.createObjectURL() 创建的 URL 对象。
+      // 当你结束使用某个 URL 对象之后，应该通过调用这个方法来让浏览器知道不用在内存中继续保留对这个文件的引用了。
+      URL.revokeObjectURL(objectURL); */
+    };
+    const download = () => {
+      exportCsv(head, jsonData);
+    };
+    Vue.createApp({
+      // el: '#app',
+      mounted() {
+        console.log('object mounted');
+      },
+      data() {
+        console.log('object');
+        return {
+          jsonData
+        };
+      }
+    }).mount('#app');
+  </script>
+</html>

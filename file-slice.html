@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>文件切割与合并</title>
+  </head>
+  <body>
+    <div>
+      <input type="file" id="file1" />
+      <button id="btn1">拆分</button>
+    </div>
+    <div>
+      <input type="file" multiple id="file2" />
+      <button id="btn2">合并</button>
+    </div>
+  </body>
+  <script>
+    const loadingEl = document.getElementById('loading');
+    document.getElementById('btn1').onclick = () => {
+      const files = document.getElementById('file1').files;
+      const file = files[0];
+      const uploadSize = 1024 * 1024 * 50;
+      const arr = [];
+      for (let i = 0; i < file.size; i += uploadSize) {
+        const index = parseInt(i / uploadSize) + 1;
+        // 文件切片
+        arr.push(file.slice(i, uploadSize * index));
+      }
+      console.log('文件切片', arr);
+      downloadFiles(arr, file.name);
+    };
+    document.getElementById('btn2').onclick = () => {
+      const files = document.getElementById('file2').files;
+      // 切片合并
+      const arr = [...files].map(v => {
+        return v.slice(0, v.size);
+      });
+      const name = files[0].name.replace(/-\d+$/, '');
+      const file = new File(arr, name);
+      console.log('切片合并', file);
+      downloadFile(file, file.name);
+    };
+    function downloadFiles(arr, name) {
+      arr.forEach((v, i) => {
+        downloadFile(v, name + '-' + i);
+      });
+    }
+    function downloadFile(v, name) {
+      const a = document.createElement('a');
+      a.setAttribute('download', name);
+      a.href = URL.createObjectURL(v);
+      a.click();
+    }
+  </script>
+</html>

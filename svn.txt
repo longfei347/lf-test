@@ -1,3 +1,4 @@
+前端svn
 龙飞▄︻┻═┳一 10:37:36
 远程连接:mstsc -v 192.168.0.171
 
@@ -255,7 +256,6 @@ var tim = setInterval(function long(){
 
 null和undefined没有包装对象,访问它们的属性会造成一个类型错误.
 存取字符串,数字,布尔值的属性时创建的临时对象称做包装对象. 修改只是发生在临时对象上,而临时对象在表达式运行完即销毁.
-
 !function() {
 	var a=b=c=0;//等价于var a=(b=(c=0)) c=0 即全局变量为0,表达式返回0 赋给b,再返回0赋给a
 }()
@@ -416,8 +416,8 @@ JavaScript跨域总结与解决办法
 2.服务器代理, 有node层,可在node层做代理转发, 如果是nginx设置proxy_pass, apache也可相应设置;
 3.script标签, jsonp方式
 4.location.hash  + iframe
-5.window.name + iframe	
-6.flash 方法 
+5.window.name + iframe
+6.flash 方法
 7.HTML5   postMessage有两种方式, 一种文档传输方式,二种是信道通信 MessageChannel
 8.webSocket
 9.CORS需要浏览器和后端同时支持,服务端设置 Access-Control-Allow-Origin
@@ -512,6 +512,7 @@ xmlhttp.send();
 xmlhttp.open("POST","ajax_test.asp",true);
 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 xmlhttp.send("fname=Bill&lname=Gates");
+
 
 onselect只用于text或textarea
 document.forms[0].addEventListener("invalid", invalidHandler, true);
@@ -760,6 +761,7 @@ ul#nav>li.item$*4>a{item $} <==> ul#nav>(li.item$>a{item $})*4
 “Select Previous Item” (Shift+Ctrl+,)
 3, ctrl+' 可将Encode/Decode Image/js to data:URL
 4, ctrl+shift+g 可使用标签包裹 -->http://www.douban.com/note/299431022/
+alt+shift+w 标签包裹
 nav>ul.nav>li.nav-item$*>a
 nav>ul.nav>li.nav-item$*>a|t(添加|t就可以删除文本中的序列标记)
 ul>li[id=long title=$#]*>{$#}+img[alt=$#]  使用$#操作符Emmet可以将文本输出到多个元素中，而$#平上Emmet缩写语法中的一部分，所以得将$#放在属性值[]或文本{}操作符中
@@ -771,6 +773,7 @@ ctrl+shift+p 输入 set syntax 可设置语法
 使用ctrl+K,ctrl+d 可跳过当前选择项
 使用alt+. 可快速结束标签
 产生多个光标,可使用shift+右键拖动, 按住鼠标滚动键滚动, ctrl+alt+ down, 或按ctrl+左键
+
 
 html头可以 !,html:5, doctype
 m0-uto->margin: 0 auto;
@@ -915,37 +918,7 @@ for(var i=0;i<5;i++) {
 dom.insertAdjacentHTML("beforestart","long<span>fei</span>")  两个参数('beforeBegin', 'afterBegin', 'beforeEnd', or 'afterEnd')
 dom.before() (string, dom)
 
-npm config rm proxy
-npm config rm http-proxy
-npm config rm https-proxy
-npm config set no-proxy.huawei.com
-npm config set registry http://w3cloudnkg-sit1.huawei.com/ccloud/nexus/content/groups/npm-all/ 6375个包
-npm config set registry http://w3cloudnkg-sit1.huawei.com/ccloud/nexus/content/repositories/npmjs/ 6317个包 两个全部相同
-
-npm config rm proxy
-npm config rm http-proxy
-npm config rm https-proxy
-npm config set no-proxy.huawei.com
-npm config set registry http://rnd-mirrors.huawei.com/npm-registry/
-
 D:\work\mcloud_ide_new\web_client>npm -h
-
-Usage: npm <command>
-
-where <command> is one of:
-    access, adduser, bin, bugs, c, cache, completion, config,
-    ddp, dedupe, deprecate, dist-tag, docs, edit, explore, get,
-    help, help-search, i, init, install, install-test, it, link,
-    list, ln, login, logout, ls, outdated, owner, pack, ping,
-    prefix, prune, publish, rb, rebuild, repo, restart, root,
-    run, run-script, s, se, search, set, shrinkwrap, star,
-    stars, start, stop, t, team, test, tst, un, uninstall,
-    unpublish, unstar, up, update, v, version, view, whoami
-
-npm <cmd> -h     quick help on <cmd>
-npm -l           display full usage info
-npm help <term>  search for help on <term>
-npm help npm     involved overview
 
 npm update --save will update all packages inside package.json to their latest version according to their defined version range
 
@@ -967,7 +940,19 @@ Here is an example:
 
 Afterward I check that everything is gravy with a simple
 npm outdated --depth=0
+参数:
+json
+long
+parseable
+global
+depth
 
+npm update
+aliases: up, upgrade
+
+npm dedupe 功能
+减少重复，重新优化包引用结构
+https://www.axihe.com/api/npm/cli/npm-docs.html
 
 Also, you can check the current toplevel installed library versions with
 npm list --depth=0
@@ -1137,9 +1122,10 @@ pageX,pageY包含滚动条的距离,不随滚动条的移动而移动
 clientX,clintY会随滚动条的移动而移动
 pageX>=clientX
 
+ getEventListeners()方法可以获取到dom元素的监听
 
 Vue 的父子通信
-可通过: v-model, 父传子: props, $children, $attrs,$listens, 子传父: $on/$emit, $parent, .sync, 修改父props, 
+可通过: v-model, 父传子: props, $children, $attrs,$listens, 子传父: $on/$emit, $parent, .sync, 修改父props,
 EventBus, vuex; provide/inject, ref
 
 安装electron 出现安装失败,因为镜像地址获取不到,
@@ -1169,12 +1155,22 @@ length >>> 0, 字面意思是指"右移 0 位"，但实际上是把前面的空�
 
 
 1. vue 快速初始化项目
-npm i -g @vue/cli 
-vue create my-vue 3.0以上版本
+npm i -g @vue/cli
+vue create my-vue // 3.0以上版本
 npm i -g vue-cli
 vue init webpack my-project  vue-cli 3.0以前版本
 vue init webpack-simple my-project
+// vue3 + vite
+# npm 6.x
+npm init vite@latest my-vue-app --template vue
 
+# npm 7+, 需要额外的双横线：
+npm init vite@latest my-vue-app -- --template vue
+npm init vite hello-vue3 -- --template vue # OR yarn create vite hello-vue3 --template vue
+pnpm create vite 同
+npm init vite
+
+vue create vite-vue2-demo
 2.express
 npm install express-generator -g
 使用express-generator生成express项目
@@ -1215,7 +1211,7 @@ git clone https://github.com/zeit/next-learn-demo.git
 cd next-learn-demo
 
 9. umi
-yarn create umi 
+yarn create umi
 (ant-design-pro - Create project with an layout-only ant-design-pro boilerplate, use together with umi block.
 app - Create project with a simple boilerplate, support typescript.
 block - Create a umi block.
@@ -1223,7 +1219,7 @@ library - Create a library with umi.
 plugin - Create a umi plugin.)
 
 npx degit sveltejs/template my-svelte-project
-# or download and extract 
+# or download and extract
 cd my-svelte-project
 
 npm install -g degit
@@ -1241,9 +1237,13 @@ npm init -y
 npm install --save react react-dom next
 mkdir pages
 
+svelte
+npx degit sveltejs/template svelte-app
+
+
 
 koa+mysql
-https://github.com/JacobMa1996/koa_mysql_demo 
+https://github.com/JacobMa1996/koa_mysql_demo
 https://github.com/tough1985/hello-koa2
 
 前端技术:
@@ -1256,8 +1256,9 @@ Houdini 是 W3C 新成立的一个任务小组，它的终极目标是实现 css
 Omi (读音 /?om?/，类似于 欧米) 是下一代前端框架，基于 Web Components 设计，支持 PC Web、移动 H5 和小程序开发(One framework. Mobile & desktop & mini program)。
 
 浏览器 Eventloop 和 Node 中的有什么区别
-微任务包括 process.nextTick ，promise ，Object.observe ，MutationObserver
-宏任务包括 script ， setTimeout ，setInterval ，setImmediate ，I/O ，UI rendering
+微任务包括 process.nextTick(Node.js 环境) ，promise ，Object.observe ，MutationObserver,async/await
+宏任务包括 script ， setTimeout ，setInterval ，setImmediate(Node.js 环境) ，I/O ，UI rendering,postMessage,MessageChannel
+
 Event loop 顺序是这样的
 
 执行同步代码，这属于宏任务
@@ -1347,13 +1348,13 @@ serverless 原理解释:
 简单来讲，FaaS（Function as a Service） 就是一些运行函数的平台，比如阿里云的函数计算、AWS 的 Lambda 等。
 BaaS（Backend as a Service）则是一些后端云服务，比如云数据库、对象存储、消息队列等。利用 BaaS，可以极大简化我们的应用开发难度。
 从技术角度来说，Serverless 就是 FaaS 和 BaaS 的结合。
+Redis（全称：Remote Dictionary Server 远程字典服务）是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value[数据库]，并提供多种语言的API。从2010年3月15日起，Redis的开发工作由VMware主持。从2013年5月开始，Redis的开发由Pivotal赞助。
 
 Serverless 则可以理解为运行在 FaaS 中，使用了 BaaS 的函数。
 Serverless 的主要特点有：
 1、事件驱动----函数在 FaaS 平台中，需要通过一系列的事件来驱动函数执行。
 2、无状态----因为每次函数执行，可能使用的都是不同的容器，无法进行内存或数据共享。如果要共享数据，则只能通过第三方服务，比如 ```Redis`` 等。
 
-Redis（全称：Remote Dictionary Server 远程字典服务）是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value[数据库]，并提供多种语言的API。从2010年3月15日起，Redis的开发工作由VMware主持。从2013年5月开始，Redis的开发由Pivotal赞助。
 3、无运维----使用serverless我们不需要关心服务器，也不需要关心运维，这也是serverles思想的核心；
 4、低成本----使用 Serverless 成本很低，因为我们只需要为每次函数的运行付费。函数不运行，则不花钱，也不会浪费服务器资源过度
 
@@ -1364,4 +1365,536 @@ Redis（全称：Remote Dictionary Server 远程字典服务）是一个开源�
 对于 transform 和 opacity 效果，不会触发 layout 和 paint
 
 提升合成层的最好方式是使用 CSS 的 will-change 属性
+
+chrome
+100.0.4896.127->101.0.4951.64
+
+宏任务包括
+
+svelte 相关ui
+Svelte Material UI
+地址：https://sveltematerialui.com/
+Material: 谷歌出品的扁平化风格。
+
+Carbon Components Svelte
+地址：https://carbon-components-svelte.onrender.com/
+Carbon：IBM 开源设计。
+https://carbon-components-svelte.onrender.com/components/Button
+
+Smelte
+地址：https://carbon-svelte.vercel.app/
+Smelte：Google Material Design 在 Svelte 和 Tailwind 上的另一实现。
+
+Svelteit
+地址：https://docs.svelteit.dev/
+Svelteit： 简约的 UI/UX 组件库。
+
+Attractions
+地址：https://illright.github.io/attractions/
+Attractions： 时尚且实用。
+
+http://域账号:密码@proxy.huawei.com:8080，特殊字符需要转义
+
+自定义组件自动引入 unplugin-vue-components
+element-plus 组件自动引入 unplugin-vue-components
+vue3等插件 hooks 自动引入 unplugin-auto-import/vite
+message, notification 等引入样式自动引入 vite-plugin-style-import
+eslint插件 vue-global-api
+
+D:\webdesign\t>npm create vite-pretty-lint
+npx: installed 67 in 5.701s
+可选:
+react-ts
+react
+vue-ts
+vue ->installed 67 in 5.701s
+
+富文本:
+editor.md
+quill
+bytemd
+monaco-editor
+tui.editor
+slate
+
+https://picsum.photos/200/200 将随机从 Unsplash 取一张指定尺寸的图片
+
+npm init vite vite0621 -- --template vue
+安装有 49 个包
+
+solidjs:
+ npx degit solidjs/templates/js my-app
+ 
+degit solidjs/templates/js my-app
+
+npx degit solidjs/templates/ts my-app
+
+一： css 方法
+
+user-seletct: none;
+-webkit-user-seletct: none;
+-moz-user-seletct: none;
+-ms-user-seletct: none;
+
+none: 不能选中内容
+text: 能选中内容
+
+二：js 方法
+document.body.onselectstart = function(){
+　　return false;
+}
+返回 false，不能选中
+
+Tauri 是一款使用 Rust 核心，可搭配任意前端框架来构建桌面应用程序的框架。 每个应用均由两个部分组成：
+创建窗口并向其提供原生功能支持的 Rust 二进制文件
+窗口内，使用您偏好的前端框架所开发的用户界面
+npm create tauri-app
+yarn tauri init
+
+5款Vue 移动端 UI 组件库
+Vant 3 - 有赞移动 UI 组件库，支持 Vue 3 微信小程序，支付宝小程序
+Cube UI - 滴滴出行移动端 UI 库，质量可靠，标准规范，扩展性强
+VUX - 移动端 UI 组件库，针对微信强势优化
+NUTUI 3.0 - 京东移动端 UI 库，面向电商业务场景，支持 Vue3
+Vuetify 3 - 老牌 Vue UI ，基于谷歌的 Material Design 样式开发，支持 Vue3
+Mint UI  官网地址:mint-ui.github.io/#!/zh-cn 饿了么公司基于vue开的的vue的Ui组件库
+Muse UI  官网地址: https://muse-ui.org/#/zh-CN
+Vonic 文档地址：https://wangdahoo.github.io/vonic-documents/#/
+演示地址：https://wangdahoo.github.io/vonic/docs/#/home 一个基于 vue.js 和 ionic 样式的 UI 框架，用于快速构建移动端单页应用，很简约
+===============================================
+v-slot
+在vue2.6中，上述的API被软废弃（3.0正式废弃），取而代之的是内置指令v-slot，可以缩写为【#】
+
+子组件用法保持不变，父组件中
+slot属性弃用，具名插槽通过指令参数v-slot:插槽名 的形式传入，可以简化为 #插槽名。
+slot-scope属性弃用，作用域插槽通过v-slot:xxx="slotProps"的slotProps来获取子组件传出的属性
+v-slot属性只能在<template>上使用，但在【只有默认插槽时】可以在组件标签上使用
+
+============================================
+将一个仓库目录的提交复制到另一个仓库子目录
+# repo_main就是待插入的代码库，是被插的角色
+git clone repo_main
+# repo_sub是要插入的代码库，是插入的角色
+git clone repo_sub
+cd repo_main
+ 
+# 将要插的代码库拉入被插的代码库
+git remote add repo_sub ../repo_sub
+git fetch repo_sub
+ 
+# 签出要插的代码库到本地新分支上
+git checkout -b repo_sub repo_sub/master
+mkdir dir_repo_sub
+ 
+# 这个地方其实就是调整目录结构，也可以不调整
+# '*' will cause git mv to fail because it cannot move dir_repo_sub into itself
+git mv <list all files>
+git commit -m"Moves all repo_sub files into a single directory for merging back into repo_main"
+ 
+# 回到被插入的代码库本地分支上
+git checkout master
+# 合并要插入的代码分支
+git merge repo_sub --allow-unrelated-histories
+ 
+# 做些清理工作，也可以不做
+git remote remove repo_sub
+git branch -D repo_sub 
+
+=============================
+
+live-server
+http-server
+serve
+
+2022 css
+CSS 容器查询
+CSS的父选择器 :has()
+@layer 控制 CSS 的级联层
+颜色函数
+视窗单位
+过度滚动行为：overscroll-behavior
+CSS网格的 subgrid
+accent-color
+媒体查询
+F-mods
+下一代CSS Transform
+实验性属性
+CSS 的嵌套
+CSS作用域：@scope
+@when ... @else
+滚动与动画
+CSS Houdini 变量：@property
+瀑布流布局
+
+currentColor
+isolation:isolate
+font-variant-numeric: tabular-nums
+scroll-padding-top属性用来定义滚动窗口的最佳查看区域对于顶部的偏移量
+===============
+前端：JavaScript、H5、CSS3、sass、less、React、Vue、webpack、jest
+后端：Nodejs、Go、Java、Spring、Gin、Kafka、Hadoop
+数据库：MySQL、mongoDB、redis、clickhouse
+运维：网络协议、CDN、Nginx、ZooKeeper、Docker、Kubernetes
+
+低代码:
+OutSystems、Mendix、微软、Salesforce、ServiceNow 被评为行业领导者
+Appian、Oracle 和 Pega 被评为挑战者
+Creatio、Kintone、Newgen 和 Quickbase 被评为利基市场参与者
+
+AI 与图形化:
+D3.js，ECharts，WebGL
+人工智能 JS 类库有：
+
+tensorflow.js： 基于 tensorflow.js Node 的 tvnet 算法，可以提取视频中的稠密光流
+deeplearning.js
+kera.js
+高性能计算：
+asm.js
+WebAssembly
+GPU
+Opencv，前端做 CV 算法，物体跟踪、图像处理、特征检测等等
+
+图像转代码:
+	目标	控件数	结果现状	本质能力
+Pix2Code	Bootstrap 基础控件	11	实验数据准确率接近 80%, 支持控件少	中后台基础组件识别
+Screenshot2Code	HTML 基础标签	HTML 基础标签	准确率较低	端到端的图片生成代码
+Sketch2Code	手绘稿到控件	9	手绘草图降低了使用门槛。	基于手绘稿的组件识别
+shots	非智能识别，全人工标注	未知	有 Showcase，新设计稿无法试用，闭源，准确度未知，人工收集了 6000 个设计稿 Case	设计稿生成代码的布局算法能力，含各种场景下丰富的高质量的控件类型标注
+Yotako	HTML 基础标签	未知	PSD 生成前端代码，有 Showcase，使用需要会员费，设计稿的要求非常高（几乎每个图层都有命名要求），刚起步	设计稿生成代码，目前规则的比重较大
+
+Promise.resolve(1).then(Promise.resolve(2)).then(3).then().then(console.log) // 1
+ESLint的项目中，如果要使用Prettier，我们要安装额外的三个包：prettier、eslint-config-prettier和eslint-plugin-prettier
+// .eslintrc    
+{      
+    "extends": ["prettier"] // prettier 一定要是最后一个，才能确保覆盖    
+}
+
+在vue中如何使用jsx,主要是依赖babel插件
+安装babel依赖，npm install babel-plugin-transform-vue-jsx babel-helper-vue-jsx-merge-props
+配置.babelrc文件
+"plugins": [
+    [ "transform-vue-jsx" ]
+]
+
+swiper7、8不能在vue2中使用,在vue3中使用,
+import { Swiper, SwiperSlide } from 'swiper/vue/swiper-vue.js';
+  // Import Swiper styles
+  import 'swiper/swiper.min.css';
+  
+  vue2的项目，选择了6版本之前，最稳定的 5.4.5
+  
+代理服务器,host设置localhost.huawei.com 可以不用修改hosts, 如果是其他的要加127.0.0.1 XXX
+
+Tailwind CSS -> Windi CSS按需加载 -> UnoCSS
+ 
+ navigator.clipboard 用来取代使用 document.execCommand() 的剪贴板访问
+ navigator.clipboard.readText().then(
+  clipText => document.querySelector(".editor").innerText += clipText);
+  
+ 在使用ondrop方法时必须要在ondragover方法中使用Event.preventDefault()方法！！
+ event.dataTransfer.effectAllowed = "copy";
+none不允许操作
+copy只复制
+move只移动
+link只链接
+copyMove复制或移动
+copyLink复制或链接
+linkMove链接或移动
+all复制、移动或链接
+event.dataTransfer.dropEffect = "copy";
+
+axios实例方法:
+axios#request(config)
+axios#get(url[, config])
+axios#delete(url[, config])
+axios#head(url[, config])
+axios#post(url[, data[, config]])
+axios#put(url[, data[, config]])
+axios#patch(url[, data[, config]])
+
+Content-Type: application/x-www-form-urlencoded
+要求提交数据为qs.stringify({}), 可用原生 new URLSearchParams({}).toString()
+
+filter:grayscale(100%) 将网站变成黑白色
+
+与vue-cli引用不同，vue-cli引用为：
+process.env.变量名
+而vite引用为:
+import.meta.env.变量名
+.env                # 所有情况下都会加载
+.env.local          # 所有情况下都会加载，但会被 git 忽略
+.env.[mode]         # 只在指定模式下加载
+.env.[mode].local   # 只在指定模式下加载，但会被 git 忽略
+只有以 VITE_ 为前缀的变量才会暴露给经过 vite 处理的代码
+
+Vue.extend 使用vue3替换 import { createVNode, render } from "vue";
+let app= createVNode(Notice, {
+    ...options,
+    duration,
+    show_toast: true,
+  });
+  render(app, mountDom)
+  
+ // vue3 setup 参数
+ import { h, reactive } from 'vue'
+export default {
+  setup(props, { slots, attrs, emit }) {
+    const state = reactive({
+      count: 0
+    })
+
+    function increment() {
+      state.count++
+    }
+
+    // 返回render函数
+    return () =>
+      h(
+        'div',
+        {
+          onClick: increment
+        },
+        state.count
+      )
+  }
+}
+
+npm create @quick-start/electron 安装不成功 electron
+# npm 7+, extra double-dash is needed:
+npm create @quick-start/electron my-app -- --template vue
+
+npm create electron-vite
+
+vscode 快捷键
+{
+  "key": "ctrl+shift+\",
+  "command": "editor.action.jumpToBracket",
+  "when": "editorTextFocus"
+}
+
+添加启动任务, 将应用的快捷方式发送到
+C:\Users\l30003589\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+
+node 16 以上使用 set NODE_OPTIONS=--openssl-legacy-provider
+
+Vue3 组件通信方式8种
+props
+$emit
+expose / ref
+$attrs
+v-model
+provide / inject
+Vuex
+mitt
+
+Vue2.x 组件通信共有12种
+props
+$emit / v-on
+ref
+$attrs / $listeners
+v-model
+provide / inject
+Vuex
+.sync
+$children / $parent
+EventBus
+$root
+slot
+
+父子组件通信可以用：
+props
+$emit / v-on
+$attrs / $listeners
+ref
+.sync
+v-model
+$children / $parent
+
+兄弟组件通信可以用：
+EventBus
+Vuex
+$parent
+
+跨层级组件通信可以用：
+provide/inject
+EventBus
+Vuex
+$attrs / $listeners
+$root
+
+python打印
+print( "Hello {0}".format(name) )
+print( "I am %s, today is %d year" % (name, year) )
+w=2
+n='long'
+print('%.2f' %w)
+print(f'w = {w:.2f}')
+print(f'n = {n}')
+print(f'n = {n:6s}')
+print(f'n = {n.rjust(10)}')
+
+time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+
+格式化快捷键为 Ctrl + Alt + L
+
+创建django项目
+1, 使用pycharm创建,
+2,命令行 进入要创建的目录, 执行 django-admin startproject my(文件名)
+3, 进入my 执行 python manage.py startapp app 创建一个app(目录)
+4, 启动服务
+a.pycharm 点启动
+b.命令,python manage.py runserver 8000
+
+
+django连接mysql,创建table
+python manage.py makemigrations
+python manage.py migrate
+
+# 方式1,如果返回非字典数据,务必设置 sale=False 才行.
+# return HttpResponse(json.dumps(data), content_type="application/json")
+# 方式2,如果返回非字典数据,务必设置 sale=False 才行.
+# return JsonResponse(goods_list,safe=False)
+
+py中b,r,f,u
+b" "前缀表示：后面字符串是bytes 类型。
+bytes 和 str 的互相转换方式是
+str.encode(‘utf-8'); bytes.decode(‘utf-8')
+
+f开头表示在字符串内支持大括号内的python 表达式
+print(f'{name} done in {time.time() - t0:.2f} s')
+
+r去掉反斜杠的转移机制。常用于正则表达式，对应着re模块
+
+u字符串以 Unicode 格式 进行编码，一般用在中文字符串前面，防止因为源码储存格式问题
+
+npm init vue 创建前端
+nest new server 创建后台
+git submodule add https://github.com/longfei347/xxx.git
+
+https://cssgridgarden.com/#zh-cn grid游戏练习
+grid-area属性接受4个由'/'分开的值：grid-row-start, grid-column-start, grid-row-end, 最后是grid-column-end。
+grid-column: 1 / 6; 指从1-5列
+
+http://flexboxfroggy.com/ flex练习
+grid-row: 5 / 6; 指第5行
+
+添加remote
+git remote add origin https://github.com/githubusername/demo.git 
+
+1.创建bundle文件
+git bundle create master.bundle -100 master
+2.从bundle中pull分支
+# 查看bundle中有哪些分支，其中xxxx.bundle为创建的bundle文件
+git bundle list-heads xxxx.bundle
+# 从bundle中pull分支，其中xxxx.bundle为bundle文件，branch为bundle中的分支名
+git pull xxxx.bundle branch
+
+Git删除本地在远端已经删除的分支
+git remote prune origin
+
+关联本地分支与仓库分支
+方法一：(已经创建了本地分支)
+git branch --set-upstream-to=origin/remote_branch your_branch
+
+//等同于
+git branch -u origin/remote_branch your_branch
+方法二：（本地分支不存在，本地名称与远程名称不同）
+git branch new_branch origin/remote_branch
+// 或者
+git fetch origin remote_branch:new_branch
+// 上面👆这两种方法都不会切换当前分支；
+// 如果想要创建分支的同时，切换到新分支
+git checkout -b new_branch origin/remote_branch
+方法三：（如果本地有远程分支 origin/name, 想拉取一个本地分支）
+// git默认将创建一个同名本地分支，并将本地分支和远程仓库关联
+git checkout remote_branch
+
+远程分支不存在
+// 如果远程仓库不存在new_remote_branch，将创建一个该分支，并关联local_branch
+git push origin local_branch:new_remote_branch
+git branch -d 删除分支(有未合并master的提交会报错)
+git branch -D 强制删除分支
+
+git diff 对比工作区与索引区
+git add .  将工作区更新同步到索引区
+git diff --cached 对比索引区与仓库
+
+git clone --depth=1 只clone最新的一次提交记录,体积更小
+degit user/repo mypro  // 直接工程脚手架,clone更简洁,支持离线
+添加文档:
+npm i vitepress --save-dev
+mkdir docs && echo '# hello vitepress' > docs/index.md
+scripts+
+"docs:dev": "vitepress dev docs"
+
+nuxt-vite
+npm i -D nuxt-vite
+// nuxt.config
+export default {
+  buildModules: [
+    'nuxt-vite'
+  ]
+}
+
+图片节省大小,按顺序优先支持匹配
+<picture>
+      <source srcset="@/assets/a.avif" type="image/avif" />
+      <source srcset="@/assets/a.webp" type="image/webp" />
+      <img src="" alt="" />
+    </picture>
+
+scripts:
+"preinstall":"npx only-allow pnpm"
+
+npx nuxi init <nuxt3-app>
+pnpm dlx nuxi init <project-name>
+
+npm create vue0129 (webpack, eslint, babel) 默认是webpack打包方式
+
+scaffolding 脚手架
+prune 修剪
+constraint 约束
+cascade 级联,梯级
+stale 不新鲜的,过期的
+contractual delivery 合同交付,契约化交付
+compliance 合规性,遵从性
+precaution 预防,谨慎
+
+chatgpt 镜像
+http://chat.h2ai.cn/home
+https://chat.forchange.cn/
+csdn也有镜像
+https://so.csdn.net/so/chat/
+
+jsfuck代码混淆
+false->![], true->!![]
+
+svg图形使用fill="currentColor" 能通过color改变图形颜色
+
+vue-i18n
+import { createI18n } from 'vue-i18n'
+export default createI18n({})
+import i18n from '@/lang/'
+const app = createApp(App)
+app.use(i18n)
+import { getCurrentInstance } from "vue";
+const { appContext : { config: { globalProperties } } } = getCurrentInstance();  // 这里可以根据需要写个hook
+console.log(globalProperties.$t('pleaseSelectNation'))
+
+<template>
+  <h2>访问方式1：{{ title }}</h2>
+  <h2>访问方式2：{{ $t('index.title') }}</h2>
+</template>
+<script>
+import { useI18n } from 'vue-i18n'
+export default {
+    setup() {
+        const { t } = useI18n()
+        const title = t('index.title')
+        return {
+            title
+        }
+  }
+}
+</script>
 

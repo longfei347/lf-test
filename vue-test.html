@@ -1,367 +1,615 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>vue test</title>
+    <script src="js/vue.js"></script>
+    <link rel="stylesheet" href="css/element-plus.css" />
+    <!-- <script src="https://unpkg.com/vue@2"></script> -->
+  </head>
+  <style>
+    .none {
+      /* display: none; */
+    }
 
-<head>
-  <meta charset="UTF-8">
-  <title>vue test</title>
-  <script src="js/vue.js"></script>
-</head>
-<style>
-  .none {
-  /* display: none; */
-}
+    /*模拟对角线*/
 
+    .out {
+      border-top: 60px #d6d3d6 solid;
+      /*上边框宽度等于表格第一行行高*/
+      width: 0px;
+      /*让容器宽度为0*/
+      height: 0px;
+      /*让容器高度为0*/
+      border-left: 180px #bdbabd solid;
+      /*左边框宽度等于表格第一行第一格宽度*/
+      position: relative;
+      /*让里面的两个子容器绝对定位*/
+    }
 
-/*模拟对角线*/
+    .tr {
+      font-style: normal;
+      display: block;
+      position: absolute;
+      top: -45px;
+      left: -60px;
+    }
 
-.out {
-  border-top: 60px #D6D3D6 solid;
-  /*上边框宽度等于表格第一行行高*/
-  width: 0px;
-  /*让容器宽度为0*/
-  height: 0px;
-  /*让容器高度为0*/
-  border-left: 180px #BDBABD solid;
-  /*左边框宽度等于表格第一行第一格宽度*/
-  position: relative;
-  /*让里面的两个子容器绝对定位*/
-}
+    .lb {
+      font-style: normal;
+      display: block;
+      position: absolute;
+      top: -25px;
+      left: -140px;
+    }
 
-.tr {
-  font-style: normal;
-  display: block;
-  position: absolute;
-  top: -45px;
-  left: -60px;
-}
+    .title-slash {
+      position: relative;
+      height: 60px;
+      background-color: #ccc;
+    }
 
-.lb {
-  font-style: normal;
-  display: block;
-  position: absolute;
-  top: -25px;
-  left: -140px;
-}
+    .title-slash:after {
+      content: ' ';
+      position: absolute;
+      width: 100%;
+      border-top: 1px solid red;
+      transform: rotate(45deg);
+    }
 
-.title-slash {
-  position: relative;
-  height: 60px;
-  background-color: #ccc;
-}
-
-.title-slash:after {
-  content: " ";
-  position: absolute;
-  width: 100%;
-  border-top: 1px solid red;
-  transform: rotate(45deg);
-}
-
-
-/* .title-slash em{
+    /* .title-slash em{
   position: absolute;
   border-top: 1px solid red;
   transform: rotate(45deg);
 } */
 
-.slash-l {
-  position: absolute;
-}
+    .slash-l {
+      position: absolute;
+    }
 
-.slash-r {
-  position: absolute;
-}
+    .slash-r {
+      position: absolute;
+    }
 
-.dl-thead {
-  width: 100px;
-}
+    .dl-thead {
+      width: 100px;
+    }
 
-.x {
-  border: solid 1px red;
-  width: 100px;
-  height: 100px;
-  position: relative;
-  background-color: transparent;
-}
+    .x {
+      border: solid 1px red;
+      width: 100px;
+      height: 100px;
+      position: relative;
+      background-color: transparent;
+    }
 
-.x:before {
-  position: absolute;
-  top: 0px;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  border-bottom: 100px solid red;
-  border-left: 100px solid transparent;
-  content: "";
-}
+    .x:before {
+      position: absolute;
+      top: 0px;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      border-bottom: 100px solid red;
+      border-left: 100px solid transparent;
+      content: '';
+    }
 
-.x:after {
-  position: absolute;
-  left: 1px;
-  right: 0;
-  top: 1px;
-  bottom: 0;
-  border-bottom: 99px solid white;
-  border-left: 99px solid transparent;
-  content: "";
-}
+    .x:after {
+      position: absolute;
+      left: 1px;
+      right: 0;
+      top: 1px;
+      bottom: 0;
+      border-bottom: 99px solid white;
+      border-left: 99px solid transparent;
+      content: '';
+    }
 
-.f {
-  border: solid 1px red;
-  width: 100px;
-  height: 100px;
-  position: relative;
-  background-color: transparent;
-}
+    .f {
+      border: solid 1px red;
+      width: 100px;
+      height: 100px;
+      position: relative;
+      background-color: transparent;
+    }
 
-.f:before {
-position: absolute;
-border-bottom: 100px solid red;
-border-right: 100px solid transparent;
-content: "";
-}
+    .f:before {
+      position: absolute;
+      border-bottom: 100px solid red;
+      border-right: 100px solid transparent;
+      content: '';
+    }
 
-.f:after {
-position: absolute;
-border-bottom: 99px solid white;
-border-right: 99px solid transparent;
-content: "";
-}
+    .f:after {
+      position: absolute;
+      border-bottom: 99px solid white;
+      border-right: 99px solid transparent;
+      content: '';
+    }
 
-#demo16{
-  position: relative;
-}
-#demo16:after, #demo16:before {
-  border: 10px solid transparent;
-  border-left: 10px solid #fff;
-  width: 0;
-  height: 0;
-  position: absolute;
-  top: 0;
-  right: -20px;
-  content: ' '
-}
+    #demo16 {
+      position: relative;
+    }
+    #demo16:after,
+    #demo16:before {
+      border: 10px solid transparent;
+      border-left: 10px solid #fff;
+      width: 0;
+      height: 0;
+      position: absolute;
+      top: 0;
+      right: -20px;
+      content: ' ';
+    }
 
-#demo16:before {
-  border-left-color: #f00;
-  right: -21px;
-}
-</style>
+    #demo16:before {
+      border-left-color: #f00;
+      right: -21px;
+    }
+    li {
+      list-style: none;
+    }
+  </style>
 
-<body>
-  <input type="file" name="fff" id="" accept="image/*">
-  <span id="demo16">文字内容</span>
-  <div class="x none"></div>
-  <div class="f none"></div>
-  <table class="none">
-    <tbody>
-      <tr>
-        <!-- <td height="41" colspan="2" style="background-color: #f2f2f2; padding: 8.0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font6">厚度（</span><span class="font0">mm</span><span class="font6">）<br />名称</span></td> -->
-        <td height="41" colspan="2" style="background-color: #f2f2f2; padding: 0.0px;">
-          <div class="out">
-            <em class="tr">厚度(mm)</em>
-            <em class="lb">名称</em>
+  <body>
+    <input type="file" name="fff" id="" accept="image/*" />
+    <span id="demo16">文字内容</span>
+    <div class="x none"></div>
+    <div class="f none"></div>
+    <table class="none">
+      <tbody>
+        <tr>
+          <!-- <td height="41" colspan="2" style="background-color: #f2f2f2; padding: 8.0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font6">厚度（</span><span class="font0">mm</span><span class="font6">）<br />名称</span></td> -->
+          <td height="41" colspan="2" style="background-color: #f2f2f2; padding: 0px">
+            <div class="out">
+              <em class="tr">厚度(mm)</em>
+              <em class="lb">名称</em>
+            </div>
+          </td>
+          <td>25</td>
+          <td>40</td>
+          <td>50</td>
+          <td>65</td>
+          <td>75</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="tinymce-module fd-clr">
+      <div id="app" v-scroll="handleScroll">
+        <h4>app</h4>
+        <span v-for="n in num">{{'item' + n}}</span>
+        <p>{{ message }}</p>
+        <input type="" name="" v-model="long" />
+      </div>
+      <div id="app-1">
+        <h4>app-1</h4>
+        <input type="radio" name="lloo" value="1" v-model="lloo" />
+        <input type="radio" name="lloo" value="2" v-model="lloo" id="" />
+        <input type="radio" name="lloo" value="3" v-model="lloo" id="" />
+        <input type="radio" name="lloo" value="4" v-model="lloo" id="" />
+        <input type="radio" name="lloo" value="5" v-model="lloo" id="" />
+      </div>
+      <div id="app-2" class="none">
+        <h4>app-2</h4>
+        <span v-bind:title="message"> 鼠标悬停几秒钟查看此处动态绑定的提示信息！ </span>
+      </div>
+      <div id="app-3">
+        <h4>app-3</h4>
+        <p v-if="seen">现在你看到我了</p>
+      </div>
+      <div id="app-4" class="none">
+        <h4>app-4</h4>
+        <ol>
+          <li v-for="todo in todos">{{ todo.text }}</li>
+        </ol>
+      </div>
+      <div id="app-5" class="none">
+        <h4>app-5</h4>
+        <p>{{ message }}</p>
+        <button v-on:click="reverseMessage">逆转消息</button>
+      </div>
+      <div id="app-6" class="none">
+        <h4>app-6</h4>
+        <p>{{ message }}</p>
+        <input v-model="message" />
+      </div>
+      <div id="app-7">
+        <h4>app-7</h4>
+        <ol>
+          <!-- 现在我们为每个todo-item提供待办项对象    -->
+          <!-- 待办项对象是变量，即其内容可以是动态的 -->
+          <todo-item v-for="item in groceryList" v-bind:todo="item"></todo-item>
+        </ol>
+      </div>
+      <div id="app-8">
+        <h4>app-8</h4>
+        <template v-if="loginType === 'username'">
+          <label>Username</label>
+          <input placeholder="Enter your username" />
+        </template>
+        <template v-else>
+          <label>Email</label>
+          <input placeholder="Enter your email address" />
+        </template>
+        <button v-on:click="tog">toggle</button>
+      </div>
+      <div id="app-9">
+        <h4>app-9</h4>
+      </div>
+      <div id="app-10">
+        <h4>app-10</h4>
+      </div>
+      <div id="app-11">
+        <h4>app-11</h4>
+
+        <div class="el-message-box__wrapper" style="z-index: 2003">
+          <div class="el-message-box" style="width: 560px">
+            <div class="el-message-box__header">
+              <div class="el-message-box__title"><span>管理收藏夹</span></div>
+              <button type="button" aria-label="Close" class="el-message-box__headerbtn"><i class="el-message-box__close el-icon-close" @click="close">X</i></button>
+            </div>
+            <div class="el-message-box__content">
+              <div class="el-message-box__container">
+                <div id="myFaveTab">
+                  <span style="display: inline-block; width: 110px">添加页签</span>
+                  <select style="width: 100px" v-model="sel" @change="doSel">
+                    <option v-for="itm in opens" :value="itm.id">{{itm.label}}</option>
+                  </select>
+                  <button @click="addSel" size="small" class="el-button" style="padding: 3px 8px">添加</button>
+                </div>
+                <ul>
+                  <li v-for="(item, index) in list" :key="index">
+                    <p>
+                      <span style="display: inline-block; width: 110px">{{ item.type }} 标签名:</span> <input type="text" v-model="item.label" />
+                      <button @click="del(index)" size="small" class="el-button" style="padding: 3px 8px">删除</button>
+                      <button @click="move('up', index)" v-if="index>0" size="small" class="el-button" style="padding: 3px 8px">上移</button>
+                      <button @click="move('down',index)" v-if="index<list.length-1" size="small" class="el-button" style="padding: 3px 8px">下移</button>
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="el-message-box__btns">
+              <button type="button" class="el-button el-button--small" @click="close"><span> 取消 </span></button>
+              <button type="button" class="el-button el-button--small el-button--primary" @click="save"><span>保存 </span></button>
+            </div>
           </div>
-        </td>
-        <td>25</td>
-        <td>40</td>
-        <td>50</td>
-        <td>65</td>
-        <td>75</td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="tinymce-module fd-clr">
-    <div id="app" v-scroll="handleScroll">
-      <span v-for="n in num">{{'item' + n}}</span>
-      <p>{{ message }}</p>
-      <input type="" name="" v-model="long">
+        </div>
+      </div>
     </div>
-    <div id="app-1">
-      <input type="radio" name="lloo" value="1" v-model="lloo">
-      <input type="radio" name="lloo" value="2" v-model="lloo" id="">
-      <input type="radio" name="lloo" value="3" v-model="lloo" id="">
-      <input type="radio" name="lloo" value="4" v-model="lloo" id="">
-      <input type="radio" name="lloo" value="5" v-model="lloo" id="">
-    </div>
-    <div id="app-2" class="none">
-      <span v-bind:title="message">
-        鼠标悬停几秒钟查看此处动态绑定的提示信息！
-      </span>
-    </div>
-    <div id="app-3">
-      <p v-if="seen">现在你看到我了</p>
-    </div>
-    <div id="app-4" class="none">
-      <ol>
-        <li v-for="todo in todos">
-          {{ todo.text }}
-        </li>
-      </ol>
-    </div>
-    <div id="app-5" class="none">
-      <p>{{ message }}</p>
-      <button v-on:click="reverseMessage">逆转消息</button>
-    </div>
-    <div id="app-6" class="none">
-      <p>{{ message }}</p>
-      <input v-model="message">
-    </div>
-    <div id="app-7">
-      <ol>
-        <!-- 现在我们为每个todo-item提供待办项对象    -->
-        <!-- 待办项对象是变量，即其内容可以是动态的 -->
-        <todo-item v-for="item in groceryList" v-bind:todo="item"></todo-item>
-      </ol>
-    </div>
-    <div id="app-8">
-      <template v-if="loginType === 'username'">
-        <label>Username</label>
-        <input placeholder="Enter your username">
-      </template>
-      <template v-else>
-        <label>Email</label>
-        <input placeholder="Enter your email address">
-      </template>
-      <button v-on:click='tog'>toggle</button>
-    </div>
-  </div>
-</body>
-<script>
-/*try {
-  long
-} catch (e) {
-  throw e;
-}*/
-Vue.directive('scroll', {
-  inserted: function (el, binding) {
-    let f = function (evt) {
-      // console.log('aa')
-      if (binding.value(evt, el)) {
-        window.removeEventListener('scroll', f)
+  </body>
+  <script>
+    /*try {
+      long
+    } catch (e) {
+      throw e;
+    }*/
+    Vue.directive('scroll', {
+      inserted: function (el, binding) {
+        let f = function (evt) {
+          // console.log('aa')
+          if (binding.value(evt, el)) {
+            window.removeEventListener('scroll', f);
+          }
+        };
+        window.addEventListener('scroll', f);
       }
-    }
-    window.addEventListener('scroll', f)
-  }
-})
-/*fetch('https://api.coindesk.com/v1/bpi/currentprice.json').then(s=>{
-  // console.log(s, s.json())
-  return s.json()
-}).then(ss=>console.log(ss))*/
-// let a = b = c = 1
-// var err = new Error();
-// console.log(err);
-var app = new Vue({
-    el: '#app',
-    data: {
-      message: 'Hello Vue!',
-      long: 'long',
-      num: 3
-    },
-    methods: {
-      handleScroll: function (evt, el) {
-        // console.log('scroll')
-        if (window.scrollY > 50) {
-          el.setAttribute(
-            'style',
-            'opacity: 1; transform: translate3d(0, -10px, 0)'
-          )
+    });
+    /*fetch('https://api.coindesk.com/v1/bpi/currentprice.json').then(s=>{
+      // console.log(s, s.json())
+      return s.json()
+    }).then(ss=>console.log(ss))*/
+    // let a = b = c = 1
+    // var err = new Error();
+    // console.log(err);
+    var app = new Vue({
+        el: '#app',
+        data: {
+          message: 'Hello Vue!',
+          long: 'long',
+          num: 3
+        },
+        methods: {
+          handleScroll: function (evt, el) {
+            // console.log('scroll')
+            if (window.scrollY > 50) {
+              el.setAttribute('style', 'opacity: 1; transform: translate3d(0, -10px, 0)');
+            }
+            return window.scrollY > 100;
+          }
         }
-        return window.scrollY > 100
+      }),
+      app1 = new Vue({
+        el: '#app-1',
+        data: {
+          lloo: '1',
+          message: 'Hello Vue!'
+        }
+      }),
+      app2 = new Vue({
+        el: '#app-2',
+        data: {
+          message: '页面加载于 ' + new Date()
+        }
+      }),
+      app3 = new Vue({
+        el: '#app-3',
+        data: {
+          seen: true
+        }
+      }),
+      app4 = new Vue({
+        el: '#app-4',
+        data: {
+          todos: [
+            {
+              text: '学习 JavaScript'
+            },
+            {
+              text: '学习 Vue'
+            },
+            {
+              text: '整个牛项目'
+            }
+          ]
+        }
+      }),
+      app5 = new Vue({
+        el: '#app-5',
+        data: {
+          message: 'Hello Vue.js!'
+        },
+        methods: {
+          reverseMessage: function () {
+            this.message = this.message.split('').reverse().join('');
+          }
+        }
+      }),
+      app6 = new Vue({
+        el: '#app-6',
+        data: {
+          message: 'Hello Vue!'
+        }
+      });
+    Vue.component('todo-item', {
+      props: ['todo'],
+      template: '<li>{{ todo.text }}<button v-on:click="$emit(\'remove\')">X</button></li>'
+    });
+    var app7 = new Vue({
+      el: '#app-7',
+      data: {
+        groceryList: [
+          {
+            text: '蔬菜'
+          },
+          {
+            text: '奶酪'
+          },
+          {
+            text: '随便其他什么人吃的东西'
+          }
+        ]
+      },
+      methods: {
+        remove(e) {
+          console.log(e); // todo
+        }
       }
-    }
-  }),
-  app1 = new Vue({
-    el: '#app-1',
-    data: {
-      lloo: '1',
-      message: 'Hello Vue!'
-    }
-  }),
-  app2 = new Vue({
-    el: '#app-2',
-    data: {
-      message: '页面加载于 ' + new Date()
-    }
-  }),
-  app3 = new Vue({
-    el: '#app-3',
-    data: {
-      seen: true
-    }
-  }),
-  app4 = new Vue({
-    el: '#app-4',
-    data: {
-      todos: [{
-        text: '学习 JavaScript'
-      }, {
-        text: '学习 Vue'
-      }, {
-        text: '整个牛项目'
-      }]
-    }
-  }),
-  app5 = new Vue({
-    el: '#app-5',
-    data: {
-      message: 'Hello Vue.js!'
-    },
-    methods: {
-      reverseMessage: function() {
-        this.message = this.message.split('').reverse().join('')
-      }
-    }
-  }),
-  app6 = new Vue({
-    el: '#app-6',
-    data: {
-      message: 'Hello Vue!'
-    }
-  });
-Vue.component('todo-item', {
-  props: ['todo'],
-  template: '<li>{{ todo.text }}<button v-on:click="$emit(\'remove\')">X</button></li>'
-});
-var app7 = new Vue({
-  el: '#app-7',
-  data: {
-    groceryList: [{
-      text: '蔬菜'
-    }, {
-      text: '奶酪'
-    }, {
-      text: '随便其他什么人吃的东西'
-    }]
-  },
-  methods: {
-    remove(e) {
-      console.log(e)// todo
-    }
-  }
-});
+    });
 
-var app8 = new Vue({
-  el: '#app-8',
-  data: {
-    loginType: 'username'
-  },
-  methods: {
-    tog() {
-      if (this.loginType === 'username') {
-        this.loginType = 'email';
-      } else {
-        this.loginType = 'username';
+    var app8 = new Vue({
+      el: '#app-8',
+      data: {
+        loginType: 'username'
+      },
+      methods: {
+        tog() {
+          if (this.loginType === 'username') {
+            this.loginType = 'email';
+          } else {
+            this.loginType = 'username';
+          }
+        }
       }
-    }
-  }
-});
-/*let long = {
-    l: 0,
-    f: 2
-  },
-  data = long.f;
-long.f && (data = 3, console.log('yes'));*/
-</script>
+    });
+    // app-9
+    let conf = Vue.extend({
+      template: '<div> 当前值：{{ count }}  <button class="btn-success" @click="onSuccessClick">成功</button> </div>',
+      data: function () {
+        return {
+          count: 0
+        };
+      },
+      methods: {
+        onSuccessClick: function () {
+          this.count += 1;
+        }
+      }
+    });
+    const initInstance = () => {
+      // 执行方法后完成挂载
+      window.newInstance = new conf(); // 实例化
+      // console.log('$el: ', newInstance.$mount().$el ==newInstance.$el); true
+      document.querySelector('#app-9').appendChild(newInstance.$mount().$el);
+      // 实例化后手动挂载，得到$el真实Dom，将其添加到body最后
+    };
+    initInstance();
+    // app-10
+    let con = Vue.extend({
+      name: 'my-fav',
+      template: `
+          <div ref="myfavDialog">
+            <div class="el-message-box__wrapper" style="z-index: 2003">
+              <div class="el-message-box">
+                <div class="el-message-box__header">
+                  <div class="el-message-box__title"><span>添加收藏夹</span></div>
+                  <button type="button" aria-label="Close" class="el-message-box__headerbtn"><i class="el-message-box__close el-icon-close" @click="close">X</i></button>
+                </div>
+                <div class="el-message-box__content">
+                  <div class="el-message-box__container">
+                    <ul>
+                      <li v-for="(item, index) in list" :key="index">
+                        <p>
+                          <span style="display: inline-block; width: 110px">{{ item.type }} 标签名:</span> <input type="text" v-model="item.label" />
+                          <button @click="del(index)" size="small" class="el-button" style="padding: 3px 8px;">删除</button>
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="el-message-box__btns">
+                  <button type="button" class="el-button el-button--small" @click="close"><span> 取消 </span></button
+                  >
+                  <button type="button" class="el-button el-button--small el-button--primary" @click="save"><span>保存 </span></button>
+                </div>
+              </div>
+            </div>
+            <div class="v-modal" tabindex="0" style="z-index: 2002;"></div>
+          </div>`,
+      data() {
+        return {
+          list: localStorage.myFavorite ? JSON.parse(localStorage.myFavorite) : [] //;myArr
+        };
+      },
+      methods: {
+        show() {
+          this.$refs.myfavDialog.hidden = false;
+        },
+        close() {
+          this.$refs.myfavDialog.hidden = true;
+        },
+        del(ind) {
+          this.list.splice(ind, 1);
+        },
+        save() {
+          localStorage.setItem('myFavorite', JSON.stringify(this.list));
+        }
+      }
+    });
+    let ins = new con();
+    // document.querySelector('#app-10').appendChild(ins.$mount().$el);
+    // app-11
+    let a11 = new Vue({
+      el: '#app-11',
+      data() {
+        return {
+          sel: '',
+          opens: [
+            {
+              id: 'ky2031467440',
+              label: 'nc_usercenter',
+              closable: true,
+              url: '/spl2/system/sys_appinfo_index',
+              params: {
+                appId: '10181',
+                appName: 'nc_usercenter',
+                activeMenu: 'DataModel'
+              },
+              originTabId: 'default'
+            },
+            {
+              method: '',
+              id: 'ky90801315',
+              label: 'personnel_position_getList',
+              closable: true,
+              url: '/servicecreator/studio/service-info.html?active=1&pageOperation=update&modelId=&appServiceId=156760&appId=10181&protect_level=',
+              tabId: '',
+              originTabId: 'ky2031467440'
+            },
+            {
+              id: 'ky-1658619598',
+              label: 'nc_usercenter_config_center',
+              closable: true,
+              url: '/spl2/system/sys_appinfo_index',
+              params: {
+                appId: '15835',
+                appName: 'nc_usercenter_config_center',
+                activeMenu: 'DataModel'
+              },
+              originTabId: 'default'
+            },
+            {
+              method: '',
+              id: 'ky-72028540',
+              label: 'nc_ucc_staff_config_info',
+              closable: true,
+              url: '/spl2/system/sys_basemodel_detail?activeMenu=cItem1&custom=&protect_level=&package_type=app&package_id=15835&model_type=datamodel&model_id=20422&model_name=nc_ucc_staff_config_info',
+              tabId: '',
+              originTabId: 'ky-1658619598'
+            },
+            {
+              method: '',
+              id: 'ky-525292105',
+              label: 'nc_ucc_staff_config_account_info',
+              closable: true,
+              url: '/spl2/system/sys_basemodel_detail?activeMenu=cItem1&custom=&protect_level=&package_type=app&package_id=15835&model_type=datamodel&model_id=20412&model_name=nc_ucc_staff_config_account_info',
+              tabId: '',
+              originTabId: 'ky-1658619598'
+            }
+          ],
+          list: localStorage.myFavorite ? JSON.parse(localStorage.myFavorite) : [] //;myArr
+        };
+      },
+      methods: {
+        addSel() {
+          let ss = this.opens.find(i => i.id === this.sel);
+          if (this.list.find(itm => itm.url === ss.url && itm.label === ss.label)) {
+            console.error('请勿重复添加');
+            return;
+          }
+          this.list.push(ss);
+        },
+        move(dire, index) {
+          console.log('dire, index: ', dire, index);
+          let tmp = this.list[index];
+          if (dire == 'up') {
+            this.list.splice(index, 1);
+            this.list.splice(index - 1, 0, tmp);
+          } else {
+            this.list.splice(index, 1);
+            this.list.splice(index + 1, 0, tmp);
+          }
+        },
+        doSel() {
+          console.log('sel:', this.sel);
+        },
+        show() {
+          this.$refs.myfavDialog.hidden = false;
+        },
+        close() {
+          this.$refs.myfavDialog.hidden = true;
+        },
+        del(ind) {
+          this.list.splice(ind, 1);
+        },
+        save() {
+          localStorage.setItem('myFavorite', JSON.stringify(this.list));
+        }
+      }
+    });
+    // 自定义
+    let ff = ins.constructor.extend({
+      name: 'my-fav',
+      template: '<div> 当前值：{{ count }}  <button class="btn-success" @click="onSuccessClick">成功</button> </div>',
+      data: function () {
+        return {
+          count: 0
+        };
+      },
+      methods: {
+        onSuccessClick: function () {
+          this.count += 1;
+        }
+      }
+    });
 
+    let tt = new ff();
+    document.body.appendChild(tt.$mount().$el);
+    /*let long = {
+        l: 0,
+        f: 2
+      },
+      data = long.f;
+    long.f && (data = 3, console.log('yes'));*/
+  </script>
 </html>

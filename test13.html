@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    :root {
+      counter-reset: chapter;
+    }
+    .demo section {
+      counter-increment: chapter;
+    }
+    .demo h1 {
+      counter-reset: headings2;
+    }
+    .demo h1::before {
+      content: '第' counter(chapter) '章 ';
+    }
+    .demo h2 {
+      counter-reset: headings3;
+    }
+    .demo h2::before {
+      counter-increment: headings2;
+      content: counter(chapter) '.' counter(headings2) ' ';
+    }
+    .demo h3::before {
+      counter-increment: headings3;
+      content: counter(chapter) '.' counter(headings2) '.' counter(headings3);
+    }
+    main {
+      background: hsl(0deg, 0%, 10%);
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+    }
+
+    .container {
+      text-align: center;
+    }
+    input:invalid {
+      border: red solid 3px;
+    }
+    #grid {
+      display: grid;
+      height: 100px;
+      grid-template: repeat(4, 1fr) / 50px 100px;
+    }
+
+    #item1 {
+      background-color: lime;
+      grid-area: 2 / 2 / auto / span 3;
+    }
+
+    #item2 {
+      background-color: yellow;
+    }
+
+    #item3 {
+      background-color: blue;
+    }
+  </style>
+  <body>
+    <div class="demo">
+      <section>
+        <h1>基础语法</h1>
+        <h2>变量</h2>
+        <h3>定义变量</h3>
+        <h2>常量</h2>
+      </section>
+      <section>
+        <h1>数据类型</h1>
+      </section>
+      <section>
+        <h1>运算符</h1>
+      </section>
+    </div>
+    <div class="container">
+      <h1 class="title">Welcome</h1>
+      <h2 class="subtitle">JavaScript Web Animations API</h2>
+      <input type="number" pattern="^[1-9]{3}$" />
+    </div>
+    <div id="grid">
+      <div id="item1"></div>
+      <div id="item2"></div>
+      <div id="item3"></div>
+    </div>
+    <button type="button" class="button">btn</button>
+  </body>
+  <script>
+    let title = document.querySelector('.title');
+    let subTitle = document.querySelector('.subtitle');
+
+    let fadeAndMove = [
+      {
+        opacity: 0,
+        transform: `translateY(-20px)`
+      },
+      {
+        opacity: 1,
+        transform: `translateY(0px)`
+      }
+    ];
+
+    let expand = [
+      {
+        letterSpacing: '-0.5em',
+        opacity: 0
+      },
+      {
+        letterSpacing: 'initial',
+        opacity: 1
+      }
+    ];
+
+    let titleTiming = {
+      duration: 2000,
+      easing: 'ease-in-out'
+    };
+
+    const titleChange = title.animate(fadeAndMove, titleTiming);
+
+    let subTitleTiming = {
+      duration: titleChange.effect.getComputedTiming().duration / 2,
+      easing: 'ease-in-out'
+    };
+
+    const subTitleChange = subTitle.animate(expand, subTitleTiming);
+    subTitleChange.pause();
+
+    document.addEventListener('click', () => {
+      if (subTitleChange.playState === 'finished') {
+      } else {
+        subTitleChange.play();
+      }
+    });
+    let dom = {
+      site: 'hahah',
+      handleEvent(event) {
+        console.log('event: ', event);
+      },
+      bind() {
+        const button = document.querySelector('.button');
+        button.addEventListener('click', this);
+      }
+    };
+    dom.bind();
+  </script>
+</html>

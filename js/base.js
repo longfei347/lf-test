@@ -2318,3 +2318,122 @@ function asyncToGenerator(generatorFunc) {
     });
   };
 }
+const EXCEL = class {
+  construct() {}
+  /**
+   * [exportsCSV 导出数据到CSV]
+   * @param  {Array}  [headers=[]]   [表头]
+   * @param  {Array}  [body=[]]      [内容]
+   * @param  {String} [name='excel'}] [文件名]
+   * @return {[type]}                 [无]
+   */
+  exportsCSV({ headers = [], body = [], name = 'csv', callback = function () {} }) {
+    // _headers = ['id', 'age', 'sex']
+    // _body = [
+    //   {
+    //     'id': '1',
+    //     'age': 12,
+    //     'sex': '男'
+    //   },
+    //   {
+    //     'id': '2',
+    //     'age': 24,
+    //     'sex': '女'
+    //   },
+    //   ......
+    // ]
+    name = name || 'test';
+    const h = headers.join(',') + '\n'; // 格式化表头
+    const b = body
+      .map(item => {
+        // 格式化表内容
+        return Object.values(item).join(',');
+      })
+      .join('\n');
+    const output = h + b; // 合并
+
+    const BOM = '\uFEFF';
+    // 创建一个文件CSV文件
+    var blob = new Blob([BOM + output], { type: 'text/csv' });
+    // IE
+    if (navigator.msSaveOrOpenBlob) {
+      // 解决大文件下载失败
+      // 保存到本地文件
+      navigator.msSaveOrOpenBlob(blob, `${name}.csv`);
+    } else {
+      // let uri = encodeURI(`data:text/csv;charset=utf-8,${BOM}${output}`)
+      let downloadLink = document.createElement('a');
+      // downloadLink.href = uri
+      downloadLink.setAttribute('href', URL.createObjectURL(blob)); // 因为url有最大长度限制，encodeURI是会把字符串转化为url，超出限制长度部分数据丢失导致下载失败,为此我采用创建Blob（二进制大对象）的方式来存放缓存数据，具体代码如下：
+      downloadLink.download = `${name}.csv`;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    }
+    callback();
+  }
+};
+function getDownloadUri(data) {
+  const mimeType = 'attachment/csv';
+  const charset = ';charset=utf-8,';
+  const _utf = '\uFEFF'; // 为了使文件以utf-8的编码模式，同时也是解决中文乱码的问题
+  return 'data:' + mimeType + charset + _utf + encodeURIComponent(data);
+}
+function getDownloadUri(data) {
+  const _utf = '\uFEFF'; // 为了使文件以utf-8的编码模式，同时也是解决中文乱码的问题
+  if (window.Blob && window.URL && window.URL.createObjectURL) {
+    const blob = new Blob([_utf + data], {
+      type: 'text/json' // 写自己需要的数据格式
+    });
+    return URL.createObjectURL(blob);
+  }
+}
+function saveFileByExecCommand(data, fileName) {
+  const newWindow = window.top.open('about:blank', '_blank');
+  newWindow.document.write('sep=,\r\n' + data);
+  newWindow.document.close();
+  newWindow.document.execCommand('SaveAs', false, fileName);
+  newWindow.close();
+}
+
+function saveData2File(data, fileName) {
+  const bw = getBrowser(); // 获取浏览器信息
+  if (!bw['edge'] || !bw['ie']) {
+    const element = document.createElement('a');
+    const uri = getDownloadUri(data);
+    element.href = uri;
+    element.download = fileName;
+    const a = document.body.appendChild(element);
+    const evt = document.createEvent('HTMLEvents');
+    evt.initEvent('click', false, false); // 不加后面两个参数在Firefox上报错
+    a.dispatchEvent(evt);
+    document.body.removeChild(element);
+  } else if (bw['ie'] >= 10 || bw['edge'] === 'edge') {
+    const _utf = '\uFEFF'; // 为了使文件以utf-8的编码模式，同时也是解决中文乱码的问题
+    const blob = new Blob([_utf + data], {
+      type: 'text/json' // 自己需要的数据格式
+    });
+    navigator.msSaveBlob(blob, fileName);
+  }
+}
+
+function getBrowser() {
+  const sys = {};
+  const ua = navigator.userAgent.toLowerCase();
+  if (ua.indexOf('edge') !== -1) {
+    sys.edge = 'edge';
+  } else if (ua.match(/rv:([\d.]+)\) like gecko/)) {
+    sys.ie = ua.match(/rv:([\d.]+)\) like gecko/)[1];
+  } else if (ua.match(/msie ([\d.]+)/)) {
+    sys.ie = ua.match(/msie ([\d.]+)/)[1];
+  } else if (ua.match(/firefox\/([\d.]+)/)) {
+    sys.firefox = ua.match(/firefox\/([\d.]+)/)[1];
+  } else if (ua.match(/chrome\/([\d.]+)/)) {
+    sys.chrome = ua.match(/chrome\/([\d.]+)/)[1];
+  } else if (ua.match(/opera.([\d.]+)/)) {
+    sys.opera = ua.match(/opera.([\d.]+)/)[1];
+  } else if (ua.match(/version\/([\d.]+).*safari/)) {
+    sys.safari = ua.match(/version\/([\d.]+).*safari/)[1];
+  }
+  return sys;
+}

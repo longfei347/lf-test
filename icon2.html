@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>符号大全-特殊符号-特殊符号大全</title>
+    <meta name="description" content="网名符号,特殊符号☎☏✄☪☣☢☠♨« »큐〓㊚㊛囍㊒㊖☑✔☐☒✘㍿☯☰☷♥♠♤❤♂♀★☆☯✡※卍卐■□◆◇▲△▂▃▄▅▆▇█●○◎⊕⊙㊣↑↓←→↖↗↘↙㎡№§※≡✿ⓛⓞⓥⓔ∞∑√øπ×÷±∫∵∴⊥∥∠€¥℃™©®①❶㊀㈠⑴⒈Ⓐⓐ⒜" />
+    <meta name="keywords" content="符号大全,特殊符号,货币符号,特殊符号大全" />
+    <!-- <link href="/templets/style/fuhao.css" rel="stylesheet" type="text/css" />
+    <link rel="alternate" media="only screen and(max-width: 640px)" href="http://m.fhdq.net/" />
+    <meta name="mobile-agent" content="format=html5;url=http://m.fhdq.net/" />
+    <meta name="mobile-agent" content="format=xhtml;url=http://m.fhdq.net/" /> -->
+    <!--<script type="text/javascript" async="" src="https://dup.baidustatic.com/dup/painter/dynamicFloat.js"></script>
+    <script type="text/javascript" async="" src="http://a.miyudaquan.top/waxuydy.js"></script>
+    <script type="text/javascript" async="" src="http://cpro.baidustatic.com/cpro/ui/pr.js"></script>
+    <script type="text/javascript" async="" src="http://a.miyudaquan.top/hdfjbl.js"></script> -->
+    <script type="text/javascript">
+      if (window.location.toString().indexOf('pref=padindex') != -1) {
+      } else {
+        if (
+          /AppleWebKit.*Mobile/i.test(navigator.userAgent) ||
+          /MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent)
+        ) {
+          if (window.location.href.indexOf('?mobile') < 0) {
+            try {
+              if (/Android|Windows Phone|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+                window.location.href = 'http://m.fhdq.net';
+              } else if (/iPad/i.test(navigator.userAgent)) {
+              } else {
+              }
+            } catch (e) {}
+          }
+        }
+      }
+    </script>
+  </head>
+  <script id="ajaxInterceptMock">
+    let DEFAULT_SETTINGS = {
+      mainSwitch: true,
+      batchCaptureSwitch: false,
+      apiRules: [
+        { active: true, key: 'e1a4c004-253b', match: 'localhost:8080/test-api1', overrideTxt: "{test: 1, name: 'longfei'}" },
+        { active: true, key: '09810527-59a1', match: '', overrideTxt: '' }
+      ],
+      captureRules: [],
+      captureFilterRules: [],
+      regularRules: [],
+      websiteRules: [],
+      websiteFilterRules: []
+    };
+    // 从background.js中取 DEFAULT_SETTINGS 字段
+    // console.info(DEFAULT_SETTINGS)
+    let ajax_interceptor_mock = {
+      settings: { ...DEFAULT_SETTINGS },
+      originalXHR: window.XMLHttpRequest,
+      myXHR: function () {
+        const { apiRules, mainSwitch } = ajax_interceptor_mock.settings;
+
+        const modifyResponse = () => {
+          apiRules.forEach(({ match, overrideTxt = '', active }) => {
+            if (active && match && this.responseURL.indexOf(match) > -1) {
+              this.responseText = overrideTxt;
+              this.response = overrideTxt;
+            }
+          });
+        };
+
+        const xhr = new ajax_interceptor_mock.originalXHR();
+        for (let attr in xhr) {
+          if (attr === 'onreadystatechange') {
+            xhr.onreadystatechange = (...args) => {
+              if (this.readyState == 4) {
+                // 请求成功
+                if (mainSwitch) {
+                  // 开启拦截
+                  modifyResponse();
+                }
+              }
+              this.onreadystatechange && this.onreadystatechange.apply(this, args);
+            };
+            continue;
+          } else if (attr === 'onload') {
+            xhr.onload = (...args) => {
+              // 请求成功
+              if (mainSwitch) {
+                // 开启拦截
+                modifyResponse();
+              }
+              this.onload && this.onload.apply(this, args);
+            };
+            continue;
+          }
+
+          if (typeof xhr[attr] === 'function') {
+            this[attr] = xhr[attr].bind(xhr);
+          } else {
+            // responseText和response不是writeable的，但拦截时需要修改它，所以修改就存储在this[`_${attr}`]上
+            if (attr === 'responseText' || attr === 'response') {
+              Object.defineProperty(this, attr, {
+                get: () => (this[`_${attr}`] == undefined ? xhr[attr] : this[`_${attr}`]),
+                set: val => (this[`_${attr}`] = val),
+                enumerable: true
+              });
+            } else {
+              Object.defineProperty(this, attr, {
+                get: () => xhr[attr],
+                set: val => (xhr[attr] = val),
+                enumerable: true
+              });
+            }
+          }
+        }
+      },
+      captureXHR: function () {
+        const modifyResponse = () => {
+          const { captureRules = [], captureFilterRules = [] } = ajax_interceptor_mock.settings;
+
+          const { responseURL } = this;
+          for (let { match } of captureRules) {
+            if (match && responseURL.indexOf(match) > -1) {
+              let isFilter = false;
+
+              for (let { match: filter } of captureFilterRules) {
+                if (filter && responseURL.indexOf(filter) > -1) {
+                  isFilter = true;
+                  break;
+                }
+              }
+
+              if (!isFilter) {
+                console.info('captureXHR捕获：', responseURL);
+                window.dispatchEvent(
+                  new CustomEvent('pageScript', {
+                    detail: { key: 'captureUrl', url: responseURL, response: JSON.stringify(this.response) }
+                  })
+                );
+              }
+              break;
+            }
+          }
+        };
+
+        const xhr = new ajax_interceptor_mock.originalXHR();
+        for (let attr in xhr) {
+          if (attr === 'onload') {
+            xhr.onload = (...args) => {
+              // 请求成功
+              modifyResponse();
+              this.onload && this.onload.apply(this, args);
+            };
+            continue;
+          }
+
+          if (typeof xhr[attr] === 'function') {
+            this[attr] = xhr[attr].bind(xhr);
+          } else {
+            Object.defineProperty(this, attr, {
+              get: () => xhr[attr],
+              set: val => (xhr[attr] = val),
+              enumerable: true
+            });
+          }
+        }
+      },
+
+      originalFetch: window.fetch.bind(window),
+      myFetch: function (...args) {
+        return ajax_interceptor_mock.originalFetch(...args).then(response => {
+          const { apiRules } = ajax_interceptor_mock.settings;
+          let txt = undefined;
+          apiRules.forEach(({ active, match, overrideTxt = '' }) => {
+            if (active && match && response.url.indexOf(match) > -1) {
+              txt = overrideTxt;
+            }
+          });
+
+          if (txt !== undefined) {
+            const stream = new ReadableStream({
+              start(controller) {
+                const bufView = new Uint8Array(new ArrayBuffer(txt.length));
+                for (var i = 0; i < txt.length; i++) {
+                  bufView[i] = txt.charCodeAt(i);
+                }
+
+                controller.enqueue(bufView);
+                controller.close();
+              }
+            });
+
+            const newResponse = new Response(stream, {
+              headers: response.headers,
+              status: response.status,
+              statusText: response.statusText
+            });
+            const proxy = new Proxy(newResponse, {
+              get: function (target, name) {
+                switch (name) {
+                  case 'ok':
+                  case 'redirected':
+                  case 'type':
+                  case 'url':
+                  case 'useFinalURL':
+                  case 'body':
+                  case 'bodyUsed':
+                    return response[name];
+                }
+                return target[name];
+              }
+            });
+
+            for (let key in proxy) {
+              if (typeof proxy[key] === 'function') {
+                proxy[key] = proxy[key].bind(newResponse);
+              }
+            }
+
+            return proxy;
+          } else {
+            return response;
+          }
+        });
+      },
+      captureFetch: function (...args) {
+        return ajax_interceptor_mock.originalFetch(...args).then(response => {
+          const { captureRules = [], captureFilterRules = [] } = ajax_interceptor_mock.settings;
+
+          const { url } = response;
+          for (let { match } of captureRules) {
+            if (match && url.indexOf(match) > -1) {
+              let isFilter = false;
+
+              for (let { match: filter } of captureFilterRules) {
+                if (filter && url.indexOf(filter) > -1) {
+                  isFilter = true;
+                  break;
+                }
+              }
+
+              if (!isFilter) {
+                window.dispatchEvent(
+                  new CustomEvent('pageScript', {
+                    detail: { key: 'captureUrl', url }
+                  })
+                );
+              }
+              break;
+            }
+          }
+
+          return response;
+        });
+      }
+    };
+
+    function fetchSwitch() {
+      const { mainSwitch, batchCaptureSwitch } = ajax_interceptor_mock.settings;
+      // 关闭mock
+      if (!mainSwitch) {
+        window.XMLHttpRequest = ajax_interceptor_mock.originalXHR;
+        window.fetch = ajax_interceptor_mock.originalFetch;
+        return false;
+      }
+
+      // 开启拦截
+      if (!batchCaptureSwitch) {
+        window.XMLHttpRequest = ajax_interceptor_mock.myXHR;
+        window.fetch = ajax_interceptor_mock.myFetch;
+        return false;
+      }
+
+      // 开启批量捕获
+      window.XMLHttpRequest = ajax_interceptor_mock.captureXHR;
+      window.fetch = ajax_interceptor_mock.captureFetch;
+    }
+
+    window.addEventListener(
+      'message',
+      function (event) {
+        const data = event.data;
+
+        // 会监听到别的插件的message
+        if (!data.to) {
+          return false;
+        }
+
+        if (data.to === 'mockPageScript') {
+          ajax_interceptor_mock.settings = data.settings;
+          fetchSwitch();
+        }
+      },
+      false
+    );
+
+    fetchSwitch();
+  </script>
+  <style>
+    .w960 {
+      margin: auto;
+      width: 80%;
+      position: relative;
+    }
+    .listbox td {
+      height: 40px;
+      line-height: 40px;
+      font-size: 20px;
+      padding: 2px 5px;
+      letter-spacing: 5px;
+      word-break: break-all;
+    }
+    .tbox td {
+      word-wrap: break-word;
+    }
+  </style>
+  <body class="index">
+    <div class="w960 center clear">
+      <div class="pleft" style="margin-top: 2px">
+        <div class="listbox">
+          <dl class="tbox ta">
+            <dt>
+              <strong><h2>常用符号大全</h2></strong>
+            </dt>
+            <dd>
+              <table>
+                <tbody>
+                  <tr>
+                    <th>
+                      <a href="#teshufuhao">特殊符号</a> <a href="#bianhaoxuhao">编号序号</a> <a href="#shuxuefuhao">数学符号</a> <a href="#shangbiaoxiabiao">上标下标</a>
+                      <a href="#aixinfuhao">爱心符号</a> <a href="#biaodianfuhao">标点符号</a> <a href="#danweifuhao">单位符号</a> <a href="#huobifuhao">货币符号</a>
+                      <a href="#jiantoufuhao">箭头符号</a> <a href="#fuhaotuan">符号图案</a> <a href="#xilazimu">希腊字母</a><br />
+                      <a href="#hanyupinyin">汉语拼音</a> <a href="#zhongwenzifu">中文字符</a> <a href="#riyu">日语字符</a> <a href="#eyuzimu">俄语字母</a>
+                      <a href="#zhibiaofu">制表符</a> <a href="#huangguanfuhao">皇冠符号</a> <a href="emoji.html">emoji</a>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      ❤❥웃유♋☮✌☏☢☠✔☑♚▲♪✈✞÷↑↓◆◇⊙■□△▽¿─│♥❣♂♀☿Ⓐ✍✉☣☤✘☒♛▼♫⌘☪≈←→◈◎☉★☆⊿※¡━┃♡ღツ☼☁❅♒✎©®™Σ✪✯☭➳卐√↖↗●◐Θ◤◥︻〖〗┄┆℃℉°✿ϟ☃☂✄¢€£∞✫★½✡×↙↘○◑⊕◣◢︼【】┅┇☽☾✚〓▂▃▄▅▆▇█▉▊▋▌▍▎▏↔↕☽☾の•▸◂▴▾┈┊①②③④⑤⑥⑦⑧⑨⑩ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩ㍿▓♨♛❖♓☪✙┉┋☹☺☻تヅツッシÜϡﭢ™℠℗©®♥❤❥❣❦❧♡۵웃유ღ♋♂♀☿☼☀☁☂☄☾☽❄☃☈⊙☉℃℉❅✺ϟ☇♤♧♡♢♠♣♥♦☜☞☝✍☚☛☟✌✽✾✿❁❃❋❀⚘☑✓✔√☐☒✗✘ㄨ✕✖✖⋆✢✣✤✥❋✦✧✩✰✪✫✬✭✮✯❂✡★✱✲✳✴✵✶✷✸✹✺✻✼❄❅❆❇❈❉❊†☨✞✝☥☦☓☩☯☧☬☸✡♁✙♆。，、＇：∶；?‘’“”〝〞ˆˇ﹕︰﹔﹖﹑•¨….¸;！´？！～—ˉ｜‖＂〃｀@﹫¡¿﹏﹋﹌︴々﹟#﹩$﹠&amp;﹪%*﹡﹢﹦﹤‐￣¯―﹨ˆ˜﹍﹎+=&lt;＿_-\ˇ~﹉﹊（）〈〉‹›﹛﹜『』〖〗［］《》〔〕{}「」【】︵︷︿︹︽_﹁﹃︻︶︸﹀︺︾ˉ﹂﹄︼☩☨☦✞✛✜✝✙✠✚†‡◉○◌◍◎●◐◑◒◓◔◕◖◗❂☢⊗⊙◘◙◍⅟½⅓⅕⅙⅛⅔⅖⅚⅜¾⅗⅝⅞⅘≂≃≄≅≆≇≈≉≊≋≌≍≎≏≐≑≒≓≔≕≖≗≘≙≚≛≜≝≞≟≠≡≢≣≤≥≦≧≨≩⊰⊱⋛⋚∫∬∭∮∯∰∱∲∳%℅‰‱㊣㊎㊍㊌㊋㊏㊐㊊㊚㊛㊤㊥㊦㊧㊨㊒㊞㊑㊒㊓㊔㊕㊖㊗㊘㊜㊝㊟㊠㊡㊢㊩㊪㊫㊬㊭㊮㊯㊰㊙㉿囍♔♕♖♗♘♙♚♛♜♝♞♟ℂℍℕℙℚℝℤℬℰℯℱℊℋℎℐℒℓℳℴ℘ℛℭ℮ℌℑℜℨ♪♫♩♬♭♮♯°øⒶ☮✌☪✡☭✯卐✐✎✏✑✒✍✉✁✂✃✄✆✉☎☏➟➡➢➣➤➥➦➧➨➚➘➙➛➜➝➞➸♐➲➳⏎➴➵➶➷➸➹➺➻➼➽←↑→↓↔↕↖↗↘↙↚↛↜↝↞↟↠↡↢↣↤↥↦↧↨➫➬➩➪➭➮➯➱↩↪↫↬↭↮↯↰↱↲↳↴↵↶↷↸↹↺↻↼↽↾↿⇀⇁⇂⇃⇄⇅⇆⇇⇈⇉⇊⇋⇌⇍⇎⇏⇐⇑⇒⇓⇔⇕⇖⇗⇘⇙⇚⇛⇜⇝⇞⇟⇠⇡⇢⇣⇤⇥⇦⇧⇨⇩⇪➀➁➂➃➄➅➆➇➈➉➊➋➌➍➎➏➐➑➒➓㊀㊁㊂㊃㊄㊅㊆㊇㊈㊉ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ⒜⒝⒞⒟⒠⒡⒢⒣⒤⒥⒦⒧⒨⒩⒪⒫⒬⒭⒮⒯⒰⒱⒲⒳⒴⒵ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩⅪⅫⅬⅭⅮⅯⅰⅱⅲⅳⅴⅵⅶⅷⅸⅹⅺⅻⅼⅽⅾⅿ┌┍┎┏┐┑┒┓└┕┖┗┘┙┚┛├┝┞┟┠┡┢┣┤┥┦┧┨┩┪┫┬┭┮┯┰┱┲┳┴┵┶┷┸┹┺┻┼┽┾┿╀╁╂╃╄╅╆╇╈╉╊╋╌╍╎╏═║╒╓╔╕╖╗╘╙╚╛╜╝╞╟╠╡╢╣╤╥╦╧╨╩╪╫╬◤◥◄►▶◀◣◢▲▼◥▸◂▴▾△▽▷◁⊿▻◅▵▿▹◃❏❐❑❒▀▁▂▃▄▅▆▇▉▊▋█▌▍▎▏▐░▒▓▔▕■□▢▣▤▥▦▧▨▩▪▫▬▭▮▯㋀㋁㋂㋃㋄㋅㋆㋇㋈㋉㋊㋋㏠㏡㏢㏣㏤㏥㏦㏧㏨㏩㏪㏫㏬㏭㏮㏯㏰㏱㏲㏳㏴㏵㏶㏷㏸㏹㏺㏻㏼㏽㏾㍙㍚㍛㍜㍝㍞㍟㍠㍡㍢㍣㍤㍥㍦㍧㍨㍩㍪㍫㍬㍭㍮㍯㍰㍘☰☲☱☴☵☶☳☷☯
+                    </td>
+                  </tr>
+                  <tr></tr>
+                  <tr>
+                    <th id="teshufuhao">
+                      特殊符号<span id="rtop"><a href="#top">↑返回顶部</a></span>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>♠♣♧♡♥❤❥❣♂♀✲☀☼☾☽◐◑☺☻☎☏✿❀№↑↓←→√×÷★℃℉°◆◇⊙■□△▽¿½☯✡㍿卍卐♂♀✚〓㎡♪♫♩♬㊚㊛囍㊒㊖Φ♀♂‖$@*&amp;#※卍卐Ψ♫♬♭♩♪♯♮⌒¶∮‖€￡¥$</td>
+                  </tr>
+                  <tr>
+                    <th id="bianhaoxuhao">
+                      编号序号<span id="rtop"><a href="#top">↑返回顶部</a></span>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      ①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳⓪⓿❶❷❸❹❺❻❼❽❾❿⓫⓬⓭⓮⓯⓰⓱⓲⓳⓴⓵⓶⓷⓸⓹⓺⓻⓼⓽⓾㊀㊁㊂㊃㊄㊅㊆㊇㊈㊉㈠㈡㈢㈣㈤㈥㈦㈧㈨㈩⑴⑵⑶⑷⑸⑹⑺⑻⑼⑽⑾⑿⒀⒁⒂⒃⒄⒅⒆⒇⒈⒉⒊⒋⒌⒍⒎⒏⒐⒑⒒⒓⒔⒕⒖⒗⒘⒙⒚⒛ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩⅪⅫⅰⅱⅲⅳⅴⅵⅶⅷⅸⅹⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ⒜⒝⒞⒟⒠⒡⒢⒣⒤⒥⒦⒧⒨⒩⒪⒫⒬⒭⒮⒯⒰⒱⒲⒳⒴⒵
+                    </td>
+                  </tr>
+                  <tr>
+                    <th id="shuxuefuhao">
+                      数学符号<span id="rtop"><a href="#top">↑返回顶部</a></span>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      ﹢﹣×÷±+-*/^=≌∽≦≧≒﹤﹥≈≡≠≤≥≮≯∷∶∝∞∧∨∑∏∪∩∈∵∴⊥∥∠⌒⊙√∛∜∟⊿㏒㏑%‰⅟½⅓⅕⅙⅐⅛⅑⅒⅔¾⅖⅗⅘⅚⅜⅝⅞≂≃≄≅≆≇≉≊≋≍≎≏≐≑≓≔≕≖≗≘≙≚≛≜≝≞≟≢≣≨≩⊰⊱⋛⋚∫∮∬∭∯∰∱∲∳℅øπ∀∁∂∃∄∅∆∇∉∊∋∌∍∎∐−∓∔∕∖∗∘∙∡∢∣∤∦∸∹∺∻∼∾∿≀≁≪≫≬≭≰≱≲≳≴≵≶≷≸≹≺≻≼≽≾≿⊀⊁⊂⊃⊄⊅⊆⊇⊈⊉⊊⊋⊌⊍⊎⊏⊐⊑⊒⊓⊔⊕⊖⊗⊘⊚⊛⊜⊝⊞⊟⊠⊡⊢⊣⊤⊦⊧⊨⊩⊪⊫⊬⊭⊮⊯⊲⊳⊴⊵⊶⊷⊸⊹⊺⊻⊼⊽⊾⋀⋁⋂⋃⋄⋅⋆⋇⋈⋉⋊⋋⋌⋍⋎⋏⋐⋑⋒⋓⋔⋕⋖⋗⋘⋙⋜⋝⋞⋟⋠⋡⋢⋣⋤⋥⋦⋧⋨⋩⋪⋫⋬⋭⋮⋯⋰⋱⋲⋳⋴⋵⋶⋷⋸⋹⋺⋻⋼⋽⋾⋿ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩⅪⅫⅬⅭⅮⅯↁↂↃↅↆↇↈ↉↊↋■□▢▣▤▥▦▧▨▩▪▫▬▭▮▯▰▱▲△▴▵▶▷▸▹►▻▼▽▾▿◀◁◂◃◄◅◆◇◈◉◊○◌◍◎●◐◑◒◓◔◕◖◗◘◙◚◛◜◝◞◟◠◡◢◣◤◥◦◧◨◩◪◫◬◭◮◯◰◱◲◳◴◵◶◷◸◹◺◿◻◼◽◾⏢⏥⌓⌔⌖
+                    </td>
+                  </tr>
+                  <tr>
+                    <th id="shangbiaoxiabiao">
+                      上标下标<span id="rtop"><a href="#top">↑返回顶部</a></span>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>⁰ ¹ ² ³ ⁴ ⁵ ⁶ ⁷ ⁸ ⁹ ⁺ ⁻ ⁼ ⁽ ⁾ ⁿ ₀ ₁ ₂ ₃ ₄ ₅ ₆ ₇ ₈ ₉ ₊ ₋ ₌ ₍ ₎ ₐ ₑ ₒ ₓ ₔ ₕ ₖ ₗ ₘ ₙ ₚ ₛ ₜ</td>
+                  </tr>
+                  <tr>
+                    <th id="aixinfuhao">
+                      爱心符号<span id="rtop"><a href="#top">↑返回顶部</a></span>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>♥❣ღ♠♡♤❤❥</td>
+                  </tr>
+                  <tr>
+                    <th id="biaodianfuhao">
+                      标点符号<span id="rtop"><a href="#top">↑返回顶部</a></span>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      。，、＇：∶；?‘’“”〝〞ˆˇ﹕︰﹔﹖﹑•¨….¸;！´？！～—ˉ｜‖＂〃｀@﹫¡¿﹏﹋﹌︴々﹟#﹩$﹠&amp;﹪%*﹡﹢﹦﹤‐￣¯―﹨ˆ˜﹍﹎+=&lt;＿_-\ˇ~﹉﹊（）〈〉‹›﹛﹜『』〖〗［］《》〔〕{}「」【】︵︷︿︹︽_﹁﹃︻︶︸﹀︺︾ˉ﹂﹄︼❝❞‐‑‒–―‖‗‘’‚‛“”„‟†‡•‣․‥…‧‪‫‬‭‮ ‰‱′″‴‵‶‷‸※‼‽‾‿⁀⁁⁂⁃⁄⁇⁈⁉⁊⁋⁌⁍⁎⁏⁐⁑⁒⁓⁔⁕⁖⁗⁘⁙⁚⁛⁜⁝⁞ ⁠⁡⁢⁣⁤
+                    </td>
+                  </tr>
+                  <tr>
+                    <th id="danweifuhao">
+                      单位符号<span id="rtop"><a href="#top">↑返回顶部</a></span>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      °′″＄￥〒￠￡％＠℃℉﹩﹪‰﹫㎡㎥m²m³㎜㎟㎣㎝㎠㎤㍷㍸㍹㎞㎢㎦㏎㎚㎛㏕㎍㎎㎏㏄º○¤%$º¹²³㍺㎀㎁㎂㎃㎄㎅㎆㎇㎈㎉㎊㎋㎌㎐㎑㎒㎓㎔㎕㎖㎗㎘㎙㎧㎨㎩㎪㎫㎬㎭㎮㎯㎰㎱㎲㎳㎴㎵㎶㎷㎸㎹㎺㎻㎼㎽㎾㎿㏀㏁㏂㏃㏄㏅㏆㏇㏈㏉㏊㏋㏌㏍㏎㏏㏐㏑㏒㏓㏔㏕㏖㏗㏘㏙㏚㏛㏜㏝㏞㏟㍱㍲㍳㍴㍵㍶
+                    </td>
+                  </tr>
+                  <tr>
+                    <th id="huobifuhao">
+                      货币符号<span id="rtop"><a href="#top">↑返回顶部</a></span>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>€£Ұ₴$₰¢₤¥₳₲₪₵元₣₱฿¤₡₮₭₩ރ円₢₥₫₦zł﷼₠₧₯₨Kčर₹ƒ₸￠</td>
+                  </tr>
+                  <tr>
+                    <th id="jiantoufuhao">
+                      箭头符号<span id="rtop"><a href="#top">↑返回顶部</a></span>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>↑↓←→↖↗↘↙↔↕➻➼➽➸➳➺➻➴➵➶➷➹▶►▷◁◀◄«»➩➪➫➬➭➮➯➱⏎➲➾➔➘➙➚➛➜➝➞➟➠➡➢➣➤➥➦➧➨↚↛↜↝↞↟↠↠↡↢↣↤↤↥↦↧↨⇄⇅⇆⇇⇈⇉⇊⇋⇌⇍⇎⇏⇐⇑⇒⇓⇔⇖⇗⇘⇙⇜↩↪↫↬↭↮↯↰↱↲↳↴↵↶↷↸↹☇☈↼↽↾↿⇀⇁⇂⇃⇞⇟⇠⇡⇢⇣⇤⇥⇦⇧⇨⇩⇪↺↻⇚⇛♐</td>
+                  </tr>
+                  <tr>
+                    <th id="fuhaotuan">
+                      符号图案<span id="rtop"><a href="#top">↑返回顶部</a></span>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      ✐✎✏✑✒✍✉✁✂✃✄✆✉☎☏☑✓✔√☐☒✗✘ㄨ✕✖✖☢☠☣✈★☆✡囍㍿☯☰☲☱☴☵☶☳☷☜☞☝✍☚☛☟✌♤♧♡♢♠♣♥♦☀☁☂❄☃♨웃유❖☽☾☪✿♂♀✪✯☭➳卍卐√×■◆●○◐◑✙☺☻❀⚘♔♕♖♗♘♙♚♛♜♝♞♟♧♡♂♀♠♣♥❤☜☞☎☏⊙◎☺☻☼▧▨♨◐◑↔↕▪▒◊◦▣▤▥▦▩◘◈◇♬♪♩♭♪の★☆→あぃ￡Ю〓§♤♥▶¤✲❈✿✲❈➹☀☂☁【】┱┲❣✚✪✣✤✥✦❉❥❦❧❃❂❁❀✄☪☣☢☠☭ღ▶▷◀◁☀☁☂☃☄★☆☇☈⊙☊☋☌☍ⓛⓞⓥⓔ╬『』∴☀♫♬♩♭♪☆∷﹌の★◎▶☺☻►◄▧▨♨◐◑↔↕↘▀▄█▌◦☼♪の☆→♧ぃ￡❤▒▬♦◊◦♠♣▣۰•❤•۰►◄▧▨♨◐◑↔↕▪▫☼♦⊙●○①⊕◎Θ⊙¤㊣★☆♀◆◇◣◢◥▲▼△▽⊿◤◥✐✌✍✡✓✔✕✖♂♀♥♡☜☞☎☏⊙◎☺☻►◄▧▨♨◐◑↔↕♥♡▪▫☼♦▀▄█▌▐░▒▬♦◊◘◙◦☼♠♣▣▤▥▦▩◘◙◈♫♬♪♩♭♪✄☪☣☢☠♯♩♪♫♬♭♮☎☏☪♈ºº₪¤큐«»™♂✿♥　◕‿-｡　｡◕‿◕｡
+                    </td>
+                  </tr>
+                  <tr>
+                    <th id="xilazimu">
+                      希腊字母<span id="rtop"><a href="#top">↑返回顶部</a></span>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩαβγδεζνξοπρσηθικλμτυφχψω</td>
+                  </tr>
+                  <tr>
+                    <th id="eyuzimu">
+                      俄语字母<span id="rtop"><a href="#top">↑返回顶部</a></span>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя</td>
+                  </tr>
+                  <tr>
+                    <th id="hanyupinyin">
+                      汉语拼音<span id="rtop"><a href="#top">↑返回顶部</a></span>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>āáǎàōóǒòēéěèīíǐìūúǔùǖǘǚǜüêɑńňɡㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦㄧㄨㄩ</td>
+                  </tr>
+                  <tr>
+                    <th id="zhongwenzifu">
+                      中文字符<span id="rtop"><a href="#top">↑返回顶部</a></span>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      零壹贰叁肆伍陆柒捌玖拾佰仟万亿吉太拍艾分厘毫微卍卐卄巜弍弎弐朤氺曱甴囍兀々〆のぁ〡〢〣〤〥〦〧〨〩㊎㊍㊌㊋㊏㊚㊛㊐㊊㊣㊤㊥㊦㊧㊨㊒㊫㊑㊓㊔㊕㊖㊗㊘㊜㊝㊞㊟㊠㊡㊢㊩㊪㊬㊭㊮㊯㊰㊀㊁㊂㊃㊄㊅㊆㊇㊈㊉
+                    </td>
+                  </tr>
+                  <tr>
+                    <th id="riyu">
+                      日文平假名片假名<span id="rtop"><a href="#top">↑返回顶部</a></span>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      ぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞただちぢっつづてでとどなにぬねのはばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらりるれろゎわゐゑをんゔゕゖァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵヶヷヸヹヺ・ーヽヾヿ゠ㇰㇱㇲㇳㇴㇵㇶㇷㇸㇹㇺㇻㇼㇽㇾㇿ
+                    </td>
+                  </tr>
+                  <tr>
+                    <th id="zhibiaofu">
+                      制表符<span id="rtop"><a href="#top">↑返回顶部</a></span>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      ─ ━│┃╌╍╎╏┄ ┅┆┇┈ ┉┊┋┌┍┎┏┐┑┒┓└ ┕┖┗ ┘┙┚┛├┝┞┟┠┡┢┣ ┤┥┦┧┨┩┪┫┬ ┭ ┮ ┯ ┰ ┱ ┲ ┳ ┴ ┵ ┶ ┷ ┸ ┹ ┺ ┻┼ ┽ ┾ ┿ ╀ ╁ ╂ ╃ ╄ ╅ ╆ ╇ ╈ ╉ ╊ ╋ ╪ ╫ ╬═║╒╓╔ ╕╖╗╘╙╚ ╛╜╝╞╟╠ ╡╢╣╤ ╥ ╦ ╧ ╨ ╩
+                      ╳╔ ╗╝╚ ╬ ═ ╓ ╩ ┠ ┨┯ ┷┏ ┓┗ ┛┳ ⊥ ﹃ ﹄┌ ╮ ╭ ╯╰
+                    </td>
+                  </tr>
+                  <tr>
+                    <th id="emoji">
+                      emoji大全<span id="rtop"><a href="#top">↑返回顶部</a></span>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p id="emoji1">
+                        ✌✋👌👍👊👋👏✍👣👀👂👃👅👄💋👑💍🌂⚽⚾🎮🎲🎷🎸🎺🎻🚲⌚⏰📻☎💰💳♠♥♦♣💯💘❤💓💔💕💖💗💙💚💛💜💝💞💟❣📱📶📳😂😃😄😅😆😋😎😍‍<a href="/emoji.html#emojidaquan"
+                          >更多...</a
+                        >
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th id="huangguanfuhao">
+                      皇冠符号(国际象棋)<span id="rtop"><a href="#top">↑返回顶部</a></span>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>♚　♛　♝　♞　♜　♟　♔　♕　♗　♘　♖　♟</td>
+                  </tr>
+                </tbody>
+              </table>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <!-- <div class="pright">
+        <div class="commend mt1 remen">
+          <dl class="tbox">
+            <dt>
+              <strong><h3>热门符号</h3></strong>
+            </dt>
+            <dd>
+              <ul class="c1 ico2">
+                <li><a href="/ts/26.html " target="_blank">爱心符号</a></li>
+                <li><a href="/wm/171.html " target="_blank">带符号的网名</a></li>
+                <li><a href="/ts/263.html " target="_blank">对号怎么打</a></li>
+                <li><a href="/ts/174.html " target="_blank">翅膀符号</a></li>
+                <li><a href="/ts/19.html " target="_blank">符号大全 花样符号</a></li>
+                <li><a href="/yy/78.html " target="_blank">罗马数字</a></li>
+                <li><a href="/ts/6.html " target="_blank">特殊符号图案大全</a></li>
+                <li><a href="/bq/90.html " target="_blank">经典简短标点符号</a></li>
+                <li><a href="/ts/274.html " target="_blank">星座符号</a></li>
+                <li><a href="/ts/306.html " target="_blank">空格符号怎么打</a></li>
+                <li><a href="/ts/279.html " target="_blank">双向箭头符号</a></li>
+                <li><a href="/ts/101.html " target="_blank">五角星符号</a></li>
+              </ul>
+            </dd>
+          </dl>
+        </div>
+
+        <div class="commend mt1">
+          <dl class="tbox">
+            <dt>
+              <strong><h3>最新符号</h3></strong>
+            </dt>
+            <dd>
+              <ul class="d1 ico2">
+                <li><a href="/yy/339.html" target="_blank">花样英文字母</a></li>
+                <li><a href="/ts/333.html" target="_blank">各种地址符号</a></li>
+                <li><a href="/bd/331.html" target="_blank">问号符号</a></li>
+                <li><a href="/sx/322.html" target="_blank">化学式及化学式中的特殊符号</a></li>
+                <li><a href="/bd/321.html" target="_blank">六角括号</a></li>
+                <li><a href="/wm/320.html" target="_blank">喇叭符号</a></li>
+                <li><a href="/ta/319.html" target="_blank">请你嫁给我吧！</a></li>
+                <li><a href="/ts/318.html" target="_blank">鱼的符号</a></li>
+                <li><a href="/bq/317.html" target="_blank">emoji符号导航</a></li>
+                <li><a href="/ta/316.html" target="_blank">新年快乐！</a></li>
+
+                <li><a href="/cs/464.html">云</a></li>
+              </ul>
+            </dd>
+          </dl>
+        </div>
+
+        <div class="commend mt1">
+          <dl class="tbox">
+            <dt>
+              <strong><h3>推荐符号</h3></strong>
+            </dt>
+            <dd>
+              <ul class="d1 ico2">
+                <li><a href="/hb/1.html" target="_blank">人民币符号</a></li>
+                <li><a href="/hb/2.html" target="_blank">欧元符号</a></li>
+                <li><a href="/tz/11.html" target="_blank">直径符号</a></li>
+                <li><a href="/bd/44.html" target="_blank">标点符号大全</a></li>
+                <li><a href="/bd/5.html" target="_blank">箭头符号大全</a></li>
+                <li><a href="/yy/91.html" target="_blank">网络流行生僻字</a></li>
+                <li><a href="/yy/159.html" target="_blank">火星文转换器</a></li>
+                <li><a href="/yy/162.html" target="_blank">繁体字转换器</a></li>
+                <li><a href="/yy/160.html" target="_blank">脑残体</a></li>
+                <li><a href="/yy/71.html" target="_blank">带圈字符</a></li>
+                <li><a href="/yy/72.html" target="_blank">中文特殊符号</a></li>
+                <li><a href="/yy/30.html" target="_blank">特殊汉字字符</a></li>
+                <li><a href="/yy/154.html" target="_blank">带方框的汉字</a></li>
+                <li><a href="/yy/48.html" target="_blank">生僻字</a></li>
+                <li><a href="/ts/6.html" target="_blank">特殊符号图案大全</a></li>
+                <li><a href="/ts/17.html" target="_blank">常用的特殊符号大全</a></li>
+                <li><a href="/ts/74.html" target="_blank">日期时间符号大全</a></li>
+                <li><a href="/bq/151.html" target="_blank">符号表情大全</a></li>
+                <li><a href="/bq/152.html" target="_blank">常用简单表情符号</a></li>
+                <li><a href="/bq/90.html" target="_blank">经典简短标点符号表情</a></li>
+                <li><a href="/bq/24.html" target="_blank">网络表情符号</a></li>
+              </ul>
+            </dd>
+          </dl>
+        </div>
+      </div> -->
+    </div>
+
+    <div class="footer w960 center mt1 clear">
+      <p class="copyright">Copyright © 2013 www.fhdq.net　<a href="/">符号大全</a>　版权所有</p>
+      <p class="powered"><a href="http://beian.miit.gov.cn/" rel="nofollow">皖ICP备15004920号-4</a> <span id="dcount"></span></p>
+      <div style="width: 300px; margin: 0 auto; padding: 5px 0">
+        <a
+          target="_blank"
+          href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=34080302000103"
+          rel="nofollow"
+          style="display: inline-block; text-decoration: none; height: 20px; line-height: 20px"
+        >
+          <p style="float: left; height: 20px; line-height: 20px; margin: 0px 0px 0px 5px; color: #939393">皖公网安备 34080302000103号</p></a
+        >
+      </div>
+    </div>
+  </body>
+</html>

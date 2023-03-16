@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .div {
+      width: 100px;
+      height: 100px;
+      background-color: #f90;
+    }
+    .div p {
+      width: 50px;
+      height: 50px;
+      background: #069;
+      margin: 0;
+      background-position: 100% 100%;
+      background-repeat: no-repeat;
+      background-size: 0 10px;
+    }
+    div {
+      margin: 0em;
+      /* padding: 2em; */
+    }
+    #source {
+      color: blue;
+      border: 1px solid black;
+    }
+    #target {
+      border: 1px solid black;
+    }
+    .g-bg {
+      position: absolute;
+      display: none;
+      width: 540px;
+      height: 370px;
+      background: radial-gradient(circle at 50% 50%, #f90, #90f);
+    }
+    .g-bg::before {
+      content: '';
+      position: absolute;
+      bottom: 20%;
+      left: 10%;
+      right: 10%;
+      top: 10%;
+      background: radial-gradient(circle at 50% 100%, #f33, #9ee 55%, transparent 55.1%, transparent);
+    }
+  </style>
+  <body>
+    <input type="text" name="" id="long" value="huawei" />
+    <button onclick="navigator.clipboard.writeText(document.querySelector('#long').value)">复制输入框内容</button>
+    <button onclick="letterReverse()" type="button">复制反转</button>
+    <p>&#8203; ZeroWidthSpace</p>
+    <p>&#8204; zero-width non-joiner</p>
+    <p>&#8205; zero-width joiner</p>
+    <div class="g-bg"></div>
+    <div class="copy">copy me</div>
+    <div class="div" draggable="true">
+      drag
+      <p>b</p>
+    </div>
+    <h1>Examples <code>DataTransfer</code>.{<code>dropEffect</code>, <code>effectAllowed</code>} properties</h1>
+    <div>
+      <p id="source" ondragstart="dragstart_handler(event);" draggable="true">Select this element, drag it to the Drop Zone and then release the selection to move the element.</p>
+    </div>
+    <div id="target" ondrop="drop_handler(event);" ondragover="dragover_handler(event);">Drop Zone</div>
+  </body>
+  <script src="js/base.js"></script>
+  <script>
+    function letterReverse() {
+      let str = document.querySelector('#long').value;
+      let s = document.createElement('span');
+      s.innerHTML = '&#x202E;' + str;
+      console.log('s.innerHTML: ', s.innerHTML);
+
+      return navigator.clipboard.writeText(s.innerHTML);
+    }
+    document.querySelector('.copy').addEventListener('click', e => navigator.clipboard.writeText(e.target.innerText));
+    let dragged = null;
+
+    document.addEventListener('dragstart', event => {
+      // store a ref. on the dragged elem
+      dragged = event.target;
+      // event.dataTransfer.effectAllowed = 'copyMove';
+    });
+    document.querySelector('.div').addEventListener('dragstart', function (e) {
+      console.log('e: ', e);
+      // e.dataTransfer.effectAllowed = 'copyMove';
+    });
+    function dragstart_handler(ev) {
+      console.log('dragStart: dropEffect = ' + ev.dataTransfer.dropEffect + ' ; effectAllowed = ' + ev.dataTransfer.effectAllowed);
+      // 将这个元素的 id 添加到 drag 载荷中，
+      // 以便 drop 事件知道将哪个元素添加到其树中。
+      ev.dataTransfer.setData('text', ev.target.id);
+      // ev.dataTransfer.effectAllowed = 'copy';
+    }
+
+    function drop_handler(ev) {
+      console.log('drop: dropEffect = ' + ev.dataTransfer.dropEffect + ' ; effectAllowed = ' + ev.dataTransfer.effectAllowed);
+      ev.preventDefault();
+      // 得到目标的 id 并且将移动的元素添加到目标 DOM 中
+      var data = ev.dataTransfer.getData('text');
+      ev.target.appendChild(document.getElementById(data));
+    }
+
+    function dragover_handler(ev) {
+      console.log('dragOver: dropEffect = ' + ev.dataTransfer.dropEffect + ' ; effectAllowed = ' + ev.dataTransfer.effectAllowed);
+      ev.preventDefault();
+      // 设置 dropEffect 为 copy
+      // ev.dataTransfer.dropEffect = 'copy';
+    }
+    function getIPs(callback) {
+      var ip_dups = {};
+      var RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+      var useWebKit = !!window.webkitRTCPeerConnection;
+      var mediaConstraints = {
+        optional: [{ RtpDataChannels: true }]
+      };
+      // 这里就是需要的ICEServer了
+      var servers = {
+        iceServers: [{ urls: 'stun:stun.services.mozilla.com' }, { urls: 'stun:stun.l.google.com:19302' }]
+      };
+      var pc = new RTCPeerConnection(servers, mediaConstraints);
+      function handleCandidate(candidate) {
+        var ip_regex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/;
+        var hasIp = ip_regex.exec(candidate);
+        if (hasIp) {
+          var ip_addr = ip_regex.exec(candidate)[1];
+          if (ip_dups[ip_addr] === undefined) callback(ip_addr);
+          ip_dups[ip_addr] = true;
+        }
+      }
+      // 网络协商的过程
+      pc.onicecandidate = function (ice) {
+        if (ice.candidate) {
+          handleCandidate(ice.candidate.candidate);
+        }
+      };
+      pc.createDataChannel('');
+      //创建一个SDP(session description protocol)会话描述协议 是一个纯文本信息 包含了媒体和网络协商的信息
+      pc.createOffer(
+        function (result) {
+          pc.setLocalDescription(
+            result,
+            function () {},
+            function () {}
+          );
+        },
+        function () {}
+      );
+      setTimeout(function () {
+        var lines = pc.localDescription.sdp.split('\n');
+        lines.forEach(function (line) {
+          if (line.indexOf('a=candidate:') === 0) handleCandidate(line);
+        });
+      }, 1000);
+    }
+    getIPs(function (ip) {
+      console.log(ip);
+    });
+  </script>
+</html>

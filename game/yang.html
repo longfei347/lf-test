@@ -1,0 +1,210 @@
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-image: url('https://pic.qy566.com/snake/bg.jpeg');
+    background-size: cover;
+  }
+  #box {
+    width: 600px;
+    height: 600px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+  #temp {
+    width: 840px;
+    height: 120px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    bottom: 0;
+    background-image: url('https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.92sucai.com%2Fimage%2F20180626%2F1529979993472449.jpg&refer=http%3A%2F%2Fup.92sucai.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1665795593&t=0c74935a1fa75d5861903e8249c15bbb');
+    background-size: contain;
+    border-radius: 16px;
+    display: flex;
+  }
+  #temp .item {
+    position: static;
+  }
+  .item {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 16px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 1px solid #333;
+    cursor: pointer;
+  }
+  .shadow {
+    box-shadow: 0 0 50px 10px #333 inset;
+  }
+  #source {
+    width: 260px;
+    height: 120px;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  #source1 {
+    width: 260px;
+    height: 120px;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  .result {
+    width: 200px;
+    height: 120px;
+    border: 4px dashed cyan;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background-color: #fff;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    /* display: none; */
+  }
+  .restart {
+    width: 120px;
+    height: 40px;
+    line-height: 40px;
+    border: 1px solid #333;
+    text-align: center;
+    cursor: pointer;
+    margin: auto;
+  }
+</style>
+<body>
+  <div id="box"></div>
+  <div id="temp"></div>
+  <div id="source"></div>
+  <div id="source1"></div>
+  <div class="result">
+    <div>游戏结束，别灰心，你能行的！</div>
+    <div class="restart">重新开始</div>
+  </div>
+</body>
+<script src="https://unpkg.com/jquery"></script>
+<script>
+  const imgSrc = [
+    'https://img01.yzcdn.cn/upload_files/2022/07/20/Fk1rj4gSaia1i8yD-FSO8CWLWlSu.jpg!280x280.jpg',
+    'https://img01.yzcdn.cn/upload_files/2022/03/16/Fo3SKNvQG5cIj3IspG_SOs_T216M.png!280x280.jpg',
+    'https://img01.yzcdn.cn/upload_files/2022/07/19/FsT754_weL6KZgUC2TuRWxr5zLnG.jpg!280x280.jpg',
+    'https://img01.yzcdn.cn/upload_files/2022/05/30/FguIz4XVMqAS3ft_7thNqlJrT0_F.jpg!280x280.jpg',
+    'https://img01.yzcdn.cn/upload_files/2022/05/09/FvG5_KInsbyhVq9W6xbygpo9jb9i.jpg!280x280.jpg',
+    'https://img01.yzcdn.cn/upload_files/2022/05/30/Fpht4CzextqfHA048FGU8m_t4NP5.jpeg!280x280.jpg',
+    'https://img01.yzcdn.cn/upload_files/2022/03/15/FlTBO9tItc9TXslq6wYd87udb-6t.jpg!280x280.jpg',
+    'https://img01.yzcdn.cn/upload_files/2022/03/15/Fi77MVQB0xREZRQdzaKHyHNuG-yg.jpg!280x280.jpg',
+    'https://img01.yzcdn.cn/upload_files/2022/03/16/FtBQGLwuPQJBuIHs0LjxbaSJVloV.jpg!280x280.jpg',
+    'https://img01.yzcdn.cn/upload_files/2022/03/16/FrZxLRso63OS_oKTD6xXk6Ao4Z2C.jpg!280x280.jpg',
+    'https://img01.yzcdn.cn/upload_files/2022/05/09/FvpbuQ35dFtL_oOcjJCfgPuPseIY.jpg!280x280.jpg',
+    'https://img01.yzcdn.cn/upload_files/2022/05/16/FlvZNZzU96K_d0DzxgFv3mh5IDA3.jpg!280x280.jpg'
+    // 'https://img01.yzcdn.cn/upload_files/2022/03/15/Fi-VLtnXgalfGpC0w3Try3Tks5qv.jpg!280x280.jpg',
+    // 'https://img01.yzcdn.cn/upload_files/2022/03/15/Fn1QBOetrZhCcKMoVFU-9lJN1gnP.jpg!280x280.jpg'
+  ];
+
+  $('.restart').click(start);
+  function start() {
+    $('#box,#temp,#source,#source1').empty();
+    $('.result').fadeOut();
+    let source = [];
+    let temp = {};
+    // 12*12=144 张
+    for (let i = 0; i < 12; i++) {
+      imgSrc.forEach((v, m) => {
+        source.push({ src: v, inx: m });
+      });
+    }
+    source.sort((a, b) => (Math.random() > 0.5 ? 1 : -1));
+    // #box, 75张
+    for (let k = 5; k > 0; k--) {
+      for (let i = 0; i < 5; i++) {
+        for (let j = 0; j < k; j++) {
+          let div = $('<div class="item"></div>');
+          // div.addClass(`${i}-${j}-${k} item`);
+
+          let img = source.splice(0, 1);
+          div.css({
+            // left: 120 * j - Math.random() * 10 * k + 'px',
+            // top: 120 * i - Math.random() * 10 * k + 'px',
+            left: 120 * j + 'px',
+            top: 120 * i + 'px',
+            'background-image': `url(${img[0].src})`
+          });
+          div.attr({
+            // x: i, y: j, z: k,
+            inx: img[0].inx
+          });
+          $('#box').append(div);
+        }
+      }
+    }
+    let len = Math.ceil(source.length / 2);
+    // left: 35, right: 34
+    source.forEach((v, i) => {
+      let div = $('<div>');
+      div.addClass('item');
+      div.attr('inx', v.inx);
+      div.css({
+        backgroundImage: `url(${v.src})`
+      });
+      if (i >= len) {
+        div.css('right', `${6 * (i - len)}px`);
+        $('#source1').append(div);
+      } else {
+        div.css('left', `${6 * i}px`);
+        $('#source').append(div);
+      }
+      div.click(function () {});
+    });
+    $('#box,#source,#source1').on('click', '.item', function () {
+      let inx = $(this).attr('inx');
+      // console.log('$(this): ', $(this));
+      if (temp[inx]) {
+        temp[inx] += 1;
+      } else {
+        temp[inx] = 1;
+      }
+
+      let e = $(this).detach();
+      $('#temp').append(e);
+      if (temp[inx] === 3) {
+        $(`#temp div[inx=${inx}]`).remove();
+        temp[inx] = 0;
+      }
+      let num = 0;
+      for (let i in temp) {
+        num += temp[i];
+      }
+      if (num >= 7) {
+        $('.item').off('click');
+        $('.result').fadeIn();
+      }
+      if (!$('.item').length) {
+        alert('恭喜你获得胜利, 你真厉害!!');
+      }
+    });
+  }
+  start();
+</script>

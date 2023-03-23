@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
+    <meta name="apple-mobile-web-app-title" content="CodePen" />
+    <link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
+    <link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111" />
+    <title>CodePen - CSS Only Puzzle game</title>
+    <style>
+      /* number of columns/rows, don't forget to adjust the HTML value */
+      g {
+        --s: 300px;
+        /* size of the puzzle */
+        display: grid;
+        max-width: var(--s);
+        border: 1px solid;
+        margin: auto;
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      g:before {
+        content: 'Original Image';
+        color: #fff;
+        font-size: 25px;
+        font-weight: bold;
+        text-shadow: 0 0 2px #000, 0 0 2px #000, 0 0 2px #000;
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        width: calc(var(--s) * 0.6);
+        aspect-ratio: 1;
+        -webkit-mask: repeating-linear-gradient(-45deg, #000 0 10%, #000d 0 20%);
+        background: var(--i) 0/100% 100%;
+        display: grid;
+        place-content: center;
+      }
+
+      z {
+        aspect-ratio: 1;
+        outline: 1px dashed;
+        display: grid;
+        position: relative;
+        pointer-events: none;
+      }
+
+      a {
+        grid-area: 1/1;
+        width: 0;
+        transition: 0s 0.2s;
+        pointer-events: initial;
+      }
+
+      b {
+        grid-area: 1/1;
+        background: var(--i) 0 / var(--s) var(--s);
+        box-shadow: 0 0 4px 1px red;
+        z-index: 2;
+        cursor: grab;
+        pointer-events: initial;
+      }
+
+      z:nth-of-type(1) b {
+        background-position: 0% 0%;
+        transform: translate(150%, 150%) rotate(19deg) translate(331%) rotate(-13deg);
+      }
+
+      z:nth-of-type(2) b {
+        background-position: 33.3333333333% 0%;
+        transform: translate(50%, 150%) rotate(168deg) translate(385%) rotate(-174deg);
+      }
+
+      z:nth-of-type(3) b {
+        background-position: 66.6666666667% 0%;
+        transform: translate(-50%, 150%) rotate(134deg) translate(333%) rotate(-133deg);
+      }
+
+      z:nth-of-type(4) b {
+        background-position: 100% 0%;
+        transform: translate(-150%, 150%) rotate(11deg) translate(390%) rotate(-12deg);
+      }
+
+      z:nth-of-type(5) b {
+        background-position: 0% 33.3333333333%;
+        transform: translate(150%, 50%) rotate(5deg) translate(315%) rotate(1deg);
+      }
+
+      z:nth-of-type(6) b {
+        background-position: 33.3333333333% 33.3333333333%;
+        transform: translate(50%, 50%) rotate(142deg) translate(395%) rotate(-144deg);
+      }
+
+      z:nth-of-type(7) b {
+        background-position: 66.6666666667% 33.3333333333%;
+        transform: translate(-50%, 50%) rotate(60deg) translate(334%) rotate(-51deg);
+      }
+
+      z:nth-of-type(8) b {
+        background-position: 100% 33.3333333333%;
+        transform: translate(-150%, 50%) rotate(163deg) translate(330%) rotate(-158deg);
+      }
+
+      z:nth-of-type(9) b {
+        background-position: 0% 66.6666666667%;
+        transform: translate(150%, -50%) rotate(103deg) translate(303%) rotate(-93deg);
+      }
+
+      z:nth-of-type(10) b {
+        background-position: 33.3333333333% 66.6666666667%;
+        transform: translate(50%, -50%) rotate(164deg) translate(346%) rotate(-156deg);
+      }
+
+      z:nth-of-type(11) b {
+        background-position: 66.6666666667% 66.6666666667%;
+        transform: translate(-50%, -50%) rotate(23deg) translate(309%) rotate(-17deg);
+      }
+
+      z:nth-of-type(12) b {
+        background-position: 100% 66.6666666667%;
+        transform: translate(-150%, -50%) rotate(90deg) translate(387%) rotate(-97deg);
+      }
+
+      z:nth-of-type(13) b {
+        background-position: 0% 100%;
+        transform: translate(150%, -150%) rotate(66deg) translate(387%) rotate(-57deg);
+      }
+
+      z:nth-of-type(14) b {
+        background-position: 33.3333333333% 100%;
+        transform: translate(50%, -150%) rotate(144deg) translate(344%) rotate(-135deg);
+      }
+
+      z:nth-of-type(15) b {
+        background-position: 66.6666666667% 100%;
+        transform: translate(-50%, -150%) rotate(18deg) translate(346%) rotate(-14deg);
+      }
+
+      z:nth-of-type(16) b {
+        background-position: 100% 100%;
+        transform: translate(-150%, -150%) rotate(81deg) translate(379%) rotate(-77deg);
+      }
+
+      z b {
+        transition: 9999s 9999s;
+      }
+
+      z:active a {
+        width: 100%;
+        transition: 0s;
+      }
+
+      z a:hover ~ b {
+        transform: translate(0);
+        box-shadow: none;
+        transition: 0s;
+      }
+
+      body {
+        background: #2c6603;
+        color: #fff;
+        font-family: system-ui, sans-serif;
+      }
+
+      h1 {
+        font-size: 2rem;
+        margin: 0;
+        text-align: center;
+      }
+
+      p {
+        font-size: 1.2rem;
+        text-align: center;
+      }
+    </style>
+
+    <script>
+      window.console = window.console || function (t) {};
+      if (document.location.search.match(/type=embed/gi)) {
+        window.parent.postMessage('resize', '*');
+      }
+    </script>
+  </head>
+
+  <body translate="no">
+    <h1>CSS Puzzle</h1>
+    <p>
+      drag &amp; drop the piece into...<br />
+      Well, you know how a puzzle works :)
+    </p>
+    <g style="--i: url(https://picsum.photos/id/1015/800/800)">
+      <z><a></a><b draggable="true"></b></z>
+      <z><a></a><b draggable="true"></b></z>
+      <z><a></a><b draggable="true"></b></z>
+      <z><a></a><b draggable="true"></b></z>
+      <z><a></a><b draggable="true"></b></z>
+      <z><a></a><b draggable="true"></b></z>
+      <z><a></a><b draggable="true"></b></z>
+      <z><a></a><b draggable="true"></b></z>
+      <z><a></a><b draggable="true"></b></z>
+      <z><a></a><b draggable="true"></b></z>
+      <z><a></a><b draggable="true"></b></z>
+      <z><a></a><b draggable="true"></b></z>
+      <z><a></a><b draggable="true"></b></z>
+      <z><a></a><b draggable="true"></b></z>
+      <z><a></a><b draggable="true"></b></z>
+      <z><a></a><b draggable="true"></b></z>
+    </g>
+  </body>
+</html>

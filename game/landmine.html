@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<!-- saved from url=(0048)http://xiechengxiong.com/xui/demos/minesweeping/ -->
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <title>扫雷游戏</title>
+    <!-- <link rel="stylesheet" href="x.base.css"> -->
+    <style>
+      html,
+      body,
+      div,
+      span,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      pre,
+      a,
+      code,
+      em,
+      img,
+      small,
+      strong,
+      sub,
+      sup,
+      u,
+      i,
+      center,
+      dl,
+      dt,
+      dd,
+      ol,
+      ul,
+      li,
+      fieldset,
+      form,
+      label {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        font-size: 100%;
+        vertical-align: baseline;
+        background: transparent;
+      }
+      a {
+        color: #000;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      ol,
+      ul {
+        list-style: none;
+      }
+      table {
+        border-collapse: collapse;
+        border-spacing: 0;
+      }
+      body {
+        height: 100%;
+        font: 12px/18px Tahoma, Helvetica, Arial, Verdana, '\5b8b\4f53', sans-serif;
+        color: #000;
+      }
+      img {
+        border: none;
+        vertical-align: middle;
+      }
+      button {
+        cursor: pointer;
+      }
+      em {
+        font-style: normal;
+      }
+    </style>
+    <style>
+      .wrap {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+      }
+
+      .wrap canvas,
+      .wrap dl {
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      .wrap dl {
+        font-size: 1.5em;
+      }
+
+      .wrap dd {
+        line-height: 1.5;
+        margin-bottom: 0.5em;
+        color: #ff0000;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body style="overflow: hidden" ryt12418="1">
+    <div class="wrap">
+      <canvas style="background: rgb(221, 221, 221)" width="600" height="320"></canvas>
+      <dl>
+        <dt>当前级别</dt>
+        <dd>
+          <select>
+            <option value="0">初级</option>
+            <option value="1">中级</option>
+            <option value="2">高级</option>
+          </select>
+        </dd>
+        <dt>剩余雷数</dt>
+        <dd>99</dd>
+        <dt>游戏耗时</dt>
+        <dd>0秒</dd>
+      </dl>
+    </div>
+    <script>
+      var imageData =
+        'data:image/gif;base64,R0lGODlhXwATANUAAAAAAP////8AAP7+/v39/fz8/Pr6+vn5+fDw8Ovr6+rq6uXl5eHh4eDg4Nzc3NnZ2djY2NXV1dTU1NPT09LS0s3NzczMzMvLy8rKysfHx8bGxsDAwL29vbCwsK2traGhoaCgoJ+fn56enpycnJmZmZiYmP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAACYALAAAAABfABMAAAb/wIBwSCwKDxGjkohcOpGmqHRKrVqvUeGAMOh6v92Co6Plgs9icmB7Ro+x8Ph1jWAs7vj8QvHwjOh2enp8foCCg30jcouLawwaFZGSkxYSGyQhjpCTnJWXmQOPnJ2WmFgAjFOocwMLFhOwsbITDxkhoK6zurW3a7m6srwhp3ICAqpTxlK+r8CwFBC2uM2xxrHQ0syyANwAz9G3VKjd3CarVsrkqMrLrRXOExQUDxq97tXGAs/z9bjvsNwAApBHL5w4deeuGFPHrt2Cf8AI9vP1L5+1ePzsPYwVcAI3iQalcBOiDg4AYwG4LaRCER6sgv7wXXw58Z6ujjAPkiRn8qQA/5/lprSUJS9YzY2yZtI6CvFZx6UhEUqtwnAhzyw2r1EwqrFpPG+xYA7lCJZmyChSg17plq8by6zOxMIFyDXmtrJQh6lK23Oh1beuJGAEJjcwRnJhj1YavKsfVYTFfqo8Btgr0Yx202IeK3BfTmQlE1axypayQ69FMUKoB2Ko5tUhWs/tKA82CGKRRUppaGJNAloPgj+AAEE4hAYYYvsGbrx48OPJZf8W/tz5cOSxccPhnbBhAAMPNmgYT768hgsclIMXb948evXh27tPfzuV/SoHHHgocat/fxC3iBAbCPnt559/AIYgIAgE6sffgbckuGB991VoQgQdjBAhhAkO+BUBhhrGxuF/IHyY4YYHdsjgBxZaGAQAOw==';
+      /*
+       *project: XUI Widgets Libs
+       *version: 2.0
+       *create: 2013-3-10
+       *update: 2013-7-3 11:00
+       *update: 2013-9-24 18:27
+       *author: F2E xiechengxiong
+       */
+      (function (win, doc) {
+        var X = win['X'] || {};
+        X = {
+          $: function (id) {
+            return doc.getElementById(id);
+          },
+          accordion: function (obj, step, num, type) {
+            obj.timer && clearInterval(obj.timer);
+            obj.timer = setInterval(function () {
+              X.accordion(obj, step, num, type);
+            }, 10);
+            var curWidth = type === 'width' ? obj.clientWidth : obj.clientHeight;
+            if (curWidth === num) {
+              clearInterval(obj.timer);
+              obj.timer = null;
+            } else {
+              obj.style[type] = curWidth + step + 'px';
+            }
+          },
+          addClass: function (node, className) {
+            if (!this.hasClass(node, className)) {
+              node.className = node.className + ' ' + className;
+            }
+          },
+          addCss: function (url, fn) {
+            var link = doc.createElement('link');
+            link.href = url;
+            link.type = 'text/css';
+            link.rel = 'stylesheet';
+            this.onload(link, fn);
+            doc.getElementsByTagName('head')[0].appendChild(link);
+          },
+          addScript: function (url, fn) {
+            var script = doc.createElement('script');
+            script.type = 'text/javascript';
+            this.onload(script, fn);
+            doc.getElementsByTagName('head')[0].appendChild(script);
+            script.src = url;
+            return script;
+          },
+          ajax: function (opts) {
+            var dataType = opts['dataType'].toLocaleLowerCase();
+            var data = decodeURIComponent(typeof opts.data === 'undefined' ? '' : typeof opts.data === 'object' ? this.obj2str(opts.data) : opts.data);
+            if (dataType === 'jsonp') {
+              var fnName = 'jsonp_' + Math.floor(Math.random() * 10e10) + '_' + new Date().getTime();
+              opts.url = opts.url + '?callback=' + fnName + '&' + data + '&' + 'r=' + new Date().getTime();
+              var script = this.addScript(opts.url, null);
+              (function (fn, sucFn, script) {
+                win[fnName] = function (data) {
+                  sucFn && sucFn(data);
+                  doc.getElementsByTagName('head')[0].removeChild(script);
+                };
+              })(fnName, opts['sucFn'], script);
+            } else {
+              var req = win.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+              var type = typeof opts.type === 'undefined' ? 'get' : opts.type;
+              if (type && type.toLocaleLowerCase() === 'post') {
+                req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
+              } else if (data !== '') {
+                opts.url = opts.url + '?' + data;
+              }
+              req.open(type, opts.url, true);
+              req.send(data);
+              req.onreadystatechange = function () {
+                if (req.readyState === 4) {
+                  if (req.status === 200) {
+                    opts['sucFn'] && opts['sucFn'](dataType === 'json' ? X.parseJSON(req.responseText) : req.responseText);
+                  } else {
+                    opts['failFn'] && opts['failFn'](req.status);
+                  }
+                }
+              };
+            }
+          },
+          append: function (node, parent) {
+            if (typeof node === 'object') {
+              parent.appendChild(node);
+            } else {
+              var fragment = doc.createDocumentFragment();
+              fragment.innerHTML = node;
+              parent.appendChild(fragment);
+            }
+          },
+          attr: function (element, attrName, attrVal) {
+            if (arguments.length === 2 && typeof attrName === 'string') {
+              return element.getAttribute(attrName);
+            } else {
+              var attr = {};
+              if (typeof attrName === 'string') {
+                attr[attrName] = attrVal;
+              } else {
+                attr = attrName;
+              }
+              for (var n in attr) {
+                element.setAttribute(n, attr[n]);
+              }
+            }
+            return element;
+          },
+          child: function (element) {
+            var childes = element.childNodes;
+            var list = [];
+            for (var i = 0, len = childes.length; i < len; i++) {
+              var child = childes[i];
+              if (child.nodeName !== '#text' || /\s/.test(child.nodeValue)) {
+                list.push(child);
+              }
+            }
+            list.each = function (fn) {
+              X.each.call(list, fn);
+            };
+            return list;
+          },
+          /**
+           * 深度克隆对象或数组，阻止js中的引用传递
+           * @param obj 被克隆的对象或数组
+           * @returns {*} 返回克隆出来的对象或数组
+           */
+          clone: function (obj) {
+            var newObj;
+            if (typeof obj === 'object') {
+              if (Object.prototype.toString.call(obj) === '[object Array]') {
+                newObj = [];
+                var i = obj.length;
+                while (i--) {
+                  newObj[i] = X.clone(obj[i]);
+                }
+                return newObj;
+              } else {
+                newObj = {};
+                for (var j in obj) {
+                  newObj[j] = X.clone(obj[j]);
+                }
+              }
+            } else {
+              return obj;
+            }
+            return newObj;
+          },
+          css: function (node, attr, value) {
+            if (arguments.length === 2) {
+              if (attr != 'opacity') {
+                return parseInt(node.currentStyle ? node.currentStyle[attr] : document.defaultView.getComputedStyle(node, false)[attr]);
+              } else {
+                return Math.round(100 * parseFloat(node.currentStyle ? node.currentStyle[attr] : document.defaultView.getComputedStyle(node, false)[attr]));
+              }
+            } else if (arguments.length === 3) {
+              switch (attr) {
+                case 'width':
+                case 'height':
+                case 'paddingLeft':
+                case 'paddingTop':
+                case 'paddingRight':
+                case 'paddingBottom':
+                  value = Math.max(value, 0);
+                case 'left':
+                case 'top':
+                case 'right':
+                case 'bottom':
+                case 'marginLeft':
+                case 'marginTop':
+                case 'marginRight':
+                case 'marginBottom':
+                  node.style[attr] = value + 'px';
+                  break;
+                case 'opacity':
+                  node.style.filter = 'alpha(opacity:' + value + ')';
+                  node.style.opacity = value / 100;
+                  break;
+                default:
+                  node.style[attr] = value;
+              }
+            }
+            return node;
+          },
+          data: function (element, key, value) {
+            this.dataObj = this.dataObj || {};
+            var id = this.attr(element, 'data-data');
+            if (!id) {
+              id = 'tid' + new Date().getTime();
+              this.attr(element, 'data-data', id);
+            }
+            this.dataObj[id] = this.dataObj[id] || {};
+            if (arguments.length === 2 && typeof key === 'string') {
+              return this.dataObj[id][key];
+            } else {
+              var keys = {};
+              if (typeof key === 'string') {
+                keys[key] = value;
+              } else {
+                keys = key;
+              }
+              for (var n in keys) {
+                this.dataObj[id][n] = keys[n];
+              }
+            }
+            return element;
+          },
+          delClass: function (node, className) {
+            if (this.hasClass(node, className)) {
+              var cls = node.className;
+              if (className === cls) {
+                cls = '';
+              } else {
+                cls = cls.replace(' ' + className, '').replace(className + ' ', '');
+              }
+              node.className = cls;
+            }
+          },
+          delEvent: function (node, type, fn) {
+            if (node.removeEventListener) {
+              node.removeEventListener(type, fn, false);
+            } else if (node.detachEvent) {
+              node.detachEvent('on' + type, fn);
+            } else {
+              node['on' + type] = null;
+            }
+          },
+          dir: function (data) {
+            try {
+              console.dir(data);
+            } catch (ex) {}
+          },
+          each: function (fn) {
+            for (var i = 0; i < this.length; i++) {
+              if (fn && fn.call(this[i], i) === false) {
+                break;
+              }
+            }
+          },
+          extend: function () {
+            var options,
+              name,
+              src,
+              copy,
+              copyIsArray,
+              clone,
+              target = arguments[0] || {},
+              i = 1,
+              length = arguments.length,
+              deep = false;
+            if (typeof target === 'boolean') {
+              deep = target;
+              target = arguments[1] || {};
+              i = 2;
+            }
+            if (typeof target !== 'object' && !this.type(target) === 'function') {
+              target = {};
+            }
+            if (length === i) {
+              target = this;
+              --i;
+            }
+            for (; i < length; i++) {
+              if ((options = arguments[i]) != null) {
+                for (name in options) {
+                  src = target[name];
+                  copy = options[name];
+                  if (target === copy) {
+                    continue;
+                  }
+                  if (deep && copy && (this.isPlainObject(copy) || (copyIsArray = this.isArray(copy)))) {
+                    if (copyIsArray) {
+                      copyIsArray = false;
+                      clone = src && this.isArray(src) ? src : [];
+                    } else {
+                      clone = src && this.isPlainObject(src) ? src : {};
+                    }
+                    target[name] = this.extend(deep, clone, copy);
+                  } else if (copy !== undefined) {
+                    target[name] = copy;
+                  }
+                }
+              }
+            }
+            return target;
+          },
+          fadeIn: function (obj) {
+            if (obj.timer) {
+              clearInterval(obj.timer);
+            }
+            obj.timer = setInterval(function () {
+              X.fadeIn(obj);
+            }, 100);
+            if (!win['xcxFadeInOpacity']) {
+              win['xcxFadeInOpacity'] = 0;
+              obj.style.display = '';
+            }
+            win['xcxFadeInOpacity'] += 0.1;
+            obj.style.opacity = win['xcxFadeInOpacity'] + '';
+            if (win['xcxFadeInOpacity'] >= 1) {
+              win['xcxFadeInOpacity'] = 0;
+              clearInterval(obj.timer);
+            }
+          },
+          fadeOut: function (obj) {
+            if (obj.timer) {
+              clearInterval(obj.timer);
+            }
+            obj.timer = setInterval(function () {
+              X.fadeOut(obj);
+            }, 100);
+            if (!win['xcxFadeOutOpacity']) {
+              win['xcxFadeOutOpacity'] = 1;
+            }
+            win['xcxFadeOutOpacity'] -= 0.1;
+            obj.style.opacity = win['xcxFadeOutOpacity'] + '';
+            if (win['xcxFadeOutOpacity'] <= 0) {
+              obj.style.display = 'none';
+              win['xcxFadeOutOpacity'] = 1;
+              clearInterval(obj.timer);
+            }
+          },
+          filter: function (list, fn) {
+            var reList = [];
+            this.each.call(list, function () {
+              if (fn.call(this)) {
+                reList.push(this);
+              }
+            });
+            reList.each = function (fn) {
+              X.each.call(reList, fn);
+            };
+            return reList;
+          },
+          getBrowser: function () {
+            var bs = {};
+            var u = win.navigator.userAgent.toLocaleLowerCase(),
+              sougou = /se 2.x metasr 1.0/,
+              qqbrowser = /(qqbrowser)\/([\d.]+)/,
+              msie = /(msie) ([\d.]+)/,
+              chrome = /(chrome)\/([\d.]+)/,
+              firefox = /(firefox)\/([\d.]+)/,
+              safari = /(safari)\/([\d.]+)/,
+              opera = /(opera)\/([\d.]+)/,
+              b = u.match(sougou) || u.match(qqbrowser) || u.match(msie) || u.match(chrome) || u.match(firefox) || u.match(safari) || u.match(opera) || [0, 0, 0];
+            if (b[1] === 'opera' || b[1] === 'safari') {
+              b[2] = u.match(/(version)\/([\d.]+)/)[2];
+            }
+            if (u.match(sougou)) {
+              b = [];
+              b[1] = 'sougo';
+              b[2] = 'msie7.0';
+            }
+            bs[b[1]] = b[2];
+            bs['name'] = b[1];
+            bs['version'] = b[2];
+            return bs;
+          },
+          getByAttr: function (attrName, attrVal, parent) {
+            parent = parent || doc.body;
+            var list = [];
+            var elements = parent.getElementsByTagName('*');
+            for (var i = 0; i < elements.length; i++) {
+              var element = elements[i];
+              var reg = new RegExp(attrVal.replace(/,/g, '|'), 'g');
+              if (reg.test(element.getAttribute(attrName))) {
+                list.push(element);
+              }
+            }
+            list.each = function (fn) {
+              X.each.call(list, fn);
+            };
+            return list;
+          },
+          getByClass: function (className, parent) {
+            var node = parent || doc;
+            var list = [];
+            if (node.getElementsByClassName) {
+              list = node.getElementsByClassName(className);
+            } else {
+              var nodes = node.getElementsByTagName('*');
+              for (var i = 0; i < nodes.length; i++) {
+                if (this.hasClass(nodes[i], className)) {
+                  list.push(nodes[i]);
+                }
+              }
+            }
+            list.each = function (fn) {
+              X.each.call(list, fn);
+            };
+            return list;
+          },
+          getByTag: function (tagName, parent) {
+            parent = parent || doc.body;
+            var list = [];
+            var tags = tagName.split(',');
+            for (var i = 0, len = tags.length; i < len; i++) {
+              var nl = parent.getElementsByTagName(tags[i]);
+              for (var j = 0, jLen = nl.length; j < jLen; j++) {
+                list.push(nl[j]);
+              }
+            }
+            list.each = function (fn) {
+              X.each.call(list, fn);
+            };
+            return list;
+          },
+          getEventXY: function (e, isEnd) {
+            e = e || win.event;
+            if (!('ontouchstart' in win)) {
+              return [e['pageX'], e['pageY']];
+            } else if (isEnd) {
+              return [e['changedTouches'][0]['pageX'], e['changedTouches'][0]['pageY']];
+            }
+            return [e['touches'][0]['pageX'], e['touches'][0]['pageY']];
+          },
+          getOffset: function (obj) {
+            var arr = (function (o) {
+              var l = 0,
+                t = 0;
+              while (o !== null && o !== doc.body) {
+                l += o.offsetLeft;
+                t += o.offsetTop;
+                o = o.offsetParent;
+              }
+              return [l, t];
+            })(obj);
+            arr.push(obj.offsetWidth);
+            arr.push(obj.offsetHeight);
+            return arr;
+          },
+          getQueryStringArgs: function () {
+            var qs = win.location.search.length > 0 ? win.location.search.substring(1) : '';
+            var args = {};
+            var items = qs.length ? qs.split('&') : [];
+            var len = items.length;
+            for (var i = 0; i < len; i++) {
+              var item = items[i].split('=');
+              var name = decodeURIComponent(item[0]);
+              var value = decodeURIComponent(item[1]);
+              if (name.length) {
+                args[name] = value;
+              }
+            }
+            return args;
+          },
+          hasClass: function (node, className) {
+            var names = node.className.split(/\s+/);
+            for (var i = 0; i < names.length; i++) {
+              if (names[i] === className) {
+                return true;
+              }
+            }
+            return false;
+          },
+          index: function (element) {
+            var index = 0;
+            var nodes = this.child(element.parentNode);
+            for (var i = 0, len = nodes.length; i < len; i++) {
+              if (nodes[i] === element) {
+                index = i;
+                break;
+              }
+            }
+            return index;
+          },
+          isArray: function (o) {
+            return Object.prototype.toString.call(o) === '[object Array]';
+          },
+          isLeapYear: function (y) {
+            var flag = false;
+            if (y % 400 === 0 || (y % 100 !== 0 && y % 4 === 0)) {
+              flag = true;
+            }
+            return flag;
+          },
+          isPlainObject: function (obj) {
+            if (!obj || this.type(obj) !== 'object' || obj.nodeType || (obj != null && obj == obj.window)) {
+              return false;
+            }
+            try {
+              if (obj.constructor && !Object.prototype.hasOwnProperty.call(obj, 'constructor') && !Object.prototype.hasOwnProperty.call(obj.constructor.prototype, 'isPrototypeOf')) {
+                return false;
+              }
+            } catch (e) {
+              return false;
+            }
+            var key;
+            for (key in obj) {
+            }
+            return key === undefined || Object.prototype.hasOwnProperty.call(obj, key);
+          },
+          log: function (data) {
+            try {
+              console.log(data);
+            } catch (ex) {}
+          },
+          obj2str: function (obj) {
+            var str = [];
+            switch (true) {
+              case typeof obj === 'undefined':
+                str = '';
+                break;
+              case typeof obj === 'string':
+                str =
+                  '"' +
+                  obj
+                    .replace(/([\"\\])/g, '\\$1')
+                    .replace(/(\n)/g, '\\n')
+                    .replace(/(\r)/g, '\\r')
+                    .replace(/(\t)/g, '\\t') +
+                  '"';
+                break;
+              case typeof obj === 'object':
+                if (!this.isArray(obj)) {
+                  for (var i in obj) {
+                    str.push('"' + i + '":' + this.obj2str(obj[i]));
+                  }
+                  if (!!doc.all && !/^\n?function\s*toString\(\)\s*\{\n?\s*\[native code\]\n?\s*\}\n?\s*$/.test(obj.toString)) {
+                    str.push('toString:' + obj.toString.toString());
+                  }
+                  str = '{' + str.join() + '}';
+                } else {
+                  for (var j = 0; j < obj.length; j++) {
+                    str.push(this.obj2str(obj[j]));
+                  }
+                  str = '[' + str.join() + ']';
+                }
+                break;
+              default:
+                str = obj.toString().replace(/\"\:/g, '":""');
+                break;
+            }
+            return str;
+          },
+          on: function (node, type, fn) {
+            if (node.addEventListener) {
+              node.addEventListener(type, fn, false);
+            } else if (node.attachEvent) {
+              node.attachEvent('on' + type, fn);
+            } else {
+              node['on' + type] = fn;
+            }
+          },
+          onload: function (obj, fn) {
+            obj.onload = function () {
+              fn();
+            };
+            if (this.getBrowser().name === 'msie') {
+              var t = win.setInterval(function () {
+                if (obj.readyState === 'loaded' || obj.readyState === 'complete') {
+                  win.clearInterval(t);
+                  fn();
+                }
+              }, 10);
+            }
+          },
+          parseJSON: function (data) {
+            if (!data || typeof data !== 'string') {
+              return null;
+            }
+            data = this.trim(data);
+            if (win.JSON && win.JSON.parse) {
+              return win.JSON.parse(data);
+            }
+            return new Function('return ' + data)();
+          },
+          preventDefault: function (e) {
+            e = e || win.event;
+            if (e.preventDefault) {
+              e.preventDefault();
+            } else {
+              e.returnValue = false;
+            }
+          },
+          query: function (selector, container) {
+            var result = [];
+            function get(element, index, arr) {
+              element = element ? element : doc.body;
+              if (!X.isArray(element)) {
+                element = [element];
+              }
+              if (arr[index]) {
+                result = [];
+                var match = /^#(.+)$|^\.(.+)$|^([\w\d]+)$/.exec(arr[index]);
+                if (match[1]) {
+                  result = doc.getElementById(match[1]);
+                } else if (match[2]) {
+                  for (var i = 0, len = element.length; i < len; i++) {
+                    X.getByClass(match[2], element[i]).each(function () {
+                      result.push(this);
+                    });
+                  }
+                } else if (match[3]) {
+                  for (var j = 0, jLen = element.length; j < jLen; j++) {
+                    X.getByTag(match[3], element[j]).each(function () {
+                      result.push(this);
+                    });
+                  }
+                }
+                index++;
+                get(result, index, arr);
+              }
+            }
+            get(container, 0, selector.split(/\s/));
+            result.each = function (fn) {
+              X.each.call(result, fn);
+            };
+            return result;
+          },
+          stopPropagation: function (e) {
+            if (e.stopPropagation) {
+              e.stopPropagation();
+            } else {
+              e.cancelBubble = true;
+            }
+          },
+          swipe: function (obj, sFn, mFn, eFn) {
+            var canMove, xy;
+            this.on(obj, 'touchstart', function (e) {
+              canMove = 0;
+              xy = X.getEventXY(e);
+              sFn && sFn(e, xy[0], xy[1]);
+            });
+            this.on(obj, 'touchmove', function (e) {
+              var mxy = X.getEventXY(e);
+              if (canMove === 0) {
+                if (Math.abs(mxy[0] - xy[0]) > Math.abs(mxy[1] - xy[1])) {
+                  canMove = 1;
+                } else {
+                  canMove = 2;
+                  return;
+                }
+              }
+              var result = mFn && mFn(e, xy[0], mxy[0]);
+              if (!result) {
+                e.preventDefault();
+                e.stopPropagation();
+              }
+            });
+
+            this.on(obj, 'touchend', function (e) {
+              var exy = X.getEventXY(e, 'true');
+              if (canMove !== 2) {
+                eFn && eFn(e, xy[0], exy[0]);
+                canMove = 2;
+              }
+            });
+          },
+          touch: function (obj, fn) {
+            var duration = 0,
+              fixDistance = 10,
+              time,
+              xy;
+            this.on(obj, 'touchstart', function (e) {
+              time = new Date().valueOf();
+              xy = X.getEventXY(e);
+            });
+            this.on(obj, 'touchend', function (e) {
+              var result = true;
+              var endTime = new Date().valueOf();
+              var endXY = X.getEventXY(e, true);
+              if (endTime - time > duration && Math.abs(endXY[0] - xy[0]) < fixDistance && Math.abs(endXY[1] - xy[1]) < fixDistance) {
+                result = fn && fn(e);
+              }
+              if (!result) {
+                e.preventDefault();
+                //e.stopPropagation();
+              }
+            });
+          },
+          trim: function (text) {
+            return text == null ? '' : text.replace(/(^\s*)|(\s*$)/g, '');
+          },
+          type: function (obj) {
+            var class2type = ['Boolean', 'Number', 'String', 'Function', 'Array', 'Date', 'Regexp', 'Object', 'Null', 'Undefined', 'global'];
+            for (var i = 0, len = class2type.length; i < len; i++) {
+              var name = class2type[i];
+              class2type['[object ' + name + ']'] = name.toLowerCase();
+            }
+            var localType = Object.prototype.toString.call(obj);
+            return obj == null ? String(obj) : /\[object\s*HTML.*Element\]/.test(localType) ? 'element' : class2type[localType] || 'undefined';
+          }
+        };
+        Array.prototype.distinct = function () {
+          var sameObj = function (a, b) {
+            var tag = true;
+            if (!a || !b) {
+              return false;
+            }
+            for (var x in a) {
+              if (!b[x]) {
+                return false;
+              }
+              if (typeof a[x] === 'object') {
+                tag = sameObj(a[x], b[x]);
+              } else {
+                if (a[x] !== b[x]) {
+                  return false;
+                }
+              }
+            }
+            return tag;
+          };
+          var newArr = [],
+            obj = {};
+          for (var i = 0, len = this.length; i < len; i++) {
+            if (!sameObj(obj[typeof this[i] + this[i]], this[i])) {
+              newArr.push(this[i]);
+              obj[typeof this[i] + this[i]] = this[i];
+            }
+          }
+          return newArr;
+        };
+        win.X = X;
+      })(window, document);
+      /*
+       *project: Mine Sweeping Game
+       *version: 1.0
+       *create: 2014-09-06 v1.0
+       *update: 2014-09-06 v1.0
+       *author: F2E xiechengxiong
+       */
+      (function (win, doc) {
+        /**
+         * 中秋节放假实在无聊
+         * 此游戏仅为闲的蛋疼时做个东西自娱自乐而已，没有任何商业价值
+         * 本人热衷于canvas简单游戏的制作，欢迎前端技术发烧友一起讨论
+         * 如有雷同，确实是巧合
+         */
+        var Config = {
+          level: 0, //初始化时的级别
+          size: 20, //每个方块大小
+          btnWidth: 100, //按钮宽度
+          btnHeight: 40, //按钮高度
+          imageData: win['imageData'] //图片base64数据
+        };
+        var Color = {
+          bg: '#ddd', //空白颜色
+          border: ['#888' /*正常颜色*/, '#ff0000' /*hover颜色*/], //方块边框颜色
+          btnBg: '#00ffff', //按钮背景
+          btnFont: '#ff0000', //按钮字体颜色
+          mask: 'rgba(0,0,0,0.8)', //遮罩背景颜色，半透明
+          number: ['#0000ff', '#008000', '#ff0000', '#000080', '#800000', '#008080', '#000000', '#808080'], //数字颜色
+          bombBg: '#ff0000', //点击使爆炸游戏结束的方块背景
+          overFont: '#ffffff', //结束文字颜色
+          copy: 'darkgray' //版权文字颜色
+        };
+        var levels = [
+          {
+            name: '初级', //级别名称
+            x: 9, //水平方向方块格式
+            y: 9, //垂直方向方块个数
+            mines: 10 //雷的数量
+          },
+          {
+            name: '中级',
+            x: 16,
+            y: 16,
+            mines: 40
+          },
+          {
+            name: '高级',
+            x: 30,
+            y: 16,
+            mines: 99
+          }
+        ];
+        var mineSweeping, //类实例
+          level, //当前级别
+          lastMines, //剩余雷数
+          lastHidden, //剩余未被揭开的方块数
+          canvas, //canvas对象
+          context, //canvas上下文
+          image, //img对象
+          matrix; //二维数组
+        var MineSweeping = function () {
+          level = levels[Config.level];
+          canvas = doc.getElementsByTagName('canvas')[0];
+          context = canvas.getContext('2d');
+          canvas.style.background = Color.bg;
+          this.infos = doc.getElementsByTagName('dd');
+          this.status = 'stopped';
+          //待图片加载完成后开始初始化
+          this.createImage(function () {
+            mineSweeping.createLevels();
+            mineSweeping.init();
+            mineSweeping.bindEvent();
+          });
+        };
+        MineSweeping.prototype = {
+          /**
+           * 绑定事件
+           */
+          bindEvent: function () {
+            //阻止默认右击事件
+            canvas.addEventListener('contextmenu', function (e) {
+              e.returnValue = false;
+            });
+            canvas.addEventListener('mouseup', function (e) {
+              if (mineSweeping.status === 'stopped') {
+                mineSweeping.stoppedClickHandler(e);
+              } else {
+                mineSweeping.startedClickHandler(e);
+              }
+            });
+            canvas.addEventListener('mousemove', function (e) {
+              if (mineSweeping.status !== 'stopped') {
+                mineSweeping.startedHoverHandler(e);
+              }
+            });
+            canvas.addEventListener('mouseleave', function (e) {
+              if (mineSweeping.status !== 'stopped') {
+                mineSweeping.startedHoverHandler(e);
+              }
+            });
+            doc.querySelector('select').addEventListener('change', function () {
+              //改变当前的级别，并重新初始化
+              level = levels[parseInt(this.value)];
+              mineSweeping.init();
+            });
+          },
+          /**
+           * 清除画布
+           */
+          clear: function () {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+          },
+          /**
+           * 加载图片
+           * @param fn 加载完成后回调
+           */
+          createImage: function (fn) {
+            image = new Image();
+            image.onload = function () {
+              fn && fn();
+            };
+            image.src = Config.imageData;
+          },
+          /**
+           * 创建级别下拉列表
+           */
+          createLevels: function () {
+            var select = doc.querySelector('select');
+            var frag = doc.createDocumentFragment(); //用文档碎片来存储
+            for (var i = 0, len = levels.length; i < len; i++) {
+              var option = doc.createElement('option');
+              option.value = i;
+              option.innerHTML = levels[i].name;
+              frag.appendChild(option);
+            }
+            select.appendChild(frag);
+          },
+          /**
+           * 创建二维数组，用来存储各种类型对象
+           */
+          createMatrix: function () {
+            matrix = [];
+            for (var i = 0; i < level.y; i++) {
+              matrix[i] = [];
+              for (var j = 0; j < level.x; j++) {
+                //0-否 >=1-是
+                matrix[i][j] = {
+                  hidden: 1, //是否隐藏的
+                  number: 0, //数字
+                  flag: 0, //旗子
+                  doubt: 0, //问号
+                  bomb: 0, //炸弹 0-没有 1-正常炸弹 2-标记错误的炸弹 3-被点击后造成游戏结束的炸弹
+                  hover: 0 //hover样式
+                };
+              }
+            }
+          },
+          /**
+           * 游戏结束时显示所有的方块
+           */
+          createMatrixForOver: function () {
+            for (var i = 0; i < level.y; i++) {
+              for (var j = 0; j < level.x; j++) {
+                var m = matrix[i][j];
+                m.hidden = 0;
+                //如果当前格子没有炸弹，但是却标了红旗，表示错误的标法，同时把旗子去掉
+                if (m.bomb === 0 && m.flag === 1) {
+                  m.flag = 0;
+                  m.bomb = 2;
+                }
+              }
+            }
+          },
+          /**
+           * 随机布雷，1为有雷
+           * @param count 雷的个数
+           */
+          createMines: function (count) {
+            while (count > 0) {
+              var i = Math.ceil(Math.random() * (level.y - 1));
+              var j = Math.ceil(Math.random() * (level.x - 1));
+              if (matrix[i][j].bomb !== 1) {
+                matrix[i][j].bomb = 1;
+                count--;
+              }
+            }
+          },
+          /**
+           * 创建数字，根据方格周围的雷数量统计
+           */
+          createNumbers: function () {
+            for (var i = 0; i < level.y; i++) {
+              for (var j = 0; j < level.x; j++) {
+                //确保当前格子不是雷
+                if (matrix[i][j].bomb === 0) {
+                  i > 0 && j > 0 && matrix[i - 1][j - 1].bomb === 1 && matrix[i][j].number++; //左上方
+                  i > 0 && matrix[i - 1][j].bomb === 1 && matrix[i][j].number++; //正上方
+                  i > 0 && j < level.x - 1 && matrix[i - 1][j + 1].bomb === 1 && matrix[i][j].number++; //右上方
+                  j < level.x - 1 && matrix[i][j + 1].bomb === 1 && matrix[i][j].number++; //正右方
+                  i < level.y - 1 && j < level.x - 1 && matrix[i + 1][j + 1].bomb === 1 && matrix[i][j].number++; //右下方
+                  i < level.y - 1 && matrix[i + 1][j].bomb === 1 && matrix[i][j].number++; //正下方
+                  i < level.y - 1 && j > 0 && matrix[i + 1][j - 1].bomb === 1 && matrix[i][j].number++; //左下方
+                  j > 0 && matrix[i][j - 1].bomb === 1 && matrix[i][j].number++; //正左方
+                }
+              }
+            }
+          },
+          /**
+           * 创建计时
+           */
+          createStartTimer: function () {
+            this.startTime += 1e3; //当前时间加1s
+            this.infos[2].innerHTML = this.startTime / 1e3 + '秒';
+            this.startTimer && clearTimeout(this.startTimer); //先清除一下，避免重复打乱节奏
+            this.startTimer = setTimeout(function () {
+              mineSweeping.createStartTimer();
+            }, 1e3);
+          },
+          /**
+           * 绘制各种形状
+           */
+          draw: function () {
+            this.clear(); //首先清除画布，重新绘制
+            for (var i = 0; i < level.y; i++) {
+              for (var j = 0; j < level.x; j++) {
+                var m = matrix[i][j];
+                var size = Config.size;
+                var x = j * size,
+                  y = i * size;
+                if (m.hidden === 1) {
+                  //隐藏的就绘制隐藏的icon
+                  this.drawImage(x, y, 0);
+                } else if (m.bomb === 2 || m.bomb === 3) {
+                  //正常炸弹
+                  if (m.bomb === 3) {
+                    //游戏结束时会有一个产生结束的肇事者炸弹，将其背景变红
+                    context.fillStyle = Color.bombBg;
+                    context.fillRect(x, y, size, size);
+                  }
+                  this.drawImage(x, y, 4);
+                } else if (m.bomb === 1) {
+                  //标记错误的炸弹
+                  this.drawImage(x, y, 3);
+                } else if (m.number > 0) {
+                  //数字
+                  this.drawNumber(m.number, x, y);
+                }
+                if (m.doubt === 1) {
+                  //问号
+                  this.drawImage(x, y, 2);
+                } else if (m.flag === 1) {
+                  //旗子
+                  this.drawImage(x, y, 1);
+                }
+                //绘制边框
+                this.drawBorder(x, y, m.hover);
+              }
+            }
+            this.drawCopy();
+          },
+          /**
+           * 绘制边框
+           * @param x x坐标
+           * @param y y坐标
+           * @param color 颜色序号，0-正常，1-hover
+           */
+          drawBorder: function (x, y, color) {
+            context.beginPath();
+            context.strokeStyle = Color.border[color];
+            context.rect(x, y, Config.size, Config.size);
+            context.closePath();
+            context.stroke();
+          },
+          /**
+           * 绘制版权信息
+           */
+          drawCopy: function () {
+            context.textAlign = 'center';
+            context.textBaseline = 'middle';
+            context.font = '12px Arial';
+            context.fillStyle = Color.copy;
+            context.fillText('All right by 谢承雄 版权所有!', canvas.width / 2, canvas.height / 2);
+          },
+          /**
+           * 绘制图形
+           * @param x x坐标
+           * @param y y坐标
+           * @param sx 裁剪位置序号
+           */
+          drawImage: function (x, y, sx) {
+            context.drawImage(image, sx * (Config.size - 1), 0, Config.size - 1, Config.size - 1, x, y, Config.size, Config.size);
+          },
+          /**
+           * 绘制数字
+           * @param number
+           * @param x
+           * @param y
+           */
+          drawNumber: function (number, x, y) {
+            context.textAlign = 'center';
+            context.textBaseline = 'middle';
+            context.font = '14px Arial bold';
+            context.fillStyle = Color.number[number - 1];
+            context.fillText(number, x + Config.size / 2, y + Config.size / 2);
+          },
+          /**
+           * 绘制结束屏幕
+           * @param isPassed 是否通关造成的结束
+           */
+          drawOver: function (isPassed) {
+            var tipsText = isPassed ? 'GAME PASS!' : 'GAME OVER!';
+            context.fillStyle = Color.mask;
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.fillStyle = Color.btnBg;
+            context.fillRect(canvas.width / 2 - Config.btnWidth / 2, canvas.height / 2 - Config.btnHeight / 2, Config.btnWidth, Config.btnHeight);
+            context.textAlign = 'center';
+            context.textBaseline = 'middle';
+            context.font = '20px Arial';
+            context.fillStyle = Color.btnFont;
+            context.fillText('再来一次', canvas.width / 2, canvas.height / 2 + Config.btnHeight / 2 - 20);
+            context.fillStyle = Color.overFont;
+            context.fillText(tipsText, canvas.width / 2, canvas.height / 2 - Config.btnHeight);
+          },
+          /**
+           * 初始化
+           */
+          init: function () {
+            lastMines = level.mines;
+            lastHidden = level.x * level.y;
+            canvas.width = level.x * Config.size;
+            canvas.height = level.y * Config.size;
+            this.infos[1].innerHTML = lastMines;
+            this.status = 'inited';
+            this.startTimer && clearTimeout(this.startTimer);
+            this.infos[2].innerHTML = '0秒';
+            this.createMatrix();
+            this.createMines(lastMines);
+            this.createNumbers();
+            this.draw();
+          },
+          /**
+           * 打开方格
+           * @param x x坐标
+           * @param y y坐标
+           */
+          openBlock: function (x, y) {
+            var m = matrix[y][x];
+            if (m.bomb === 1) {
+              //如果有炸弹
+              if (this.status === 'started') {
+                //此时游戏已经开始了，因此要直接结束游戏
+                m.bomb = 3;
+                this.over();
+              } else if (this.status === 'inited') {
+                //此时游戏刚初始化，避免第一次点击就碰着雷，所以重新初始化，知道没碰到雷位置
+                this.init();
+                this.openBlock(x, y);
+              }
+            } else if (m.flag === 1) {
+              //如果有旗子的话，会造成游戏结束，此种情况可能发生在自动打开周围方格时
+              m.hidden = 0;
+              m.flag = 0;
+              m.bomb = 2;
+              this.over();
+            } else {
+              //如果有数字,正常情况是直接显示数字
+              m.hidden = 0;
+              if (m.doubt === 1) {
+                //如果是问号，则把问号去掉
+                m.doubt = 0;
+              }
+              lastHidden--; //剩余未被开启的格子减1
+              if (m.number === 0) {
+                //如果是空白的话则把周围的都显示出来
+                x > 0 && y > 0 && matrix[y - 1][x - 1].hidden === 1 && this.openBlock(x - 1, y - 1);
+                y > 0 && matrix[y - 1][x].hidden === 1 && this.openBlock(x, y - 1);
+                y > 0 && x < level.x - 1 && matrix[y - 1][x + 1].hidden === 1 && this.openBlock(x + 1, y - 1);
+                x < level.x - 1 && matrix[y][x + 1] === 1 && this.openBlock(x + 1, y);
+                y < level.y - 1 && x < level.x - 1 && matrix[y + 1][x + 1].hidden === 1 && this.openBlock(x + 1, y + 1);
+                y < level.y - 1 && matrix[y + 1][x].hidden === 1 && this.openBlock(x, y + 1);
+                y < level.y - 1 && x > 0 && matrix[y + 1][x - 1].hidden === 1 && this.openBlock(x - 1, y + 1);
+                x > 0 && matrix[y][x - 1].hidden === 1 && this.openBlock(x - 1, y);
+              }
+            }
+          },
+          /**
+           * 打开方格周围的方格
+           * @param x
+           * @param y
+           */
+          openAroundBlock: function (x, y) {
+            var flagCount = 0, //周围旗子统计
+              hiddenCount = 0; //周围隐藏的格子统计
+            for (var i = y - 1; i <= y + 1; i++) {
+              for (var j = x - 1; j <= x + 1; j++) {
+                //在边界的话有可能索引报错
+                try {
+                  if (matrix[i][j].flag === 1) {
+                    flagCount++;
+                  }
+                  if (matrix[i][j].hidden === 1) {
+                    hiddenCount++;
+                  }
+                } catch (ex) {}
+              }
+            }
+            /**
+             * 如果旗子数等于周围的炸弹数，并且有未标记旗子的隐藏格子
+             */
+            if (flagCount === matrix[y][x].number && hiddenCount > flagCount) {
+              for (i = y - 1; i <= y + 1; i++) {
+                for (j = x - 1; j <= x + 1; j++) {
+                  try {
+                    if (matrix[i][j].bomb === 0 && matrix[i][j].hidden === 1) {
+                      //没有炸弹，并且是隐藏的才打开格子
+                      this.openBlock(j, i);
+                    }
+                  } catch (ex) {}
+                }
+              }
+            }
+          },
+          /**
+           * 游戏结束
+           * @param isPassed 是否通关造成的结束
+           */
+          over: function (isPassed) {
+            this.status = 'stopped';
+            this.startTimer && clearTimeout(this.startTimer);
+            this.createMatrixForOver();
+            this.draw();
+            this.drawOver(isPassed);
+          },
+          /**
+           * 开始后点击事件回调
+           * @param e
+           */
+          startedClickHandler: function (e) {
+            var x = Math.floor(e.offsetX / Config.size),
+              y = Math.floor(e.offsetY / Config.size);
+            var m = matrix[y][x];
+            if (this.status === 'started') {
+              //游戏已经开始
+              if (e.which === 1) {
+                //鼠标右键点击
+                if (m.hidden === 1 && m.flag === 0) {
+                  //格子是隐藏的并且未标记旗子则直接打开
+                  this.openBlock(x, y);
+                } else if (m.hidden === 0) {
+                  //格子已经显示，则开启周围的格子，windows上是双击触发这个效果
+                  this.openAroundBlock(x, y);
+                }
+              } else if (e.which === 3 && m.hidden === 1) {
+                //鼠标左键并且格子是隐藏的
+                if (m.flag === 1) {
+                  //如果有旗子，则把旗子换成问号，同时炸弹和隐藏格子数量增加
+                  m.flag = 0;
+                  m.doubt = 1;
+                  lastMines++;
+                  lastHidden++;
+                } else if (m.doubt === 1) {
+                  //如果是问号，则直接去掉问号
+                  m.doubt = 0;
+                } else {
+                  //如果不是问号，也不是旗子，则标记旗子
+                  m.flag = 1;
+                  lastMines--;
+                  lastHidden--;
+                }
+              }
+              if (lastMines === lastHidden) {
+                //剩余的雷和剩余未被揭开的格子相等时游戏结束，传一个true过去代表通关造成的结束
+                this.over(true);
+              }
+            } else if (this.status === 'inited') {
+              //游戏刚刚初始化
+              if (e.which === 1) {
+                //如果是鼠标右键
+                this.openBlock(x, y);
+                this.status = 'started';
+                this.startTime = 0;
+                this.createStartTimer(); //开始计时
+              }
+            }
+            this.infos[1].innerHTML = lastMines; //修改剩余雷数
+            if (this.status !== 'stopped') {
+              //游戏开始后才进行绘制
+              this.draw();
+            }
+          },
+          /**
+           * 游戏开始后的hover事件回调
+           * @param e
+           */
+          startedHoverHandler: function (e) {
+            if (e.type === 'mousemove') {
+              //鼠标滑动
+              var x = Math.floor(e.offsetX / Config.size),
+                y = Math.floor(e.offsetY / Config.size);
+              var m = matrix[y][x];
+              if (m.hover === 0) {
+                //之前没有hover才添加hover效果
+                for (var i = 0; i < level.y; i++) {
+                  for (var j = 0; j < level.x; j++) {
+                    m = matrix[i][j];
+                    //要隐藏的元素才满足hover要求
+                    m.hover = +(m.hidden === 1 && i === y && j === x);
+                  }
+                }
+                this.draw();
+              }
+            } else {
+              //鼠标离开canvas画布
+              for (i = 0; i < level.y; i++) {
+                for (j = 0; j < level.x; j++) {
+                  m = matrix[i][j];
+                  if (m.hover === 1) {
+                    //如果有hover，则把hover去掉
+                    m.hover = 0;
+                    this.draw();
+                    return;
+                  }
+                }
+              }
+            }
+          },
+          /**
+           * 结束后的点击事件回调
+           * @param e
+           */
+          stoppedClickHandler: function (e) {
+            var x = e.offsetX,
+              y = e.offsetY;
+            //坐标在按钮范围内则点击有效
+            if (x > (canvas.width - Config.btnWidth) / 2 && x < (canvas.width + Config.btnWidth) / 2 && y > (canvas.height - Config.btnHeight) / 2 && y < (canvas.height + Config.btnHeight) / 2) {
+              this.init();
+            }
+          }
+        };
+        mineSweeping = new MineSweeping();
+      })(window, document);
+    </script>
+    <!-- <script src="x.core.js"></script>
+	<script src="x.minesweeping.js"></script> -->
+  </body>
+</html>

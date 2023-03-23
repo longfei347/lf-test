@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+    <style>
+      #div2 {
+        width: 150px;
+        height: 150px;
+        position: absolute;
+        background: #cccccc;
+      }
+      .box {
+        border: 1px dashed black;
+        position: absolute;
+      }
+    </style>
+    <script>
+      window.onload = function () {
+        var div2 = document.getElementById('div2');
+        var x = 0;
+        var y = 0;
+
+        document.onmousedown = function (ev) {
+          //获取具有兼容性的事件
+          var oEvent = ev || event;
+
+          //x、y分别代表，鼠标与div之间的横坐标和纵坐标
+          x = oEvent.clientX - div2.offsetLeft;
+          y = oEvent.clientY - div2.offsetTop;
+
+          //创建一个div元素
+          var box = document.createElement('div');
+          //将创建好的样式赋给box
+          box.className = 'box';
+          //将div的长宽赋给box
+          box.style.width = div2.offsetWidth - 2 + 'px';
+          box.style.height = div2.offsetHeight - 2 + 'px';
+          //按下鼠标，将div当前的位置赋给box,防止每次点击时，虚线框都会在左上角闪一下
+          box.style.left = div2.offsetLeft + 'px';
+          box.style.top = div2.offsetTop + 'px';
+          //将box插入到页面
+          document.body.appendChild(box);
+
+          //mouseMove函数
+          document.onmousemove = function (ev) {
+            var oEvent = ev || event;
+
+            //m、n分别代表div的横、纵坐标
+            var m = oEvent.clientX - x;
+            var n = oEvent.clientY - y;
+
+            //设置div的坐标
+            box.style.left = m + 'px';
+            box.style.top = n + 'px';
+          };
+
+          //mouseUp函数
+          document.onmouseup = function (ev) {
+            var oEvent = ev || event;
+
+            //释放move事件，如果不释放，放开鼠标后，div仍然会跟随鼠标移动
+            document.onmousemove = null;
+            document.onmouseup = null;
+
+            //放开鼠标后，将虚线框的位置赋给div2
+            div2.style.left = box.offsetLeft + 'px';
+            div2.style.top = box.offsetTop + 'px';
+
+            //并且移出虚线框
+            document.body.removeChild(box);
+          };
+
+          return false;
+        };
+      };
+    </script>
+  </head>
+
+  <body>
+    <div id="div2"></div>
+  </body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="google" content="notranslate" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    html {
+      height: 100%;
+      background-color: #fff;
+    }
+    .form__container {
+      container: inline-size;
+    }
+
+    .form {
+      display: grid;
+      align-items: center;
+    }
+
+    @container (min-width: 480px) {
+      .form {
+        grid-template-columns: min-content 1fr 200px;
+        grid-template-areas: 'searchIcon searchInput button';
+        grid-template-rows: 88px;
+        gap: 10px;
+      }
+    }
+
+    @container (min-width: 768px) {
+      .form {
+        grid-template-columns: min-content 1fr min-content 200px;
+        grid-template-areas: 'searchIcon searchInput cameraIcon button';
+        grid-template-rows: 88px;
+        gap: 10px;
+      }
+    }
+    figure:has(figcaption) img {
+      border: 5px solid #9c27b0;
+    }
+    @layer setting, tool;
+    @layer setting {
+      /* 附加到级联层 setting 中的 CSS */
+    }
+
+    @layer tool {
+      /* 附加到级联层 tool 中的 CSS */
+    }
+    div {
+      background: #fff;
+      & p {
+        color: red;
+      }
+      /* .blue & {
+        color: blue;
+      } */
+    }
+    .flex {
+      display: flex;
+    }
+
+    aside {
+      width: 200px;
+      margin-right: 5px;
+      border-left: 5px solid currentColor;
+      box-shadow: 5px 5px 10px currentColor;
+    }
+    .success {
+      color: darkgreen;
+    }
+    .warning {
+      color: darkgoldenrod;
+    }
+    .error {
+      color: darkred;
+    }
+    .gradient-text {
+      text-align: left;
+      text-indent: 30px;
+      line-height: 50px;
+      font-size: 40px;
+      font-weight: bolder;
+      position: relative;
+      /*-webkit-mask-image:-webkit-gradient(linear, 0 0, 0 bottom, from(yellow), to(rgba(0, 0, 255, 0)));*/
+      background-image: linear-gradient(to bottom, red, #fd8403, yellow);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .test {
+      display: flex;
+      flex-direction: column;
+      width: 200px;
+      justify-content: center;
+      align-items: center;
+      background-color: #ccc;
+    }
+    .test span {
+      background-color: #f90;
+      padding: 5px;
+      border-radius: 10px;
+    }
+  </style>
+  <body>
+    <div id="app">
+      <!-- <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"> -->
+      <div class="test">
+        <p><span>101101</span></p>
+        <p><span>101102</span></p>
+        <p><span>101103</span></p>
+      </div>
+      <div draggable="true">drag</div>
+      <p>{{data.count}}</p>
+      <button @click="increment">增加</button>
+      <div class="form__container">
+        <div class="form">
+          <p>1</p>
+          <p>2</p>
+          <p>3</p>
+          <p>4</p>
+          <p>5</p>
+        </div>
+      </div>
+      <p class="gradient-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <div class="flex">
+        <aside class="success">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor tellus ac tempus sollicitudin. Mauris quam eros, viverra eget pulvinar at, scelerisque non velit.
+        </aside>
+        <aside class="warning">Vestibulum dapibus, libero non venenatis suscipit, elit libero scelerisque odio, nec laoreet ipsum sem sed nibh. Nulla facilisi.</aside>
+        <aside class="error">Vivamus rhoncus dignissim diam, id dictum lorem tincidunt sit amet. Cras et eros urna. Proin pulvinar enim a congue porttitor.</aside>
+      </div>
+      <figure>
+        <figcaption>123123</figcaption>
+        <img alt="1122" src="" />
+      </figure>
+    </div>
+  </body>
+  <script src="js/petite-vue.iife.js"></script>
+  <script src="js/vue@2.7.8.js"></script>
+  <script>
+    /* let arr = [
+      {
+        resultType: 'supporter',
+        num: 1
+      },
+      {
+        resultType: 'maker',
+        num: 3
+      },
+      {
+        resultType: 'maker',
+        num: 1
+      },
+      {
+        resultType: 'supporter',
+        num: 2
+      },
+      {
+        resultType: 'maker',
+        num: 2
+      }
+    ];
+    arr.sort((a, b) => {
+      if (a.resultType !== b.resultType) {
+        return a.resultType === 'supporter' ? -1 : 1;
+      }
+      return a.num > b.num ? 1 : -1;
+    }); */
+    PetiteVue.createApp({
+      data: {
+        count: 1
+      },
+      increment() {
+        this.data.count++;
+        console.log('this.data: ', this.data);
+      },
+      methods: {}
+    }).mount('#app');
+    /* let vm = new Vue({
+      el: '#app',
+      data() {
+        return {
+          name: 'hello vue2.7.8'
+        };
+      },
+      created() {
+        this.name;
+        console.log('this.name: ', this.name);
+      },
+      mounted() {
+        console.log('mounted: ', this.name);
+      }
+    }); */
+  </script>
+</html>

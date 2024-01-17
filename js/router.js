@@ -1,4 +1,32 @@
-// 1. vue3 自动路由,依赖webpack的require
+// 导入Vue和Vue Router
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+
+// 自动导入路由
+const routes = []
+const routerContext = require.context('@/views', true, /\.vue$/)
+routerContext.keys().forEach(route => {
+  const routeConfig = routerContext(route)
+  const routeModule = routeConfig.default || routeConfig
+  const routePath = routeModule.routePath || `/${route.replace(/\.\/|\.vue/g, '')}`
+  routes.push({
+    path: routePath,
+    name: routeModule.name,
+    component: routeModule
+  })
+})
+
+// 创建Vue Router实例
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes
+})
+
+// 导出Vue Router实例
+export default router
+
+// Note: This code automatically imports all Vue files in the `@/views` directory and adds them as routes to the Vue Router instance. The `routePath` and `name` properties can be added to each Vue file to customize the route path and name respectively.// 1. vue3 自动路由,依赖webpack的require7
 import { createRouter, createWebHashHistory } from 'vue-router';
 
 // 自动注入路由
@@ -52,7 +80,7 @@ export const router = createRouter({
 import { createRouter, createWebHashHistory } from 'vue-router';
 // 引入路由各页面配置
 let routeArr = [];
-const modules = import.meta.globEager('../page/**/*.vue');
+const modules = import.meta.glob('../page/**/*.vue', { eager: true });
 // console.log('object', modules)
 // 循环进入路由
 Object.keys(modules).forEach(i => {

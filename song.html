@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>歌词管理</title>
+    <script src="js/vue.global.js"></script>
+  </head>
+  <style>
+    .main {
+      width: 80%;
+      display: flex;
+    }
+    .side {
+      width: 150px;
+      border-right: 1px solid #000;
+    }
+    li {
+      list-style-type: none;
+    }
+    .content p {
+      white-space: pre;
+    }
+    .lyric li {
+      border-top: 2px solid #000;
+    }
+  </style>
+  <body>
+    <div class="main">
+      <div class="side">
+        <h3>歌词列表:</h3>
+        <ul>
+          <li v-for="itm in list">
+            <a :href="'#'+itm.name">{{itm.name}}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="content">
+        <p><button @click="add">新增/关闭</button><button @click="save">保存</button> <button @click="exports">导出</button></p>
+        <div v-if="showAdd">
+          <input type="text" v-model="title" placeholder="歌曲名" />
+          <textarea name="" id="" cols="30" rows="10" v-model="content" placeholder="歌词"></textarea>
+        </div>
+        <ul class="lyric">
+          <li v-for="itm,index in list">
+            <h3>{{itm.name}} <button @click="modify(index)">编辑</button></h3>
+            <p :id="itm.name">{{itm.content}}</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+  <script src="js/FileSaver.min.js"></script>
+  <script src="song.js"></script>
+  <script>
+    let vm = Vue.createApp({
+      data() {
+        return {
+          showAdd: false,
+          title: '',
+          content: '',
+          list: list
+        };
+      },
+      methods: {
+        add() {
+          this.edit = false;
+          this.showAdd = !this.showAdd;
+          this.title = '';
+          this.content = '';
+        },
+        modify(index) {
+          this.edit = index;
+          this.title = this.list[index].name;
+          this.content = this.list[index].content;
+          this.showAdd = true;
+        },
+        save() {
+          if (this.edit === false) {
+            this.list.push({
+              name: this.title,
+              content: this.content
+            });
+          } else {
+            this.list[this.edit] = {
+              name: this.title,
+              content: this.content
+            };
+          }
+        },
+        exports() {
+          let blob = new Blob(['let list=' + JSON.stringify(this.list)], { type: 'text/plain;charset=utf-8' });
+          saveAs(blob, 'song.js');
+        }
+      }
+    }).mount('.main');
+  </script>
+</html>

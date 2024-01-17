@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    input {
+      caret-color: red;
+    }
+    #ems {
+      font-size: 18px;
+    }
+    .battery-container {
+      width: 100px;
+      height: 50px;
+      border: 2px solid #000;
+      position: relative;
+    }
+
+    .battery-capacity {
+      width: 100%;
+      height: 100%;
+      background-color: #555;
+      border-radius: 5px;
+      position: absolute;
+      animation: charging 5s linear infinite;
+    }
+
+    @keyframes charging {
+      0% {
+        width: 50%;
+        background-color: #555;
+      }
+      100% {
+        width: 100%; /* 根据需要调整充电完成时的电池容量 */
+        background-color: green; /* 根据需要调整充电完成时的颜色 */
+      }
+    }
+  </style>
+  <body>
+    <details>
+      <summary>long</summary>
+      哈哈
+      <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+      </ul>
+    </details>
+
+    <input type="text" list="fei" />
+    <datalist id="fei">
+      <option value="fei"></option>
+      <option value="fei2"></option>
+      <option value="fei3"></option>
+    </datalist>
+    <div class="battery-container">
+      <div class="battery-capacity"></div>
+    </div>
+    <p id="ems"><span>&#128512;</span></p>
+    <form action="http:localhost:8080/process?first_name=long1&last_name=fei" method="post" enctype="multipart/form-data">
+      <input type="text" name="first_name" id="" />
+      <input type="text" name="last_name" id="" />
+      <input type="file" name="uploaded" id="" />
+      <input type="submit" value="提交" />
+    </form>
+    <div id="energy-chart" style="width: 600px; height: 400px"></div>
+  </body>
+  <script src="js/echarts.js"></script>
+  <script>
+    /* for (i = 0; i < 8; i++) {
+      ems.insertAdjacentHTML('beforeend', `<span>&#${128512 + i};</span>`);
+    } */
+
+    // 初始化 ECharts 实例
+    var myChart = echarts.init(document.getElementById('energy-chart'));
+
+    // 配置图表选项
+    var option = {
+      title: {
+        text: '充放电能量流图'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+        }
+      },
+      legend: {
+        data: ['充电', '放电']
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      toolbox: {
+        feature: {
+          saveAsImage: {}
+        }
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['时间1', '时间2', '时间3', '时间4', '时间5'] // 根据实际情况设置 x 轴数据
+      },
+      yAxis: {
+        type: 'value',
+        boundaryGap: [0, '100%'] // y 轴范围设置，此处设置为 0 到 100% 的比例值，可根据实际需求调整范围值。
+      },
+      series: [
+        {
+          name: '充电',
+          type: 'line',
+          stack: '总量', // 使用堆叠图展示充放电能量流图时，需要设置 stack 属性为相同的值。这里设置为 '总量' 表示所有系列在同一堆叠上。
+          data: [120, 200, 150, 80, 70] // 根据实际情况设置充电能量数据。单位可以根据实际需求调整。
+        },
+        {
+          name: '放电',
+          type: 'line',
+          stack: '总量', // 与充电系列设置相同的堆叠值。这里设置为 '总量' 表示所有系列在同一堆叠上。
+          data: [80, 130, 90, 60, 50] // 根据实际情况设置放电能量数据。单位可以根据实际需求调整。
+        }
+      ]
+    };
+
+    // 将配置项设置到图表实例中并渲染图表。
+    myChart.setOption(option);
+  </script>
+</html>

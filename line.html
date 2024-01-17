@@ -1,143 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    *,
+    *:before,
+    *:after {
+      box-sizing: border-box;
+    }
+    html,
+    body {
+      height: 100%;
+    }
+    html {
+      background-color: #1d1d1d;
+    }
+    body {
+      position: relative;
+      margin: 0;
+      padding: 0;
+      transform-style: preserve-3d;
 
-<head>
-  <meta charset="UTF-8">
-  <title>Document</title>
-</head>
-<style>
-* {
-  margin: 0;
-  padding: 0;
-}
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
-html, body {
-  height: 100%;
-}
-html {
-  background-color: #1d1d1d;
-}
-body {
-  position: relative;
-  margin: 0;
-  padding: 0;
-  transform-style: preserve-3d;
+      -webkit-perspective: 500px;
+      perspective: 500px;
+    }
 
-  -webkit-perspective: 500px;
-  perspective: 500px;
-}
+    /*Screen*/
+    .screen {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 320px;
+      height: 210px;
+      margin-top: -105px;
+      margin-left: -160px;
 
-/*Screen*/
-.screen {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 320px;
-  height: 210px;
-  margin-top: -105px;
-  margin-left: -160px;
+      border-radius: 8px;
+      box-shadow: 0 0 80px #0caba8;
+      overflow: hidden;
+      z-index: 100000;
+      animation: screenMove01 2s, boxShine 2.5s 2s infinite alternate, screenMove02 5s infinite alternate linear;
+    }
+    .screen::before {
+      display: block;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 320px;
+      height: 210px;
 
-  border-radius: 8px;
-  box-shadow: 0 0 80px #0caba8;
-  overflow: hidden;
-  z-index: 100000;
-  animation: screenMove01 2s,
-    boxShine 2.5s 2s infinite alternate,
-    screenMove02 5s infinite alternate linear;
-}
-.screen::before {
-  display: block;
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 320px;
-  height: 210px;
+      border-width: 5px;
+      border-style: solid;
+      border-image: linear-gradient(
+          to bottombottom,
+          rgba(29, 186, 180, 1) 0%,
+          rgba(126, 252, 247, 1) 26%,
+          rgba(227, 253, 252, 1) 30%,
+          rgba(126, 252, 247, 1) 36%,
+          rgba(29, 186, 180, 1) 52%,
+          rgba(29, 186, 180, 1) 74%,
+          rgba(164, 247, 244, 1) 91%,
+          rgba(29, 186, 180, 1) 100%
+        )
+        1;
+    }
+    .screen::after {
+      display: block;
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 314px;
+      height: 204px;
 
-  border-width: 5px;
-  border-style: solid;
-  border-image: linear-gradient(to bottombottom, rgba(29, 186, 180, 1) 0%, rgba(126, 252, 247, 1) 26%, rgba(227, 253, 252, 1) 30%, rgba(126, 252, 247, 1) 36%, rgba(29, 186, 180, 1) 52%, rgba(29, 186, 180, 1) 74%, rgba(164, 247, 244, 1) 91%, rgba(29, 186, 180, 1) 100%) 1;
-}
-.screen::after {
-  display: block;
-  content: "";
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 314px;
-  height: 204px;
+      border: 3px solid #1d1d1d;
+      border-color: rgba(29, 29, 29, 0.9);
+      border-radius: 5px;
+      background: linear-gradient(
+        135deg,
+        rgba(29, 186, 180, 1) 0%,
+        rgba(227, 253, 252, 1) 17%,
+        rgba(227, 253, 252, 1) 25%,
+        rgba(42, 197, 191, 1) 48%,
+        rgba(126, 252, 247, 1) 93%,
+        rgba(29, 186, 180, 1) 100%
+      );
+      background-size: 300% 300%;
+      animation: bgShine 5s infinite alternate linear;
+    }
 
-  border: 3px solid #1d1d1d;
-  border-color: rgba(29, 29, 29, 0.9);
-  border-radius: 5px;
-  background: linear-gradient(135deg, rgba(29, 186, 180, 1) 0%, rgba(227, 253, 252, 1) 17%, rgba(227, 253, 252, 1) 25%, rgba(42, 197, 191, 1) 48%, rgba(126, 252, 247, 1) 93%, rgba(29, 186, 180, 1) 100%);
-  background-size: 300% 300%;
-  animation: bgShine 5s infinite alternate linear;
-}
-/**/
+    @keyframes screenMove01 {
+      0% {
+        opacity: 0;
+        top: 100%;
+        transform: rotateY(0deg);
+      }
+      100% {
+        opacity: 1;
+        top: 50%;
+        transform: rotateY(-30deg);
+      }
+    }
 
+    @keyframes screenMove02 {
+      0% {
+        transform: rotateY(-30deg);
+      }
+      100% {
+        transform: rotateY(30deg);
+      }
+    }
 
+    @keyframes boxShine {
+      0% {
+        box-shadow: 0 0 50px #0caba8;
+      }
+      100% {
+        box-shadow: 0 0 200px #0caba8;
+      }
+    }
+    /*bg shine*/
+    @keyframes bgShine {
+      0% {
+        background-size: 300% 300%;
+      }
+      100% {
+        background-size: 100% 100%;
+      }
+    }
 
-/*Animation*/
-
-/*screenMove01*/
-
-@keyframes screenMove01 {
-  0% {
-    opacity: 0;
-    top: 100%;
-    transform: rotateY(0deg);
-  }
-  100% {
-    opacity: 1;
-    top: 50%;
-    transform: rotateY(-30deg);
-  }
-}
-/**/
-
-
-
-/*screenMove02*/
-
-@keyframes screenMove02 {
-  0% {
-    transform: rotateY(-30deg);
-  }
-  100% {
-    transform: rotateY(30deg);
-  }
-}
-/**/
-
-
-
-/*box shine*/
-
-@keyframes boxShine {
-  0% {
-    box-shadow: 0 0 50px #0caba8;
-  }
-  100% {
-    box-shadow: 0 0 200px #0caba8;
-  }
-}
-/*bg shine*/
-@keyframes bgShine {
-  0% {
-    background-size: 300% 300%;
-  }
-  100% {
-    background-size: 100% 100%;
-  }
-}
-
-
-/********************************
+    /********************************
 设计思路如下：
 头像显示最近一个联系人,慢旋转效果。
 有新消息，头像增加闪耀效果并发光。
@@ -145,75 +144,74 @@ body {
 实现：
 用纯css实现。
 ******************************/
-.chatPanel-toMin {
-  position: absolute;
-  right: 0;
-  top: 100px;
-  width: 65px;
-  height: 60px;
-  border-radius: 50% 0 0 50%;
-  background: #fff;
-}
-.user-avatar {
-  position: absolute;
-  right: 0;
-  top: 7px;
-  right: 8px;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  border: 1px solid #ddd;
-}
-.user-avatar img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  display: block;
-}
-/*spin旋转*/
-.spin {
-  -webkit-animation: spin 5s infinite linear;
-  animation: spin 5s infinite linear
-}
-@keyframes spin {
-  0% {
-    transform: rotate(0deg)
-  }
-  100% {
-    transform: rotate(360deg)
-  }
-}
-/*sparkle 闪耀*/
-.sparkle {
-  transition: all 1s;
-  animation: sparkle linear 2s 1.5s infinite;
-}
+    .chatPanel-toMin {
+      position: absolute;
+      right: 0;
+      top: 100px;
+      width: 65px;
+      height: 60px;
+      border-radius: 50% 0 0 50%;
+      background: #fff;
+    }
+    .user-avatar {
+      position: absolute;
+      right: 0;
+      top: 7px;
+      right: 8px;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      border: 1px solid #ddd;
+    }
+    .user-avatar img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: block;
+    }
+    /*spin旋转*/
+    .spin {
+      -webkit-animation: spin 5s infinite linear;
+      animation: spin 5s infinite linear;
+    }
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    /*sparkle 闪耀*/
+    .sparkle {
+      transition: all 1s;
+      animation: sparkle linear 2s 1.5s infinite;
+    }
 
-@keyframes sparkle {
-  0% {
-    box-shadow: 0 0 0px 0 #b2ff1a;
-    transform: rotate(0deg)
-  }
-  50% {
-    box-shadow: 0 0 20px 0 #1affff;
-  }
-  100% {
-    box-shadow: 0 0 0px 0 #b2ff1a;
-    transform: rotate(359deg)
-  }
-}
-</style>
+    @keyframes sparkle {
+      0% {
+        box-shadow: 0 0 0px 0 #b2ff1a;
+        transform: rotate(0deg);
+      }
+      50% {
+        box-shadow: 0 0 20px 0 #1affff;
+      }
+      100% {
+        box-shadow: 0 0 0px 0 #b2ff1a;
+        transform: rotate(359deg);
+      }
+    }
+  </style>
 
-<body>
-  <!-- <div class="screen"></div> -->
-  <div style="width:400px; height:600px; margin:0 auto; border:1px solid #666; position:relative; background:#666;">
-    <div class="chatPanel-toMin">
-      <div class="user-avatar">
-        <!-- <a href="" ></a> -->
-          <img class="sparkle spin" src="" alt="">
+  <body>
+    <!-- <div class="screen"></div> -->
+    <div style="width: 400px; height: 600px; margin: 0 auto; border: 1px solid #666; position: relative; background: #666">
+      <div class="chatPanel-toMin">
+        <div class="user-avatar">
+          <!-- <a href="" ></a> -->
+          <img class="sparkle spin" src="" alt="" />
+        </div>
       </div>
     </div>
-  </div>
-</body>
-
+  </body>
 </html>

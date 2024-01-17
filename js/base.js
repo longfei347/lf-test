@@ -1,6 +1,5 @@
 var Class = function () {
   var klass = function () {
-    // console.log(this);
     this.init.apply(this, arguments);
   };
   //改变klass的原型
@@ -105,7 +104,7 @@ function handleFiles(files) {
   }
 }
 //指定范围,产生一个随机数
-function selectFrom(lowerValue, upperValue) {
+function selectFrom(lowerValue = 0, upperValue = 1) {
   var choices = upperValue - lowerValue + 1;
   return Math.floor(Math.random() * choices + lowerValue);
 }
@@ -1611,6 +1610,19 @@ function generateRandom(length) {
     }, '')
     .substring(0, length);
 }
+
+function debounce2(fn, delay) {
+  let timer;
+  return function (...args) {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      fn.apply(this, args);
+    }, delay);
+  };
+}
+
 // 防抖 将多次高频操作优化为只在最后一次执行，通常使用的场景是：用户输入，只需再输入完成后做一次输入校验即可
 function debounce(func, wait) {
   let timeout;
@@ -1657,6 +1669,54 @@ function throttle2(fn, delay) {
       fn.apply(context, args);
     }
   };
+}
+
+//深拷贝
+
+function deepClone(obj, cache = new WeakMap()) {
+  if (typeof obj !== 'object') return obj; // 普通类型，直接返回
+  if (obj === null) return obj;
+  if (cache.get(obj)) return cache.get(obj); // 防止循环引用，程序进入死循环
+  if (obj instanceof Date) return new Date(obj);
+  if (obj instanceof RegExp) return new RegExp(obj);
+
+  // 找到所属原型上的constructor，所属原型上的constructor指向当前对象的构造函数
+  let cloneObj = new obj.constructor();
+  cache.set(obj, cloneObj); // 缓存拷贝的对象，用于处理循环引用的情况
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      cloneObj[key] = deepClone(obj[key], cache); // 递归拷贝
+    }
+  }
+  return cloneObj;
+}
+
+// 测试
+// const obj = { name: 'Jack', address: { x: 100, y: 200 } }
+// obj.a = obj // 循环引用
+// const newObj = deepClone(obj)
+// console.log(newObj.address === obj.address) // false
+
+// 创建一个URLSearchParams实例
+const urlSearchParams = new URLSearchParams(window.location.search);
+// 把键值对列表转换为一个对象
+const params = Object.fromEntries(urlSearchParams.entries());
+
+// el.matches(selector)
+// 自定义事件代理
+function delegate(element, eventType, selector, fn) {
+  element.addEventListener(eventType, e => {
+    let el = e.target;
+    while (!el.matches(selector)) {
+      if (element === el) {
+        el = null;
+        break;
+      }
+      el = el.parentNode;
+    }
+    el && fn.call(el, e, el);
+  });
+  return element;
 }
 
 var BrowserInfo = {
@@ -2318,122 +2378,826 @@ function asyncToGenerator(generatorFunc) {
     });
   };
 }
-const EXCEL = class {
-  construct() {}
-  /**
-   * [exportsCSV 导出数据到CSV]
-   * @param  {Array}  [headers=[]]   [表头]
-   * @param  {Array}  [body=[]]      [内容]
-   * @param  {String} [name='excel'}] [文件名]
-   * @return {[type]}                 [无]
-   */
-  exportsCSV({ headers = [], body = [], name = 'csv', callback = function () {} }) {
-    // _headers = ['id', 'age', 'sex']
-    // _body = [
-    //   {
-    //     'id': '1',
-    //     'age': 12,
-    //     'sex': '男'
-    //   },
-    //   {
-    //     'id': '2',
-    //     'age': 24,
-    //     'sex': '女'
-    //   },
-    //   ......
-    // ]
-    name = name || 'test';
-    const h = headers.join(',') + '\n'; // 格式化表头
-    const b = body
-      .map(item => {
-        // 格式化表内容
-        return Object.values(item).join(',');
-      })
-      .join('\n');
-    const output = h + b; // 合并
-
-    const BOM = '\uFEFF';
-    // 创建一个文件CSV文件
-    var blob = new Blob([BOM + output], { type: 'text/csv' });
-    // IE
-    if (navigator.msSaveOrOpenBlob) {
-      // 解决大文件下载失败
-      // 保存到本地文件
-      navigator.msSaveOrOpenBlob(blob, `${name}.csv`);
+function checkMail(mail) {
+  let reg = /^[0-9a-z][0-9a-z\-\_\.]+@([0-9a-z][0-9a-z\-]*\.)+[a-z]{2,}$/i;
+  if (typeof str === 'string') {
+    if (str.includes(';')) {
+      // let mail='aaa@123.com;bbb@123.com;ccc@123.com'
+      return mail.split(';').every(s => reg.test(s));
     } else {
-      // let uri = encodeURI(`data:text/csv;charset=utf-8,${BOM}${output}`)
-      let downloadLink = document.createElement('a');
-      // downloadLink.href = uri
-      downloadLink.setAttribute('href', URL.createObjectURL(blob)); // 因为url有最大长度限制，encodeURI是会把字符串转化为url，超出限制长度部分数据丢失导致下载失败,为此我采用创建Blob（二进制大对象）的方式来存放缓存数据，具体代码如下：
-      downloadLink.download = `${name}.csv`;
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
+      return reg.test(mail);
     }
-    callback();
+  } else if (Array.isArray(mail)) {
+    return mail.every(s => reg.test(s));
+  }
+}
+// url参数序列化
+function stringifyUrl(search = {}) {
+  return Object.entries(search)
+    .reduce((t, v) => `${t}${v[0]}=${encodeURIComponent(v[1])}&`, Object.keys(search).length ? '?' : '')
+    .replace(/&$/, '');
+}
+// url参数反序列化
+function parseUrlSearch() {
+  const search = '?age=25&name=TYJ';
+  return search
+    .replace(/(^\?)|(&$)/g, '')
+    .split('&')
+    .reduce((t, v) => {
+      const [key, val] = v.split('=');
+      t[key] = decodeURIComponent(val);
+      return t;
+    }, {});
+}
+// 判断数据类型 undefined、null、string、number、boolean、array、object、symbol、date、regexp、function、asyncfunction、arguments、set、map、weakset、weakmap
+function dataTypeJudge(val, type) {
+  const dataType = Object.prototype.toString
+    .call(val)
+    .replace(/\[object (\w+)\]/, '$1')
+    .toLowerCase();
+  return type ? dataType === type : dataType;
+}
+// 获取window自定义变量
+(function () {
+  var iframe = document.createElement('iframe');
+  iframe.onload = function () {
+    window.glb = {};
+    var iframeKeys = iframe.contentWindow;
+    Object.keys(window).forEach(function (key) {
+      if (!(key in iframeKeys)) {
+        glb[key] = window[key];
+      }
+    });
+    iframe.remove();
+  };
+  iframe.src = 'about:blank';
+  document.body.appendChild(iframe);
+})();
+
+// String Number Array Function Object Null & undefined Boolean RegExp Error Date Symbol
+// Returns if a value is an object
+function isObject(value) {
+  return value && typeof value === 'object' && value.constructor === Object;
+}
+// Returns if a value is an array
+function isArray(value) {
+  // ES5 actually has a method for this (ie9+)
+  if (Array.isArray) {
+    return Array.isArray(value);
+  }
+  // "Array" == Object.prototype.toString.call(result).slice(8, -1)
+  return value && typeof value === 'object' && value.constructor === Array;
+}
+
+function isPrime(num) {
+  if (num <= 3) {
+    return num > 1;
+  }
+  // 不在6的倍数两侧的一定不是质数
+  if (num % 6 != 1 && num % 6 != 5) {
+    return false;
+  }
+  let sqrt = Math.sqrt(num);
+  for (let i = 5; i <= sqrt; i += 6) {
+    if (num % i == 0 || num % (i + 2) == 0) {
+      return false;
+    }
+  }
+  return true;
+}
+
+// 通过src获取图片的blob对象
+function getImageBlob(url, cb) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('get', url, true);
+  xhr.responseType = 'blob';
+  let reader = new FileReader();
+  reader.addEventListener('loadend', function () {
+    console.log(reader.result);
+  });
+  xhr.onload = function () {
+    if (this.status == 200) {
+      let blob = this.response;
+      // 读取来看下下载的内容
+      reader.readAsDataURL(blob);
+      // 最终生成的字符串
+      // data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAA...
+      // 生成下载用的URL对象
+      let url = URL.createObjectURL(blob);
+      // 生成一个a标签，并模拟点击，即可下载，批量下载同理
+      let aDom = document.createElement('a');
+      aDom.href = url;
+      aDom.download = 'download.png';
+      aDom.text = '下载文件';
+      document.getElementsByTagName('body')[0].appendChild(aDom);
+      aDom.click();
+    }
+  };
+  xhr.send();
+}
+// getImageBlob('https://cdn.segmentfault.com/v-5c4ec07f/global/img/user-64.png')
+function channel(obj, cloneObj) {
+  var channel = new MessageChannel();
+  let ifr = document.createElement('iframe');
+  ifr.src = '#'; // about:blank
+  document.body.appendChild(ifr);
+  var otherWindow = ifr.contentWindow;
+  ifr.addEventListener(
+    'load',
+    function iframeLoaded() {
+      // console.log('postmessage', channel)
+      // otherWindow.postMessage('Hello from the main page!', '*', [channel.port2]); // 有问题
+      // otherWindow.parent.channel.port2.postMessage('Hello from the main page!', '*', [channel.port2]); // 有问题
+      // Failed to execute 'postMessage' on 'MessagePort': No function was found that matched the signature provided.
+      channel.port2.postMessage(obj);
+    },
+    false
+  );
+  channel.port1.onmessage = function handleMessage(e) {
+    console.log('onmessage: ', e.data);
+    cloneObj = obj; // 对象深拷贝,有问题,不能含函数, 只能函数内用
+  };
+}
+
+const pipe =
+  (...fs) =>
+  p =>
+    fs.reduce((v, f) => f(v), p);
+
+function toRawType(value) {
+  var _toString = Object.prototype.toString;
+  return _toString.call(value).slice(8, -1);
+}
+/*
+console.log('string:', toRawType(''))
+console.log('number:', toRawType(1))
+console.log('bool:', toRawType(true))
+console.log('null:', toRawType(null))
+console.log('symbol:', toRawType(Symbol()))
+console.log('undefined:', toRawType(undefined))
+console.log('function:', toRawType(function(){}))
+console.log('obj:', toRawType({}))
+console.log('array:', toRawType([]))
+console.log('set:', toRawType(new Set()))
+console.log('weakset:', toRawType(new WeakSet()))
+console.log('map:', toRawType(new Map()))
+console.log('weakMap:', toRawType(new WeakMap()))*/
+
+// 将数组n等分
+function sliceArray(arr = [], n) {
+  // 方法1
+  let te = []; //tmp.reduce((a,b)=>a.splice())
+  for (let i = 0; i < arr.length; i += n) {
+    te.push(tmp.slice(i, i + n));
+  }
+  console.log(te);
+  // 方法2 改变原数组
+  let aa1 = arr || [1, 3, 4, 5, 6, 7],
+    aa2 = [];
+  while (aa1.length) {
+    aa2.push(aa1.splice(0, 2));
+  }
+  return aa2;
+}
+
+var copyFunc = function (val) {
+  var oInput = document.querySelector('#tempCopy') || document.createElement('input');
+  oInput.value = val;
+  document.body.appendChild(oInput);
+  oInput.select();
+  document.execCommand('Copy');
+  oInput.id = 'tempCopy';
+  oInput.style.display = 'none';
+  console.log('复制成功:', val);
+};
+
+function escapeHtml(e) {
+  if ('undefined' == typeof e) return '';
+  if (!e || 'string' != typeof e) return e;
+  var t = e.replace(/\\x(\w{2})/g, function (e, t) {
+    return String.fromCharCode(parseInt(t, 16));
+  });
+  return (
+    (t = t.replace(/&/g, '&amp;')),
+    (t = t.replace(/\"/g, '&quot;')),
+    (t = t.replace(/'/g, '&apos;')),
+    (t = t.replace(/</g, '&lt;')),
+    (t = t.replace(/>/g, '&gt;')),
+    (t = t.replace(/\\t/g, '&nbsp;&nbsp;')),
+    (t = t.replace(/\\r\\n/g, '<br/>')),
+    t
+  );
+}
+
+// 使用 __proto__
+/*var obj = {};
+var descriptor = Object.create(null); // 没有继承的属性
+// 默认没有 enumerable，没有 configurable，没有 writable
+descriptor.value = 'static';
+Object.defineProperty(obj, 'key', descriptor);
+
+// 显式
+Object.defineProperty(obj, "key", {
+  enumerable: false,
+  configurable: false,
+  writable: false,
+  value: "static"
+});*/
+// 匹配非中英文字符
+// str.match(/[^\x00-\xff\u4e00-\u9fa5。；，：“”（）、？《》！]+/g)
+
+async function sleep(t) {
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, t || 1000);
+  });
+}
+
+const reducedFilter = (data, keys, fn) =>
+  data.filter(fn).map(el =>
+    keys.reduce((acc, key) => {
+      acc[key] = el[key];
+      return acc;
+    }, {})
+  );
+
+const maxDate = dates => {
+  console.log('data:', dates);
+  return new Date(Math.max.apply(null, dates));
+};
+
+/**
+ * 获取n个随机数
+ * @public
+ * @param {number} n 个数
+ * @return {Uint16Array}
+ */
+function getRandomValues(n) {
+  const arr = new Uint16Array(n);
+
+  window.crypto.getRandomValues(arr);
+
+  return arr;
+}
+
+/**
+ * 获取随机数
+ * @public
+ * @return {number}
+ */
+function getRandomValue() {
+  return getRandomValues(1)[0];
+}
+// 获取中国区日期 时间
+function getDateTime() {
+  return new Date(Date.now() + 1000 * 60 * 60 * 8).toJSON().split('.')[0].replace('T', ' ');
+}
+
+function getDateTimeFormat(argument) {
+  // body...
+}
+// 优先队列
+class MinHeap {
+  constructor() {
+    this.heap = [];
+  }
+  swap(i1, i2) {
+    const temp = this.heap[i1];
+    this.heap[i1] = this.heap[i2];
+    this.heap[i2] = temp;
+  }
+  getParentIndex(i) {
+    return (i - 1) >> 1;
+  }
+  getLeftIndex(i) {
+    return i * 2 + 1;
+  }
+  getRightIndex(i) {
+    return i * 2 + 2;
+  }
+  shiftUp(index) {
+    if (index == 0) {
+      return;
+    }
+    const parentIndex = this.getParentIndex(index);
+    if (this.heap[parentIndex] > this.heap[index]) {
+      this.swap(parentIndex, index);
+      this.shiftUp(parentIndex);
+    }
+  }
+  shiftDown(index) {
+    const leftIndex = this.getLeftIndex(index);
+    const rightIndex = this.getRightIndex(index);
+    if (this.heap[leftIndex] < this.heap[index]) {
+      this.swap(leftIndex, index);
+      this.shiftDown(leftIndex);
+    }
+    if (this.heap[rightIndex] < this.heap[index]) {
+      this.swap(rightIndex, index);
+      this.shiftDown(rightIndex);
+    }
+  }
+  insert(value) {
+    this.heap.push(value);
+    this.shiftUp(this.heap.length - 1);
+  }
+  pop() {
+    this.heap[0] = this.heap.pop();
+    this.shiftDown(0);
+  }
+  peek() {
+    return this.heap[0];
+  }
+  size() {
+    return this.heap.length;
+  }
+}
+// ​
+// const h = new MinHeap();
+// h.insert(3);
+// h.insert(2);
+// h.insert(1);
+// h.pop(); // 1
+
+Array.prototype.binarySearch = function (item) {
+  let low = 0;
+  let high = this.length - 1;
+  while (low <= high) {
+    const mid = Math.floor((low + high) / 2);
+    const element = this[mid];
+    if (element < item) {
+      low = mid + 1;
+    } else if (element > item) {
+      high = mid - 1;
+    } else {
+      return mid;
+    }
+  }
+  return -1;
+};
+
+// getNetworksOfRepOffice // app/api/cs_nc_customer_info/customer_info_customer_network_portal
+
+var coinChange = function (coins, amount) {
+  let dp = new Array(amount + 1);
+  // 数组大小为 amount + 1，初始值也为 amount + 1
+  dp.fill(amount + 1);
+
+  // base case
+  dp[0] = 0;
+  // 外层 for 循环在遍历所有状态的所有取值
+  for (let i = 0; i < dp.length; i++) {
+    // 内层 for 循环在求所有选择的最小值
+    for (let coin of coins) {
+      // 子问题无解，跳过
+      if (i - coin < 0) {
+        continue;
+      }
+      dp[i] = Math.min(dp[i], 1 + dp[i - coin]);
+    }
+  }
+  return dp[amount] == amount + 1 ? -1 : dp[amount];
+};
+// 获取参数对象
+function getParams(str) {
+  // new URL(location.href).searchParams.get('wd')
+  let arr = str.split('?')[1].split('&');
+  return arr.reduce((a, b) => ((a[b.split('=')[0]] = b.split('=')[1]), a), {});
+}
+
+function getParam(name, str) {
+  return (str || location.search).match(new RegExp(name + '=[^&]*'))[0].split('=')[1];
+}
+/*
+ * 参数说明：
+ * number：要格式化的数字
+ * decimals：保留几位小数
+ * thousands_sep：千分位符号, true|false
+ * */
+function number_format(number, decimals, thousands_sep) {
+  if (!number) {
+    return '0.00';
+  }
+  let num = parseFloat(number),
+    str = '' + num;
+  if (decimals && decimals > 0) {
+    str = num.toFixed(decimals);
+    num = +str;
+  }
+  if (thousands_sep) {
+    str = num.toLocaleString();
+  }
+  return str;
+}
+
+/* // ⏹ 1. 使用正则表达式
+const reg = /(\d)(?=(\d{3})+$)/g;
+// ❗❗❗使用String()把数字转换为字符串的优点在于null等情况不会报错
+console.log(String(123456789).replace(reg, "$1,"));  // 123,456,789
+// 支持整数,不支持小数
+console.log(String(123456789.1315454).replace(reg, "$1,"));  // 123456789.1,315,454
+console.log(String(1000).replace(reg, "$1,"));  // 1,000
+console.log(String(null).replace(reg, "$1,"));  // null
+console.log(String(undefined).replace(reg, "$1,"));  // undefined
+console.log(String(NaN).replace(reg, "$1,"));  // NaN
+console.log('😁😁😁😁😁😁');
+
+// ⏹ 2. 使用toLocaleString()方法
+// ❗❗❗必须是数字,如果是null或者undefined的话,会报错
+console.log((123456789).toLocaleString('en-US'));  // 123,456,789
+// 最多保留三位小数
+console.log((123456789.1315454).toLocaleString('en-US'));  // 123,456,789.132
+console.log('😁😁😁😁😁😁');
+
+// ⏹ 3. 使用new Intl.NumberFormat()方法
+console.log(new Intl.NumberFormat('en-US', {}).format(123456789.1315454));  // 123,456,789.132
+console.log(new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'JPY' }).format(123456789.1315454));  // ￥123,456,789 */
+
+// 加密
+const encode = username => {
+  // 每个字符转为二进制,用空格分隔
+  const textToBinary = username =>
+    username
+      .split('')
+      // charCodeAt 将字符转成相应的 Unicode 码值
+      .map(char => char.charCodeAt(0).toString(2))
+      .join(' ');
+  const binaryToZeroWidth = binary =>
+    binary
+      .split('')
+      .map(binaryNum => {
+        const num = parseInt(binaryNum, 10);
+        if (num === 1) {
+          return '\u200b'; // \u200b 零宽度字符（zero-width space）
+        } else if (num === 0) {
+          return '\u200c'; // \u200c 零宽度断字符（zero-width non-joiner）
+        }
+        return '\u200d'; // \u200d 零宽度连字符 (zero-width joiner)
+      })
+      .join('\ufeff'); // \ufeff 零宽度非断空格符 (zero width no-break space)
+  const binaryUsername = textToBinary(username);
+  const zeroWidthUsername = binaryToZeroWidth(binaryUsername);
+  return zeroWidthUsername;
+};
+
+// 解密
+const decode = string => {
+  const zeroWidthToBinary = string =>
+    string
+      .split('\ufeff')
+      .map(char => {
+        // \ufeff 零宽度非断空格符 (zero width no-break space)
+        if (char === '\u200b') {
+          // \u200b 零宽度字符（zero-width space）
+          return '1';
+        } else if (char === '\u200c') {
+          // \u200c 零宽度断字符（zero-width non-joiner）
+          return '0';
+        }
+        return ' ';
+      })
+      .join('');
+  // fromCharCode 二进制转化
+  return zeroWidthToBinary(string)
+    .split(' ')
+    .map(num => String.fromCharCode(parseInt(num, 2)))
+    .join('');
+};
+let morse = () => {
+  // a-z
+  const morseWords = [
+    '.-',
+    '-...',
+    '-.-.',
+    '-..',
+    '.',
+    '..-.',
+    '--.',
+    '....',
+    '..',
+    '.---',
+    '-.-',
+    '.-..',
+    '--',
+    '-.',
+    '---',
+    '.--.',
+    '--.-',
+    '.-.',
+    '...',
+    '-',
+    '..-',
+    '...-',
+    '.--',
+    '-..-',
+    '-.--',
+    '--..'
+  ];
+  // 0-9
+  const morseNumber = ['-----', '.----', '..---', '...--', '....-', '.....', '-....', '--...', '---..', '----.'];
+  let wordsToMorse = {};
+  let morseToWords = {};
+  let morseToNum = {};
+
+  //a-z数组
+  let words = [];
+  for (let i = 10; i < 36; i++) {
+    let j = i.toString(36);
+    words.push(j);
+  }
+
+  //数字加密字典
+  let numToMorse = morseNumber;
+
+  //数字解密字典
+  for (let i in morseNumber) {
+    morseToNum[morseNumber[i]] = i;
+  }
+
+  //字母加密字典
+  for (let i in words) {
+    wordsToMorse[words[i]] = morseWords[i];
+  }
+  //字母解密字典
+  for (let i in wordsToMorse) {
+    morseToWords[wordsToMorse[i]] = i;
+  }
+  //合并解密字典
+  let decodeWords = Object.assign(morseToWords, morseToNum);
+  // 只能加密a-z0-9
+  let encode = str => {
+    if (typeof str != 'string') {
+      return;
+    }
+    let res = [];
+    let l = '&#8205;';
+    let s = '&#8204;';
+    let q = '&#8203;';
+    for (let i in str) {
+      let val = str[i];
+      if (!!parseInt(val) || parseInt(val) == 0) {
+        res.push(numToMorse[str[i]]);
+      } else {
+        res.push(wordsToMorse[str[i]]);
+      }
+    }
+    let encrypt = res.join('/');
+    encrypt = encrypt.replace(/\//g, q);
+    encrypt = encrypt.replace(/\./g, s);
+    encrypt = encrypt.replace(/\-/g, l);
+    return encrypt;
+  };
+  let decode = text => {
+    if (typeof text != 'string') {
+      return;
+    }
+    let decode = [];
+    //匹配文本中的零宽字符，并转换为摩斯码
+    text.match(/(\&\#8203\;|\&\#8204\;|\&\#8205\;|\u200B|\u200C|\u200D|\&zwnj\;|\&zwj\;)+/g).map(temp => {
+      temp = temp.replace(/\&\#8203\;|\u200B/g, '/');
+      temp = temp.replace(/\&\#8204\;|\u200C|\&zwnj\;/g, '.');
+      temp = temp.replace(/\&\#8205\;|\u200D|\&zwj\;/g, '-');
+      let arr = temp.split('/');
+
+      //调用解密字典转码
+      for (let i in arr) {
+        decode.push(decodeWords[arr[i]]);
+      }
+    });
+    return decode.join('');
+  };
+  return { wordsToMorse, morseToWords, morseToNum, numToMorse, decodeWords, encode, decode };
+};
+// var time=new Date().toLocaleString('chinese',{hour12:false}) 不一定等于 new Date().toLocaleString() // '2022/9/19 10:44:03'
+// var time=new Date().toLocaleString('chinese',{hour12:true}) // '2022/9/19 上午10:44:35'
+
+// let curDate = new Date().toLocaleString('chinese',{hour12:false}).replace(/\/\d+/g, a => (a.length < 3 ? `-0${a.substring(1)}` : `-${a.substring(1)}`))
+// let curDate = new Date(Date.now() + 8 * 3600000).toJSON().substring(0, 19).replace('T', ' ')
+window._jsonp = (url, params) => {
+  if (params) {
+  }
+  url += '?';
+  for (let k in params) {
+    url += k + '=' + params[k] + '&';
+  }
+  // 2 拼接 callback
+  const callbackName = 'itcast_' + (new Date() - 0);
+  url += 'callback=' + callbackName;
+  // 3 动态创建script标签
+  const script = document.createElement('script');
+  script.src = url;
+  document.head.appendChild(script);
+  return new Promise((resolve, reject) => {
+    window[callbackName] = function (data) {
+      resolve(data);
+      delete window[callbackName];
+      document.head.removeChild(script);
+    };
+  });
+};
+!window.axios && (window.axios = {});
+axios.jsonp = url => {
+  if (!url) {
+    console.error('Axios.JSONP 至少需要一个url参数!');
+    return;
+  }
+  return new Promise((resolve, reject) => {
+    window.jsonCallBack = result => {
+      resolve(result);
+    };
+    var JSONP = document.createElement('script');
+    JSONP.type = 'text/javascript';
+    JSONP.src = `${url}&callback=jsonCallBack`;
+    document.getElementsByTagName('head')[0].appendChild(JSONP);
+    setTimeout(() => {
+      document.getElementsByTagName('head')[0].removeChild(JSONP);
+    }, 500);
+  });
+};
+function exportExcel(str = `姓名,电话,邮箱\n`, jsonData) {
+  // 列标题，逗号隔开，每一个逗号就是隔开一个单元格
+  // let str = `姓名,电话,邮箱\n`;
+  // 增加\t为了不让表格显示科学计数法或者其他格式
+  /* for (let i = 0; i < jsonData.length; i++) {
+    for (const key in jsonData[i]) {
+      str += `${jsonData[i][key]},`;
+    }
+    str += '\n';
+  } */
+  str += jsonData.map(itm => Object.values(itm).join(',')).join('\n');
+  // encodeURIComponent解决中文乱码
+  const uri = 'data:text/csv;charset=gb2312,\ufeff' + encodeURIComponent(str);
+  // const uri = 'data:application/msword;charset=utf-8,\ufeff' + encodeURIComponent(str);
+  // 通过创建a标签实现
+  const link = document.createElement('a');
+  link.href = uri;
+  // 对下载的文件命名
+  link.download = 'data.csv';
+  // link.download = 'data.doc';
+  link.click();
+}
+function saveXls(opt = {}) {
+  opt.jsonData = opt.jsonData || [
+    {
+      name: '路人甲',
+      phone: '123456789',
+      email: '000@123456.com'
+    },
+    {
+      name: '炮灰乙',
+      phone: '123456789',
+      email: '000@123456.com'
+    },
+    {
+      name: '土匪丙',
+      phone: '123456789',
+      email: '000@123456.com'
+    },
+    {
+      name: '流氓丁',
+      phone: '123456789',
+      email: '000@123456.com'
+    }
+  ];
+  opt.str = opt.str || `姓名,电话,邮箱\n`;
+  exportExcel(opt.str, opt.jsonData);
+}
+// 读取csv文件到json
+function csvToJson(filePath) {
+  let result = [];
+  function csvJSON(csv) {
+    var lines = csv.split('\n');
+    var result = [];
+    var headers = lines[0].split(',');
+    for (var i = 1; i < lines.length; i++) {
+      var obj = {};
+      var currentline = lines[i].split(',');
+      for (var j = 0; j < headers.length; j++) {
+        obj[headers[j]] = currentline[j];
+      }
+      result.push(obj);
+    }
+    return result;
+  }
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', filePath, false);
+  xhr.onload = function (e) {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        result = csvJSON(xhr.responseText);
+      } else {
+        console.error(xhr.statusText);
+      }
+    }
+  };
+  xhr.send(null);
+  return result;
+}
+// csv文件乱码
+/* fetch('static/data/list.csv', {})
+  .then(res => {
+    console.log('object res', res);
+    return res.blob();
+  })
+  .then(blob => {
+    const reader2 = new FileReader();
+    reader2.readAsArrayBuffer(blob);
+    reader2.onload = e => {
+      console.log('result ======', iconv.decode(Buffer.from(e.target.result, 'hex'), 'gbk'));
+    };
+  }); */
+let exportExcel2 = excelHtml => {
+  // 生成blob对象
+  let excelBlob = new Blob([excelHtml], { type: 'application/vnd.ms-excel' });
+  // 创建一个a标签
+  let oA = document.createElement('a');
+  // 利用URL.createObjectURL()方法为a元素生成blob URL
+  oA.href = URL.createObjectURL(excelBlob);
+  // 给文件命名
+  oA.download = `${new Date().toLocaleString()}_提现数据表.xlsx`;
+  // 模拟点击
+  oA.click();
+};
+
+// 生成树1
+function listToTree() {
+  let array = [];
+  cityList.forEach(item => {
+    // 遍历对象数组
+    item.children = cityList.filter(info => info.parentId === item.id); // 找到每个对象的子节点
+    if (item.parentId === 0) {
+      array.push(item); // 将一层节点放入新数组中
+    }
+  });
+  return array; //循环结束，返回结果
+}
+// 生成树2
+function recursionGenerateTree(pid, arr) {
+  let array = [];
+  arr.forEach(item => {
+    if (item.parentId === pid) {
+      item.children = recursionGenerateTree(item.id, arr); // 接收子节点
+      array.push(item);
+    }
+  });
+  return array; // 返回查找到的节点
+}
+// console.log(recursionGenerateTree(0, cityList))
+// 深度遍历
+const deepEach = data => {
+  let stack = [...data],
+    node;
+
+  while ((node = stack.shift())) {
+    console.log(node.id);
+    // 如果有子元素的话进行压栈操作
+    if (node.children) stack.unshift(...node.children);
   }
 };
-function getDownloadUri(data) {
-  const mimeType = 'attachment/csv';
-  const charset = ';charset=utf-8,';
-  const _utf = '\uFEFF'; // 为了使文件以utf-8的编码模式，同时也是解决中文乱码的问题
-  return 'data:' + mimeType + charset + _utf + encodeURIComponent(data);
-}
-function getDownloadUri(data) {
-  const _utf = '\uFEFF'; // 为了使文件以utf-8的编码模式，同时也是解决中文乱码的问题
-  if (window.Blob && window.URL && window.URL.createObjectURL) {
-    const blob = new Blob([_utf + data], {
-      type: 'text/json' // 写自己需要的数据格式
-    });
-    return URL.createObjectURL(blob);
-  }
-}
-function saveFileByExecCommand(data, fileName) {
-  const newWindow = window.top.open('about:blank', '_blank');
-  newWindow.document.write('sep=,\r\n' + data);
-  newWindow.document.close();
-  newWindow.document.execCommand('SaveAs', false, fileName);
-  newWindow.close();
-}
 
-function saveData2File(data, fileName) {
-  const bw = getBrowser(); // 获取浏览器信息
-  if (!bw['edge'] || !bw['ie']) {
-    const element = document.createElement('a');
-    const uri = getDownloadUri(data);
-    element.href = uri;
-    element.download = fileName;
-    const a = document.body.appendChild(element);
-    const evt = document.createEvent('HTMLEvents');
-    evt.initEvent('click', false, false); // 不加后面两个参数在Firefox上报错
-    a.dispatchEvent(evt);
-    document.body.removeChild(element);
-  } else if (bw['ie'] >= 10 || bw['edge'] === 'edge') {
-    const _utf = '\uFEFF'; // 为了使文件以utf-8的编码模式，同时也是解决中文乱码的问题
-    const blob = new Blob([_utf + data], {
-      type: 'text/json' // 自己需要的数据格式
-    });
-    navigator.msSaveBlob(blob, fileName);
-  }
-}
+// 广度遍历
+const widthEach = data => {
+  let node,
+    list = [...data];
 
-function getBrowser() {
-  const sys = {};
-  const ua = navigator.userAgent.toLowerCase();
-  if (ua.indexOf('edge') !== -1) {
-    sys.edge = 'edge';
-  } else if (ua.match(/rv:([\d.]+)\) like gecko/)) {
-    sys.ie = ua.match(/rv:([\d.]+)\) like gecko/)[1];
-  } else if (ua.match(/msie ([\d.]+)/)) {
-    sys.ie = ua.match(/msie ([\d.]+)/)[1];
-  } else if (ua.match(/firefox\/([\d.]+)/)) {
-    sys.firefox = ua.match(/firefox\/([\d.]+)/)[1];
-  } else if (ua.match(/chrome\/([\d.]+)/)) {
-    sys.chrome = ua.match(/chrome\/([\d.]+)/)[1];
-  } else if (ua.match(/opera.([\d.]+)/)) {
-    sys.opera = ua.match(/opera.([\d.]+)/)[1];
-  } else if (ua.match(/version\/([\d.]+).*safari/)) {
-    sys.safari = ua.match(/version\/([\d.]+).*safari/)[1];
+  while ((node = list.shift())) {
+    console.log(node.id);
+    // 如果有子元素就放入队列
+    node.children && list.push(...node.children);
   }
-  return sys;
+};
+
+/* element.insertAdjacentHTML(position, text);
+<!-- beforebegin -->
+<p>
+  <!-- afterbegin -->
+  foo
+  <!-- beforeend -->
+</p>
+<!-- afterend --> */
+// 并不会动态请求脚本??
+// document.head.insertAdjacentHTML('beforeend', '<script src="https://unpkg.com/jquery"></script>')
+// 将chrome表单数据转对象
+function getFormData(s) {
+  if (s.includes(': \n')) {
+    s = s.replace(/: \n/g, '=').replace(/\n/g, '&');
+  }
+  return s.split('&').reduce((a, b) => {
+    let tmp = b.split('=');
+
+    if (Array.isArray(a[tmp[0]])) {
+      a[tmp[0]].push(tmp[1]);
+    } else if (a[tmp[0]] !== undefined) {
+      a[tmp[0]] = [a[tmp[0]]];
+    } else {
+      a[tmp[0]] = tmp[1];
+    }
+    return a;
+  }, {});
 }
+const uuid = () => {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  const txt = 'txt';
+  ctx.fillText(txt, 10, 10);
+  console.log(canvas.toDataURL());
+};

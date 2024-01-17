@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <style>
+    .box {
+      position: relative;
+      left: 20%;
+      top: 100px;
+    }
+    .box div {
+      position: relative;
+    }
+
+    .box .child {
+      margin-left: 30px;
+    }
+
+    .box div.child::before {
+      content: '';
+      position: absolute;
+      width: 1px;
+      height: 22px;
+      background: #000;
+      top: 50%;
+      left: -39px;
+      top: -9px;
+    }
+
+    .box div.child::after {
+      content: '';
+      position: absolute;
+      width: 24px;
+      height: 1px;
+      background: #000;
+      top: 50%;
+      transform: translateY(-50%);
+      left: -39px;
+      top: 12px;
+    }
+
+    .box > div.child > div {
+      margin-left: 30px;
+    }
+
+    .box .two_child {
+      margin-left: 10px;
+      position: relative;
+    }
+    .box2 {
+      position: relative;
+      left: 50%;
+    }
+    /* 兜底 ul的伪元素是 第一层元素的高度 */
+    .ul {
+      position: relative;
+    }
+    .ul::after {
+      content: '';
+      position: absolute;
+      width: 1px;
+      height: calc(100% - 10px);
+      background: #000;
+      top: 50%;
+      left: -9px;
+      top: 0;
+    }
+
+    .two_child {
+      position: absolute;
+    }
+  </style>
+  <body>
+    <div class="box">
+      <div class="ul">
+        <div class="parent">四川区域</div>
+        <div class="child">四川一区</div>
+        <div class="child">四川二区</div>
+        <div class="child">
+          四川三区
+          <div class="child two_child">
+            四川三区(一)
+            <div class="child two_child">四川三区(一) --- 1</div>
+          </div>
+        </div>
+        <div class="child">四川三区</div>
+        <div class="child">
+          四川四区
+          <div class="child two_child">
+            四川四区(一) --- 1
+            <div class="child two_child">四川四区(一) --- 1 - 1</div>
+          </div>
+        </div>
+        <!-- <div class="child">四川四区</div> -->
+      </div>
+    </div>
+
+    <div class="box box2">
+      <div class="ul">
+        <div class="parent">四川区域</div>
+        <div class="child">四川一区</div>
+        <div class="child">四川二区</div>
+        <div class="child">
+          四川三区
+          <div class="child two_child">
+            四川三区(一)
+            <div class="child two_child">四川三区(一) --- 1</div>
+          </div>
+        </div>
+        <div class="child">四川三区</div>
+        <div class="child">
+          四川四区
+          <div class="child two_child">
+            四川四区(一) --- 1
+            <div class="child two_child">四川四区(一) --- 1 - 1</div>
+          </div>
+        </div>
+        <div class="child">四川四区</div>
+      </div>
+    </div>
+  </body>
+  <script>
+    const container = document.querySelector('.ul');
+    // 获取第一层级最后一个元素的offsetTop
+    const lastChildOffsetTop = container.lastElementChild.offsetTop;
+    container.style.height = lastChildOffsetTop + 10 + 'px';
+  </script>
+</html>
